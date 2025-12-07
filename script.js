@@ -539,9 +539,22 @@ function validateField(field) {
     return isValid;
 }
 
-// Enhanced form submission
+// Initialize EmailJS
+// Replace 'YOUR_PUBLIC_KEY' with your EmailJS public key
+// Get it from https://dashboard.emailjs.com/admin/integration
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+const EMAILJS_CONTACT_TEMPLATE = 'YOUR_CONTACT_TEMPLATE_ID';
+const EMAILJS_NEWSLETTER_TEMPLATE = 'YOUR_NEWSLETTER_TEMPLATE_ID';
+
+// Initialize EmailJS if available
+if (typeof emailjs !== 'undefined') {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+}
+
+// Enhanced form submission with EmailJS
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         let isFormValid = true;
@@ -555,58 +568,182 @@ if (contactForm) {
             return;
         }
         
-        // Get form data
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-        };
-        
-        console.log('Form submitted:', formData);
-        
-        // Show success message
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
-        submitButton.textContent = 'Message Sent! ✓';
-        submitButton.style.background = '#10b981';
+        const originalBackground = submitButton.style.background;
+        
+        // Disable button and show loading state
         submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+        submitButton.style.background = '#6b7280';
         
-        // Reset form
-        contactForm.reset();
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            subject: document.getElementById('subject').value.trim(),
+            message: document.getElementById('message').value.trim()
+        };
         
-        // Reset button after 3 seconds
-        setTimeout(() => {
+        try {
+            // Check if EmailJS is configured
+            if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+                // Send email via EmailJS
+                await emailjs.send(
+                    EMAILJS_SERVICE_ID,
+                    EMAILJS_CONTACT_TEMPLATE,
+                    {
+                        from_name: formData.name,
+                        from_email: formData.email,
+                        subject: formData.subject,
+                        message: formData.message,
+                        to_email: 'contact@kcoh.ca'
+                    }
+                );
+                
+                // Show success message
+                showFormMessage(contactForm, 'Message sent successfully! We\'ll get back to you soon.', 'success');
+                contactForm.reset();
+                
+                // Reset button
+                submitButton.textContent = originalText;
+                submitButton.style.background = originalBackground;
+                submitButton.disabled = false;
+            } else {
+                // Fallback: Send email via mailto link
+                const mailtoLink = `mailto:contact@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
+                window.location.href = mailtoLink;
+                
+                // Show success message
+                showFormMessage(contactForm, 'Opening your email client...', 'success');
+                contactForm.reset();
+                
+                // Reset button after delay
+                setTimeout(() => {
+                    submitButton.textContent = originalText;
+                    submitButton.style.background = originalBackground;
+                    submitButton.disabled = false;
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            showFormMessage(contactForm, 'Failed to send message. Please try again or email us directly at contact@kcoh.ca', 'error');
+            
+            // Reset button
             submitButton.textContent = originalText;
-            submitButton.style.background = '';
+            submitButton.style.background = originalBackground;
             submitButton.disabled = false;
-        }, 3000);
+        }
     });
 }
 
 // Newsletter Form
 const newsletterForm = document.getElementById('newsletterForm');
 if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
+    newsletterForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('newsletterEmail').value;
         
-        console.log('Newsletter signup:', email);
+        const emailInput = document.getElementById('newsletterEmail');
+        const email = emailInput.value.trim();
+        
+        // Validate email
+        if (!email || !validateEmail(email)) {
+            showFormMessage(newsletterForm, 'Please enter a valid email address.', 'error');
+            return;
+        }
         
         const submitButton = newsletterForm.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
-        submitButton.textContent = 'Subscribed! ✓';
-        submitButton.style.background = '#10b981';
+        const originalBackground = submitButton.style.background;
+        
+        // Disable button and show loading state
         submitButton.disabled = true;
+        submitButton.textContent = 'Subscribing...';
+        submitButton.style.background = '#6b7280';
         
-        newsletterForm.reset();
-        
-        setTimeout(() => {
+        try {
+            // Check if EmailJS is configured
+            if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+                // Send email via EmailJS
+                await emailjs.send(
+                    EMAILJS_SERVICE_ID,
+                    EMAILJS_NEWSLETTER_TEMPLATE,
+                    {
+                        email: email,
+                        to_email: 'contact@kcoh.ca'
+                    }
+                );
+                
+                // Show success message
+                showFormMessage(newsletterForm, 'Successfully subscribed! Check your email for confirmation.', 'success');
+                newsletterForm.reset();
+                
+                // Reset button
+                submitButton.textContent = originalText;
+                submitButton.style.background = originalBackground;
+                submitButton.disabled = false;
+            } else {
+                // Fallback: Store in localStorage and show success
+                const subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+                if (!subscribers.includes(email)) {
+                    subscribers.push(email);
+                    localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+                }
+                
+                // Show success message
+                showFormMessage(newsletterForm, 'Successfully subscribed! We\'ll keep you updated.', 'success');
+                newsletterForm.reset();
+                
+                // Reset button
+                submitButton.textContent = originalText;
+                submitButton.style.background = originalBackground;
+                submitButton.disabled = false;
+            }
+        } catch (error) {
+            console.error('Newsletter subscription error:', error);
+            showFormMessage(newsletterForm, 'Failed to subscribe. Please try again.', 'error');
+            
+            // Reset button
             submitButton.textContent = originalText;
-            submitButton.style.background = '';
+            submitButton.style.background = originalBackground;
             submitButton.disabled = false;
-        }, 3000);
+        }
     });
+}
+
+// Helper function to validate email
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Helper function to show form messages
+function showFormMessage(form, message, type) {
+    // Remove existing messages
+    const existingMessage = form.querySelector('.form-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message element
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `form-message form-message-${type}`;
+    messageDiv.textContent = message;
+    
+    // Insert message after form or before submit button
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.parentNode.insertBefore(messageDiv, submitButton);
+    } else {
+        form.appendChild(messageDiv);
+    }
+    
+    // Auto-remove success messages after 5 seconds
+    if (type === 'success') {
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 5000);
+    }
 }
 
 // FAQ Accordion

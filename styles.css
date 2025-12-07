@@ -961,6 +961,53 @@ section * {
     margin-top: 0.5rem;
 }
 
+/* Form Messages */
+.form-message {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    animation: slideDown 0.3s ease;
+}
+
+.form-message-success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.form-message-error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.dark-theme .form-message-success,
+body:not(.light-theme) .form-message-success {
+    background: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+    border-color: #10b981;
+}
+
+body.dark-theme .form-message-error,
+body:not(.light-theme) .form-message-error {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border-color: #ef4444;
+}
+
 /* Footer */
 .footer {
     background: var(--text-primary);
