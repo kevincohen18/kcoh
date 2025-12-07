@@ -677,6 +677,7 @@ if (acceptCookies) {
         localStorage.setItem('cookieConsent', 'accepted');
         if (cookieConsent) {
             cookieConsent.classList.remove('show');
+            document.body.classList.remove('cookie-visible');
         }
     });
 }
@@ -686,7 +687,25 @@ if (declineCookies) {
         localStorage.setItem('cookieConsent', 'declined');
         if (cookieConsent) {
             cookieConsent.classList.remove('show');
+            document.body.classList.remove('cookie-visible');
         }
     });
+}
+
+// Add body class when cookie consent is visible
+if (cookieConsent) {
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                if (cookieConsent.classList.contains('show')) {
+                    document.body.classList.add('cookie-visible');
+                } else {
+                    document.body.classList.remove('cookie-visible');
+                }
+            }
+        });
+    });
+    
+    observer.observe(cookieConsent, { attributes: true });
 }
 
