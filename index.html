@@ -4,11 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="KCOH Software Inc. - Professional freelance software development services specializing in web applications, mobile apps, and custom software solutions.">
+    <meta name="keywords" content="software development, web development, mobile apps, freelance developer, custom software, React, Node.js, API development, cloud solutions">
+    <meta name="author" content="KCOH Software Inc.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kcoh.ca/">
+    <meta property="og:title" content="KCOH Software Inc. - Professional Software Development Services">
+    <meta property="og:description" content="Professional freelance software development services specializing in web applications, mobile apps, and custom software solutions.">
+    <meta property="og:image" content="https://kcoh.ca/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://kcoh.ca/">
+    <meta property="twitter:title" content="KCOH Software Inc. - Professional Software Development Services">
+    <meta property="twitter:description" content="Professional freelance software development services specializing in web applications, mobile apps, and custom software solutions.">
+    <meta property="twitter:image" content="https://kcoh.ca/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
     <title>KCOH Software Inc. - Professional Software Development Services</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "KCOH Software Inc.",
+        "url": "https://kcoh.ca",
+        "logo": "https://kcoh.ca/logo.png",
+        "description": "Professional freelance software development services specializing in web applications, mobile apps, and custom software solutions.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-514-898-8716",
+            "contactType": "Customer Service",
+            "email": "contact@kcoh.ca",
+            "areaServed": "CA",
+            "availableLanguage": ["English", "French"]
+        },
+        "sameAs": [
+            "https://github.com/kevincohen18/kcoh"
+        ],
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "CA"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "KCOH Software Inc.",
+        "description": "Professional software development services",
+        "serviceType": "Software Development",
+        "areaServed": "Worldwide",
+        "provider": {
+            "@type": "Organization",
+            "name": "KCOH Software Inc."
+        }
+    }
+    </script>
 </head>
 <body class="dark-theme">
     <!-- Loading Screen -->
@@ -44,6 +108,7 @@
                     <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                     <li><a href="#technologies" class="nav-link">Technologies</a></li>
                     <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="#faq" class="nav-link">FAQ</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
@@ -444,6 +509,72 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Common questions about our services</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What technologies do you specialize in?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We specialize in modern web technologies including React, Vue.js, Angular, Node.js, Python, and mobile development with React Native and Flutter. We also work with cloud platforms like AWS, Azure, and GCP.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How long does a typical project take?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Project timelines vary based on scope and complexity. A simple website might take 2-4 weeks, while a complex web application could take 2-6 months. We provide detailed timelines during the initial consultation.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you provide ongoing support and maintenance?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer ongoing support and maintenance packages. This includes bug fixes, security updates, feature additions, and performance optimization. We can discuss a maintenance plan that fits your needs.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can you work with our existing team?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We're experienced in collaborating with in-house teams and can integrate seamlessly into your workflow. We use modern collaboration tools and follow best practices for remote teamwork.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is your development process?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We follow an agile development methodology with regular communication, iterative development, and continuous feedback. Our process includes planning, design, development, testing, and deployment phases.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you offer fixed-price or hourly billing?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer both fixed-price and hourly billing options depending on the project. Fixed-price works well for well-defined projects, while hourly billing is better for ongoing work or projects with evolving requirements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
@@ -542,8 +673,20 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button type="submit" class="btn btn-primary"><span>Send Message</span></button>
                 </form>
+                
+                <!-- Newsletter Signup -->
+                <div class="newsletter-section">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to our newsletter for tech tips and company updates</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <div class="newsletter-input-group">
+                            <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary"><span>Subscribe</span></button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -607,6 +750,17 @@
             </div>
         </div>
     </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your browsing experience and analyze site traffic. By continuing to use this site, you consent to our use of cookies. <a href="#privacy">Learn more</a></p>
+            <div class="cookie-buttons">
+                <button class="btn btn-primary" id="acceptCookies"><span>Accept</span></button>
+                <button class="btn btn-secondary" id="declineCookies">Decline</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

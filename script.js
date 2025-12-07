@@ -615,3 +615,78 @@ if (contactForm) {
     });
 }
 
+// Newsletter Form
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('newsletterEmail').value;
+        
+        console.log('Newsletter signup:', email);
+        
+        const submitButton = newsletterForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Subscribed! ✓';
+        submitButton.style.background = '#10b981';
+        submitButton.disabled = true;
+        
+        newsletterForm.reset();
+        
+        setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.style.background = '';
+            submitButton.disabled = false;
+        }, 3000);
+    });
+}
+
+// FAQ Accordion
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+            faqItem.classList.add('active');
+        }
+    });
+});
+
+// Cookie Consent
+const cookieConsent = document.getElementById('cookieConsent');
+const acceptCookies = document.getElementById('acceptCookies');
+const declineCookies = document.getElementById('declineCookies');
+
+// Check if user has already made a choice
+if (!localStorage.getItem('cookieConsent')) {
+    setTimeout(() => {
+        if (cookieConsent) {
+            cookieConsent.classList.add('show');
+        }
+    }, 1000);
+}
+
+if (acceptCookies) {
+    acceptCookies.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'accepted');
+        if (cookieConsent) {
+            cookieConsent.classList.remove('show');
+        }
+    });
+}
+
+if (declineCookies) {
+    declineCookies.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'declined');
+        if (cookieConsent) {
+            cookieConsent.classList.remove('show');
+        }
+    });
+}
+
