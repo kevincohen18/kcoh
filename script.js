@@ -46,6 +46,8 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            // Force reflow to ensure transform is applied
+            entry.target.offsetHeight;
             observer.unobserve(entry.target);
         }
     });
@@ -200,43 +202,10 @@ window.addEventListener('load', () => {
     }
 });
 
-// Parallax scrolling effect
-let lastScrollTop = 0;
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const hero = document.querySelector('.hero');
-    
-    if (hero && scrollTop < window.innerHeight) {
-        const parallaxSpeed = scrollTop * 0.5;
-        hero.style.transform = `translateY(${parallaxSpeed}px)`;
-    }
+// Removed parallax effects that cause overlaps during scroll
+// Parallax disabled to prevent overlapping issues
 
-    // Parallax for sections
-    document.querySelectorAll('section').forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-        
-        if (isVisible && index % 2 === 0) {
-            const speed = (rect.top - window.innerHeight) * 0.1;
-            section.style.transform = `translateY(${speed}px)`;
-        }
-    });
-
-    lastScrollTop = scrollTop;
-});
-
-// Mouse move parallax effect
-document.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
-    
-    const hero = document.querySelector('.hero-content');
-    if (hero) {
-        const moveX = (mouseX - 0.5) * 20;
-        const moveY = (mouseY - 0.5) * 20;
-        hero.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    }
-});
+// Removed mouse parallax to prevent overlaps
 
 // Animate numbers in stats
 function animateNumber(element, target, duration = 2000) {

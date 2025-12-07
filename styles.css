@@ -102,6 +102,9 @@ body.light-theme {
     box-shadow: var(--shadow-sm);
     z-index: 1000;
     transition: all 0.3s ease;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
 }
 
 .navbar.scrolled {
@@ -236,6 +239,8 @@ body:not(.light-theme) .theme-toggle .moon-icon {
     overflow: hidden;
     margin-top: 0;
     padding-top: calc(80px + 2rem);
+    transform: none !important;
+    will-change: auto;
 }
 
 .hero-background {
@@ -301,6 +306,8 @@ body:not(.light-theme) .theme-toggle .moon-icon {
     animation: fadeInUp 1s ease, slideInScale 1.2s ease;
     position: relative;
     z-index: 1;
+    transform: none !important;
+    will-change: auto;
 }
 
 @keyframes fadeInUp {
@@ -492,11 +499,19 @@ section {
     padding: 80px 0;
     position: relative;
     clear: both;
-    overflow: hidden;
+    overflow: visible;
+    transform: none !important;
+    will-change: auto;
+    isolation: isolate;
 }
 
 section:first-of-type {
     margin-top: 0;
+}
+
+/* Prevent any section transforms during scroll */
+section * {
+    transform: none !important;
 }
 
 .section-header {
@@ -583,6 +598,8 @@ section:first-of-type {
     transform: translateY(-10px) scale(1.02);
     box-shadow: var(--shadow-xl);
     border-color: var(--primary-color);
+    z-index: 10;
+    position: relative;
 }
 
 .service-icon {
@@ -672,6 +689,8 @@ section:first-of-type {
 .portfolio-item:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: var(--shadow-xl);
+    z-index: 10;
+    position: relative;
 }
 
 .portfolio-item:hover::after {
@@ -1052,8 +1071,13 @@ section:first-of-type {
     box-shadow: var(--shadow-lg);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
     z-index: 998;
+    pointer-events: none;
+}
+
+.back-to-top.visible {
+    pointer-events: auto;
 }
 
 .back-to-top.visible {
@@ -1225,6 +1249,8 @@ section:first-of-type {
     transform: translateY(-8px) scale(1.02);
     box-shadow: var(--shadow-xl);
     border-color: var(--primary-color);
+    z-index: 10;
+    position: relative;
 }
 
 .testimonial-quote {
@@ -1326,44 +1352,52 @@ section:first-of-type {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
 }
 
 .fade-in.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) !important;
+    will-change: auto;
 }
 
 .slide-in-left {
     opacity: 0;
     transform: translateX(-50px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
 }
 
 .slide-in-left.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) !important;
+    will-change: auto;
 }
 
 .slide-in-right {
     opacity: 0;
     transform: translateX(50px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
 }
 
 .slide-in-right.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) !important;
+    will-change: auto;
 }
 
 .scale-in {
     opacity: 0;
     transform: scale(0.8);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
 }
 
 .scale-in.visible {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) !important;
+    will-change: auto;
 }
 
 /* Stagger animation for grid items */
@@ -1371,11 +1405,13 @@ section:first-of-type {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
 }
 
 .stagger-item.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) !important;
+    will-change: auto;
 }
 
 /* Floating animation */
@@ -1629,10 +1665,16 @@ section:first-of-type {
     transition: transform 0.3s ease;
     max-width: 100vw;
     box-sizing: border-box;
+    width: 100%;
+    isolation: isolate;
 }
 
 body.cookie-visible .back-to-top {
     bottom: calc(100px + 80px);
+}
+
+body.cookie-visible {
+    padding-bottom: 0;
 }
 
 .cookie-consent.show {
