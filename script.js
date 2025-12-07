@@ -110,62 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Contact Form Handling
-const contactForm = document.getElementById('contactForm');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-        };
-        
-        // Here you would typically send the data to a server
-        // For now, we'll just show a success message
-        console.log('Form submitted:', formData);
-        
-        // Show success message
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        submitButton.textContent = 'Message Sent!';
-        submitButton.style.background = '#10b981';
-        submitButton.disabled = true;
-        
-        // Reset form
-        contactForm.reset();
-        
-        // Reset button after 3 seconds
-        setTimeout(() => {
-            submitButton.textContent = originalText;
-            submitButton.style.background = '';
-            submitButton.disabled = false;
-        }, 3000);
-        
-        // In a real application, you would send this data to your backend
-        // Example:
-        // fetch('/api/contact', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(formData)
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log('Success:', data);
-        //     // Show success message
-        // })
-        // .catch((error) => {
-        //     console.error('Error:', error);
-        //     // Show error message
-        // });
-    });
-}
+// Contact Form Handling - Removed duplicate handler (now handled below with EmailJS)
 
 // Add active class to current section in navigation
 const sections = document.querySelectorAll('section[id]');
@@ -355,20 +300,7 @@ window.addEventListener('load', () => {
     setTimeout(initParticles, 500);
 });
 
-// Cursor trail effect
-let cursorTrail = [];
-const maxTrailLength = 20;
-
-document.addEventListener('mousemove', (e) => {
-    cursorTrail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
-    
-    if (cursorTrail.length > maxTrailLength) {
-        cursorTrail.shift();
-    }
-    
-    // Remove old trail points
-    cursorTrail = cursorTrail.filter(point => Date.now() - point.time < 500);
-});
+// Magnetic cursor effect will be added below with modern implementation
 
 // Smooth scroll with easing
 function smoothScrollTo(target) {
@@ -408,24 +340,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Parallax effect for hero section (optional enhancement)
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero && scrolled < window.innerHeight) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
-
-// Loader
-window.addEventListener('load', () => {
-    const loader = document.getElementById('loader');
-    if (loader) {
-        setTimeout(() => {
-            loader.classList.add('hidden');
-        }, 500);
-    }
-});
+// Removed problematic parallax effect that caused overlapping issues
 
 // Back to Top Button
 const backToTop = document.getElementById('backToTop');
@@ -811,7 +726,1178 @@ if (cookieConsent) {
             }
         });
     });
-    
+
     observer.observe(cookieConsent, { attributes: true });
 }
+
+// ============================================
+// MODERN DEVELOPER EFFECTS & ANIMATIONS
+// ============================================
+
+// Matrix Rain Effect
+function initMatrixRain() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'matrix-rain';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '0';
+    canvas.style.opacity = '0.04';
+    document.querySelector('.hero').appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>/\\|~';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#6366f1';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 35);
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Code Typing Animation
+function initCodeTyping() {
+    const codeLines = [
+        'const developer = new Developer();',
+        'developer.skills = ["React", "Node.js", "Python"];',
+        'developer.build(yourIdea);',
+        '// Creating amazing software...'
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    let currentLine = '';
+
+    const codeDisplay = document.createElement('div');
+    codeDisplay.className = 'code-typing';
+    codeDisplay.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        left: 20px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        color: #6366f1;
+        background: rgba(15, 23, 42, 0.95);
+        padding: 1.5rem;
+        padding-top: 2.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #6366f1;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        max-width: 400px;
+        z-index: 10000;
+        opacity: 0;
+        transition: opacity 0.5s;
+    `;
+
+    // Add close button
+    const closeBtn = document.createElement('span');
+    closeBtn.innerHTML = '✕';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+    `;
+    closeBtn.addEventListener('mouseenter', () => closeBtn.style.opacity = '1');
+    closeBtn.addEventListener('mouseleave', () => closeBtn.style.opacity = '0.7');
+    closeBtn.addEventListener('click', () => {
+        codeDisplay.style.opacity = '0';
+        setTimeout(() => codeDisplay.remove(), 500);
+    });
+
+    codeDisplay.appendChild(closeBtn);
+    document.body.appendChild(codeDisplay);
+
+    setTimeout(() => {
+        codeDisplay.style.opacity = '1';
+        typeCode();
+    }, 2000);
+
+    function typeCode() {
+        if (lineIndex < codeLines.length) {
+            if (charIndex < codeLines[lineIndex].length) {
+                currentLine += codeLines[lineIndex][charIndex];
+                codeDisplay.innerHTML = codeLines.slice(0, lineIndex).join('<br>') +
+                    (lineIndex > 0 ? '<br>' : '') +
+                    currentLine + '<span class="cursor">|</span>';
+                charIndex++;
+                setTimeout(typeCode, 50);
+            } else {
+                lineIndex++;
+                charIndex = 0;
+                currentLine = '';
+                setTimeout(typeCode, 500);
+            }
+        } else {
+            setTimeout(() => {
+                codeDisplay.style.opacity = '0';
+                setTimeout(() => {
+                    lineIndex = 0;
+                    charIndex = 0;
+                    currentLine = '';
+                    codeDisplay.innerHTML = '';
+                    setTimeout(() => {
+                        codeDisplay.style.opacity = '1';
+                        typeCode();
+                    }, 1000);
+                }, 500);
+            }, 3000);
+        }
+    }
+}
+
+// Magnetic Cursor Effect
+function initMagneticCursor() {
+    const cursor = document.createElement('div');
+    cursor.className = 'magnetic-cursor';
+    cursor.style.cssText = `
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.15s ease;
+        mix-blend-mode: difference;
+        opacity: 0.8;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    `;
+    document.body.appendChild(cursor);
+
+    const cursorRing = document.createElement('div');
+    cursorRing.className = 'cursor-ring';
+    cursorRing.style.cssText = `
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        border: 2px solid #6366f1;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transition: transform 0.2s ease, width 0.2s ease, height 0.2s ease;
+        opacity: 0.5;
+    `;
+    document.body.appendChild(cursorRing);
+
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.2;
+        cursorY += (mouseY - cursorY) * 0.2;
+
+        cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px)`;
+        cursorRing.style.transform = `translate(${mouseX - 20}px, ${mouseY - 20}px)`;
+
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Expand cursor on hover
+    const interactiveElements = document.querySelectorAll('a, button, .service-card, .portfolio-item');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px) scale(1.5)`;
+            cursorRing.style.width = '60px';
+            cursorRing.style.height = '60px';
+            cursorRing.style.transform = `translate(${mouseX - 30}px, ${mouseY - 30}px)`;
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px) scale(1)`;
+            cursorRing.style.width = '40px';
+            cursorRing.style.height = '40px';
+            cursorRing.style.transform = `translate(${mouseX - 20}px, ${mouseY - 20}px)`;
+        });
+    });
+}
+
+// Glitch Effect for Headers
+function initGlitchEffect() {
+    const headers = document.querySelectorAll('.section-title');
+    headers.forEach(header => {
+        header.addEventListener('mouseenter', () => {
+            header.style.animation = 'glitch 0.3s infinite';
+        });
+        header.addEventListener('mouseleave', () => {
+            header.style.animation = '';
+        });
+    });
+
+    // Add glitch keyframes to document
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes glitch {
+            0% {
+                text-shadow: 2px 2px #6366f1, -2px -2px #8b5cf6;
+                transform: translate(0);
+            }
+            25% {
+                text-shadow: -2px -2px #6366f1, 2px 2px #8b5cf6;
+                transform: translate(-2px, 2px);
+            }
+            50% {
+                text-shadow: 2px -2px #6366f1, -2px 2px #8b5cf6;
+                transform: translate(2px, -2px);
+            }
+            75% {
+                text-shadow: -2px 2px #6366f1, 2px -2px #8b5cf6;
+                transform: translate(-2px, -2px);
+            }
+            100% {
+                text-shadow: 2px 2px #6366f1, -2px -2px #8b5cf6;
+                transform: translate(0);
+            }
+        }
+
+        .cursor { animation: blink 0.7s infinite; }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .holographic-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holographic-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                transparent 30%,
+                rgba(99, 102, 241, 0.1) 50%,
+                transparent 70%);
+            animation: holographic-shine 3s linear infinite;
+        }
+
+        @keyframes holographic-shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .floating-particles {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Holographic Card Effect
+function initHolographicCards() {
+    const cards = document.querySelectorAll('.service-card, .portfolio-item, .testimonial-card');
+    cards.forEach(card => {
+        card.classList.add('holographic-card');
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+}
+
+// Circuit Board Background Pattern
+function initCircuitBoard() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'circuit-board';
+    canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.03;
+    `;
+    document.body.insertBefore(canvas, document.body.firstChild);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function drawCircuit() {
+        ctx.strokeStyle = '#6366f1';
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i < 50; i++) {
+            const x1 = Math.random() * canvas.width;
+            const y1 = Math.random() * canvas.height;
+            const x2 = x1 + (Math.random() - 0.5) * 200;
+            const y2 = y1 + (Math.random() - 0.5) * 200;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(x1, y1, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(x2, y2, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    drawCircuit();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawCircuit();
+    });
+}
+
+// Enhanced Particle System with Mouse Interaction
+function initInteractiveParticles() {
+    const canvas = document.getElementById('particles');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let mouseX = canvas.width / 2;
+    let mouseY = canvas.height / 2;
+
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+    });
+
+    // Particles will now react to mouse position
+    const particleSystem = {
+        mouseX: mouseX,
+        mouseY: mouseY
+    };
+
+    // Add floating code snippets
+    const codeSnippets = ['{ }', '< />', '( )', '[ ]', '=>', '{}', 'fn', 'const', 'let'];
+    let floatingCode = [];
+
+    for (let i = 0; i < 15; i++) {
+        floatingCode.push({
+            text: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            opacity: Math.random() * 0.3 + 0.1
+        });
+    }
+
+    function animateFloatingCode() {
+        ctx.font = '14px monospace';
+        floatingCode.forEach(code => {
+            ctx.fillStyle = `rgba(99, 102, 241, ${code.opacity})`;
+            ctx.fillText(code.text, code.x, code.y);
+
+            code.x += code.vx;
+            code.y += code.vy;
+
+            if (code.x > canvas.width) code.x = 0;
+            if (code.x < 0) code.x = canvas.width;
+            if (code.y > canvas.height) code.y = 0;
+            if (code.y < 0) code.y = canvas.height;
+        });
+    }
+
+    // Integrate with existing particle animation
+    const originalAnimate = window.animateParticles || (() => {});
+    window.animateParticles = function() {
+        originalAnimate();
+        animateFloatingCode();
+    };
+}
+
+// Smooth Page Transitions
+function initPageTransitions() {
+    const sections = document.querySelectorAll('section');
+
+    const transitionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        transitionObserver.observe(section);
+    });
+}
+
+// Enhanced Loading Screen
+function enhanceLoadingScreen() {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+
+    const loaderContent = loader.querySelector('.loader-content');
+    if (!loaderContent) return;
+
+    // Add compilation text
+    const compilingText = document.createElement('div');
+    compilingText.style.cssText = `
+        margin-top: 2rem;
+        font-family: 'Courier New', monospace;
+        color: #6366f1;
+        font-size: 1rem;
+    `;
+
+    const messages = [
+        'Initializing framework...',
+        'Loading components...',
+        'Compiling assets...',
+        'Optimizing performance...',
+        'Ready!'
+    ];
+
+    let messageIndex = 0;
+    const interval = setInterval(() => {
+        if (messageIndex < messages.length) {
+            compilingText.textContent = messages[messageIndex];
+            messageIndex++;
+        }
+    }, 150);
+
+    loaderContent.appendChild(compilingText);
+
+    setTimeout(() => {
+        clearInterval(interval);
+    }, 800);
+}
+
+// Terminal Command Animation in Console
+function initTerminalCommands() {
+    const commands = [
+        'npm install awesome-website',
+        'Building modern UI...',
+        'Compiling with love ❤️',
+        'Website ready! 🚀'
+    ];
+
+    commands.forEach((cmd, index) => {
+        setTimeout(() => {
+            console.log(`%c$ ${cmd}`, 'color: #6366f1; font-weight: bold; font-size: 14px;');
+        }, index * 500);
+    });
+}
+
+// ============================================
+// ULTRA INTERACTIVE EFFECTS
+// ============================================
+
+// Particle Explosion on Click
+function initClickExplosion() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'explosion-canvas';
+    canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    `;
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    class ExplosionParticle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.vx = (Math.random() - 0.5) * 10;
+            this.vy = (Math.random() - 0.5) * 10;
+            this.life = 100;
+            this.maxLife = 100;
+            this.size = Math.random() * 4 + 2;
+            this.color = ['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd'][Math.floor(Math.random() * 4)];
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += 0.2; // gravity
+            this.life--;
+        }
+
+        draw() {
+            const opacity = this.life / this.maxLife;
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = opacity;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        isDead() {
+            return this.life <= 0;
+        }
+    }
+
+    document.addEventListener('click', (e) => {
+        for (let i = 0; i < 30; i++) {
+            particles.push(new ExplosionParticle(e.clientX, e.clientY));
+        }
+    });
+
+    function animateExplosions() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+
+        particles = particles.filter(p => !p.isDead());
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+
+        requestAnimationFrame(animateExplosions);
+    }
+
+    animateExplosions();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Mouse Trail Particles
+function initMouseTrail() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'trail-canvas';
+    canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9997;
+    `;
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const trail = [];
+    const maxTrailLength = 20;
+
+    class TrailParticle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.life = 30;
+            this.size = Math.random() * 3 + 1;
+        }
+
+        update() {
+            this.life--;
+        }
+
+        draw() {
+            const opacity = this.life / 30;
+            ctx.fillStyle = `rgba(99, 102, 241, ${opacity * 0.6})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        isDead() {
+            return this.life <= 0;
+        }
+    }
+
+    let lastX = 0, lastY = 0;
+    document.addEventListener('mousemove', (e) => {
+        const dist = Math.sqrt((e.clientX - lastX) ** 2 + (e.clientY - lastY) ** 2);
+        if (dist > 5) {
+            trail.push(new TrailParticle(e.clientX, e.clientY));
+            lastX = e.clientX;
+            lastY = e.clientY;
+        }
+    });
+
+    function animateTrail() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = trail.length - 1; i >= 0; i--) {
+            trail[i].update();
+            trail[i].draw();
+            if (trail[i].isDead()) {
+                trail.splice(i, 1);
+            }
+        }
+
+        requestAnimationFrame(animateTrail);
+    }
+
+    animateTrail();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Interactive Ripple Effect
+function initRippleEffect() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .ripple-wave {
+            position: fixed;
+            border-radius: 50%;
+            border: 2px solid rgba(99, 102, 241, 0.5);
+            pointer-events: none;
+            animation: ripple-expand 1s ease-out;
+            z-index: 9996;
+        }
+
+        @keyframes ripple-expand {
+            from {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            to {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    document.addEventListener('click', (e) => {
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple-wave';
+        ripple.style.left = (e.clientX - 150) + 'px';
+        ripple.style.top = (e.clientY - 150) + 'px';
+        document.body.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 1000);
+    });
+}
+
+// Konami Code Easter Egg
+function initKonamiCode() {
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex]) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                activateKonamiEasterEgg();
+                konamiIndex = 0;
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
+
+    function activateKonamiEasterEgg() {
+        // Create celebration overlay
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 100px rgba(99, 102, 241, 0.8);
+            z-index: 99999;
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            animation: konamiPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        `;
+        overlay.innerHTML = `
+            🎮 KONAMI CODE ACTIVATED! 🎮<br>
+            <span style="font-size: 1rem; opacity: 0.9;">You found the secret!</span><br>
+            <span style="font-size: 1rem; opacity: 0.8;">🚀 Developer Mode Unlocked 🚀</span>
+        `;
+
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes konamiPop {
+                0% { transform: translate(-50%, -50%) scale(0); }
+                100% { transform: translate(-50%, -50%) scale(1); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        document.body.appendChild(overlay);
+
+        // Trigger confetti
+        for (let i = 0; i < 100; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.textContent = ['🎉', '🚀', '⭐', '💻', '🔥'][Math.floor(Math.random() * 5)];
+                confetti.style.cssText = `
+                    position: fixed;
+                    left: ${Math.random() * 100}%;
+                    top: -50px;
+                    font-size: 2rem;
+                    pointer-events: none;
+                    z-index: 99998;
+                    animation: confettiFall ${2 + Math.random() * 2}s linear forwards;
+                `;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }, i * 30);
+        }
+
+        const confettiStyle = document.createElement('style');
+        confettiStyle.textContent = `
+            @keyframes confettiFall {
+                to {
+                    transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(confettiStyle);
+
+        setTimeout(() => overlay.remove(), 5000);
+    }
+}
+
+// Interactive Terminal
+function initInteractiveTerminal() {
+    const terminal = document.createElement('div');
+    terminal.id = 'interactive-terminal';
+    terminal.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 400px;
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid #6366f1;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        font-family: 'Courier New', monospace;
+        color: #6366f1;
+        z-index: 10001;
+        box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+        display: none;
+        max-height: 300px;
+        overflow-y: auto;
+    `;
+
+    const terminalHeader = document.createElement('div');
+    terminalHeader.style.cssText = `
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        font-weight: bold;
+    `;
+    terminalHeader.innerHTML = `
+        <span>Developer Terminal</span>
+        <span style="cursor: pointer;" id="terminal-close">✕</span>
+    `;
+
+    const terminalOutput = document.createElement('div');
+    terminalOutput.id = 'terminal-output';
+    terminalOutput.style.cssText = `
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        max-height: 200px;
+        overflow-y: auto;
+    `;
+    terminalOutput.innerHTML = `<div>Welcome to KCOH Terminal v1.0</div><div>Type 'help' for available commands</div>`;
+
+    const terminalInput = document.createElement('input');
+    terminalInput.type = 'text';
+    terminalInput.placeholder = '$ type command...';
+    terminalInput.style.cssText = `
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-top: 1px solid #6366f1;
+        padding: 0.5rem 0;
+        color: #6366f1;
+        font-family: inherit;
+        outline: none;
+    `;
+
+    terminal.appendChild(terminalHeader);
+    terminal.appendChild(terminalOutput);
+    terminal.appendChild(terminalInput);
+    document.body.appendChild(terminal);
+
+    // Toggle terminal with Ctrl+`
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === '`') {
+            e.preventDefault();
+            terminal.style.display = terminal.style.display === 'none' ? 'block' : 'none';
+            if (terminal.style.display === 'block') {
+                terminalInput.focus();
+            }
+        }
+    });
+
+    document.getElementById('terminal-close').addEventListener('click', () => {
+        terminal.style.display = 'none';
+    });
+
+    const commands = {
+        help: 'Available commands: help, about, skills, contact, clear, matrix, party',
+        about: 'KCOH Software Inc. - Professional software development services',
+        skills: 'React, Node.js, Python, AWS, Docker, and more!',
+        contact: 'Email: contact@kcoh.ca | Phone: 514-898-8716',
+        clear: '',
+        matrix: 'Entering the Matrix... 🟢',
+        party: '🎉 Party mode activated! 🎊',
+        whoami: 'You are exploring the portfolio of a professional developer',
+        ls: 'services/  portfolio/  about/  contact/',
+        pwd: '/home/kcoh/website',
+        date: new Date().toLocaleString()
+    };
+
+    terminalInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const cmd = terminalInput.value.trim().toLowerCase();
+            const output = terminalOutput;
+
+            output.innerHTML += `<div style="margin-top: 0.5rem;">$ ${terminalInput.value}</div>`;
+
+            if (cmd === 'clear') {
+                output.innerHTML = '';
+            } else if (cmd === 'party') {
+                output.innerHTML += `<div style="color: #a78bfa;">${commands[cmd]}</div>`;
+                triggerPartyMode();
+            } else if (commands[cmd]) {
+                output.innerHTML += `<div style="color: #a78bfa;">${commands[cmd]}</div>`;
+            } else if (cmd) {
+                output.innerHTML += `<div style="color: #ef4444;">Command not found: ${cmd}</div>`;
+            }
+
+            output.scrollTop = output.scrollHeight;
+            terminalInput.value = '';
+        }
+    });
+
+    function triggerPartyMode() {
+        document.body.style.animation = 'rainbow 2s linear infinite';
+        setTimeout(() => {
+            document.body.style.animation = '';
+        }, 5000);
+    }
+
+    const rainbowStyle = document.createElement('style');
+    rainbowStyle.textContent = `
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(rainbowStyle);
+}
+
+// Floating Achievement Badges
+function initAchievementBadges() {
+    const achievements = [
+        { icon: '🎯', text: 'Explorer', trigger: 'scroll', threshold: 1000 },
+        { icon: '🖱️', text: 'Clicker', trigger: 'click', threshold: 10 },
+        { icon: '⌨️', text: 'Typist', trigger: 'keypress', threshold: 50 },
+        { icon: '🕐', text: 'Time Traveler', trigger: 'time', threshold: 30000 }
+    ];
+
+    let stats = { scroll: 0, click: 0, keypress: 0, time: 0 };
+    const unlockedAchievements = new Set();
+
+    window.addEventListener('scroll', () => stats.scroll = window.pageYOffset);
+    document.addEventListener('click', () => stats.click++);
+    document.addEventListener('keypress', () => stats.keypress++);
+    setInterval(() => stats.time += 1000, 1000);
+
+    function checkAchievements() {
+        achievements.forEach(achievement => {
+            const key = achievement.icon + achievement.text;
+            if (!unlockedAchievements.has(key)) {
+                const statValue = stats[achievement.trigger];
+                if (statValue >= achievement.threshold) {
+                    unlockAchievement(achievement);
+                    unlockedAchievements.add(key);
+                }
+            }
+        });
+    }
+
+    function unlockAchievement(achievement) {
+        const badge = document.createElement('div');
+        badge.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+            z-index: 99999;
+            animation: achievementSlide 0.5s ease, achievementShake 0.5s ease 0.5s;
+            font-weight: bold;
+        `;
+        badge.innerHTML = `
+            <div style="font-size: 2rem; text-align: center;">${achievement.icon}</div>
+            <div>Achievement Unlocked!</div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">${achievement.text}</div>
+        `;
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes achievementSlide {
+                from { transform: translateX(500px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes achievementShake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px) rotate(-5deg); }
+                75% { transform: translateX(10px) rotate(5deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(badge);
+        setTimeout(() => badge.remove(), 4000);
+    }
+
+    setInterval(checkAchievements, 1000);
+}
+
+// Parallax Mouse Movement
+function initParallaxLayers() {
+    const layers = document.querySelectorAll('.service-card, .portfolio-item, .testimonial-card');
+
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth - 0.5;
+        const mouseY = e.clientY / window.innerHeight - 0.5;
+
+        layers.forEach((layer, index) => {
+            const rect = layer.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+            if (isVisible) {
+                const depth = (index % 3 + 1) * 5;
+                const moveX = mouseX * depth;
+                const moveY = mouseY * depth;
+
+                layer.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+    });
+}
+
+// Interactive Stats Counter
+function initInteractiveStats() {
+    const stats = document.querySelectorAll('.stat-number');
+
+    stats.forEach(stat => {
+        stat.style.cursor = 'pointer';
+        stat.style.transition = 'all 0.3s ease';
+
+        stat.addEventListener('click', () => {
+            const currentValue = parseInt(stat.textContent);
+            const newValue = currentValue + 1;
+
+            stat.style.transform = 'scale(1.2) rotate(360deg)';
+            stat.textContent = newValue + '+';
+
+            setTimeout(() => {
+                stat.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+        });
+
+        stat.addEventListener('mouseenter', () => {
+            stat.style.transform = 'scale(1.1)';
+        });
+
+        stat.addEventListener('mouseleave', () => {
+            stat.style.transform = 'scale(1)';
+        });
+    });
+}
+
+// Card Shake Effect
+function initShakeEffects() {
+    const cards = document.querySelectorAll('.service-card, .portfolio-item');
+
+    cards.forEach(card => {
+        let shakeTimeout;
+
+        card.addEventListener('mouseenter', () => {
+            shakeTimeout = setTimeout(() => {
+                card.style.animation = 'cardShake 0.5s ease';
+            }, 500);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            clearTimeout(shakeTimeout);
+            card.style.animation = '';
+        });
+
+        card.addEventListener('animationend', () => {
+            card.style.animation = '';
+        });
+    });
+
+    const shakeStyle = document.createElement('style');
+    shakeStyle.textContent = `
+        @keyframes cardShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px) rotate(-1deg); }
+            20%, 40%, 60%, 80% { transform: translateX(3px) rotate(1deg); }
+        }
+    `;
+    document.head.appendChild(shakeStyle);
+}
+
+// Easter Eggs - Double Click Logo
+function initEasterEggs() {
+    const logo = document.querySelector('.logo-text');
+
+    logo.addEventListener('dblclick', () => {
+        logo.style.animation = 'logoSpin 1s ease';
+        setTimeout(() => logo.style.animation = '', 1000);
+
+        // Show secret message
+        const message = document.createElement('div');
+        message.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(99, 102, 241, 0.95);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            z-index: 99999;
+            font-size: 1.5rem;
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.8);
+            animation: secretPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        `;
+        message.textContent = '🎉 You found a secret! Keep exploring! 🚀';
+        document.body.appendChild(message);
+        setTimeout(() => message.remove(), 3000);
+    });
+
+    const logoStyle = document.createElement('style');
+    logoStyle.textContent = `
+        @keyframes logoSpin {
+            from { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.5); }
+            to { transform: rotate(360deg) scale(1); }
+        }
+        @keyframes secretPop {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.2) rotate(10deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        }
+    `;
+    document.head.appendChild(logoStyle);
+}
+
+// Initialize all modern effects
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        enhanceLoadingScreen();
+        initMatrixRain();
+        initCodeTyping();
+        initMagneticCursor();
+        initGlitchEffect();
+        initHolographicCards();
+        initCircuitBoard();
+        initInteractiveParticles();
+        initPageTransitions();
+        initTerminalCommands();
+
+        // New ultra-interactive effects
+        initClickExplosion();
+        initMouseTrail();
+        initRippleEffect();
+        initKonamiCode();
+        initInteractiveTerminal();
+        initAchievementBadges();
+        initParallaxLayers();
+        initInteractiveStats();
+        initShakeEffects();
+        initEasterEggs();
+
+        console.log('%c🚀 All interactive effects loaded!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
+        console.log('%c💡 Pro tip: Try Ctrl+` to open terminal, Konami code for surprise, or double-click the logo!', 'color: #8b5cf6; font-size: 12px;');
+    }, 1000);
+});
 
