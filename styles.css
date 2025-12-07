@@ -235,10 +235,11 @@ body:not(.light-theme) .theme-toggle .moon-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 120px 0 80px;
+    padding: 0;
     overflow: hidden;
     margin-top: 0;
-    padding-top: calc(80px + 2rem);
+    padding-top: calc(80px + 3rem);
+    padding-bottom: 80px;
     transform: none !important;
     will-change: auto;
 }
@@ -509,6 +510,15 @@ section:first-of-type {
     margin-top: 0;
 }
 
+/* Ensure hero is full height and services starts after it */
+.hero {
+    min-height: calc(100vh - 80px);
+}
+
+.services {
+    margin-top: 0;
+}
+
 /* Prevent any section transforms during scroll */
 section * {
     transform: none !important;
@@ -560,6 +570,10 @@ section * {
 /* Services Section */
 .services {
     background: var(--bg-light);
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+    padding-top: 80px;
 }
 
 .services-grid {
@@ -1753,8 +1767,10 @@ body.cookie-visible {
     }
 
     .hero {
-        padding: 100px 0 60px;
-        padding-top: calc(100px + 2rem);
+        padding: 0;
+        padding-top: calc(80px + 2rem);
+        padding-bottom: 60px;
+        min-height: calc(100vh - 80px);
     }
     
     .back-to-top {
