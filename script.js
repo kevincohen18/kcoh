@@ -1440,7 +1440,13 @@ function initModernLoader() {
                     // Hide loader after delay
                     setTimeout(() => {
                         loader.classList.add('hidden');
+                        // Force remove from DOM after transition
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            loader.remove();
+                        }, 600);
                         document.body.style.opacity = '1';
+                        document.body.style.overflow = 'auto';
                     }, 800);
                 }, 500);
             }
