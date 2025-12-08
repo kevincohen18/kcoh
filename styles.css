@@ -539,8 +539,19 @@ body:not(.light-theme) .theme-toggle .moon-icon {
     font-size: 0.9rem;
     box-shadow: 0 0 14px rgba(99, 102, 241, 0.25);
     animation: badgePulse 8s ease-in-out infinite, badgeFloat 9s ease-in-out infinite;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     padding-inline: 1.25rem;
+}
+
+.apple-logo-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: inline-block;
+    vertical-align: middle;
+    filter: brightness(0) invert(1);
 }
 
 .code-marquee {
