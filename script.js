@@ -1769,41 +1769,123 @@ function initAchievementBadges() {
 
     function unlockAchievement(achievement) {
         const badge = document.createElement('div');
+        badge.className = 'achievement-badge-modern';
         badge.style.cssText = `
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+            top: 24px;
+            right: 24px;
+            width: 320px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(99, 102, 241, 0.2);
             z-index: 99999;
-            animation: achievementSlide 0.5s ease, achievementShake 0.5s ease 0.5s;
-            font-weight: bold;
-        `;
-        badge.innerHTML = `
-            <div style="font-size: 2rem; text-align: center;">${achievement.icon}</div>
-            <div>Achievement Unlocked!</div>
-            <div style="font-size: 0.9rem; opacity: 0.9;">${achievement.text}</div>
+            animation: achievementSlideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow: hidden;
         `;
 
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes achievementSlide {
-                from { transform: translateX(500px); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes achievementShake {
-                0%, 100% { transform: translateX(0); }
-                25% { transform: translateX(-10px) rotate(-5deg); }
-                75% { transform: translateX(10px) rotate(5deg); }
-            }
+        badge.innerHTML = `
+            <div style="
+                position: relative;
+                padding: 1.25rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            ">
+                <div style="
+                    font-size: 2.5rem;
+                    animation: achievementIconBounce 0.8s ease 0.3s;
+                ">${achievement.icon}</div>
+                <div style="flex: 1;">
+                    <div style="
+                        font-size: 0.75rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        background: linear-gradient(135deg, #6366f1, #a78bfa);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        margin-bottom: 0.25rem;
+                    ">Achievement Unlocked</div>
+                    <div style="
+                        font-size: 1.1rem;
+                        font-weight: 700;
+                        color: #e2e8f0;
+                        margin-bottom: 0.25rem;
+                    ">${achievement.text}</div>
+                    <div style="
+                        font-size: 0.8rem;
+                        color: #94a3b8;
+                        opacity: 0.8;
+                    ">Keep exploring!</div>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    background: rgba(99, 102, 241, 0.1);
+                    border: 1px solid rgba(99, 102, 241, 0.2);
+                    color: #94a3b8;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.2s ease;
+                " onmouseover="this.style.background='rgba(99, 102, 241, 0.2)'; this.style.color='#e2e8f0';" onmouseout="this.style.background='rgba(99, 102, 241, 0.1)'; this.style.color='#94a3b8';">✕</button>
+            </div>
+            <div class="achievement-progress" style="
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                width: 100%;
+                background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+                transform-origin: left;
+                animation: achievementProgress 4s linear;
+            "></div>
         `;
-        document.head.appendChild(style);
+
+        // Add keyframes if not already added
+        if (!document.getElementById('achievement-animations')) {
+            const style = document.createElement('style');
+            style.id = 'achievement-animations';
+            style.textContent = `
+                @keyframes achievementSlideIn {
+                    from {
+                        transform: translateX(400px) scale(0.8);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0) scale(1);
+                        opacity: 1;
+                    }
+                }
+                @keyframes achievementIconBounce {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.2) rotate(10deg); }
+                }
+                @keyframes achievementProgress {
+                    from { transform: scaleX(1); }
+                    to { transform: scaleX(0); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
 
         document.body.appendChild(badge);
-        setTimeout(() => badge.remove(), 4000);
+
+        // Auto-remove after 4 seconds with fade out
+        setTimeout(() => {
+            badge.style.animation = 'achievementSlideIn 0.4s ease reverse';
+            badge.style.opacity = '0';
+            setTimeout(() => badge.remove(), 400);
+        }, 4000);
     }
 
     setInterval(checkAchievements, 1000);
