@@ -131,12 +131,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 
-    // Contact items
-    document.querySelectorAll('.contact-item').forEach((el, index) => {
-        el.classList.add('slide-in-left');
-        el.style.transitionDelay = `${index * 0.15}s`;
-        observer.observe(el);
-    });
+    // Contact section elements with animations
+    const contactSection = document.querySelector('.contact');
+    if (contactSection) {
+        // Animate section header
+        const contactHeader = contactSection.querySelector('.section-header');
+        if (contactHeader) {
+            contactHeader.classList.add('fade-in');
+            observer.observe(contactHeader);
+        }
+
+        // Animate contact info items
+        document.querySelectorAll('.contact-item').forEach((el, index) => {
+            el.classList.add('slide-in-left');
+            el.style.transitionDelay = `${index * 0.15}s`;
+            observer.observe(el);
+        });
+
+        // Animate form intro
+        const formIntro = contactSection.querySelector('.form-intro');
+        if (formIntro) {
+            formIntro.classList.add('fade-in');
+            formIntro.style.transitionDelay = '0.3s';
+            observer.observe(formIntro);
+        }
+
+        // Animate contact form
+        const contactForm = contactSection.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.classList.add('fade-in');
+            contactForm.style.transitionDelay = '0.4s';
+            observer.observe(contactForm);
+        }
+    }
 });
 
 // Contact Form Handling - Removed duplicate handler (now handled below with EmailJS)
