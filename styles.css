@@ -2760,11 +2760,14 @@ body:not(.light-theme) .navbar {
 }
 
 .tech-icon:nth-child(1) { animation-delay: 0s; }
-.tech-icon:nth-child(2) { animation-delay: 0.2s; }
-.tech-icon:nth-child(3) { animation-delay: 0.4s; }
-.tech-icon:nth-child(4) { animation-delay: 0.6s; }
-.tech-icon:nth-child(5) { animation-delay: 0.8s; }
-.tech-icon:nth-child(6) { animation-delay: 1s; }
+.tech-icon:nth-child(2) { animation-delay: 0.15s; }
+.tech-icon:nth-child(3) { animation-delay: 0.3s; }
+.tech-icon:nth-child(4) { animation-delay: 0.45s; }
+.tech-icon:nth-child(5) { animation-delay: 0.6s; }
+.tech-icon:nth-child(6) { animation-delay: 0.75s; }
+.tech-icon:nth-child(7) { animation-delay: 0.9s; }
+.tech-icon:nth-child(8) { animation-delay: 1.05s; }
+.tech-icon:nth-child(9) { animation-delay: 1.2s; }
 
 .tech-icon:hover {
     background: rgba(99, 102, 241, 0.2);
