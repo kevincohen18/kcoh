@@ -889,6 +889,10 @@ function initCodeTyping() {
     let lineIndex = 0;
     let charIndex = 0;
     let currentLine = '';
+    let typingTimeout = null;
+    let hideTimeout = null;
+    let isTyping = false;
+    let isVisible = false;
 
     const codeDisplay = document.createElement('div');
     codeDisplay.className = 'code-typing';
@@ -947,10 +951,11 @@ function initCodeTyping() {
     }
 
     function typeCode() {
-        if (document.body.classList.contains('minimal-mode')) {
+        if (!isVisible || document.body.classList.contains('minimal-mode')) {
             hideCode();
             return;
         }
+        
         if (lineIndex < codeLines.length) {
             if (charIndex < codeLines[lineIndex].length) {
                 currentLine += codeLines[lineIndex][charIndex];
@@ -958,52 +963,83 @@ function initCodeTyping() {
                     (lineIndex > 0 ? '<br>' : '') +
                     currentLine + '<span class="cursor">|</span>';
                 charIndex++;
-                setTimeout(typeCode, 50);
+                typingTimeout = setTimeout(typeCode, 50);
             } else {
                 lineIndex++;
                 charIndex = 0;
                 currentLine = '';
-                setTimeout(typeCode, 500);
+                typingTimeout = setTimeout(typeCode, 500);
             }
         } else {
-            setTimeout(() => hideCode(), 2500);
+            hideTimeout = setTimeout(() => hideCode(), 2500);
         }
     }
 
     const showCode = (fromButton = false) => {
+        // Clear any existing timeouts
+        if (typingTimeout) {
+            clearTimeout(typingTimeout);
+            typingTimeout = null;
+        }
+        if (hideTimeout) {
+            clearTimeout(hideTimeout);
+            hideTimeout = null;
+        }
+        
+        // Reset state
+        isVisible = true;
+        isTyping = true;
+        lineIndex = 0;
+        charIndex = 0;
+        currentLine = '';
+        
         codeDisplay.classList.add('visible');
         codeDisplay.style.opacity = '1';
         codeDisplay.style.pointerEvents = 'auto';
         codeDisplay.style.transform = 'translate(-50%, 0)';
+        
         if (codeToggle) {
             codeToggle.textContent = 'Hide code';
             codeToggle.setAttribute('aria-pressed', 'true');
         }
 
         if (fromButton) {
-            lineIndex = 0;
-            charIndex = 0;
-            currentLine = '';
             codeDisplay.innerHTML = '';
-            setTimeout(typeCode, 250);
+            typingTimeout = setTimeout(typeCode, 250);
         }
     };
 
     const hideCode = () => {
+        // Clear any running timeouts
+        if (typingTimeout) {
+            clearTimeout(typingTimeout);
+            typingTimeout = null;
+        }
+        if (hideTimeout) {
+            clearTimeout(hideTimeout);
+            hideTimeout = null;
+        }
+        
+        isVisible = false;
+        isTyping = false;
+        
         codeDisplay.classList.remove('visible');
         codeDisplay.style.opacity = '0';
         codeDisplay.style.pointerEvents = 'none';
         codeDisplay.style.transform = 'translate(-50%, 10px)';
+        
         if (codeToggle) {
             codeToggle.textContent = 'Show code';
             codeToggle.setAttribute('aria-pressed', 'false');
         }
 
         setTimeout(() => {
-            lineIndex = 0;
-            charIndex = 0;
-            currentLine = '';
-            codeDisplay.innerHTML = '';
+            if (!isVisible) {
+                lineIndex = 0;
+                charIndex = 0;
+                currentLine = '';
+                codeDisplay.innerHTML = '';
+            }
         }, 400);
     };
 
