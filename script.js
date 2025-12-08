@@ -2127,6 +2127,61 @@ function initCodeEditor() {
     });
 }
 
+// Pixel Font Generator - 7x5 font for A-Z
+const pixelFont = {
+    A: [[0,1,1,0],[1,0,0,1],[1,1,1,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1]],
+    B: [[1,1,1,0],[1,0,0,1],[1,0,0,1],[1,1,1,0],[1,0,0,1],[1,0,0,1],[1,1,1,0]],
+    C: [[0,1,1,1],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[0,1,1,1]],
+    D: [[1,1,1,0],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,1,1,0]],
+    E: [[1,1,1,1],[1,0,0,0],[1,0,0,0],[1,1,1,0],[1,0,0,0],[1,0,0,0],[1,1,1,1]],
+    F: [[1,1,1,1],[1,0,0,0],[1,0,0,0],[1,1,1,0],[1,0,0,0],[1,0,0,0],[1,0,0,0]],
+    G: [[0,1,1,1],[1,0,0,0],[1,0,0,0],[1,0,1,1],[1,0,0,1],[1,0,0,1],[0,1,1,0]],
+    H: [[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,1,1,1],[1,0,0,1],[1,0,0,1],[1,0,0,1]],
+    I: [[1,1,1],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[1,1,1]],
+    J: [[0,0,1,1],[0,0,0,1],[0,0,0,1],[0,0,0,1],[0,0,0,1],[1,0,0,1],[0,1,1,0]],
+    K: [[1,0,0,1],[1,0,1,0],[1,1,0,0],[1,1,0,0],[1,0,1,0],[1,0,0,1],[1,0,0,1]],
+    L: [[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,0,0,0],[1,1,1,1]],
+    M: [[1,0,0,0,1],[1,1,0,1,1],[1,0,1,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1]],
+    N: [[1,0,0,0,1],[1,1,0,0,1],[1,0,1,0,1],[1,0,1,0,1],[1,0,0,1,1],[1,0,0,0,1],[1,0,0,0,1]],
+    O: [[0,1,1,0],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[0,1,1,0]],
+    P: [[1,1,1,0],[1,0,0,1],[1,0,0,1],[1,1,1,0],[1,0,0,0],[1,0,0,0],[1,0,0,0]],
+    Q: [[0,1,1,0],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,1,1],[1,0,0,1],[0,1,1,1]],
+    R: [[1,1,1,0],[1,0,0,1],[1,0,0,1],[1,1,1,0],[1,0,1,0],[1,0,0,1],[1,0,0,1]],
+    S: [[0,1,1,1],[1,0,0,0],[1,0,0,0],[0,1,1,0],[0,0,0,1],[0,0,0,1],[1,1,1,0]],
+    T: [[1,1,1,1,1],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
+    U: [[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[1,0,0,1],[0,1,1,0]],
+    V: [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[0,1,0,1,0],[0,1,0,1,0],[0,0,1,0,0],[0,0,1,0,0]],
+    W: [[1,0,0,0,1],[1,0,0,0,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,1,0,1],[1,1,0,1,1],[1,0,0,0,1]],
+    X: [[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1],[1,0,0,0,1]],
+    Y: [[1,0,0,0,1],[0,1,0,1,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0],[0,0,1,0,0]],
+    Z: [[1,1,1,1,1],[0,0,0,0,1],[0,0,0,1,0],[0,0,1,0,0],[0,1,0,0,0],[1,0,0,0,0],[1,1,1,1,1]]
+};
+
+// Get custom name from localStorage or use default
+function getCustomName() {
+    const saved = localStorage.getItem('contributionGraphName');
+    return saved || 'KEVIN';
+}
+
+// Save custom name to localStorage
+function saveCustomName(name) {
+    localStorage.setItem('contributionGraphName', name.toUpperCase());
+}
+
+// Generate pattern for any name
+function generateNamePattern(name) {
+    const pattern = {};
+    const letters = name.toUpperCase().split('').filter(char => /[A-Z]/.test(char));
+    
+    letters.forEach(letter => {
+        if (pixelFont[letter]) {
+            pattern[letter] = pixelFont[letter];
+        }
+    });
+    
+    return { pattern, letters };
+}
+
 // GitHub Contribution Graph Generator
 function initGitHubGraph() {
     const grid = document.getElementById('contribution-grid');
@@ -2135,69 +2190,32 @@ function initGitHubGraph() {
     const weeks = 52;
     const days = 7;
 
-    // Define "KEVIN" pixel pattern (7 rows × 5 letters)
-    // 1 = filled (level-4), 0 = empty (level-0 or low)
-    const kevinPattern = {
-        // K - 5 columns
-        K: [
-            [1, 0, 0, 1, 1],
-            [1, 0, 1, 0, 0],
-            [1, 1, 0, 0, 0],
-            [1, 1, 0, 0, 0],
-            [1, 0, 1, 0, 0],
-            [1, 0, 0, 1, 0],
-            [1, 0, 0, 0, 1]
-        ],
-        // E - 4 columns
-        E: [
-            [1, 1, 1, 1],
-            [1, 0, 0, 0],
-            [1, 0, 0, 0],
-            [1, 1, 1, 0],
-            [1, 0, 0, 0],
-            [1, 0, 0, 0],
-            [1, 1, 1, 1]
-        ],
-        // V - 5 columns
-        V: [
-            [1, 0, 0, 0, 1],
-            [1, 0, 0, 0, 1],
-            [1, 0, 0, 0, 1],
-            [0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0]
-        ],
-        // I - 3 columns
-        I: [
-            [1, 1, 1],
-            [0, 1, 0],
-            [0, 1, 0],
-            [0, 1, 0],
-            [0, 1, 0],
-            [0, 1, 0],
-            [1, 1, 1]
-        ],
-        // N - 5 columns
-        N: [
-            [1, 0, 0, 0, 1],
-            [1, 1, 0, 0, 1],
-            [1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1],
-            [1, 0, 0, 1, 1],
-            [1, 0, 0, 0, 1],
-            [1, 0, 0, 0, 1]
-        ]
-    };
+    // Get custom name
+    const customName = getCustomName();
+    const { pattern: namePattern, letters } = generateNamePattern(customName);
+    
+    if (letters.length === 0) {
+        // Fallback to KEVIN if no valid letters
+        const { pattern: fallbackPattern, letters: fallbackLetters } = generateNamePattern('KEVIN');
+        return generateGraph(grid, weeks, days, fallbackPattern, fallbackLetters);
+    }
 
-    // Flatten the pattern into a single array with positions
-    const letters = ['K', 'E', 'V', 'I', 'N'];
+    generateGraph(grid, weeks, days, namePattern, letters);
+}
+
+// Generate the actual graph
+function generateGraph(grid, weeks, days, namePattern, letters) {
+    // Clear existing grid
+    grid.innerHTML = '';
+
     const letterSpacing = 1; // gap between letters
     let totalWidth = 0;
 
     // Calculate total width
     letters.forEach(letter => {
-        totalWidth += kevinPattern[letter][0].length + letterSpacing;
+        if (namePattern[letter]) {
+            totalWidth += namePattern[letter][0].length + letterSpacing;
+        }
     });
     totalWidth -= letterSpacing; // remove last spacing
 
@@ -2209,14 +2227,17 @@ function initGitHubGraph() {
     let currentWeek = startWeek;
 
     letters.forEach(letter => {
-        const letterPattern = kevinPattern[letter];
+        const letterPattern = namePattern[letter];
+        if (!letterPattern) return;
+        
         const letterWidth = letterPattern[0].length;
 
-        for (let col = 0; col < letterWidth; col++) {
-            for (let row = 0; row < days; row++) {
+        // Map pattern to grid coordinates
+        for (let dayIdx = 0; dayIdx < days; dayIdx++) {
+            for (let col = 0; col < letterWidth; col++) {
                 const week = currentWeek + col;
-                const key = `${week}-${row}`;
-                patternMap[key] = letterPattern[row][col];
+                const key = `${week}-${dayIdx}`;
+                patternMap[key] = letterPattern[dayIdx][col];
             }
         }
         currentWeek += letterWidth + letterSpacing;
@@ -2227,27 +2248,35 @@ function initGitHubGraph() {
         for (let day = 0; day < days; day++) {
             const box = document.createElement('div');
             box.className = 'contribution-box';
+            box.style.gridColumn = week + 1;
+            box.style.gridRow = day + 1;
 
             const key = `${week}-${day}`;
             let level;
 
-            // Check if this position is part of the KEVIN pattern
             if (patternMap[key] === 1) {
-                level = 4; // Max level for the name
-            } else if (patternMap[key] === 0) {
-                level = 0; // Empty for contrast
+                box.classList.add('level-dark');
+                // Add staggered animation delay based on position for subtle effect
+                const delay = (week * 7 + day) % 8; // Varies delay from 0-7
+                box.style.setProperty('--delay', delay);
+                const customName = getCustomName();
+                box.title = customName;
             } else {
-                // Random background contributions
-                level = Math.random() > 0.6 ? Math.floor(Math.random() * 3) : 0;
+                const rand = Math.random();
+                if (rand < 0.35) {
+                    level = 1;
+                } else if (rand < 0.60) {
+                    level = 2;
+                } else if (rand < 0.80) {
+                    level = 3;
+                } else {
+                    level = 4;
+                }
+                box.classList.add(`level-${level}`);
+                const contributions = level * Math.floor(Math.random() * 5) + level;
+                box.title = `${contributions} contributions`;
             }
 
-            box.classList.add(`level-${level}`);
-
-            // Tooltip on hover
-            const contributions = level * Math.floor(Math.random() * 5) + level;
-            box.title = `${contributions} contributions`;
-
-            // Add hover effect
             box.addEventListener('mouseenter', () => {
                 box.style.transform = 'scale(1.3)';
                 box.style.zIndex = '10';
@@ -2261,6 +2290,118 @@ function initGitHubGraph() {
             grid.appendChild(box);
         }
     }
+}
+
+// Name Editor Functionality
+function initNameEditor() {
+    const editBtn = document.getElementById('edit-name-btn');
+    const modal = document.getElementById('name-editor-modal');
+    const closeBtn = document.getElementById('close-editor-btn');
+    const nameInput = document.getElementById('name-input');
+    const applyBtn = document.getElementById('apply-name-btn');
+    const resetBtn = document.getElementById('reset-name-btn');
+    const previewGrid = document.getElementById('name-preview-grid');
+
+    if (!editBtn || !modal) return;
+
+    // Set initial value
+    nameInput.value = getCustomName();
+
+    // Open modal
+    editBtn.addEventListener('click', () => {
+        modal.classList.add('active');
+        nameInput.focus();
+        updatePreview();
+    });
+
+    // Close modal
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+
+    // Update preview on input
+    nameInput.addEventListener('input', () => {
+        nameInput.value = nameInput.value.toUpperCase().replace(/[^A-Z]/g, '');
+        updatePreview();
+    });
+
+    // Apply name
+    applyBtn.addEventListener('click', () => {
+        const name = nameInput.value.toUpperCase().trim();
+        if (name.length > 0 && /^[A-Z]+$/.test(name)) {
+            saveCustomName(name);
+            initGitHubGraph(); // Regenerate graph
+            modal.classList.remove('active');
+        }
+    });
+
+    // Reset to default
+    resetBtn.addEventListener('click', () => {
+        saveCustomName('KEVIN');
+        nameInput.value = 'KEVIN';
+        updatePreview();
+        initGitHubGraph(); // Regenerate graph
+    });
+
+    // Update preview grid
+    function updatePreview() {
+        previewGrid.innerHTML = '';
+        const name = nameInput.value.toUpperCase().trim() || 'KEVIN';
+        const { pattern, letters } = generateNamePattern(name);
+
+        if (letters.length === 0) {
+            previewGrid.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 1rem;">Enter a valid name (A-Z only)</p>';
+            return;
+        }
+
+        const letterSpacing = 1;
+        let totalWidth = 0;
+        letters.forEach(letter => {
+            if (pattern[letter]) {
+                totalWidth += pattern[letter][0].length + letterSpacing;
+            }
+        });
+        totalWidth -= letterSpacing;
+
+        // Set grid columns
+        previewGrid.style.gridTemplateColumns = `repeat(${totalWidth}, 8px)`;
+
+        let currentCol = 0;
+        letters.forEach(letter => {
+            const letterPattern = pattern[letter];
+            if (!letterPattern) return;
+
+            const letterWidth = letterPattern[0].length;
+            for (let row = 0; row < 7; row++) {
+                for (let col = 0; col < letterWidth; col++) {
+                    const box = document.createElement('div');
+                    box.className = 'preview-box';
+                    if (letterPattern[row][col] === 1) {
+                        box.classList.remove('empty');
+                    } else {
+                        box.classList.add('empty');
+                    }
+                    box.style.gridColumn = currentCol + col + 1;
+                    box.style.gridRow = row + 1;
+                    previewGrid.appendChild(box);
+                }
+            }
+            currentCol += letterWidth + letterSpacing;
+        });
+    }
+
+    // Enter key to apply
+    nameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            applyBtn.click();
+        }
+    });
 }
 
 // Enhanced Matrix Rain Effect (Movie-Style)
@@ -2703,6 +2844,7 @@ window.addEventListener('load', () => {
         // New movie-style coding effects
         initCodeEditor();
         initGitHubGraph();
+        initNameEditor();
         initEnhancedMatrixRain();
         initHeroTypingEffect();
         initHackerTerminal();
