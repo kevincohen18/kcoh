@@ -102,6 +102,22 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
+    // Progressive disclosure for tech stack
+    const techStack = document.getElementById('tech-stack');
+    if (techStack) {
+        observer.observe(techStack);
+    }
+
+    // Progressive disclosure for code stats
+    const codeStats = document.getElementById('code-stats');
+    if (codeStats) {
+        // Show stats after a delay when hero is visible
+        setTimeout(() => {
+            codeStats.style.opacity = '1';
+            codeStats.style.transform = 'translateY(0)';
+        }, 2000);
+    }
+
     // Contact items
     document.querySelectorAll('.contact-item').forEach((el, index) => {
         el.classList.add('slide-in-left');
@@ -2292,6 +2308,28 @@ function generateGraph(grid, weeks, days, namePattern, letters) {
     }
 }
 
+// Progressive Disclosure - Reveal elements on scroll
+function initProgressiveDisclosure() {
+    const codeStats = document.getElementById('code-stats');
+    const techStack = document.getElementById('tech-stack');
+    
+    if (!codeStats || !techStack) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    observer.observe(codeStats);
+    observer.observe(techStack);
+}
+
 // Inline Name Editor - Live editing on chart
 function initNameEditor() {
     const graphWrapper = document.querySelector('.graph-grid-wrapper');
@@ -2887,6 +2925,7 @@ window.addEventListener('load', () => {
         initEnhancedMatrixRain();
         initHeroTypingEffect();
         initHackerTerminal();
+        initProgressiveDisclosure();
         // initCyberScan(); // Removed - horizontal scan line effect
         initDataStream();
         initHolographicGrid();
