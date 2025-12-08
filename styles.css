@@ -2374,6 +2374,24 @@ body:not(.light-theme) .navbar {
     backface-visibility: hidden;
 }
 
+/* Mobile-specific performance optimizations */
+@media (max-width: 768px) {
+    .service-card,
+    .portfolio-item,
+    .testimonial-card,
+    .btn,
+    .dev-badge {
+        will-change: auto;
+        transform: none;
+    }
+
+    /* Only use GPU for active animations */
+    .dev-badge,
+    .tech-icon {
+        transform: translateZ(0);
+    }
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -2621,6 +2639,86 @@ body:not(.light-theme) .navbar {
     .magnetic-cursor,
     .cursor-ring {
         display: none !important;
+    }
+
+    /* Optimize animations for mobile - reduce intensity */
+    .dev-badge {
+        animation: badgePulse 10s ease-in-out infinite, badgeFloat 11s ease-in-out infinite;
+    }
+
+    .tech-icon {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    /* Reduce particle effects */
+    .particles-canvas {
+        opacity: 0.08;
+    }
+
+    /* Optimize transitions */
+    * {
+        transition-duration: 0.2s !important;
+    }
+
+    /* Ensure touch targets are at least 44x44px */
+    .btn,
+    .nav-link,
+    .dev-badge,
+    .tech-icon {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Better tap highlight */
+    * {
+        -webkit-tap-highlight-color: rgba(99, 102, 241, 0.2);
+        tap-highlight-color: rgba(99, 102, 241, 0.2);
+    }
+
+    /* Optimize scroll performance */
+    .hero,
+    section {
+        -webkit-overflow-scrolling: touch;
+        will-change: scroll-position;
+    }
+
+    /* Reduce transform complexity on mobile */
+    .hero-content {
+        transform: none !important;
+    }
+
+    /* Simplify hover states for touch */
+    .service-card:active,
+    .portfolio-item:active,
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+    /* Optimize contribution graph for mobile */
+    .contribution-graph {
+        padding: 2rem 1rem;
+    }
+
+    .graph-grid {
+        gap: 3px;
+    }
+
+    .contribution-box {
+        min-width: 10px;
+        min-height: 10px;
+    }
+
+    /* Better spacing for mobile sections */
+    section {
+        padding: 80px 0;
+    }
+
+    .hero {
+        padding-top: calc(80px + 2rem);
+        padding-bottom: 60px;
     }
 }
 
@@ -3745,6 +3843,48 @@ body:not(.light-theme) .navbar {
     .permissions,
     .file-name {
         min-width: auto;
+    }
+
+    /* Additional mobile touch optimizations */
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .section-header {
+        margin-bottom: 3rem;
+    }
+
+    /* Ensure smooth scrolling on mobile */
+    html {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Optimize font rendering on mobile */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Better button spacing on mobile */
+    .hero-buttons .btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    /* Optimize contribution graph touch interactions */
+    .contribution-box {
+        touch-action: manipulation;
+    }
+
+    /* Reduce animation delays on mobile for faster feel */
+    .stagger-item,
+    .fade-in,
+    .slide-in-left,
+    .slide-in-right,
+    .scale-in {
+        transition-delay: 0s !important;
     }
 }
 

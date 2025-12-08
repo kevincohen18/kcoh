@@ -2922,10 +2922,39 @@ window.addEventListener('load', () => {
         initCodeEditor();
         initGitHubGraph();
         initNameEditor();
-        initEnhancedMatrixRain();
+        
+        // Only initialize heavy effects on desktop for better mobile performance
+        if (window.innerWidth > 768) {
+            initEnhancedMatrixRain();
+        }
+        
         initHeroTypingEffect();
         initHackerTerminal();
         initProgressiveDisclosure();
+        
+        // Mobile-specific optimizations
+        if (window.innerWidth <= 768) {
+            // Reduce animation complexity on mobile
+            document.documentElement.style.setProperty('--animation-duration', '0.3s');
+            
+            // Disable heavy canvas effects
+            const particlesCanvas = document.getElementById('particles');
+            if (particlesCanvas) {
+                particlesCanvas.style.display = 'none';
+            }
+            
+            // Optimize intersection observer for mobile
+            const mobileObserverOptions = {
+                threshold: 0.05,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            // Update observer with mobile-optimized settings
+            if (typeof observer !== 'undefined') {
+                observer.disconnect();
+                // Recreate with mobile settings if needed
+            }
+        }
         // initCyberScan(); // Removed - horizontal scan line effect
         initDataStream();
         initHolographicGrid();
