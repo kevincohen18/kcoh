@@ -3063,6 +3063,134 @@ body:not(.light-theme) .navbar {
     display: flex;
     align-items: center;
     gap: 1rem;
+    position: relative;
+}
+
+.inline-name-editor {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeIn 0.2s ease;
+}
+
+.inline-name-input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #6366f1;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+    min-width: 80px;
+    max-width: 120px;
+    outline: none;
+    letter-spacing: 0.1em;
+}
+
+.inline-name-input:focus {
+    border-bottom-color: #8b5cf6;
+}
+
+.inline-cursor {
+    color: #6366f1;
+    animation: cursorBlink 1s step-end infinite;
+    font-weight: 600;
+    margin-left: -2px;
+}
+
+.graph-container {
+    position: relative;
+}
+
+.graph-grid-wrapper {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.graph-grid-wrapper:hover {
+    opacity: 0.95;
+}
+
+.graph-grid-wrapper.editing {
+    cursor: default;
+}
+
+.inline-name-editor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid #6366f1;
+    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+    z-index: 100;
+    animation: fadeInScale 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.inline-name-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 0;
+    text-transform: uppercase;
+    min-width: 100px;
+    max-width: 200px;
+    outline: none;
+    letter-spacing: 0.2em;
+    text-align: center;
+}
+
+.inline-name-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.inline-cursor {
+    color: #6366f1;
+    animation: cursorBlink 1s step-end infinite;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-left: 2px;
+}
+
+.graph-edit-hint {
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.graph-grid-wrapper:hover .graph-edit-hint {
+    opacity: 1;
+}
+
+.graph-grid-wrapper.editing .graph-edit-hint {
+    display: none;
 }
 
 .edit-name-btn {

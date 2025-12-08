@@ -2160,7 +2160,7 @@ const pixelFont = {
 // Get custom name from localStorage or use default
 function getCustomName() {
     const saved = localStorage.getItem('contributionGraphName');
-    return saved || 'KEVIN';
+    return saved || 'KCOH';
 }
 
 // Save custom name to localStorage
@@ -2195,8 +2195,8 @@ function initGitHubGraph() {
     const { pattern: namePattern, letters } = generateNamePattern(customName);
     
     if (letters.length === 0) {
-        // Fallback to KEVIN if no valid letters
-        const { pattern: fallbackPattern, letters: fallbackLetters } = generateNamePattern('KEVIN');
+        // Fallback to KCOH if no valid letters
+        const { pattern: fallbackPattern, letters: fallbackLetters } = generateNamePattern('KCOH');
         return generateGraph(grid, weeks, days, fallbackPattern, fallbackLetters);
     }
 
@@ -2292,75 +2292,95 @@ function generateGraph(grid, weeks, days, namePattern, letters) {
     }
 }
 
-// Name Editor Functionality
+// Inline Name Editor - Live editing on chart
 function initNameEditor() {
-    const editBtn = document.getElementById('edit-name-btn');
-    const modal = document.getElementById('name-editor-modal');
-    const closeBtn = document.getElementById('close-editor-btn');
-    const nameInput = document.getElementById('name-input');
-    const applyBtn = document.getElementById('apply-name-btn');
-    const resetBtn = document.getElementById('reset-name-btn');
-    const previewGrid = document.getElementById('name-preview-grid');
+    const graphWrapper = document.querySelector('.graph-grid-wrapper');
+    const graphGrid = document.getElementById('contribution-grid');
+    const inlineEditor = document.getElementById('inline-name-input');
+    const editorContainer = document.getElementById('inline-name-editor');
 
-    if (!editBtn || !modal) return;
+    if (!graphWrapper || !graphGrid || !inlineEditor) return;
+
+    let isEditing = false;
+    let updateTimeout = null;
 
     // Set initial value
-    nameInput.value = getCustomName();
+    inlineEditor.value = getCustomName();
 
-    // Open modal
-    editBtn.addEventListener('click', () => {
-        modal.classList.add('active');
-        nameInput.focus();
-        updatePreview();
-    });
-
-    // Close modal
-    closeBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('active');
+    // Click on chart to edit
+    graphWrapper.addEventListener('click', (e) => {
+        // Don't trigger if clicking on the editor itself
+        if (e.target.closest('.inline-name-editor')) return;
+        
+        if (!isEditing) {
+            enterEditMode();
         }
     });
 
-    // Update preview on input
-    nameInput.addEventListener('input', () => {
-        nameInput.value = nameInput.value.toUpperCase().replace(/[^A-Z]/g, '');
-        updatePreview();
+    // Live update as user types (debounced for performance)
+    inlineEditor.addEventListener('input', (e) => {
+        // Filter to A-Z only and uppercase
+        let value = e.target.value.toUpperCase().replace(/[^A-Z]/g, '');
+        e.target.value = value;
+        
+        // Clear previous timeout
+        if (updateTimeout) {
+            clearTimeout(updateTimeout);
+        }
+        
+        // Debounce updates for smooth performance
+        updateTimeout = setTimeout(() => {
+            if (value.length > 0) {
+                saveCustomName(value);
+                updateGraphLive(value);
+            }
+        }, 150); // Fast refresh with minimal lag
     });
 
-    // Apply name
-    applyBtn.addEventListener('click', () => {
-        const name = nameInput.value.toUpperCase().trim();
-        if (name.length > 0 && /^[A-Z]+$/.test(name)) {
-            saveCustomName(name);
-            initGitHubGraph(); // Regenerate graph
-            modal.classList.remove('active');
+    // Handle Enter key to finish editing
+    inlineEditor.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === 'Escape') {
+            exitEditMode();
         }
     });
 
-    // Reset to default
-    resetBtn.addEventListener('click', () => {
-        saveCustomName('KEVIN');
-        nameInput.value = 'KEVIN';
-        updatePreview();
-        initGitHubGraph(); // Regenerate graph
+    // Click outside to exit edit mode
+    document.addEventListener('click', (e) => {
+        if (isEditing && !e.target.closest('.inline-name-editor') && !e.target.closest('.graph-grid')) {
+            exitEditMode();
+        }
     });
 
-    // Update preview grid
-    function updatePreview() {
-        previewGrid.innerHTML = '';
-        const name = nameInput.value.toUpperCase().trim() || 'KEVIN';
+    function enterEditMode() {
+        isEditing = true;
+        graphWrapper.classList.add('editing');
+        editorContainer.style.display = 'flex';
+        inlineEditor.focus();
+        inlineEditor.select();
+    }
+
+    function exitEditMode() {
+        isEditing = false;
+        graphWrapper.classList.remove('editing');
+        editorContainer.style.display = 'none';
+        // Save final value
+        const finalValue = inlineEditor.value.toUpperCase().trim() || 'KCOH';
+        saveCustomName(finalValue);
+        updateGraphLive(finalValue);
+    }
+
+    // Optimized live graph update (only updates pattern, not entire grid)
+    function updateGraphLive(name) {
         const { pattern, letters } = generateNamePattern(name);
+        if (letters.length === 0) return;
 
-        if (letters.length === 0) {
-            previewGrid.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 1rem;">Enter a valid name (A-Z only)</p>';
-            return;
-        }
-
+        // Get all boxes
+        const boxes = graphGrid.querySelectorAll('.contribution-box');
+        const weeks = 52;
+        const days = 7;
         const letterSpacing = 1;
+
+        // Calculate pattern map
         let totalWidth = 0;
         letters.forEach(letter => {
             if (pattern[letter]) {
@@ -2368,40 +2388,59 @@ function initNameEditor() {
             }
         });
         totalWidth -= letterSpacing;
+        const startWeek = Math.floor((weeks - totalWidth) / 2);
 
-        // Set grid columns
-        previewGrid.style.gridTemplateColumns = `repeat(${totalWidth}, 8px)`;
+        const patternMap = {};
+        let currentWeek = startWeek;
 
-        let currentCol = 0;
         letters.forEach(letter => {
             const letterPattern = pattern[letter];
             if (!letterPattern) return;
-
             const letterWidth = letterPattern[0].length;
-            for (let row = 0; row < 7; row++) {
+
+            for (let dayIdx = 0; dayIdx < days; dayIdx++) {
                 for (let col = 0; col < letterWidth; col++) {
-                    const box = document.createElement('div');
-                    box.className = 'preview-box';
-                    if (letterPattern[row][col] === 1) {
-                        box.classList.remove('empty');
-                    } else {
-                        box.classList.add('empty');
-                    }
-                    box.style.gridColumn = currentCol + col + 1;
-                    box.style.gridRow = row + 1;
-                    previewGrid.appendChild(box);
+                    const week = currentWeek + col;
+                    const key = `${week}-${dayIdx}`;
+                    patternMap[key] = letterPattern[dayIdx][col];
                 }
             }
-            currentCol += letterWidth + letterSpacing;
+            currentWeek += letterWidth + letterSpacing;
+        });
+
+        // Update boxes efficiently
+        boxes.forEach((box, index) => {
+            const week = Math.floor(index / days);
+            const day = index % days;
+            const key = `${week}-${day}`;
+
+            // Remove all level classes
+            box.classList.remove('level-0', 'level-1', 'level-2', 'level-3', 'level-4', 'level-dark');
+
+            if (patternMap[key] === 1) {
+                box.classList.add('level-dark');
+                const delay = (week * 7 + day) % 8;
+                box.style.setProperty('--delay', delay);
+                box.title = name;
+            } else {
+                // Keep existing gradient levels for non-pattern squares
+                const rand = Math.random();
+                let level;
+                if (rand < 0.35) {
+                    level = 1;
+                } else if (rand < 0.60) {
+                    level = 2;
+                } else if (rand < 0.80) {
+                    level = 3;
+                } else {
+                    level = 4;
+                }
+                box.classList.add(`level-${level}`);
+                const contributions = level * Math.floor(Math.random() * 5) + level;
+                box.title = `${contributions} contributions`;
+            }
         });
     }
-
-    // Enter key to apply
-    nameInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            applyBtn.click();
-        }
-    });
 }
 
 // Enhanced Matrix Rain Effect (Movie-Style)
