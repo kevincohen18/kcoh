@@ -206,8 +206,26 @@ window.addEventListener('load', () => {
         window.history.scrollRestoration = 'manual';
     }
     
-    // Modern loading screen with terminal effects
-    initModernLoader();
+    // Modern loading screen with terminal effects - only on refresh/reload
+    // Check if this is a page refresh (not navigation)
+    const navigationType = performance.getEntriesByType('navigation')[0]?.type;
+    const isRefresh = navigationType === 'reload' || 
+                      navigationType === 'navigate' && 
+                      (performance.navigation?.type === 1 || // TYPE_RELOAD
+                       document.referrer === ''); // No referrer means direct load/refresh
+    
+    if (isRefresh) {
+        initModernLoader();
+    } else {
+        // Just hide loader immediately if not a refresh
+        const loader = document.getElementById('loader');
+        if (loader) {
+            loader.style.display = 'none';
+            loader.remove();
+        }
+        document.body.style.opacity = '1';
+        document.body.style.overflow = 'auto';
+    }
 });
 
 // Ensure scroll to top on page show (back/forward navigation)
