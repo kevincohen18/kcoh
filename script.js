@@ -801,19 +801,19 @@ function initCodeTyping() {
     codeDisplay.className = 'code-typing';
     codeDisplay.style.cssText = `
         position: fixed;
-        bottom: 28px;
+        bottom: 40px;
         left: 50%;
-        transform: translate(-50%, 0);
+        transform: translate(-50%, 10px);
         font-family: 'Courier New', monospace;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: #c7d2fe;
         background: rgba(15, 23, 42, 0.9);
-        padding: 1.5rem;
-        padding-top: 2.1rem;
+        padding: 1.35rem;
+        padding-top: 2rem;
         border-radius: 0.75rem;
-        border: 1px solid rgba(99, 102, 241, 0.4);
-        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.4), 0 0 25px rgba(99, 102, 241, 0.3);
-        max-width: 420px;
+        border: 1px solid rgba(99, 102, 241, 0.35);
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.35), 0 0 18px rgba(99, 102, 241, 0.25);
+        max-width: 360px;
         width: calc(100% - 48px);
         z-index: 10000;
         opacity: 0;
@@ -840,20 +840,18 @@ function initCodeTyping() {
     codeDisplay.appendChild(closeBtn);
     document.body.appendChild(codeDisplay);
 
-    // Toggle pill
-    const codeToggle = document.createElement('button');
-    codeToggle.className = 'code-toggle';
-    codeToggle.textContent = 'Show code';
-    codeToggle.setAttribute('aria-label', 'Show code sample');
-    codeToggle.style.cssText = '';
-    codeToggle.addEventListener('click', () => {
-        if (codeDisplay.classList.contains('visible')) {
-            hideCode();
-        } else {
-            showCode(true);
-        }
-    });
-    document.body.appendChild(codeToggle);
+    // Toggle button in hero
+    const codeToggle = document.querySelector('.code-toggle');
+    if (codeToggle) {
+        codeToggle.setAttribute('aria-label', 'Show code sample');
+        codeToggle.addEventListener('click', () => {
+            if (codeDisplay.classList.contains('visible')) {
+                hideCode();
+            } else {
+                showCode(true);
+            }
+        });
+    }
 
     function typeCode() {
         if (document.body.classList.contains('minimal-mode')) {
@@ -884,11 +882,11 @@ function initCodeTyping() {
         codeDisplay.style.opacity = '1';
         codeDisplay.style.pointerEvents = 'auto';
         codeDisplay.style.transform = 'translate(-50%, 0)';
-        codeToggle.textContent = 'Hide code';
+        if (codeToggle) codeToggle.textContent = 'Hide code';
 
         if (fromButton && codeDisplay.dataset.typed !== 'true') {
             codeDisplay.dataset.typed = 'true';
-            typeCode();
+            setTimeout(typeCode, 250);
         }
     };
 
@@ -897,7 +895,7 @@ function initCodeTyping() {
         codeDisplay.style.opacity = '0';
         codeDisplay.style.pointerEvents = 'none';
         codeDisplay.style.transform = 'translate(-50%, 10px)';
-        codeToggle.textContent = 'Show code';
+        if (codeToggle) codeToggle.textContent = 'Show code';
 
         setTimeout(() => {
             lineIndex = 0;
@@ -907,11 +905,7 @@ function initCodeTyping() {
         }, 400);
     };
 
-    setTimeout(() => {
-        showCode();
-        typeCode();
-        setTimeout(() => hideCode(), 6000);
-    }, 1400);
+    // Keep hidden by default; user can open via hero button
 
     return {
         hide: hideCode,
@@ -1901,6 +1895,13 @@ function initDeveloperPalette() {
     };
 
     closeBtn.addEventListener('click', closePalette);
+
+    const paletteButton = document.querySelector('.palette-toggle');
+    if (paletteButton) {
+        paletteButton.addEventListener('click', () => {
+            togglePalette();
+        });
+    }
 
     document.addEventListener('keydown', (e) => {
         const key = e.key ? e.key.toLowerCase() : '';
