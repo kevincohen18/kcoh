@@ -1735,13 +1735,13 @@ function initInteractiveTerminal() {
     document.head.appendChild(rainbowStyle);
 }
 
-// Floating Achievement Badges
+// Floating Achievement Badges (FIXED - higher thresholds)
 function initAchievementBadges() {
     const achievements = [
-        { icon: '🎯', text: 'Explorer', trigger: 'scroll', threshold: 1000 },
-        { icon: '🖱️', text: 'Clicker', trigger: 'click', threshold: 10 },
-        { icon: '⌨️', text: 'Typist', trigger: 'keypress', threshold: 50 },
-        { icon: '🕐', text: 'Time Traveler', trigger: 'time', threshold: 30000 }
+        { icon: '🎯', text: 'Explorer', trigger: 'scroll', threshold: 3000 },
+        { icon: '🖱️', text: 'Clicker', trigger: 'click', threshold: 50 },
+        { icon: '⌨️', text: 'Typist', trigger: 'keypress', threshold: 200 },
+        { icon: '🕐', text: 'Time Traveler', trigger: 'time', threshold: 120000 }
     ];
 
     let stats = { scroll: 0, click: 0, keypress: 0, time: 0 };
@@ -1753,6 +1753,8 @@ function initAchievementBadges() {
     setInterval(() => stats.time += 1000, 1000);
 
     function checkAchievements() {
+        if (isMinimalMode()) return;
+
         achievements.forEach(achievement => {
             const key = achievement.icon + achievement.text;
             if (!unlockedAchievements.has(key)) {
@@ -2149,7 +2151,7 @@ function initEnhancedMatrixRain() {
     });
 }
 
-// Typing Effect for Hero Title
+// Typing Effect for Hero Title (FIXED - store original text properly)
 function initHeroTypingEffect() {
     const textElement = document.querySelector('.typing-animation');
     if (!textElement) return;
@@ -2164,9 +2166,14 @@ function initHeroTypingEffect() {
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    const originalText = textElement.textContent;
+
+    // Store original text as data attribute to prevent glitch interference
+    textElement.dataset.originalText = textElement.textContent;
+    textElement.dataset.isTyping = 'true';
 
     function type() {
+        if (isMinimalMode()) return;
+
         const currentText = texts[textIndex];
 
         if (isDeleting) {
@@ -2375,15 +2382,18 @@ function initHolographicGrid() {
     });
 }
 
-// Glitch Text Effect on Hover
+// Glitch Text Effect on Hover (FIXED - only for section titles, not hero)
 function initGlitchText() {
-    const headers = document.querySelectorAll('h1, h2, .section-title');
+    const headers = document.querySelectorAll('.section-title');
 
     headers.forEach(header => {
         let glitchInterval;
 
+        // Store original text immediately
+        header.dataset.originalText = header.textContent;
+
         header.addEventListener('mouseenter', () => {
-            const originalText = header.textContent;
+            const originalText = header.dataset.originalText;
             const glitchChars = '!<>-_\\/[]{}—=+*^?#________';
 
             glitchInterval = setInterval(() => {
@@ -2401,15 +2411,8 @@ function initGlitchText() {
 
         header.addEventListener('mouseleave', () => {
             clearInterval(glitchInterval);
-            // Restore original text - get it from data attribute if available
-            if (!header.dataset.originalText) {
-                header.dataset.originalText = header.textContent;
-            }
-            header.textContent = header.dataset.originalText || header.textContent;
+            header.textContent = header.dataset.originalText;
         });
-
-        // Store original text
-        header.dataset.originalText = header.textContent;
     });
 }
 
