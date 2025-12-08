@@ -296,27 +296,7 @@ document.querySelectorAll('.stat-item').forEach(stat => {
     statsObserver.observe(stat);
 });
 
-// Add ripple effect to buttons
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
-    });
-});
+// Removed button ripple to keep click visuals minimal (confetti remains)
 
 // Particle System for Hero Section
 function initParticles() {
@@ -511,9 +491,9 @@ techProgressBars.forEach(bar => {
 });
 
 // Enhanced form validation
-const contactFormInputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
+const validationInputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
 
-contactFormInputs.forEach(input => {
+validationInputs.forEach(input => {
     input.addEventListener('blur', () => {
         validateField(input);
     });
@@ -625,8 +605,8 @@ if (contactForm) {
                     EMAILJS_SERVICE_ID,
                     EMAILJS_CONTACT_TEMPLATE,
                     {
-                        from_name: formData.name,
-                        from_email: formData.email,
+                        name: formData.name,
+                        email: formData.email,
                         subject: formData.subject,
                         message: formData.message,
                         to_email: 'inquiries@kcoh.ca'
@@ -804,8 +784,6 @@ document.querySelectorAll('.faq-question').forEach(question => {
         }
     });
 });
-
-
 
 // ============================================
 // MODERN DEVELOPER EFFECTS & ANIMATIONS
@@ -1588,42 +1566,7 @@ function initMouseTrail() {
 
 // Interactive Ripple Effect
 function initRippleEffect() {
-    const style = document.createElement('style');
-    style.textContent = `
-        .ripple-wave {
-            position: fixed;
-            border-radius: 50%;
-            border: 2px solid rgba(99, 102, 241, 0.5);
-            pointer-events: none;
-            animation: ripple-expand 1s ease-out;
-            z-index: 9996;
-        }
-
-        @keyframes ripple-expand {
-            from {
-                width: 0;
-                height: 0;
-                opacity: 1;
-            }
-            to {
-                width: 300px;
-                height: 300px;
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
-    document.addEventListener('click', (e) => {
-        if (isMinimalMode()) return;
-        const ripple = document.createElement('div');
-        ripple.className = 'ripple-wave';
-        ripple.style.left = (e.clientX - 150) + 'px';
-        ripple.style.top = (e.clientY - 150) + 'px';
-        document.body.appendChild(ripple);
-
-        setTimeout(() => ripple.remove(), 1000);
-    });
+    // Ripple effect removed; confetti and other click effects remain
 }
 
 // Konami Code Easter Egg
