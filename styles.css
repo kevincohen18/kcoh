@@ -546,8 +546,8 @@ body:not(.light-theme) .theme-toggle .moon-icon {
 }
 
 .apple-logo-icon {
-    width: 18px;
-    height: 18px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
     display: inline-block;
     vertical-align: middle;
