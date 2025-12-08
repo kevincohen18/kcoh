@@ -555,10 +555,21 @@ const formInputs = contactForm ? contactForm.querySelectorAll('input, textarea')
 
 // Initialize EmailJS if available
 if (typeof emailjs !== 'undefined') {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-    console.log('EmailJS initialized successfully ✓');
+    try {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+        console.log('EmailJS initialized successfully ✓');
+        console.log('EmailJS Config:', {
+            publicKey: EMAILJS_PUBLIC_KEY,
+            serviceId: EMAILJS_SERVICE_ID,
+            contactTemplate: EMAILJS_CONTACT_TEMPLATE,
+            newsletterTemplate: EMAILJS_NEWSLETTER_TEMPLATE
+        });
+    } catch (error) {
+        console.error('EmailJS initialization error:', error);
+    }
 } else {
     console.warn('EmailJS library not loaded. Forms will use mailto fallback.');
+    console.warn('Make sure EmailJS SDK is loaded: https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js');
 }
 
 // Enhanced form submission with EmailJS
@@ -600,8 +611,21 @@ if (contactForm) {
                 EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' && 
                 EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' && 
                 EMAILJS_CONTACT_TEMPLATE !== 'YOUR_CONTACT_TEMPLATE_ID') {
+                
+                console.log('Sending email via EmailJS...', {
+                    serviceId: EMAILJS_SERVICE_ID,
+                    templateId: EMAILJS_CONTACT_TEMPLATE,
+                    data: {
+                        name: formData.name,
+                        email: formData.email,
+                        subject: formData.subject,
+                        message: formData.message,
+                        to_email: 'inquiries@kcoh.ca'
+                    }
+                });
+                
                 // Send email via EmailJS
-                await emailjs.send(
+                const response = await emailjs.send(
                     EMAILJS_SERVICE_ID,
                     EMAILJS_CONTACT_TEMPLATE,
                     {
@@ -612,6 +636,9 @@ if (contactForm) {
                         to_email: 'inquiries@kcoh.ca'
                     }
                 );
+                
+                console.log('EmailJS response:', response);
+                console.log('Email sent successfully! Status:', response.status, 'Text:', response.text);
                 
                 // Show success message
                 showFormMessage(contactForm, 'Message sent successfully! We\'ll get back to you soon.', 'success');
@@ -638,11 +665,27 @@ if (contactForm) {
                 }, 2000);
             }
         } catch (error) {
-            // Log error in development only
-            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                console.error('Form submission error:', error);
+            // Always log errors for debugging
+            console.error('Form submission error:', error);
+            console.error('Error details:', {
+                message: error.message,
+                text: error.text,
+                status: error.status,
+                serviceId: EMAILJS_SERVICE_ID,
+                templateId: EMAILJS_CONTACT_TEMPLATE,
+                publicKey: EMAILJS_PUBLIC_KEY ? 'Set' : 'Missing',
+                emailjsLoaded: typeof emailjs !== 'undefined'
+            });
+            
+            let errorMessage = 'Failed to send message. ';
+            if (error.text) {
+                errorMessage += `Error: ${error.text}. `;
+            } else if (error.message) {
+                errorMessage += `Error: ${error.message}. `;
             }
-            showFormMessage(contactForm, 'Failed to send message. Please try again or email us directly at inquiries@kcoh.ca', 'error');
+            errorMessage += 'Please try again or email us directly at inquiries@kcoh.ca';
+            
+            showFormMessage(contactForm, errorMessage, 'error');
             
             // Reset button
             submitButton.textContent = originalText;
