@@ -541,11 +541,16 @@ const EMAILJS_SERVICE_ID = 'service_o6blrnk'; // Replace with your service ID
 const EMAILJS_CONTACT_TEMPLATE = 'template_zz1sxwj'; // Replace with your contact form template ID
 const EMAILJS_NEWSLETTER_TEMPLATE = 'template_4v48c53'; // Replace with your newsletter template ID
 
-
+// Get form elements
+const contactForm = document.getElementById('contactForm');
+const formInputs = contactForm ? contactForm.querySelectorAll('input, textarea') : [];
 
 // Initialize EmailJS if available
 if (typeof emailjs !== 'undefined') {
     emailjs.init(EMAILJS_PUBLIC_KEY);
+    console.log('EmailJS initialized successfully ✓');
+} else {
+    console.warn('EmailJS library not loaded. Forms will use mailto fallback.');
 }
 
 // Enhanced form submission with EmailJS
@@ -772,55 +777,6 @@ document.querySelectorAll('.faq-question').forEach(question => {
     });
 });
 
-// Cookie Consent
-const cookieConsent = document.getElementById('cookieConsent');
-const acceptCookies = document.getElementById('acceptCookies');
-const declineCookies = document.getElementById('declineCookies');
-
-// Check if user has already made a choice
-if (!localStorage.getItem('cookieConsent')) {
-    setTimeout(() => {
-        if (cookieConsent) {
-            cookieConsent.classList.add('show');
-        }
-    }, 1000);
-}
-
-if (acceptCookies) {
-    acceptCookies.addEventListener('click', () => {
-        localStorage.setItem('cookieConsent', 'accepted');
-        if (cookieConsent) {
-            cookieConsent.classList.remove('show');
-            document.body.classList.remove('cookie-visible');
-        }
-    });
-}
-
-if (declineCookies) {
-    declineCookies.addEventListener('click', () => {
-        localStorage.setItem('cookieConsent', 'declined');
-        if (cookieConsent) {
-            cookieConsent.classList.remove('show');
-            document.body.classList.remove('cookie-visible');
-        }
-    });
-}
-
-// Add body class when cookie consent is visible
-if (cookieConsent) {
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.attributeName === 'class') {
-                if (cookieConsent.classList.contains('show')) {
-                    document.body.classList.add('cookie-visible');
-                } else {
-                    document.body.classList.remove('cookie-visible');
-                }
-            }
-        });
-    });
-
-    observer.observe(cookieConsent, { attributes: true });
 }
 
 // ============================================
