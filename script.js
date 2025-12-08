@@ -2519,7 +2519,7 @@ window.addEventListener('load', () => {
         initEnhancedMatrixRain();
         initHeroTypingEffect();
         initHackerTerminal();
-        initCyberScan();
+        // initCyberScan(); // Removed - horizontal scan line effect
         initDataStream();
         initHolographicGrid();
         initGlitchText();
