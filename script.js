@@ -786,10 +786,11 @@ function initMatrixRain() {
 // Code Typing Animation
 function initCodeTyping() {
     const codeLines = [
-        'const developer = new Developer();',
-        'developer.skills = ["React", "Node.js", "Python"];',
-        'developer.build(yourIdea);',
-        '// Creating amazing software...'
+        'let developer = Developer()',
+        'developer.skills = ["Swift", "iOS", "React"]',
+        'developer.appStoreApps = 10',
+        'developer.build(yourIdea)',
+        '// 🍎 Building amazing apps...'
     ];
 
     let lineIndex = 0;
@@ -1613,15 +1614,18 @@ function initInteractiveTerminal() {
     });
 
     const commands = {
-        help: 'Available commands: help, about, skills, contact, clear, matrix, party',
-        about: 'KCOH Software Inc. - Professional software development services',
-        skills: 'React, Node.js, Python, AWS, Docker, and more!',
+        help: 'Available commands: help, about, skills, apps, portfolio, contact, clear, matrix, party, swift',
+        about: 'KCOH Software Inc. - Professional software development with 10+ iOS apps on App Store',
+        skills: 'Swift, SwiftUI, React, Node.js, Python, AWS, Docker, and more!',
+        apps: '10+ published iOS apps on the App Store built with Swift & SwiftUI 🍎',
+        portfolio: 'Visit https://kevincohen.ca to see my complete portfolio',
         contact: 'Email: contact@kcoh.ca | Phone: 514-898-8716',
         clear: '',
         matrix: 'Entering the Matrix... 🟢',
         party: '🎉 Party mode activated! 🎊',
-        whoami: 'You are exploring the portfolio of a professional developer',
-        ls: 'services/  portfolio/  about/  contact/',
+        swift: 'let expertise = "iOS Development" 🚀',
+        whoami: 'You are exploring the portfolio of an iOS developer with 10+ App Store apps',
+        ls: 'services/  portfolio/  about/  contact/  apps/',
         pwd: '/home/kcoh/website',
         date: new Date().toLocaleString()
     };

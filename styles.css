@@ -2077,9 +2077,31 @@ body:not(.light-theme) .navbar {
     letter-spacing: 1px;
 }
 
-/* Smooth Transitions */
+/* Smooth Transitions - Optimized for Performance */
 * {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Performance Optimization - Use GPU acceleration */
+.service-card,
+.portfolio-item,
+.testimonial-card,
+.btn,
+.dev-badge {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /* Custom Scrollbar */
@@ -2115,6 +2137,48 @@ body:not(.light-theme) .navbar {
 ::-moz-selection {
     background: rgba(99, 102, 241, 0.3);
     color: var(--text-primary);
+}
+
+/* Hero Badges Animation */
+.dev-badge {
+    animation: badgePulse 3s ease-in-out infinite, badgeFloat 4s ease-in-out infinite;
+    display: inline-block;
+}
+
+.dev-badge:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dev-badge:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.dev-badge:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(99, 102, 241, 0.8), 0 0 60px rgba(99, 102, 241, 0.4);
+    }
+}
+
+@keyframes badgeFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.dev-badge:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.8) !important;
+    cursor: pointer;
 }
 
 /* Code Typing Box Positioning */
