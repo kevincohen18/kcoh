@@ -842,26 +842,10 @@ function initCodeTyping() {
 
     // Toggle pill
     const codeToggle = document.createElement('button');
+    codeToggle.className = 'code-toggle';
     codeToggle.textContent = 'Show code';
     codeToggle.setAttribute('aria-label', 'Show code sample');
-    codeToggle.style.cssText = `
-        position: fixed;
-        bottom: 24px;
-        left: 24px;
-        padding: 0.6rem 1rem;
-        border-radius: 999px;
-        border: 1px solid rgba(99, 102, 241, 0.5);
-        background: rgba(15, 23, 42, 0.85);
-        color: #e0e7ff;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
-        backdrop-filter: blur(6px);
-        z-index: 10001;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    `;
-    codeToggle.addEventListener('mouseenter', () => codeToggle.style.transform = 'translateY(-2px)');
-    codeToggle.addEventListener('mouseleave', () => codeToggle.style.transform = 'translateY(0)');
+    codeToggle.style.cssText = '';
     codeToggle.addEventListener('click', () => {
         if (codeDisplay.classList.contains('visible')) {
             hideCode();
@@ -872,6 +856,10 @@ function initCodeTyping() {
     document.body.appendChild(codeToggle);
 
     function typeCode() {
+        if (document.body.classList.contains('minimal-mode')) {
+            hideCode();
+            return;
+        }
         if (lineIndex < codeLines.length) {
             if (charIndex < codeLines[lineIndex].length) {
                 currentLine += codeLines[lineIndex][charIndex];
@@ -924,6 +912,11 @@ function initCodeTyping() {
         typeCode();
         setTimeout(() => hideCode(), 6000);
     }, 1400);
+
+    return {
+        hide: hideCode,
+        show: showCode
+    };
 }
 
 // Magnetic Cursor Effect
@@ -1927,6 +1920,24 @@ function initDeveloperPalette() {
     document.body.appendChild(palette);
 }
 
+// Minimal mode toggle (hides flashy elements)
+function initMinimalMode(codeTyping) {
+    const toggleBtn = document.querySelector('.minimal-toggle');
+    if (!toggleBtn) return;
+
+    const applyState = (isOn) => {
+        document.body.classList.toggle('minimal-mode', isOn);
+        toggleBtn.setAttribute('aria-pressed', String(isOn));
+        toggleBtn.textContent = isOn ? 'Minimal mode: On' : 'Minimal mode';
+        if (isOn && codeTyping?.hide) codeTyping.hide();
+    };
+
+    toggleBtn.addEventListener('click', () => {
+        const isOn = !document.body.classList.contains('minimal-mode');
+        applyState(isOn);
+    });
+}
+
 // Easter Eggs - Double Click Logo
 function initEasterEggs() {
     const logo = document.querySelector('.logo-text');
@@ -1977,7 +1988,7 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         enhanceLoadingScreen();
         initMatrixRain();
-        initCodeTyping();
+        const codeTyping = initCodeTyping();
         initMagneticCursor();
         initGlitchEffect();
         initHolographicCards();
@@ -1997,6 +2008,7 @@ window.addEventListener('load', () => {
         initInteractiveStats();
         initShakeEffects();
         initDeveloperPalette();
+        initMinimalMode(codeTyping);
         initEasterEggs();
 
         console.log('%c🚀 All interactive effects loaded!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
