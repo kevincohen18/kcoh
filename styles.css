@@ -443,6 +443,16 @@ body:not(.light-theme) .theme-toggle .moon-icon {
     z-index: 1;
     transform: none !important;
     will-change: auto;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* Ensure consistent animation across all platforms */
+@supports (animation: fadeInUp) {
+    .hero-content {
+        animation: fadeInUp 1s ease 0.2s, slideInScale 1.2s ease 0.2s;
+        animation-fill-mode: both;
+    }
 }
 
 @keyframes fadeInUp {
@@ -2685,9 +2695,16 @@ body:not(.light-theme) .navbar {
         will-change: scroll-position;
     }
 
-    /* Reduce transform complexity on mobile */
+    /* Ensure same animations on mobile - don't disable transforms */
     .hero-content {
-        transform: none !important;
+        /* Keep animations but ensure they work smoothly */
+        animation: fadeInUp 1s ease 0.2s, slideInScale 1.2s ease 0.2s;
+        animation-fill-mode: both;
+    }
+    
+    .terminal-prompt {
+        animation: fadeInDown 0.8s ease 0.1s;
+        animation-fill-mode: both;
     }
 
     /* Simplify hover states for touch */
@@ -2730,8 +2747,17 @@ body:not(.light-theme) .navbar {
 .terminal-prompt {
     font-family: 'Courier New', monospace;
     margin-bottom: 1.5rem;
-    opacity: 0.9;
-    animation: fadeInDown 0.8s ease;
+    opacity: 0;
+    animation: fadeInDown 0.8s ease 0.1s;
+    animation-fill-mode: forwards;
+}
+
+/* Ensure consistent animation across platforms */
+@supports (animation: fadeInDown) {
+    .terminal-prompt {
+        animation: fadeInDown 0.8s ease 0.1s;
+        animation-fill-mode: both;
+    }
 }
 
 .terminal-line {
@@ -2754,6 +2780,10 @@ body:not(.light-theme) .navbar {
         transform: translateY(-20px);
     }
     to {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
         opacity: 0.9;
         transform: translateY(0);
     }
@@ -3848,6 +3878,10 @@ body:not(.light-theme) .navbar {
     /* Additional mobile touch optimizations */
     .hero-content {
         padding: 0 1rem;
+        /* Ensure same animation on mobile */
+        animation: fadeInUp 1s ease 0.2s, slideInScale 1.2s ease 0.2s;
+        animation-fill-mode: both;
+        opacity: 0;
     }
 
     .section-header {

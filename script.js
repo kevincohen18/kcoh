@@ -1,3 +1,9 @@
+// Force scroll to top on initial load (before DOM is ready)
+if (window.history.scrollRestoration) {
+    window.history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 // Mobile Menu Toggle
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navMenu = document.getElementById('navMenu');
@@ -151,8 +157,21 @@ function highlightNavigation() {
 
 window.addEventListener('scroll', highlightNavigation);
 
-// Enhanced loading animation
+// Scroll to top on page refresh/reload
+window.addEventListener('beforeunload', () => {
+    window.scrollTo(0, 0);
+});
+
+// Force scroll to top on page load/refresh
 window.addEventListener('load', () => {
+    // Scroll to top immediately
+    window.scrollTo(0, 0);
+    
+    // Also use history API to ensure we're at top
+    if (window.history.scrollRestoration) {
+        window.history.scrollRestoration = 'manual';
+    }
+    
     const loader = document.getElementById('loader');
     if (loader) {
         setTimeout(() => {
@@ -160,6 +179,14 @@ window.addEventListener('load', () => {
             // Trigger initial animations
             document.body.style.opacity = '1';
         }, 800);
+    }
+});
+
+// Ensure scroll to top on page show (back/forward navigation)
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        // Page was loaded from cache, scroll to top
+        window.scrollTo(0, 0);
     }
 });
 
