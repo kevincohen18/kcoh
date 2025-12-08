@@ -5210,3 +5210,75 @@ video {
         padding: 0 2rem;
     }
 }
+
+/* ============================================
+   REMOVE PURPLE BACKGROUNDS & CONSISTENT DESIGN
+   ============================================ */
+
+/* Remove purple gradient from stat boxes */
+.stat-box {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateY(-4px);
+}
+
+/* Make stat numbers white/light instead of purple gradient */
+.stat-number {
+    background: none !important;
+    color: #e0e7ff !important;
+    -webkit-text-fill-color: currentColor !important;
+}
+
+/* Consistent background for all sections */
+.hero,
+.services,
+.portfolio,
+.technologies,
+.testimonials,
+.faq,
+.about,
+.contact,
+.code-showcase,
+.terminal-portfolio,
+.github-activity {
+    background: var(--bg-white) !important;
+}
+
+/* Subtle alternating pattern for visual interest (optional) */
+.services,
+.testimonials,
+.terminal-portfolio {
+    background: var(--bg-light) !important;
+}
+
+/* Ensure smooth transitions between sections */
+section {
+    transition: background-color 0.3s ease;
+}
+
+/* Remove any jarring background colors */
+body {
+    background: var(--bg-white);
+}
+
+/* Override any purple backgrounds on cards */
+.service-card,
+.portfolio-item,
+.testimonial-card,
+.faq-item {
+    background: var(--bg-white) !important;
+}
+
+.service-card:hover,
+.portfolio-item:hover,
+.testimonial-card:hover {
+    background: var(--bg-white) !important;
+}
