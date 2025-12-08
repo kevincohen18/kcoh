@@ -616,6 +616,8 @@ if (contactForm) {
                     serviceId: EMAILJS_SERVICE_ID,
                     templateId: EMAILJS_CONTACT_TEMPLATE,
                     data: {
+                        from_name: formData.name,
+                        from_email: formData.email,
                         name: formData.name,
                         email: formData.email,
                         subject: formData.subject,
@@ -629,8 +631,10 @@ if (contactForm) {
                     EMAILJS_SERVICE_ID,
                     EMAILJS_CONTACT_TEMPLATE,
                     {
-                        name: formData.name,
-                        email: formData.email,
+                        from_name: formData.name,
+                        from_email: formData.email,
+                        name: formData.name, // Also include for compatibility
+                        email: formData.email, // Also include for compatibility
                         subject: formData.subject,
                         message: formData.message,
                         to_email: 'inquiries@kcoh.ca'
