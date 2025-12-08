@@ -5177,3 +5177,36 @@ video {
         -moz-osx-font-smoothing: grayscale;
     }
 }
+
+/* ============================================
+   TABLET/IPAD CENTERING FIXES
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Center terminal window on iPad */
+    .terminal-window {
+        margin: 0 auto !important;
+        max-width: 90%;
+    }
+
+    /* Center code editor on iPad */
+    .code-editor-container {
+        margin: 0 auto;
+        max-width: 90%;
+    }
+
+    /* Center contribution graph on iPad */
+    .contribution-graph {
+        margin: 2rem auto;
+        max-width: 90%;
+    }
+
+    /* Ensure all major content blocks are centered */
+    .terminal-portfolio .container,
+    .code-showcase .container,
+    .github-activity .container {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+}
