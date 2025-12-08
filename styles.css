@@ -863,6 +863,13 @@ section * {
     padding-top: 80px;
 }
 
+@media (max-width: 768px) {
+    .services {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+}
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -4256,6 +4263,38 @@ html {
     .services-grid,
     .portfolio-grid {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .service-card {
+        padding: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .service-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    .service-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 1rem;
+    }
+
+    .service-features {
+        gap: 0.4rem;
+        font-size: 0.9rem;
+    }
+
+    .service-features li {
+        padding: 0.3rem 0.6rem;
     }
 
     .about-stats {
@@ -4500,7 +4539,11 @@ html {
         padding: 40px 0;
     }
 
-    .service-card,
+    .service-card {
+        margin: 0;
+        padding: 1.25rem;
+    }
+
     .form-intro {
         margin: 1.25rem 0;
         padding: 1rem;
