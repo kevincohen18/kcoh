@@ -434,6 +434,16 @@ body:not(.light-theme) .theme-toggle .moon-icon {
     66% { transform: translate(-20px, 20px) rotate(240deg); }
 }
 
+@keyframes floatWithRest {
+    /* Animation phase: 0% to ~44% (4 seconds of animation) */
+    0% { transform: translate(0, 0) rotate(0deg); }
+    11% { transform: translate(30px, -30px) rotate(120deg); }
+    22% { transform: translate(-20px, 20px) rotate(240deg); }
+    33.33% { transform: translate(0, 0) rotate(0deg); }
+    /* Rest phase: ~44% to 100% (5 seconds of static rest) */
+    33.34%, 100% { transform: translate(0, 0) rotate(0deg); }
+}
+
 .hero-content {
     text-align: center;
     max-width: 800px;
@@ -1679,12 +1689,11 @@ body:not(.light-theme) .form-message-error {
 }
 
 .testimonial-quote {
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    transition: opacity 0.3s ease;
 }
 
 .testimonial-card:hover .testimonial-quote {
-    transform: scale(1.2) rotate(5deg);
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 .testimonial-content {
@@ -1939,78 +1948,214 @@ body:not(.light-theme) .form-message-error {
     }
 }
 
-/* FAQ Section */
+/* FAQ Section - Modern Redesign */
 .faq {
-    padding: 80px 0;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .faq-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
 }
 
 .faq-item {
-    background: var(--bg-white);
-    border-radius: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
+    background: rgba(31, 41, 55, 0.6);
+    backdrop-filter: blur(20px);
+    border-radius: 1.25rem;
+    border: 1px solid rgba(99, 102, 241, 0.2);
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    transform: translateY(0);
+}
+
+.faq-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .faq-item:hover {
-    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+    border-color: rgba(99, 102, 241, 0.4);
+    box-shadow: 
+        0 10px 30px rgba(99, 102, 241, 0.15),
+        0 0 40px rgba(99, 102, 241, 0.1);
+}
+
+.faq-item.active {
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 
+        0 15px 40px rgba(99, 102, 241, 0.2),
+        0 0 60px rgba(99, 102, 241, 0.15);
+    background: rgba(31, 41, 55, 0.8);
+}
+
+.faq-item.active::before {
+    transform: scaleX(1);
 }
 
 .faq-question {
-    padding: 1.5rem 2rem;
+    padding: 1.75rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    gap: 1.5rem;
+}
+
+.faq-question::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--gradient-start), var(--gradient-end));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0 4px 4px 0;
+}
+
+.faq-item.active .faq-question::after {
+    transform: scaleY(1);
 }
 
 .faq-question:hover {
-    background: var(--bg-light);
+    background: rgba(99, 102, 241, 0.05);
+}
+
+.faq-item.active .faq-question {
+    background: rgba(99, 102, 241, 0.08);
 }
 
 .faq-question h3 {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-primary);
     margin: 0;
+    flex: 1;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.faq-item.active .faq-question h3 {
+    color: var(--primary-color);
 }
 
 .faq-icon {
-    font-size: 1.5rem;
-    font-weight: 300;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 50%;
     color: var(--primary-color);
-    transition: transform 0.3s ease;
+    font-size: 1.25rem;
+    font-weight: 300;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
-    margin-left: 1rem;
+    position: relative;
+}
+
+.faq-icon::before {
+    content: '+';
+    position: absolute;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .faq-item.active .faq-icon {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: white;
     transform: rotate(45deg);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
 }
 
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease, opacity 0.3s ease;
     padding: 0 2rem;
+    opacity: 0;
 }
 
 .faq-item.active .faq-answer {
     max-height: 500px;
-    padding: 0 2rem 1.5rem;
+    padding: 0 2rem 2rem;
+    opacity: 1;
 }
 
 .faq-answer p {
     color: var(--text-secondary);
     line-height: 1.8;
     margin: 0;
+    font-size: 1.05rem;
+    padding-top: 0.5rem;
+}
+
+/* FAQ Grid Layout for larger screens */
+@media (min-width: 1024px) {
+    .faq-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .faq-item:nth-child(odd) {
+        animation-delay: 0.1s;
+    }
+    
+    .faq-item:nth-child(even) {
+        animation-delay: 0.2s;
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .faq {
+        padding: 60px 0;
+    }
+    
+    .faq-container {
+        gap: 1rem;
+    }
+    
+    .faq-question {
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .faq-question h3 {
+        font-size: 1.1rem;
+    }
+    
+    .faq-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 1.1rem;
+    }
+    
+    .faq-item.active .faq-answer {
+        padding: 0 1.5rem 1.5rem;
+    }
+    
+    .faq-answer p {
+        font-size: 1rem;
+    }
 }
 
 /* Newsletter Section */
@@ -2990,7 +3135,7 @@ html {
     font-size: 0.9rem;
     font-weight: 600;
     color: #c7d2fe;
-    animation: float 4s ease-in-out infinite;
+    animation: floatWithRest 9s ease-in-out infinite;
     transition: all 0.3s ease;
 }
 

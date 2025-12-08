@@ -536,13 +536,12 @@ function validateField(field) {
 // Get your Public Key from: https://dashboard.emailjs.com/admin/integration
 // Get your Service ID from: https://dashboard.emailjs.com/admin/service
 // Get your Template IDs from: https://dashboard.emailjs.com/admin/template
-const EMAILJS_PUBLIC_KEY = 'GgkF4EXvRp9ePaCIE'; // Public key (safe to expose in client-side code)
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'; // Replace with your service ID
-const EMAILJS_CONTACT_TEMPLATE = 'YOUR_CONTACT_TEMPLATE_ID'; // Replace with your contact form template ID
-const EMAILJS_NEWSLETTER_TEMPLATE = 'YOUR_NEWSLETTER_TEMPLATE_ID'; // Replace with your newsletter template ID
+const EMAILJS_PUBLIC_KEY = 'Z_iIIF96wVdVQLv_E'; // Public key (safe to expose in client-side code)
+const EMAILJS_SERVICE_ID = 'service_o6blrnk'; // Replace with your service ID
+const EMAILJS_CONTACT_TEMPLATE = 'template_zz1sxwj'; // Replace with your contact form template ID
+const EMAILJS_NEWSLETTER_TEMPLATE = 'template_4v48c53'; // Replace with your newsletter template ID
 
-// ⚠️ SECURITY NOTE: Private key (frP4Vv1nTBFTX3-34w7SE) should NEVER be added to client-side code!
-// Private keys are only for server-side use. Keep it secure and never commit it to version control.
+
 
 // Initialize EmailJS if available
 if (typeof emailjs !== 'undefined') {
@@ -2863,9 +2862,9 @@ function initGlitchText() {
         // Store original text immediately
         header.dataset.originalText = header.textContent;
 
-        // Skip glitch effect for terminal/code style titles (those starting with $ or containing code syntax)
+        // Skip glitch effect for terminal/code style titles and testimonials
         const text = header.textContent.trim();
-        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ') || text.includes('Code Showcase')) {
+        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ') || text.includes('Code Showcase') || text.includes('Client Testimonials') || text.includes('Testimonials')) {
             return;
         }
 
