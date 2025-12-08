@@ -2382,7 +2382,7 @@ function initHolographicGrid() {
     });
 }
 
-// Glitch Text Effect on Hover (FIXED - only for section titles, not hero)
+// Glitch Text Effect on Hover (FIXED - excludes terminal/code titles)
 function initGlitchText() {
     const headers = document.querySelectorAll('.section-title');
 
@@ -2391,6 +2391,12 @@ function initGlitchText() {
 
         // Store original text immediately
         header.dataset.originalText = header.textContent;
+
+        // Skip glitch effect for terminal/code style titles (those starting with $ or containing code syntax)
+        const text = header.textContent.trim();
+        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ')) {
+            return;
+        }
 
         header.addEventListener('mouseenter', () => {
             const originalText = header.dataset.originalText;
