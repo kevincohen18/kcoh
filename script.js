@@ -196,6 +196,23 @@ window.addEventListener('beforeunload', () => {
     window.scrollTo(0, 0);
 });
 
+// Helper to safely remove loader overlay
+function safeRemoveLoader(delay = 0) {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+
+    setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+            if (loader.parentNode) {
+                loader.parentNode.removeChild(loader);
+            }
+            document.body.style.opacity = '1';
+            document.body.style.overflow = 'auto';
+        }, 400);
+    }, delay);
+}
+
 // Force scroll to top on page load/refresh
 window.addEventListener('load', () => {
     // Scroll to top immediately
@@ -206,26 +223,18 @@ window.addEventListener('load', () => {
         window.history.scrollRestoration = 'manual';
     }
     
-    // Modern loading screen with terminal effects - only on refresh/reload
-    // Check if this is a page refresh (not navigation)
-    const navigationType = performance.getEntriesByType('navigation')[0]?.type;
-    const isRefresh = navigationType === 'reload' || 
-                      navigationType === 'navigate' && 
-                      (performance.navigation?.type === 1 || // TYPE_RELOAD
-                       document.referrer === ''); // No referrer means direct load/refresh
-    
+    const navigationEntry = performance.getEntriesByType('navigation')[0];
+    const isRefresh = navigationEntry ? navigationEntry.type === 'reload' : performance.navigation?.type === 1;
+
     if (isRefresh) {
-        initModernLoader();
+        enhanceLoadingScreen();
+        safeRemoveLoader(1200);
     } else {
-        // Just hide loader immediately if not a refresh
-        const loader = document.getElementById('loader');
-        if (loader) {
-            loader.style.display = 'none';
-            loader.remove();
-        }
-        document.body.style.opacity = '1';
-        document.body.style.overflow = 'auto';
+        safeRemoveLoader(0);
     }
+
+    // Fallback guard in case anything hangs
+    setTimeout(() => safeRemoveLoader(0), 3500);
 });
 
 // Ensure scroll to top on page show (back/forward navigation)
@@ -1338,145 +1347,42 @@ function initPageTransitions() {
 
 // Enhanced Loading Screen
 function enhanceLoadingScreen() {
-// Modern Software Engineer Loading Screen
-function initModernLoader() {
     const loader = document.getElementById('loader');
     if (!loader) return;
 
-    const commandEl = document.getElementById('loader-command');
-    const outputEl = document.getElementById('loader-output');
-    const progressFill = document.getElementById('progress-fill');
-    const progressText = document.getElementById('progress-text');
-    const logoEl = document.getElementById('loader-logo');
+    const loaderContent = loader.querySelector('.loader-content');
+    if (!loaderContent) return;
 
-    if (!commandEl || !outputEl || !progressFill || !progressText) return;
+    // Add compilation text
+    const compilingText = document.createElement('div');
+    compilingText.style.cssText = `
+        margin-top: 2rem;
+        font-family: 'Courier New', monospace;
+        color: #6366f1;
+        font-size: 1rem;
+    `;
 
-    // Terminal commands sequence
-    const commands = [
-        { cmd: 'npm run build', delay: 800 },
-        { cmd: 'git status', delay: 600 },
-        { cmd: 'yarn install', delay: 700 },
-        { cmd: 'npm start', delay: 500 }
+    const messages = [
+        'Initializing framework...',
+        'Loading components...',
+        'Compiling assets...',
+        'Optimizing performance...',
+        'Ready!'
     ];
 
-    // Output messages
-    const outputs = [
-        { text: '✓ Framework initialized', type: 'success', delay: 300 },
-        { text: '→ Loading components...', type: 'info', delay: 400 },
-        { text: '→ Compiling TypeScript...', type: 'info', delay: 500 },
-        { text: '→ Bundling assets...', type: 'info', delay: 400 },
-        { text: '→ Optimizing performance...', type: 'info', delay: 500 },
-        { text: '→ Running tests...', type: 'info', delay: 400 },
-        { text: '✓ Build successful', type: 'success', delay: 300 },
-        { text: '→ Starting dev server...', type: 'info', delay: 400 },
-        { text: '✓ Ready on http://localhost:3000', type: 'success', delay: 500 }
-    ];
-
-    let commandIndex = 0;
-    let outputIndex = 0;
-    let progress = 0;
-    let charIndex = 0;
-    let currentCommand = '';
-    let isTyping = false;
-
-    // Type command with typing effect
-    function typeCommand() {
-        if (commandIndex >= commands.length) {
-            // All commands done, start progress
-            updateProgress();
-            return;
+    let messageIndex = 0;
+    const interval = setInterval(() => {
+        if (messageIndex < messages.length) {
+            compilingText.textContent = messages[messageIndex];
+            messageIndex++;
         }
+    }, 150);
 
-        const command = commands[commandIndex];
-        currentCommand = command.cmd;
-        charIndex = 0;
-        isTyping = true;
-        commandEl.textContent = '';
+    loaderContent.appendChild(compilingText);
 
-        function typeChar() {
-            if (charIndex < currentCommand.length) {
-                commandEl.textContent += currentCommand[charIndex];
-                charIndex++;
-                setTimeout(typeChar, 50);
-            } else {
-                isTyping = false;
-                // Show output after command
-                setTimeout(() => {
-                    showOutput();
-                    commandIndex++;
-                    setTimeout(typeCommand, 200);
-                }, command.delay);
-            }
-        }
-
-        typeChar();
-    }
-
-    // Show output messages
-    function showOutput() {
-        if (outputIndex >= outputs.length) return;
-
-        const output = outputs[outputIndex];
-        const outputLine = document.createElement('div');
-        outputLine.className = `output-line ${output.type}`;
-        outputLine.textContent = output.text;
-        outputEl.appendChild(outputLine);
-
-        // Scroll to bottom
-        outputEl.scrollTop = outputEl.scrollHeight;
-
-        outputIndex++;
-        if (outputIndex < outputs.length) {
-            setTimeout(showOutput, output.delay);
-        }
-    }
-
-    // Update progress bar
-    function updateProgress() {
-        const targetProgress = Math.min(100, (outputIndex / outputs.length) * 100);
-        
-        if (progress < targetProgress) {
-            progress += 2;
-            progressFill.style.width = progress + '%';
-            progressText.textContent = Math.round(progress) + '%';
-
-            if (progress < 100) {
-                requestAnimationFrame(updateProgress);
-            } else {
-                // Complete - add final message
-                setTimeout(() => {
-                    const finalLine = document.createElement('div');
-                    finalLine.className = 'output-line success';
-                    finalLine.textContent = '✓ System ready';
-                    outputEl.appendChild(finalLine);
-                    
-                    // Animate logo
-                    if (logoEl) {
-                        logoEl.style.animation = 'logoGlow 1s ease-in-out infinite';
-                    }
-
-                    // Hide loader after delay
-                    setTimeout(() => {
-                        loader.classList.add('hidden');
-                        // Force remove from DOM after transition
-                        setTimeout(() => {
-                            loader.style.display = 'none';
-                            loader.remove();
-                        }, 600);
-                        document.body.style.opacity = '1';
-                        document.body.style.overflow = 'auto';
-                    }, 800);
-                }, 500);
-            }
-        } else {
-            requestAnimationFrame(updateProgress);
-        }
-    }
-
-    // Start the loading sequence
     setTimeout(() => {
-        typeCommand();
-    }, 500);
+        clearInterval(interval);
+    }, 800);
 }
 
 // Terminal Command Animation in Console
@@ -2199,21 +2105,24 @@ function initDeveloperPalette() {
     `;
 
     const closeBtn = palette.querySelector('.dev-palette-close');
+    let userPinned = false;
 
-    const togglePalette = () => {
-        palette.classList.toggle('open');
-    };
+    const openPalette = () => palette.classList.add('open');
+    const closePalette = () => palette.classList.remove('open');
+    const togglePalette = () => palette.classList.toggle('open');
 
-    const closePalette = () => {
-        palette.classList.remove('open');
+    const pinPalette = () => {
+        userPinned = true;
+        openPalette();
     };
 
     closeBtn.addEventListener('click', closePalette);
+    palette.addEventListener('click', pinPalette);
 
     const paletteButton = document.querySelector('.palette-toggle');
     if (paletteButton) {
         paletteButton.addEventListener('click', () => {
-            togglePalette();
+            pinPalette();
         });
     }
 
@@ -2233,6 +2142,16 @@ function initDeveloperPalette() {
     });
 
     document.body.appendChild(palette);
+
+    // Auto-show palette briefly on first load (desktop/minimal disabled)
+    if (!isMinimalMode()) {
+        openPalette();
+        setTimeout(() => {
+            if (!userPinned && !isMinimalMode()) {
+                closePalette();
+            }
+        }, 3000);
+    }
 }
 
 // Minimal mode toggle (hides flashy elements)
