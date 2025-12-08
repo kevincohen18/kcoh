@@ -616,10 +616,10 @@ if (contactForm) {
                     serviceId: EMAILJS_SERVICE_ID,
                     templateId: EMAILJS_CONTACT_TEMPLATE,
                     data: {
+                        name: formData.name, // Primary - matches template {{name}}
+                        email: formData.email, // Primary - matches template {{email}}
                         from_name: formData.name,
                         from_email: formData.email,
-                        name: formData.name,
-                        email: formData.email,
                         subject: formData.subject,
                         message: formData.message,
                         to_email: 'inquiries@kcoh.ca'
@@ -627,14 +627,15 @@ if (contactForm) {
                 });
                 
                 // Send email via EmailJS
+                // Note: Template uses {{name}} and {{email}}, so these are primary
                 const response = await emailjs.send(
                     EMAILJS_SERVICE_ID,
                     EMAILJS_CONTACT_TEMPLATE,
                     {
-                        from_name: formData.name,
-                        from_email: formData.email,
-                        name: formData.name, // Also include for compatibility
-                        email: formData.email, // Also include for compatibility
+                        name: formData.name, // Primary - matches template {{name}}
+                        email: formData.email, // Primary - matches template {{email}}
+                        from_name: formData.name, // Also include for compatibility
+                        from_email: formData.email, // Also include for compatibility
                         subject: formData.subject,
                         message: formData.message,
                         to_email: 'inquiries@kcoh.ca'
