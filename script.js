@@ -2016,6 +2016,472 @@ function initEasterEggs() {
     document.head.appendChild(logoStyle);
 }
 
+// ============================================
+// NEW INTERACTIVE CODING EFFECTS
+// ============================================
+
+// Code Editor Tab Switching
+function initCodeEditor() {
+    const tabs = document.querySelectorAll('.editor-tab');
+    const codeBlocks = document.querySelectorAll('.code-block');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetLang = tab.getAttribute('data-lang');
+
+            // Remove active class from all tabs and code blocks
+            tabs.forEach(t => t.classList.remove('active'));
+            codeBlocks.forEach(block => block.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding code block
+            tab.classList.add('active');
+            const targetBlock = document.querySelector(`.code-block[data-lang="${targetLang}"]`);
+            if (targetBlock) {
+                targetBlock.classList.add('active');
+            }
+        });
+    });
+}
+
+// GitHub Contribution Graph Generator
+function initGitHubGraph() {
+    const grid = document.getElementById('contribution-grid');
+    if (!grid) return;
+
+    const weeks = 52;
+    const days = 7;
+
+    for (let week = 0; week < weeks; week++) {
+        for (let day = 0; day < days; day++) {
+            const box = document.createElement('div');
+            box.className = 'contribution-box';
+
+            // Random contribution level (0-4)
+            const level = Math.random() > 0.3 ? Math.floor(Math.random() * 5) : 0;
+            box.classList.add(`level-${level}`);
+
+            // Tooltip on hover
+            const contributions = level * Math.floor(Math.random() * 5) + level;
+            box.title = `${contributions} contributions`;
+
+            // Add hover effect
+            box.addEventListener('mouseenter', () => {
+                box.style.transform = 'scale(1.3)';
+                box.style.zIndex = '10';
+            });
+
+            box.addEventListener('mouseleave', () => {
+                box.style.transform = 'scale(1)';
+                box.style.zIndex = '1';
+            });
+
+            grid.appendChild(box);
+        }
+    }
+}
+
+// Enhanced Matrix Rain Effect (Movie-Style)
+function initEnhancedMatrixRain() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'enhanced-matrix';
+    canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.08;
+    `;
+    document.body.insertBefore(canvas, document.body.firstChild);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * -100;
+    }
+
+    function draw() {
+        if (isMinimalMode()) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(draw);
+            return;
+        }
+
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            // Color gradient effect
+            const gradient = ctx.createLinearGradient(0, drops[i] * fontSize, 0, (drops[i] + 1) * fontSize);
+            gradient.addColorStop(0, '#6366f1');
+            gradient.addColorStop(1, '#a78bfa');
+            ctx.fillStyle = gradient;
+
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
+                drops[i] = 0;
+            }
+
+            drops[i]++;
+        }
+
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}
+
+// Typing Effect for Hero Title
+function initHeroTypingEffect() {
+    const textElement = document.querySelector('.typing-animation');
+    if (!textElement) return;
+
+    const texts = [
+        'Building the Future',
+        'Crafting Solutions',
+        'Shipping Quality Code',
+        'Creating Experiences'
+    ];
+
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const originalText = textElement.textContent;
+
+    function type() {
+        const currentText = texts[textIndex];
+
+        if (isDeleting) {
+            textElement.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            textElement.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === currentText.length) {
+            typeSpeed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(type, typeSpeed);
+    }
+
+    // Start typing effect after a delay
+    setTimeout(type, 2000);
+}
+
+// Hacker-Style Terminal Animation
+function initHackerTerminal() {
+    const terminalOutput = document.querySelector('.terminal-output');
+    if (!terminalOutput) return;
+
+    // Add typing animation to terminal
+    const lines = terminalOutput.querySelectorAll('p:not(.terminal-command-input)');
+
+    lines.forEach((line, index) => {
+        line.style.opacity = '0';
+        setTimeout(() => {
+            line.style.transition = 'opacity 0.3s ease';
+            line.style.opacity = '1';
+
+            // Play typing sound effect (visual only)
+            line.style.animation = 'terminalGlow 0.3s ease';
+        }, index * 150);
+    });
+
+    // Add glow animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes terminalGlow {
+            0%, 100% { text-shadow: none; }
+            50% { text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Cyber Scan Effect
+function initCyberScan() {
+    const scanLine = document.createElement('div');
+    scanLine.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #6366f1, transparent);
+        box-shadow: 0 0 20px #6366f1;
+        pointer-events: none;
+        z-index: 9999;
+        animation: scanDown 8s linear infinite;
+        opacity: 0.3;
+    `;
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes scanDown {
+            0% { top: 0; opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { top: 100%; opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+    document.body.appendChild(scanLine);
+}
+
+// Data Stream Effect
+function initDataStream() {
+    const container = document.createElement('div');
+    container.className = 'data-stream-container';
+    container.style.cssText = `
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 200px;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.1;
+    `;
+    document.body.appendChild(container);
+
+    function createDataBit() {
+        const bit = document.createElement('div');
+        bit.textContent = Math.random() > 0.5 ? '1' : '0';
+        bit.style.cssText = `
+            position: absolute;
+            right: ${Math.random() * 200}px;
+            top: -20px;
+            color: #6366f1;
+            font-family: 'Courier New', monospace;
+            font-size: ${Math.random() * 20 + 10}px;
+            animation: dataFall ${Math.random() * 3 + 2}s linear;
+        `;
+
+        container.appendChild(bit);
+
+        setTimeout(() => bit.remove(), 5000);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes dataFall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    if (!isMinimalMode()) {
+        setInterval(createDataBit, 200);
+    }
+}
+
+// Holographic Grid Effect
+function initHolographicGrid() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'holographic-grid';
+    canvas.style.cssText = `
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.05;
+    `;
+    document.querySelector('.hero').appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * 0.4;
+
+    let angle = 0;
+
+    function drawGrid() {
+        if (isMinimalMode()) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#6366f1';
+        ctx.lineWidth = 1;
+
+        const gridSize = 50;
+        const perspective = 0.5;
+
+        // Draw perspective grid
+        for (let i = 0; i < canvas.height; i += gridSize) {
+            const y = canvas.height - i;
+            const scale = 1 - (i / canvas.height) * perspective;
+
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
+            ctx.stroke();
+
+            // Vertical lines
+            for (let x = 0; x < canvas.width; x += gridSize * scale) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x * scale + canvas.width / 2 * (1 - scale), canvas.height);
+                ctx.stroke();
+            }
+        }
+
+        angle += 0.001;
+    }
+
+    function animate() {
+        drawGrid();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight * 0.4;
+    });
+}
+
+// Glitch Text Effect on Hover
+function initGlitchText() {
+    const headers = document.querySelectorAll('h1, h2, .section-title');
+
+    headers.forEach(header => {
+        let glitchInterval;
+
+        header.addEventListener('mouseenter', () => {
+            const originalText = header.textContent;
+            const glitchChars = '!<>-_\\/[]{}—=+*^?#________';
+
+            glitchInterval = setInterval(() => {
+                header.textContent = originalText
+                    .split('')
+                    .map(char => {
+                        if (Math.random() < 0.1) {
+                            return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                        }
+                        return char;
+                    })
+                    .join('');
+            }, 50);
+        });
+
+        header.addEventListener('mouseleave', () => {
+            clearInterval(glitchInterval);
+            // Restore original text - get it from data attribute if available
+            if (!header.dataset.originalText) {
+                header.dataset.originalText = header.textContent;
+            }
+            header.textContent = header.dataset.originalText || header.textContent;
+        });
+
+        // Store original text
+        header.dataset.originalText = header.textContent;
+    });
+}
+
+// Binary Rain Effect
+function initBinaryRain() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'binary-rain';
+    canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.05;
+    `;
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const binary = '01';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+        if (isMinimalMode()) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(draw);
+            return;
+        }
+
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#6366f1';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = binary[Math.floor(Math.random() * binary.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+
+            drops[i]++;
+        }
+
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+}
+
+// Neon Pulse Effect
+function initNeonPulse() {
+    const badges = document.querySelectorAll('.dev-badge, .tech-icon');
+
+    badges.forEach((badge, index) => {
+        setInterval(() => {
+            badge.style.boxShadow = `
+                0 0 ${Math.random() * 30 + 10}px rgba(99, 102, 241, ${Math.random() * 0.5 + 0.3}),
+                0 0 ${Math.random() * 50 + 20}px rgba(139, 92, 246, ${Math.random() * 0.3 + 0.2})
+            `;
+        }, 2000 + index * 500);
+    });
+}
+
 // Initialize all modern effects
 window.addEventListener('load', () => {
     setTimeout(() => {
@@ -2044,7 +2510,21 @@ window.addEventListener('load', () => {
         initMinimalMode(codeTyping);
         initEasterEggs();
 
+        // New movie-style coding effects
+        initCodeEditor();
+        initGitHubGraph();
+        initEnhancedMatrixRain();
+        initHeroTypingEffect();
+        initHackerTerminal();
+        initCyberScan();
+        initDataStream();
+        initHolographicGrid();
+        initGlitchText();
+        initBinaryRain();
+        initNeonPulse();
+
         console.log('%c🚀 All interactive effects loaded!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
         console.log('%c💡 Pro tip: Try Ctrl+` to open terminal, Konami code for surprise, or double-click the logo!', 'color: #8b5cf6; font-size: 12px;');
+        console.log('%c🎬 Movie-style coding effects activated!', 'color: #a78bfa; font-size: 14px; font-weight: bold;');
     }, 1000);
 });
