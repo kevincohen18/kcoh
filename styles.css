@@ -375,6 +375,63 @@ body:not(.light-theme) .theme-toggle .moon-icon {
     flex-wrap: wrap;
 }
 
+.code-marquee {
+    margin-top: 1.25rem;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.35), 0 0 25px rgba(99, 102, 241, 0.3);
+    backdrop-filter: blur(6px);
+}
+
+.code-marquee::before,
+.code-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.code-marquee::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0) 100%);
+}
+
+.code-marquee::after {
+    right: 0;
+    background: linear-gradient(-90deg, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0) 100%);
+}
+
+.code-marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 0.85rem 1.75rem;
+    white-space: nowrap;
+    animation: codeMarquee 22s linear infinite;
+}
+
+.code-marquee span {
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    color: #c7d2fe;
+    text-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+}
+
+.code-marquee:hover .code-marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes codeMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 .btn {
     display: inline-block;
     padding: 0.875rem 2rem;
@@ -749,6 +806,20 @@ section * {
     height: 80px;
     color: white;
     opacity: 0.8;
+}
+
+.portfolio-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.1) contrast(1.05);
+    transform: scale(1.02);
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.portfolio-item:hover .portfolio-photo {
+    transform: scale(1.06);
+    filter: saturate(1.2) contrast(1.1);
 }
 
 .portfolio-placeholder svg {
@@ -2181,6 +2252,83 @@ body:not(.light-theme) .navbar {
     cursor: pointer;
 }
 
+/* Developer Command Palette */
+.dev-palette {
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    width: 320px;
+    background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.15), rgba(15, 23, 42, 0.92));
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    border-radius: 1rem;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.45), 0 0 30px rgba(99, 102, 241, 0.4);
+    padding: 1rem 1.25rem;
+    color: #e0e7ff;
+    backdrop-filter: blur(12px);
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s ease;
+    z-index: 10002;
+}
+
+.dev-palette.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dev-palette-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
+    letter-spacing: 0.5px;
+}
+
+.dev-palette-close {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.dev-palette-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.dev-palette-list {
+    display: grid;
+    gap: 0.35rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+}
+
+.dev-palette-list span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.dev-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.dev-palette-hint {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
 /* Code Typing Box Positioning */
 .code-typing {
     max-width: 400px !important;
@@ -2194,6 +2342,10 @@ body:not(.light-theme) .navbar {
         max-width: calc(100% - 20px) !important;
         font-size: 0.75rem !important;
         padding: 1rem !important;
+    }
+
+    .dev-palette {
+        display: none;
     }
 }
 
@@ -2341,4 +2493,3 @@ body:not(.light-theme) .navbar {
         font-size: 1rem;
     }
 }
-

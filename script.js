@@ -1829,6 +1829,56 @@ function initShakeEffects() {
     document.head.appendChild(shakeStyle);
 }
 
+// Developer Command Palette (press ? or Ctrl+K)
+function initDeveloperPalette() {
+    const palette = document.createElement('div');
+    palette.className = 'dev-palette';
+    palette.innerHTML = `
+        <div class="dev-palette-header">
+            <span>Developer Shortcuts</span>
+            <span class="dev-palette-close">✕</span>
+        </div>
+        <div class="dev-palette-list">
+            <span><span class="dev-key">Ctrl + \`</span>Open interactive terminal</span>
+            <span><span class="dev-key">Ctrl + K</span>Toggle this palette</span>
+            <span><span class="dev-key">?</span>Show/hide shortcuts</span>
+            <span><span class="dev-key">Konami</span>Confetti surprise</span>
+            <span><span class="dev-key">Click</span>Particle + ripple effects</span>
+            <span><span class="dev-key">Hover</span>Magnetic cards + tilt</span>
+        </div>
+        <div class="dev-palette-hint">Press "?" or Ctrl+K from anywhere to view shortcuts.</div>
+    `;
+
+    const closeBtn = palette.querySelector('.dev-palette-close');
+
+    const togglePalette = () => {
+        palette.classList.toggle('open');
+    };
+
+    const closePalette = () => {
+        palette.classList.remove('open');
+    };
+
+    closeBtn.addEventListener('click', closePalette);
+
+    document.addEventListener('keydown', (e) => {
+        const key = e.key ? e.key.toLowerCase() : '';
+        const isQuestionMark = e.key === '?' || (e.key === '/' && e.shiftKey);
+        const isCtrlK = e.ctrlKey && key === 'k';
+
+        if (isQuestionMark || isCtrlK) {
+            e.preventDefault();
+            togglePalette();
+        }
+
+        if (key === 'escape') {
+            closePalette();
+        }
+    });
+
+    document.body.appendChild(palette);
+}
+
 // Easter Eggs - Double Click Logo
 function initEasterEggs() {
     const logo = document.querySelector('.logo-text');
@@ -1898,10 +1948,10 @@ window.addEventListener('load', () => {
         initParallaxLayers();
         initInteractiveStats();
         initShakeEffects();
+        initDeveloperPalette();
         initEasterEggs();
 
         console.log('%c🚀 All interactive effects loaded!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
         console.log('%c💡 Pro tip: Try Ctrl+` to open terminal, Konami code for surprise, or double-click the logo!', 'color: #8b5cf6; font-size: 12px;');
     }, 1000);
 });
-
