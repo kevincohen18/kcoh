@@ -801,21 +801,24 @@ function initCodeTyping() {
     codeDisplay.className = 'code-typing';
     codeDisplay.style.cssText = `
         position: fixed;
-        bottom: 100px;
-        left: 20px;
+        bottom: 28px;
+        left: 50%;
+        transform: translate(-50%, 0);
         font-family: 'Courier New', monospace;
         font-size: 0.9rem;
-        color: #6366f1;
-        background: rgba(15, 23, 42, 0.95);
+        color: #c7d2fe;
+        background: rgba(15, 23, 42, 0.9);
         padding: 1.5rem;
-        padding-top: 2.5rem;
-        border-radius: 0.5rem;
-        border: 1px solid #6366f1;
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-        max-width: 400px;
+        padding-top: 2.1rem;
+        border-radius: 0.75rem;
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.4), 0 0 25px rgba(99, 102, 241, 0.3);
+        max-width: 420px;
+        width: calc(100% - 48px);
         z-index: 10000;
         opacity: 0;
-        transition: opacity 0.5s;
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
     `;
 
     // Add close button
@@ -832,18 +835,41 @@ function initCodeTyping() {
     `;
     closeBtn.addEventListener('mouseenter', () => closeBtn.style.opacity = '1');
     closeBtn.addEventListener('mouseleave', () => closeBtn.style.opacity = '0.7');
-    closeBtn.addEventListener('click', () => {
-        codeDisplay.style.opacity = '0';
-        setTimeout(() => codeDisplay.remove(), 500);
-    });
+    closeBtn.addEventListener('click', () => hideCode());
 
     codeDisplay.appendChild(closeBtn);
     document.body.appendChild(codeDisplay);
 
-    setTimeout(() => {
-        codeDisplay.style.opacity = '1';
-        typeCode();
-    }, 2000);
+    // Toggle pill
+    const codeToggle = document.createElement('button');
+    codeToggle.textContent = 'Show code';
+    codeToggle.setAttribute('aria-label', 'Show code sample');
+    codeToggle.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        padding: 0.6rem 1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(99, 102, 241, 0.5);
+        background: rgba(15, 23, 42, 0.85);
+        color: #e0e7ff;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
+        backdrop-filter: blur(6px);
+        z-index: 10001;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    `;
+    codeToggle.addEventListener('mouseenter', () => codeToggle.style.transform = 'translateY(-2px)');
+    codeToggle.addEventListener('mouseleave', () => codeToggle.style.transform = 'translateY(0)');
+    codeToggle.addEventListener('click', () => {
+        if (codeDisplay.classList.contains('visible')) {
+            hideCode();
+        } else {
+            showCode(true);
+        }
+    });
+    document.body.appendChild(codeToggle);
 
     function typeCode() {
         if (lineIndex < codeLines.length) {
@@ -861,21 +887,43 @@ function initCodeTyping() {
                 setTimeout(typeCode, 500);
             }
         } else {
-            setTimeout(() => {
-                codeDisplay.style.opacity = '0';
-                setTimeout(() => {
-                    lineIndex = 0;
-                    charIndex = 0;
-                    currentLine = '';
-                    codeDisplay.innerHTML = '';
-                    setTimeout(() => {
-                        codeDisplay.style.opacity = '1';
-                        typeCode();
-                    }, 1000);
-                }, 500);
-            }, 3000);
+            setTimeout(() => hideCode(), 2500);
         }
     }
+
+    const showCode = (fromButton = false) => {
+        codeDisplay.classList.add('visible');
+        codeDisplay.style.opacity = '1';
+        codeDisplay.style.pointerEvents = 'auto';
+        codeDisplay.style.transform = 'translate(-50%, 0)';
+        codeToggle.textContent = 'Hide code';
+
+        if (fromButton && codeDisplay.dataset.typed !== 'true') {
+            codeDisplay.dataset.typed = 'true';
+            typeCode();
+        }
+    };
+
+    const hideCode = () => {
+        codeDisplay.classList.remove('visible');
+        codeDisplay.style.opacity = '0';
+        codeDisplay.style.pointerEvents = 'none';
+        codeDisplay.style.transform = 'translate(-50%, 10px)';
+        codeToggle.textContent = 'Show code';
+
+        setTimeout(() => {
+            lineIndex = 0;
+            charIndex = 0;
+            currentLine = '';
+            codeDisplay.innerHTML = '';
+        }, 400);
+    };
+
+    setTimeout(() => {
+        showCode();
+        typeCode();
+        setTimeout(() => hideCode(), 6000);
+    }, 1400);
 }
 
 // Magnetic Cursor Effect
