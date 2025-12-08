@@ -625,7 +625,10 @@ if (contactForm) {
                 }, 2000);
             }
         } catch (error) {
-            console.error('Form submission error:', error);
+            // Log error in development only
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.error('Form submission error:', error);
+            }
             showFormMessage(contactForm, 'Failed to send message. Please try again or email us directly at inquiries@kcoh.ca', 'error');
             
             // Reset button
@@ -702,7 +705,10 @@ if (newsletterForm) {
                 submitButton.disabled = false;
             }
         } catch (error) {
-            console.error('Newsletter subscription error:', error);
+            // Log error in development only
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.error('Newsletter subscription error:', error);
+            }
             showFormMessage(newsletterForm, 'Failed to subscribe. Please try again.', 'error');
             
             // Reset button
@@ -3123,8 +3129,11 @@ window.addEventListener('load', () => {
         initBinaryRain();
         initNeonPulse();
 
-        console.log('%c🚀 All interactive effects loaded!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
-        console.log('%c💡 Pro tip: Try Ctrl+` to open terminal, Konami code for surprise, or double-click the logo!', 'color: #8b5cf6; font-size: 12px;');
-        console.log('%c🎬 Movie-style coding effects activated!', 'color: #a78bfa; font-size: 14px; font-weight: bold;');
+        // Development-only console messages
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.log('%c🚀 All interactive effects loaded!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
+            console.log('%c💡 Pro tip: Try Ctrl+` to open terminal, Konami code for surprise, or double-click the logo!', 'color: #8b5cf6; font-size: 12px;');
+            console.log('%c🎬 Movie-style coding effects activated!', 'color: #a78bfa; font-size: 14px; font-weight: bold;');
+        }
     }, 1000);
 });
