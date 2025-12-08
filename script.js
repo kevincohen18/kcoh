@@ -191,6 +191,11 @@ function highlightNavigation() {
 
 window.addEventListener('scroll', highlightNavigation);
 
+// mark loading state early
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('loading');
+});
+
 // Scroll to top on page refresh/reload
 window.addEventListener('beforeunload', () => {
     window.scrollTo(0, 0);
@@ -208,6 +213,8 @@ function safeRemoveLoader(delay = 0) {
                 loader.parentNode.removeChild(loader);
             }
             document.body.style.opacity = '1';
+            document.body.classList.remove('loading');
+            document.body.classList.add('ready');
             document.body.style.overflow = 'auto';
         }, 400);
     }, delay);
@@ -504,9 +511,9 @@ techProgressBars.forEach(bar => {
 });
 
 // Enhanced form validation
-const formInputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
+const contactFormInputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
 
-formInputs.forEach(input => {
+contactFormInputs.forEach(input => {
     input.addEventListener('blur', () => {
         validateField(input);
     });
@@ -798,7 +805,7 @@ document.querySelectorAll('.faq-question').forEach(question => {
     });
 });
 
-}
+
 
 // ============================================
 // MODERN DEVELOPER EFFECTS & ANIMATIONS
