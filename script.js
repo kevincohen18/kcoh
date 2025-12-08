@@ -206,14 +206,8 @@ window.addEventListener('load', () => {
         window.history.scrollRestoration = 'manual';
     }
     
-    const loader = document.getElementById('loader');
-    if (loader) {
-        setTimeout(() => {
-            loader.classList.add('hidden');
-            // Trigger initial animations
-            document.body.style.opacity = '1';
-        }, 800);
-    }
+    // Modern loading screen with terminal effects
+    initModernLoader();
 });
 
 // Ensure scroll to top on page show (back/forward navigation)
@@ -1326,42 +1320,139 @@ function initPageTransitions() {
 
 // Enhanced Loading Screen
 function enhanceLoadingScreen() {
+// Modern Software Engineer Loading Screen
+function initModernLoader() {
     const loader = document.getElementById('loader');
     if (!loader) return;
 
-    const loaderContent = loader.querySelector('.loader-content');
-    if (!loaderContent) return;
+    const commandEl = document.getElementById('loader-command');
+    const outputEl = document.getElementById('loader-output');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const logoEl = document.getElementById('loader-logo');
 
-    // Add compilation text
-    const compilingText = document.createElement('div');
-    compilingText.style.cssText = `
-        margin-top: 2rem;
-        font-family: 'Courier New', monospace;
-        color: #6366f1;
-        font-size: 1rem;
-    `;
+    if (!commandEl || !outputEl || !progressFill || !progressText) return;
 
-    const messages = [
-        'Initializing framework...',
-        'Loading components...',
-        'Compiling assets...',
-        'Optimizing performance...',
-        'Ready!'
+    // Terminal commands sequence
+    const commands = [
+        { cmd: 'npm run build', delay: 800 },
+        { cmd: 'git status', delay: 600 },
+        { cmd: 'yarn install', delay: 700 },
+        { cmd: 'npm start', delay: 500 }
     ];
 
-    let messageIndex = 0;
-    const interval = setInterval(() => {
-        if (messageIndex < messages.length) {
-            compilingText.textContent = messages[messageIndex];
-            messageIndex++;
+    // Output messages
+    const outputs = [
+        { text: '✓ Framework initialized', type: 'success', delay: 300 },
+        { text: '→ Loading components...', type: 'info', delay: 400 },
+        { text: '→ Compiling TypeScript...', type: 'info', delay: 500 },
+        { text: '→ Bundling assets...', type: 'info', delay: 400 },
+        { text: '→ Optimizing performance...', type: 'info', delay: 500 },
+        { text: '→ Running tests...', type: 'info', delay: 400 },
+        { text: '✓ Build successful', type: 'success', delay: 300 },
+        { text: '→ Starting dev server...', type: 'info', delay: 400 },
+        { text: '✓ Ready on http://localhost:3000', type: 'success', delay: 500 }
+    ];
+
+    let commandIndex = 0;
+    let outputIndex = 0;
+    let progress = 0;
+    let charIndex = 0;
+    let currentCommand = '';
+    let isTyping = false;
+
+    // Type command with typing effect
+    function typeCommand() {
+        if (commandIndex >= commands.length) {
+            // All commands done, start progress
+            updateProgress();
+            return;
         }
-    }, 150);
 
-    loaderContent.appendChild(compilingText);
+        const command = commands[commandIndex];
+        currentCommand = command.cmd;
+        charIndex = 0;
+        isTyping = true;
+        commandEl.textContent = '';
 
+        function typeChar() {
+            if (charIndex < currentCommand.length) {
+                commandEl.textContent += currentCommand[charIndex];
+                charIndex++;
+                setTimeout(typeChar, 50);
+            } else {
+                isTyping = false;
+                // Show output after command
+                setTimeout(() => {
+                    showOutput();
+                    commandIndex++;
+                    setTimeout(typeCommand, 200);
+                }, command.delay);
+            }
+        }
+
+        typeChar();
+    }
+
+    // Show output messages
+    function showOutput() {
+        if (outputIndex >= outputs.length) return;
+
+        const output = outputs[outputIndex];
+        const outputLine = document.createElement('div');
+        outputLine.className = `output-line ${output.type}`;
+        outputLine.textContent = output.text;
+        outputEl.appendChild(outputLine);
+
+        // Scroll to bottom
+        outputEl.scrollTop = outputEl.scrollHeight;
+
+        outputIndex++;
+        if (outputIndex < outputs.length) {
+            setTimeout(showOutput, output.delay);
+        }
+    }
+
+    // Update progress bar
+    function updateProgress() {
+        const targetProgress = Math.min(100, (outputIndex / outputs.length) * 100);
+        
+        if (progress < targetProgress) {
+            progress += 2;
+            progressFill.style.width = progress + '%';
+            progressText.textContent = Math.round(progress) + '%';
+
+            if (progress < 100) {
+                requestAnimationFrame(updateProgress);
+            } else {
+                // Complete - add final message
+                setTimeout(() => {
+                    const finalLine = document.createElement('div');
+                    finalLine.className = 'output-line success';
+                    finalLine.textContent = '✓ System ready';
+                    outputEl.appendChild(finalLine);
+                    
+                    // Animate logo
+                    if (logoEl) {
+                        logoEl.style.animation = 'logoGlow 1s ease-in-out infinite';
+                    }
+
+                    // Hide loader after delay
+                    setTimeout(() => {
+                        loader.classList.add('hidden');
+                        document.body.style.opacity = '1';
+                    }, 800);
+                }, 500);
+            }
+        } else {
+            requestAnimationFrame(updateProgress);
+        }
+    }
+
+    // Start the loading sequence
     setTimeout(() => {
-        clearInterval(interval);
-    }, 800);
+        typeCommand();
+    }, 500);
 }
 
 // Terminal Command Animation in Console
