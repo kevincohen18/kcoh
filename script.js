@@ -3137,3 +3137,132 @@ window.addEventListener('load', () => {
         }
     }, 1000);
 });
+
+// ============================================
+// PERFORMANCE OPTIMIZATIONS
+// ============================================
+
+// Debounce function for performance
+function debounce(func, wait = 100) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Throttle function for scroll/resize events
+function throttle(func, limit = 100) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// Detect if user prefers reduced motion
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Optimize animations based on device capability
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2;
+
+if (isMobile || isLowEndDevice || prefersReducedMotion) {
+    document.body.classList.add('reduced-animations');
+}
+
+// Lazy load images
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                }
+                imageObserver.unobserve(img);
+            }
+        });
+    }, {
+        rootMargin: '50px 0px',
+        threshold: 0.01
+    });
+
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+    });
+}
+
+// Optimize resize handler
+let resizeTimeout;
+window.addEventListener('resize', debounce(() => {
+    // Handle responsive adjustments
+    const width = window.innerWidth;
+    
+    if (width < 768) {
+        document.body.classList.add('mobile-view');
+        document.body.classList.remove('tablet-view', 'desktop-view');
+    } else if (width < 1024) {
+        document.body.classList.add('tablet-view');
+        document.body.classList.remove('mobile-view', 'desktop-view');
+    } else {
+        document.body.classList.add('desktop-view');
+        document.body.classList.remove('mobile-view', 'tablet-view');
+    }
+}, 250), { passive: true });
+
+// Preconnect to external resources
+const preconnectLinks = [
+    'https://fonts.googleapis.com',
+    'https://fonts.gstatic.com'
+];
+
+preconnectLinks.forEach(url => {
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = url;
+    link.crossOrigin = 'anonymous';
+    document.head.appendChild(link);
+});
+
+// Service Worker registration for PWA (optional)
+if ('serviceWorker' in navigator && !window.location.hostname.includes('localhost')) {
+    window.addEventListener('load', () => {
+        // Uncomment to enable service worker
+        // navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+}
+
+// Performance monitoring
+if (window.performance && window.performance.mark) {
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            if (perfData) {
+                console.log('Page Load Time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
+            }
+        }, 0);
+    });
+}
+
+// Cleanup function for better memory management
+window.addEventListener('beforeunload', () => {
+    // Remove event listeners and observers
+    if (window.particleCanvas) {
+        window.particleCanvas.remove();
+    }
+    // Clear any intervals or timeouts
+    if (window.animationFrameId) {
+        cancelAnimationFrame(window.animationFrameId);
+    }
+});
+
+console.log('Performance optimizations loaded ✓');
