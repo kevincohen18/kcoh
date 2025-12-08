@@ -789,23 +789,44 @@ function showFormMessage(form, message, type) {
         existingMessage.remove();
     }
     
-    // Create message element
+    // Create message element with icon
     const messageDiv = document.createElement('div');
     messageDiv.className = `form-message form-message-${type}`;
-    messageDiv.textContent = message;
     
-    // Insert message after form or before submit button
-    const submitButton = form.querySelector('button[type="submit"]');
-    if (submitButton) {
-        submitButton.parentNode.insertBefore(messageDiv, submitButton);
+    // Add icon based on type
+    const icon = type === 'success' 
+        ? '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill="currentColor"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" fill="currentColor"/></svg>';
+    
+    messageDiv.innerHTML = `
+        <div class="form-message-content">
+            <span class="form-message-icon">${icon}</span>
+            <span class="form-message-text">${message}</span>
+        </div>
+    `;
+    
+    // For newsletter form, insert after the input group
+    const inputGroup = form.querySelector('.newsletter-input-group');
+    if (inputGroup && form.id === 'newsletterForm') {
+        form.insertBefore(messageDiv, inputGroup.nextSibling);
     } else {
-        form.appendChild(messageDiv);
+        // For other forms, insert before submit button
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) {
+            submitButton.parentNode.insertBefore(messageDiv, submitButton);
+        } else {
+            form.appendChild(messageDiv);
+        }
     }
     
-    // Auto-remove success messages after 5 seconds
+    // Auto-remove success messages after 5 seconds with fade out
     if (type === 'success') {
         setTimeout(() => {
-            messageDiv.remove();
+            messageDiv.style.opacity = '0';
+            messageDiv.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 300);
         }, 5000);
     }
 }
