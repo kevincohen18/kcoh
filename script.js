@@ -3266,3 +3266,79 @@ window.addEventListener('beforeunload', () => {
 });
 
 console.log('Performance optimizations loaded ✓');
+
+// ============================================
+// AUTO-CENTER CONTRIBUTION GRAPH ON MOBILE
+// ============================================
+
+function centerContributionGraph() {
+    // Only run on mobile devices
+    if (window.innerWidth > 768) return;
+
+    const graphContainer = document.querySelector('.graph-container');
+    const graphGrid = document.querySelector('.graph-grid');
+    
+    if (!graphContainer || !graphGrid) return;
+
+    // Wait for the graph to be fully rendered
+    setTimeout(() => {
+        // Calculate the center position
+        const containerWidth = graphContainer.clientWidth;
+        const gridWidth = graphGrid.scrollWidth;
+        
+        // Calculate center scroll position
+        const centerPosition = (gridWidth - containerWidth) / 2;
+        
+        // Smoothly scroll to center
+        graphContainer.scrollTo({
+            left: centerPosition,
+            behavior: 'smooth'
+        });
+        
+        console.log('Contribution graph centered on mobile ✓');
+    }, 100);
+}
+
+// Center on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', centerContributionGraph);
+} else {
+    centerContributionGraph();
+}
+
+// Re-center on orientation change
+window.addEventListener('orientationchange', () => {
+    setTimeout(centerContributionGraph, 300);
+});
+
+// Re-center on resize (debounced)
+let centerTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(centerTimeout);
+    centerTimeout = setTimeout(() => {
+        if (window.innerWidth <= 768) {
+            centerContributionGraph();
+        }
+    }, 250);
+});
+
+// Also center when the graph becomes visible (IntersectionObserver)
+if ('IntersectionObserver' in window) {
+    const graphObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && window.innerWidth <= 768) {
+                centerContributionGraph();
+                graphObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    const graphSection = document.querySelector('.github-activity');
+    if (graphSection) {
+        graphObserver.observe(graphSection);
+    }
+}
+
+console.log('Auto-center contribution graph loaded ✓');
