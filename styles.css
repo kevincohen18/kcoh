@@ -690,8 +690,9 @@ body:not(.light-theme) .theme-toggle .moon-icon {
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px) scale(1.05);
+    transform: translateY(-2px) translateZ(0);
     box-shadow: var(--shadow-lg);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-primary span {
@@ -979,11 +980,17 @@ section * {
     pointer-events: none;
 }
 
+.portfolio-item {
+    transform: translateZ(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .portfolio-item:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-8px) translateZ(0);
     box-shadow: var(--shadow-xl);
     z-index: 10;
     position: relative;
+    will-change: transform;
 }
 
 .portfolio-item:hover::after {
@@ -1725,8 +1732,8 @@ body:not(.light-theme) .form-message-error {
 /* Scroll Animations */
 .fade-in {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(20px) translateZ(0);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity, transform;
 }
 
@@ -1751,8 +1758,8 @@ body:not(.light-theme) .form-message-error {
 
 .slide-in-right {
     opacity: 0;
-    transform: translateX(50px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateX(50px) translateZ(0);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity, transform;
 }
 
