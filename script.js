@@ -533,12 +533,16 @@ function validateField(field) {
 }
 
 // Initialize EmailJS
-// Replace 'YOUR_PUBLIC_KEY' with your EmailJS public key
-// Get it from https://dashboard.emailjs.com/admin/integration
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-const EMAILJS_CONTACT_TEMPLATE = 'YOUR_CONTACT_TEMPLATE_ID';
-const EMAILJS_NEWSLETTER_TEMPLATE = 'YOUR_NEWSLETTER_TEMPLATE_ID';
+// Get your Public Key from: https://dashboard.emailjs.com/admin/integration
+// Get your Service ID from: https://dashboard.emailjs.com/admin/service
+// Get your Template IDs from: https://dashboard.emailjs.com/admin/template
+const EMAILJS_PUBLIC_KEY = 'GgkF4EXvRp9ePaCIE'; // Public key (safe to expose in client-side code)
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'; // Replace with your service ID
+const EMAILJS_CONTACT_TEMPLATE = 'YOUR_CONTACT_TEMPLATE_ID'; // Replace with your contact form template ID
+const EMAILJS_NEWSLETTER_TEMPLATE = 'YOUR_NEWSLETTER_TEMPLATE_ID'; // Replace with your newsletter template ID
+
+// ⚠️ SECURITY NOTE: Private key (frP4Vv1nTBFTX3-34w7SE) should NEVER be added to client-side code!
+// Private keys are only for server-side use. Keep it secure and never commit it to version control.
 
 // Initialize EmailJS if available
 if (typeof emailjs !== 'undefined') {
@@ -580,7 +584,10 @@ if (contactForm) {
         
         try {
             // Check if EmailJS is configured
-            if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+            if (typeof emailjs !== 'undefined' && 
+                EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' && 
+                EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' && 
+                EMAILJS_CONTACT_TEMPLATE !== 'YOUR_CONTACT_TEMPLATE_ID') {
                 // Send email via EmailJS
                 await emailjs.send(
                     EMAILJS_SERVICE_ID,
@@ -656,7 +663,10 @@ if (newsletterForm) {
         
         try {
             // Check if EmailJS is configured
-            if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+            if (typeof emailjs !== 'undefined' && 
+                EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' && 
+                EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' && 
+                EMAILJS_NEWSLETTER_TEMPLATE !== 'YOUR_NEWSLETTER_TEMPLATE_ID') {
                 // Send email via EmailJS
                 await emailjs.send(
                     EMAILJS_SERVICE_ID,
