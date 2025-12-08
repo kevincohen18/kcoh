@@ -734,6 +734,8 @@ if (cookieConsent) {
 // MODERN DEVELOPER EFFECTS & ANIMATIONS
 // ============================================
 
+const isMinimalMode = () => document.body.classList.contains('minimal-mode');
+
 // Matrix Rain Effect
 function initMatrixRain() {
     const canvas = document.createElement('canvas');
@@ -758,6 +760,10 @@ function initMatrixRain() {
     const drops = Array(Math.floor(columns)).fill(1);
 
     function draw() {
+        if (isMinimalMode()) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
+        }
         ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -882,10 +888,16 @@ function initCodeTyping() {
         codeDisplay.style.opacity = '1';
         codeDisplay.style.pointerEvents = 'auto';
         codeDisplay.style.transform = 'translate(-50%, 0)';
-        if (codeToggle) codeToggle.textContent = 'Hide code';
+        if (codeToggle) {
+            codeToggle.textContent = 'Hide code';
+            codeToggle.setAttribute('aria-pressed', 'true');
+        }
 
-        if (fromButton && codeDisplay.dataset.typed !== 'true') {
-            codeDisplay.dataset.typed = 'true';
+        if (fromButton) {
+            lineIndex = 0;
+            charIndex = 0;
+            currentLine = '';
+            codeDisplay.innerHTML = '';
             setTimeout(typeCode, 250);
         }
     };
@@ -895,7 +907,10 @@ function initCodeTyping() {
         codeDisplay.style.opacity = '0';
         codeDisplay.style.pointerEvents = 'none';
         codeDisplay.style.transform = 'translate(-50%, 10px)';
-        if (codeToggle) codeToggle.textContent = 'Show code';
+        if (codeToggle) {
+            codeToggle.textContent = 'Show code';
+            codeToggle.setAttribute('aria-pressed', 'false');
+        }
 
         setTimeout(() => {
             lineIndex = 0;
@@ -1339,12 +1354,19 @@ function initClickExplosion() {
     }
 
     document.addEventListener('click', (e) => {
+        if (isMinimalMode()) return;
         for (let i = 0; i < 30; i++) {
             particles.push(new ExplosionParticle(e.clientX, e.clientY));
         }
     });
 
     function animateExplosions() {
+        if (isMinimalMode()) {
+            particles = [];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(animateExplosions);
+            return;
+        }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.globalAlpha = 1;
 
@@ -1414,6 +1436,7 @@ function initMouseTrail() {
 
     let lastX = 0, lastY = 0;
     document.addEventListener('mousemove', (e) => {
+        if (isMinimalMode()) return;
         const dist = Math.sqrt((e.clientX - lastX) ** 2 + (e.clientY - lastY) ** 2);
         if (dist > 5) {
             trail.push(new TrailParticle(e.clientX, e.clientY));
@@ -1423,6 +1446,12 @@ function initMouseTrail() {
     });
 
     function animateTrail() {
+        if (isMinimalMode()) {
+            trail.length = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(animateTrail);
+            return;
+        }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         for (let i = trail.length - 1; i >= 0; i--) {
@@ -1473,6 +1502,7 @@ function initRippleEffect() {
     document.head.appendChild(style);
 
     document.addEventListener('click', (e) => {
+        if (isMinimalMode()) return;
         const ripple = document.createElement('div');
         ripple.className = 'ripple-wave';
         ripple.style.left = (e.clientX - 150) + 'px';
@@ -1931,6 +1961,8 @@ function initMinimalMode(codeTyping) {
         toggleBtn.setAttribute('aria-pressed', String(isOn));
         toggleBtn.textContent = isOn ? 'Minimal mode: On' : 'Minimal mode';
         if (isOn && codeTyping?.hide) codeTyping.hide();
+        const palette = document.querySelector('.dev-palette');
+        if (isOn && palette) palette.classList.remove('open');
     };
 
     toggleBtn.addEventListener('click', () => {

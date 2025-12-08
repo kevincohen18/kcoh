@@ -167,6 +167,12 @@ body.light-theme {
     font-size: 0.95rem;
 }
 
+@media (max-width: 768px) {
+    .palette-toggle {
+        display: none;
+    }
+}
+
 .nav-link {
     text-decoration: none;
     color: var(--text-primary);
@@ -2451,6 +2457,16 @@ body:not(.light-theme) .navbar {
 
 .minimal-mode .code-typing,
 .minimal-mode .code-toggle {
+    display: none !important;
+}
+
+.minimal-mode #matrix-rain,
+.minimal-mode #circuit-board,
+.minimal-mode #explosion-canvas,
+.minimal-mode #trail-canvas,
+.minimal-mode .ripple-wave,
+.minimal-mode .magnetic-cursor,
+.minimal-mode .cursor-ring {
     display: none !important;
 }
 
