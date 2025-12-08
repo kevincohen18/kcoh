@@ -863,10 +863,11 @@ section * {
     padding: 2.5rem;
     border-radius: 1rem;
     box-shadow: var(--shadow-sm);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
+    transform: translateZ(0);
 }
 
 .service-card::before {
@@ -877,7 +878,8 @@ section * {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-    transition: left 0.5s ease;
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: left;
 }
 
 .service-card:hover::before {
@@ -885,11 +887,12 @@ section * {
 }
 
 .service-card:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-8px) scale(1.01) translateZ(0);
     box-shadow: var(--shadow-xl);
     border-color: var(--primary-color);
     z-index: 10;
     position: relative;
+    will-change: transform;
 }
 
 .service-icon {
@@ -1710,7 +1713,8 @@ body:not(.light-theme) .form-message-error {
 .social-link:hover {
     background: var(--primary-color);
     color: white;
-    transform: translateY(-3px);
+    transform: translateY(-2px) translateZ(0);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .social-link svg {
@@ -1734,8 +1738,8 @@ body:not(.light-theme) .form-message-error {
 
 .slide-in-left {
     opacity: 0;
-    transform: translateX(-50px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateX(-50px) translateZ(0);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity, transform;
 }
 
@@ -1760,8 +1764,8 @@ body:not(.light-theme) .form-message-error {
 
 .scale-in {
     opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: scale(0.95) translateZ(0);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity, transform;
 }
 
@@ -1774,8 +1778,8 @@ body:not(.light-theme) .form-message-error {
 /* Stagger animation for grid items */
 .stagger-item {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(20px) translateZ(0);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity, transform;
 }
 
@@ -2392,15 +2396,69 @@ body:not(.light-theme) .navbar {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Performance Optimization - Use GPU acceleration */
+/* Optimize default transition durations for snappier feel */
+* {
+    transition-duration: 0.2s;
+}
+
+/* Longer transitions only for specific elements */
+.service-card,
+.portfolio-item,
+.testimonial-card {
+    transition-duration: 0.3s;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Performance Optimization - Use GPU acceleration strategically */
 .service-card,
 .portfolio-item,
 .testimonial-card,
 .btn,
-.dev-badge {
-    will-change: transform, opacity;
+.dev-badge,
+.hero-content,
+.tech-icon {
     transform: translateZ(0);
     backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Only set will-change when elements are animating */
+.service-card:hover,
+.portfolio-item:hover,
+.testimonial-card:hover,
+.btn:hover,
+.dev-badge:hover {
+    will-change: transform;
+}
+
+.service-card,
+.portfolio-item,
+.testimonial-card {
+    will-change: auto;
+}
+
+/* Remove will-change after animation completes */
+.service-card.visible,
+.portfolio-item.visible,
+.testimonial-card.visible {
+    will-change: auto;
 }
 
 /* Mobile-specific performance optimizations */
@@ -2684,9 +2742,17 @@ body:not(.light-theme) .navbar {
         opacity: 0.08;
     }
 
-    /* Optimize transitions */
+    /* Optimize transitions for mobile */
     * {
         transition-duration: 0.2s !important;
+    }
+
+    /* Ensure smooth responsive transitions */
+    .hero-content,
+    .section-header,
+    .service-card,
+    .portfolio-item {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* Ensure touch targets are at least 44x44px */
@@ -3712,7 +3778,14 @@ body:not(.light-theme) .navbar {
     color: var(--text-secondary);
 }
 
-/* Responsive Design */
+/* Responsive Design - Smooth breakpoint transitions */
+@media (max-width: 1024px) {
+    /* Tablet optimizations */
+    section {
+        padding: 100px 0;
+    }
+}
+
 @media (max-width: 768px) {
     /* Navigation improvements */
     .nav-wrapper {

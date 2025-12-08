@@ -42,18 +42,25 @@ window.addEventListener('scroll', () => {
 
 // Smooth scroll is now handled by the enhanced smoothScrollTo function below
 
-// Enhanced Intersection Observer for animations
+// Enhanced Intersection Observer for animations - optimized for smoothness
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: [0, 0.1, 0.2],
+    rootMargin: '0px 0px -30px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            // Force reflow to ensure transform is applied
-            entry.target.offsetHeight;
+            // Use requestAnimationFrame for smooth animation triggering
+            requestAnimationFrame(() => {
+                entry.target.classList.add('visible');
+                // Remove will-change after animation
+                if (entry.target.style.willChange) {
+                    setTimeout(() => {
+                        entry.target.style.willChange = 'auto';
+                    }, 1000);
+                }
+            });
             observer.unobserve(entry.target);
         }
     });
@@ -345,7 +352,7 @@ window.addEventListener('load', () => {
 
 // Magnetic cursor effect will be added below with modern implementation
 
-// Smooth scroll with easing
+// Smooth scroll with easing - optimized for performance
 function smoothScrollTo(target) {
     const targetElement = document.querySelector(target);
     if (!targetElement) return;
@@ -353,6 +360,7 @@ function smoothScrollTo(target) {
     const targetPosition = targetElement.offsetTop - 80;
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
+    const duration = Math.min(800, Math.abs(distance) * 0.5); // Adaptive duration
     let startTime = null;
     
     function easeInOutCubic(t) {
@@ -362,11 +370,11 @@ function smoothScrollTo(target) {
     function animation(currentTime) {
         if (startTime === null) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
-        const duration = 1000;
-        const run = easeInOutCubic(timeElapsed / duration);
+        const progress = Math.min(timeElapsed / duration, 1);
+        const run = easeInOutCubic(progress);
         window.scrollTo(0, startPosition + distance * run);
         
-        if (timeElapsed < duration) {
+        if (progress < 1) {
             requestAnimationFrame(animation);
         }
     }
