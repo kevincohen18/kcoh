@@ -2621,6 +2621,60 @@ function initEnhancedMatrixRain() {
     });
 }
 
+// Typing Effect for Terminal Prompt
+function initTerminalTypingEffect() {
+    const terminalLine = document.querySelector('.terminal-line');
+    const terminalResponse = document.querySelector('.terminal-response');
+    
+    if (!terminalLine) return;
+    
+    const command = '$ whoami';
+    const response = 'Kevin Cohen';
+    
+    // Store original text
+    terminalLine.dataset.originalText = command;
+    if (terminalResponse) {
+        terminalResponse.dataset.originalText = response;
+    }
+    
+    // Clear initial text
+    terminalLine.textContent = '';
+    if (terminalResponse) {
+        terminalResponse.style.opacity = '0';
+        terminalResponse.textContent = '';
+    }
+    
+    let charIndex = 0;
+    
+    function typeCommand() {
+        if (charIndex < command.length) {
+            terminalLine.textContent = command.substring(0, charIndex + 1);
+            charIndex++;
+            setTimeout(typeCommand, 80); // Typing speed
+        } else {
+            // Command typed, wait a bit then show response
+            setTimeout(() => {
+                if (terminalResponse) {
+                    typeResponse();
+                }
+            }, 500);
+        }
+    }
+    
+    let responseCharIndex = 0;
+    function typeResponse() {
+        if (terminalResponse && responseCharIndex < response.length) {
+            terminalResponse.style.opacity = '1';
+            terminalResponse.textContent = response.substring(0, responseCharIndex + 1);
+            responseCharIndex++;
+            setTimeout(typeResponse, 100); // Slightly slower for response
+        }
+    }
+    
+    // Start typing after a short delay
+    setTimeout(typeCommand, 500);
+}
+
 // Typing Effect for Hero Title (FIXED - store original text properly)
 function initHeroTypingEffect() {
     const textElement = document.querySelector('.typing-animation');
