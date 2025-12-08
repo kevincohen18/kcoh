@@ -2135,13 +2135,112 @@ function initGitHubGraph() {
     const weeks = 52;
     const days = 7;
 
+    // Define "KEVIN" pixel pattern (7 rows × 5 letters)
+    // 1 = filled (level-4), 0 = empty (level-0 or low)
+    const kevinPattern = {
+        // K - 5 columns
+        K: [
+            [1, 0, 0, 1, 1],
+            [1, 0, 1, 0, 0],
+            [1, 1, 0, 0, 0],
+            [1, 1, 0, 0, 0],
+            [1, 0, 1, 0, 0],
+            [1, 0, 0, 1, 0],
+            [1, 0, 0, 0, 1]
+        ],
+        // E - 4 columns
+        E: [
+            [1, 1, 1, 1],
+            [1, 0, 0, 0],
+            [1, 0, 0, 0],
+            [1, 1, 1, 0],
+            [1, 0, 0, 0],
+            [1, 0, 0, 0],
+            [1, 1, 1, 1]
+        ],
+        // V - 5 columns
+        V: [
+            [1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1],
+            [0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0]
+        ],
+        // I - 3 columns
+        I: [
+            [1, 1, 1],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [1, 1, 1]
+        ],
+        // N - 5 columns
+        N: [
+            [1, 0, 0, 0, 1],
+            [1, 1, 0, 0, 1],
+            [1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1],
+            [1, 0, 0, 1, 1],
+            [1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1]
+        ]
+    };
+
+    // Flatten the pattern into a single array with positions
+    const letters = ['K', 'E', 'V', 'I', 'N'];
+    const letterSpacing = 1; // gap between letters
+    let totalWidth = 0;
+
+    // Calculate total width
+    letters.forEach(letter => {
+        totalWidth += kevinPattern[letter][0].length + letterSpacing;
+    });
+    totalWidth -= letterSpacing; // remove last spacing
+
+    // Center the text
+    const startWeek = Math.floor((weeks - totalWidth) / 2);
+
+    // Create pattern map
+    const patternMap = {};
+    let currentWeek = startWeek;
+
+    letters.forEach(letter => {
+        const letterPattern = kevinPattern[letter];
+        const letterWidth = letterPattern[0].length;
+
+        for (let col = 0; col < letterWidth; col++) {
+            for (let row = 0; row < days; row++) {
+                const week = currentWeek + col;
+                const key = `${week}-${row}`;
+                patternMap[key] = letterPattern[row][col];
+            }
+        }
+        currentWeek += letterWidth + letterSpacing;
+    });
+
+    // Generate the grid
     for (let week = 0; week < weeks; week++) {
         for (let day = 0; day < days; day++) {
             const box = document.createElement('div');
             box.className = 'contribution-box';
 
-            // Random contribution level (0-4)
-            const level = Math.random() > 0.3 ? Math.floor(Math.random() * 5) : 0;
+            const key = `${week}-${day}`;
+            let level;
+
+            // Check if this position is part of the KEVIN pattern
+            if (patternMap[key] === 1) {
+                level = 4; // Max level for the name
+            } else if (patternMap[key] === 0) {
+                level = 0; // Empty for contrast
+            } else {
+                // Random background contributions
+                level = Math.random() > 0.6 ? Math.floor(Math.random() * 3) : 0;
+            }
+
             box.classList.add(`level-${level}`);
 
             // Tooltip on hover
