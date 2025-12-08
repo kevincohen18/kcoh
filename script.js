@@ -2476,7 +2476,7 @@ function initGlitchText() {
 
         // Skip glitch effect for terminal/code style titles (those starting with $ or containing code syntax)
         const text = header.textContent.trim();
-        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ')) {
+        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ') || text.includes('Code Showcase')) {
             return;
         }
 
