@@ -512,7 +512,7 @@ if (contactForm) {
                         from_email: formData.email,
                         subject: formData.subject,
                         message: formData.message,
-                        to_email: 'contact@kcoh.ca'
+                        to_email: 'inquiries@kcoh.ca'
                     }
                 );
                 
@@ -526,7 +526,7 @@ if (contactForm) {
                 submitButton.disabled = false;
             } else {
                 // Fallback: Send email via mailto link
-                const mailtoLink = `mailto:contact@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
+                const mailtoLink = `mailto:inquiries@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
                 window.location.href = mailtoLink;
                 
                 // Show success message
@@ -542,7 +542,7 @@ if (contactForm) {
             }
         } catch (error) {
             console.error('Form submission error:', error);
-            showFormMessage(contactForm, 'Failed to send message. Please try again or email us directly at contact@kcoh.ca', 'error');
+            showFormMessage(contactForm, 'Failed to send message. Please try again or email us directly at inquiries@kcoh.ca', 'error');
             
             // Reset button
             submitButton.textContent = originalText;
@@ -585,7 +585,7 @@ if (newsletterForm) {
                     EMAILJS_NEWSLETTER_TEMPLATE,
                     {
                         email: email,
-                        to_email: 'contact@kcoh.ca'
+                        to_email: 'inquiries@kcoh.ca'
                     }
                 );
                 
@@ -1684,7 +1684,7 @@ function initInteractiveTerminal() {
         skills: 'Swift, SwiftUI, React, Node.js, Python, AWS, Docker, and more!',
         apps: '10+ published iOS apps on the App Store built with Swift & SwiftUI 🍎',
         portfolio: 'Visit https://kevincohen.ca to see my complete portfolio',
-        contact: 'Email: contact@kcoh.ca | Phone: 514-898-8716',
+        contact: 'Email: inquiries@kcoh.ca | Phone: 514-898-8716',
         clear: '',
         matrix: 'Entering the Matrix... 🟢',
         party: '🎉 Party mode activated! 🎊',

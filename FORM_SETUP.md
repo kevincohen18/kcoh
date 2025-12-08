@@ -80,7 +80,7 @@ If EmailJS is not configured, the forms will:
 
 ## Production:
 
-Once EmailJS is configured, all form submissions will be sent directly to your email address (contact@kcoh.ca).
+Once EmailJS is configured, all form submissions will be sent directly to your email address (inquiries@kcoh.ca).
 
 ---
 

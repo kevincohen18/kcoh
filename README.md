@@ -140,7 +140,7 @@ fetch('/api/contact', {
 ## Contact
 
 For questions or support, please contact:
-- Email: contact@kcoh.ca
+- Email: inquiries@kcoh.ca
 - Website: https://kcoh.ca
 
 ---
