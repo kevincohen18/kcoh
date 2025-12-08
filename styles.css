@@ -3708,9 +3708,28 @@ body:not(.light-theme) .navbar {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Navigation improvements */
+    .nav-wrapper {
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+    }
+
+    .logo-text-container {
+        padding: 0.5rem 0.875rem;
+    }
+
+    .logo-text {
+        font-size: 1.1rem;
+    }
+
+    .logo-subtext {
+        font-size: 0.65rem;
+    }
+
     .mobile-menu-toggle {
         display: flex;
         order: 2;
+        margin-left: auto;
     }
 
     .theme-toggle {
@@ -3741,11 +3760,33 @@ body:not(.light-theme) .navbar {
         left: 0;
     }
 
+    /* Hero section improvements */
     .hero {
         padding: 0;
-        padding-top: calc(80px + 2rem);
-        padding-bottom: 60px;
-        min-height: calc(100vh - 80px);
+        padding-top: calc(80px + 1.5rem);
+        padding-bottom: 3rem;
+        min-height: auto;
+    }
+
+    .hero-content {
+        padding: 0 1.25rem;
+        max-width: 100%;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 8vw, 2.5rem);
+        margin-bottom: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .terminal-prompt {
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+    }
+
+    .terminal-line,
+    .terminal-response {
+        font-size: 0.85rem;
     }
 
     .back-to-top {
@@ -3778,18 +3819,19 @@ body:not(.light-theme) .navbar {
         padding-bottom: 60px;
     }
     
+    /* Button improvements */
     .hero-buttons {
         flex-direction: column;
         width: 100%;
+        gap: 0.875rem;
+        margin-bottom: 2rem;
     }
     
     .hero-buttons .btn {
         width: 100%;
-        max-width: 300px;
-    }
-    
-    .hero-buttons {
-        flex-direction: column;
+        max-width: 100%;
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
     }
 
     .btn {
@@ -3818,20 +3860,25 @@ body:not(.light-theme) .navbar {
         margin-top: 2rem;
     }
 
+    /* Badge improvements */
     .hero-badges {
         gap: 0.75rem;
         margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .dev-badge {
-        font-size: 1rem;
-        padding: 0.65rem 1.5rem;
-        gap: 0.65rem;
+        font-size: 0.95rem;
+        padding: 0.6rem 1.25rem;
+        gap: 0.6rem;
+        flex: 0 1 auto;
+        min-width: fit-content;
     }
 
     .apple-logo-icon {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
     }
 
     .hero-buttons {
@@ -3839,22 +3886,58 @@ body:not(.light-theme) .navbar {
         gap: 0.75rem;
     }
 
+    /* Subtitle and text improvements */
     .hero-subtitle {
-        margin: 1.5rem auto 2rem;
-        font-size: 1rem;
+        margin: 1.25rem auto 2rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        padding: 0 0.5rem;
     }
 
-    .hero-title {
-        margin-bottom: 2rem;
-    }
-
+    /* Tech stack improvements */
     .tech-stack-animation {
+        margin: 1.25rem 0;
         gap: 0.5rem;
     }
 
     .tech-icon {
-        font-size: 0.8rem;
-        padding: 0.4rem 1rem;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.875rem;
+    }
+
+    /* Code stats improvements */
+    .code-stats {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        padding: 1.5rem 1rem;
+        margin-top: 2rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+    }
+
+    /* Section spacing improvements */
+    section {
+        padding: 60px 0;
+    }
+
+    .section-header {
+        margin-bottom: 2.5rem;
+        padding: 0 1rem;
+    }
+
+    .section-title {
+        font-size: clamp(1.75rem, 6vw, 2.25rem);
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
     }
 
     .editor-header {
