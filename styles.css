@@ -2783,9 +2783,6 @@ body:not(.light-theme) .navbar {
         opacity: 0.9;
         transform: translateY(0);
     }
-}
-        opacity: 0.9;
-        transform: translateY(0);
     }
 }
 
