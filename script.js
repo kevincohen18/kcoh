@@ -1032,8 +1032,8 @@ function initMatrixRainBackground() {
     const frameInterval = 1000 / targetFPS;
     
     function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
         // Recalculate columns after resize
         columns = Math.floor(canvas.width / fontSize);
         drops = Array(columns).fill(1);
@@ -1105,6 +1105,20 @@ function initMatrixRainBackground() {
     window.addEventListener('beforeunload', () => {
         if (animationFrameId) {
             cancelAnimationFrame(animationFrameId);
+        }
+    });
+    
+    // Pause when tab is not visible (performance optimization)
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+        } else {
+            if (!animationFrameId) {
+                animationFrameId = requestAnimationFrame(draw);
+            }
         }
     });
 }
@@ -2363,7 +2377,7 @@ function initDeveloperPalette() {
     `;
 
     const closeBtn = palette.querySelector('.dev-palette-close');
-    
+
     // Ensure close button is clickable
     if (closeBtn) {
         closeBtn.style.pointerEvents = 'auto';
@@ -3382,7 +3396,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initPageTransitions();
     initModernHoverEffect();
     initDeveloperPalette();
-    enhanceLoadingScreen();
+        enhanceLoadingScreen();
     
     // Load matrix background early for site-wide effect (desktop only)
     if (window.innerWidth > 768) {
