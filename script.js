@@ -2386,8 +2386,10 @@ function initShakeEffects() {
     document.head.appendChild(shakeStyle);
 }
 
-// Developer Command Palette (press ? or Ctrl+K)
+// Developer Command Palette (press ? or Ctrl+K) - only on home page
 function initDeveloperPalette() {
+    const isHome = window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html') || window.location.pathname === '' || window.location.pathname === '/index.html';
+    if (!isHome) return;
     const palette = document.createElement('div');
     palette.className = 'dev-palette';
     palette.innerHTML = `
