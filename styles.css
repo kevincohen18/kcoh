@@ -86,6 +86,17 @@ body {
     -webkit-overflow-scrolling: touch;
     /* Prevent scroll chaining on mobile */
     overscroll-behavior-y: none;
+    width: 100%;
+    max-width: 100vw;
+}
+
+/* Ensure all images and media are responsive */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Removed body overlays for consistent background */
@@ -101,6 +112,14 @@ body.light-theme {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
 }
 
 /* Unified section background - all sections use same background */
@@ -153,7 +172,7 @@ section {
     align-items: center;
     padding: 1rem 0;
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .nav-wrapper > * {
@@ -167,6 +186,8 @@ section {
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .logo:hover {
@@ -950,8 +971,33 @@ section * {
 
 @media (max-width: 768px) {
     .services {
-        padding-top: 40px;
+        padding-top: 100px;
         padding-bottom: 40px;
+    }
+
+    .services-page,
+    .portfolio-page,
+    .about-page {
+        padding-top: 100px;
+    }
+
+    .services-grid,
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .service-card,
+    .portfolio-item {
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Ensure section headers have proper spacing */
+    .section-header {
+        margin-bottom: 2rem;
+        padding-top: 0;
     }
 }
 
@@ -5264,31 +5310,34 @@ html {
 @media (max-width: 768px) {
     /* Navigation improvements */
     .nav-wrapper {
-        padding: 0.75rem 1rem;
-        gap: 0.75rem;
+        padding: 0.75rem 0;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
     }
 
     .logo-text-container {
-        padding: 0.5rem 0.875rem;
+        padding: 0.4rem 0.75rem;
     }
 
     .logo-text {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .logo-subtext {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
 
     .mobile-menu-toggle {
         display: flex;
         order: 2;
         margin-left: auto;
+        flex-shrink: 0;
     }
 
     .theme-toggle {
         order: 3;
         margin-left: 0.5rem;
+        flex-shrink: 0;
     }
 
     .nav-menu {
@@ -5317,7 +5366,7 @@ html {
     /* Hero section improvements */
     .hero {
         padding: 0;
-        padding-top: calc(80px + 1.5rem);
+        padding-top: calc(90px + 2rem);
         padding-bottom: 3rem;
         min-height: auto;
     }
@@ -5368,10 +5417,7 @@ html {
         flex: 1;
     }
 
-    .hero {
-        padding-top: calc(80px + 2rem);
-        padding-bottom: 60px;
-    }
+    /* Removed duplicate hero padding - consolidated above */
     
     /* Button improvements */
     .hero-buttons {
