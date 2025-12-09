@@ -1002,57 +1002,116 @@ document.querySelectorAll('.faq-question').forEach(question => {
 
 const isMinimalMode = () => document.body.classList.contains('minimal-mode');
 
-// Matrix Rain Effect
-function initMatrixRain() {
+// Optimized Matrix Rain Background Effect (Site-wide)
+function initMatrixRainBackground() {
+    // Check if already initialized
+    if (document.getElementById('matrix-background')) return;
+    
+    // Skip on mobile for performance
+    if (window.innerWidth <= 768) return;
+    
     const canvas = document.createElement('canvas');
-    canvas.id = 'matrix-rain';
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.zIndex = '0';
-    canvas.style.opacity = '0.04';
-    document.querySelector('.hero').appendChild(canvas);
+    canvas.id = 'matrix-background';
+    canvas.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.06;
+        will-change: contents;
+    `;
+    document.body.insertBefore(canvas, document.body.firstChild);
 
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    let animationFrameId;
+    let lastFrameTime = 0;
+    const targetFPS = 30; // Reduced from 60 for better performance
+    const frameInterval = 1000 / targetFPS;
+    
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        // Recalculate columns after resize
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(1);
+    }
+    
+    resizeCanvas();
 
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>/\\|~';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const fontSize = 18; // Slightly larger for better visibility at lower opacity
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
 
-    function draw() {
-        if (isMinimalMode()) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function draw(currentTime) {
+        // Throttle to target FPS
+        if (currentTime - lastFrameTime < frameInterval) {
+            animationFrameId = requestAnimationFrame(draw);
             return;
         }
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
+        lastFrameTime = currentTime;
+        
+        if (isMinimalMode()) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            animationFrameId = requestAnimationFrame(draw);
+            return;
+        }
+
+        // Fade effect
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.03)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#6366f1';
-        ctx.font = fontSize + 'px monospace';
+        ctx.font = `${fontSize}px monospace`;
 
-        for (let i = 0; i < drops.length; i++) {
-            const text = chars[Math.floor(Math.random() * chars.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        // Draw fewer characters for performance (every other column on smaller screens)
+        const step = window.innerWidth < 1200 ? 2 : 1;
+        
+        for (let i = 0; i < drops.length; i += step) {
+            // Gradient effect for visual appeal
+            const gradient = ctx.createLinearGradient(0, drops[i] * fontSize, 0, (drops[i] + 1) * fontSize);
+            gradient.addColorStop(0, '#10b981');
+            gradient.addColorStop(0.5, '#6366f1');
+            gradient.addColorStop(1, '#a78bfa');
+            ctx.fillStyle = gradient;
 
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.97) {
                 drops[i] = 0;
             }
             drops[i]++;
         }
+
+        animationFrameId = requestAnimationFrame(draw);
     }
 
-    setInterval(draw, 35);
+    // Start animation
+    animationFrameId = requestAnimationFrame(draw);
 
+    // Debounced resize handler
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            resizeCanvas();
+        }, 250);
     });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+        }
+    });
+}
+
+// Legacy function for backward compatibility (now just calls background version)
+function initMatrixRain() {
+    initMatrixRainBackground();
 }
 
 // Code Typing Animation
@@ -3323,7 +3382,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initPageTransitions();
     initModernHoverEffect();
     initDeveloperPalette();
-        enhanceLoadingScreen();
+    enhanceLoadingScreen();
+    
+    // Load matrix background early for site-wide effect (desktop only)
+    if (window.innerWidth > 768) {
+        requestAnimationFrame(() => {
+            initMatrixRainBackground();
+        });
+    }
 });
 
 // Initialize all effects progressively for optimal performance
@@ -3355,7 +3421,8 @@ window.addEventListener('load', () => {
     // Phase 3: Heavy canvas effects (lazy load when browser is idle)
     const loadHeavyEffects = () => {
         if (window.innerWidth > 768) {
-            initMatrixRain();
+            // Matrix background loads early for site-wide effect
+            initMatrixRainBackground();
             initEnhancedMatrixRain();
         initCircuitBoard();
         initInteractiveParticles();

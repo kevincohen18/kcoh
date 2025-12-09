@@ -399,9 +399,7 @@ function initInteractiveTerminalPortfolio() {
             case 'apps':
                 handleApps();
                 break;
-            case 'matrix':
-                handleMatrix();
-                break;
+            // Matrix command removed - now a site-wide background effect
             case 'cowsay':
                 handleCowsay(nonFlags);
                 break;
@@ -583,7 +581,6 @@ function initInteractiveTerminalPortfolio() {
   <span class="help-command">apps</span>                     Show iOS apps information
 
 <span class="help-category">Fun Commands:</span>
-  <span class="help-command">matrix</span>                    Matrix rain effect
   <span class="help-command">cowsay &lt;text&gt;</span>      ASCII art cow
   <span class="help-command">fortune</span>                   Random quote
   <span class="help-command">neofetch</span>                  System information
@@ -696,79 +693,7 @@ function initInteractiveTerminalPortfolio() {
         addOutput(`  Visit <a href="https://kevincohen.ca" target="_blank" class="terminal-link">kevincohen.ca</a> for full portfolio`);
     }
 
-    function handleMatrix() {
-        addOutput(`<span class="matrix-text">Entering the Matrix... 🟢</span>`);
-        
-        // Create matrix rain effect directly in terminal
-        const matrixCanvas = document.createElement('canvas');
-        matrixCanvas.id = 'terminal-matrix-rain';
-        matrixCanvas.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.15;
-        `;
-        document.body.appendChild(matrixCanvas);
-        
-        const ctx = matrixCanvas.getContext('2d');
-        matrixCanvas.width = window.innerWidth;
-        matrixCanvas.height = window.innerHeight;
-        
-        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const fontSize = 16;
-        const columns = Math.floor(matrixCanvas.width / fontSize);
-        const drops = [];
-        
-        for (let i = 0; i < columns; i++) {
-            drops[i] = Math.random() * -100;
-        }
-        
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
-            ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-            
-            ctx.font = fontSize + 'px monospace';
-            
-            for (let i = 0; i < drops.length; i++) {
-                const gradient = ctx.createLinearGradient(0, drops[i] * fontSize, 0, (drops[i] + 1) * fontSize);
-                gradient.addColorStop(0, '#10b981');
-                gradient.addColorStop(1, '#6366f1');
-                ctx.fillStyle = gradient;
-                
-                const char = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-                
-                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.98) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-            
-            requestAnimationFrame(drawMatrix);
-        }
-        
-        drawMatrix();
-        
-        // Auto-remove after 10 seconds
-        setTimeout(() => {
-            if (matrixCanvas && matrixCanvas.parentNode) {
-                matrixCanvas.parentNode.removeChild(matrixCanvas);
-            }
-        }, 10000);
-        
-        // Also try to call global function if available
-        if (typeof initMatrixRain === 'function') {
-            try {
-                initMatrixRain();
-            } catch (e) {
-                console.log('Matrix rain function not available');
-            }
-        }
-    }
+    // Matrix command removed - now a site-wide background effect
 
     function handleCowsay(args) {
         const text = args.join(' ') || 'Hello from KCOH Terminal!';
