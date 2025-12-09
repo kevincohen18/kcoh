@@ -54,23 +54,7 @@ navLinks.forEach(link => {
     });
 });
 
-// Navbar scroll effect (throttled for performance)
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
-
-const handleNavbarScroll = throttleRAF(() => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
-});
-
-window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+// Navbar scroll effect removed - navbar stays fixed and consistent
 
 // Smooth scroll is now handled by the enhanced smoothScrollTo function below
 

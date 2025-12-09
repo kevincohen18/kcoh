@@ -68,25 +68,9 @@ navLinks.forEach(link => {
 });
 
 // ============================================
-// NAVBAR SCROLL EFFECT
+// NAVBAR SCROLL EFFECT - REMOVED
 // ============================================
-
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
-
-const handleNavbarScroll = throttleRAF(() => {
-    const currentScroll = window.pageYOffset;
-
-    if (currentScroll > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-
-    lastScroll = currentScroll;
-});
-
-window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+// Navbar scroll effect removed - navbar stays fixed and consistent
 
 // ============================================
 // INTERSECTION OBSERVER FOR ANIMATIONS
