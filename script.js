@@ -1113,6 +1113,7 @@ function initMatrixRainBackground() {
 
     // Start animation
     animationFrameId = requestAnimationFrame(draw);
+    console.log('Matrix background canvas created and animation started', canvas);
 
     // Debounced resize handler
     let resizeTimeout;
