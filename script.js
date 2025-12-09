@@ -601,6 +601,7 @@ if (contactForm) {
         const formData = {
             name: document.getElementById('name').value.trim(),
             email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
             subject: document.getElementById('subject').value.trim(),
             message: document.getElementById('message').value.trim()
         };
@@ -618,6 +619,7 @@ if (contactForm) {
                     data: {
                         name: formData.name, // Primary - matches template {{name}}
                         email: formData.email, // Primary - matches template {{email}}
+                        phone: formData.phone,
                         from_name: formData.name,
                         from_email: formData.email,
                         subject: formData.subject,
@@ -634,6 +636,7 @@ if (contactForm) {
                     {
                         name: formData.name, // Primary - matches template {{name}}
                         email: formData.email, // Primary - matches template {{email}}
+                        phone: formData.phone,
                         from_name: formData.name, // Also include for compatibility
                         from_email: formData.email, // Also include for compatibility
                         subject: formData.subject,
@@ -655,7 +658,7 @@ if (contactForm) {
                 submitButton.disabled = false;
             } else {
                 // Fallback: Send email via mailto link
-                const mailtoLink = `mailto:inquiries@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
+                const mailtoLink = `mailto:inquiries@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`)}`;
                 window.location.href = mailtoLink;
                 
                 // Show success message

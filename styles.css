@@ -1349,6 +1349,12 @@ section * {
     font-size: 0.95rem;
 }
 
+.required-asterisk {
+    color: #ef4444;
+    font-weight: 600;
+    margin-left: 0.25rem;
+}
+
 .form-group input,
 .form-group textarea {
     order: 2;
@@ -1360,6 +1366,13 @@ section * {
     font-size: 1rem;
     transition: all 0.3s ease;
     background: var(--bg-white);
+    color: var(--text-primary);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
 }
 
 .form-group input:focus,
