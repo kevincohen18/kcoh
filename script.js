@@ -1027,7 +1027,7 @@ function initMatrixRainBackground() {
     if (document.body) {
         if (document.body.firstChild) {
             document.body.insertBefore(canvas, document.body.firstChild);
-        } else {
+                } else {
             document.body.appendChild(canvas);
         }
     } else {
@@ -1046,8 +1046,8 @@ function initMatrixRainBackground() {
     const frameInterval = 1000 / targetFPS;
     
     function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
         // Recalculate columns after resize
         columns = Math.floor(canvas.width / fontSize);
         drops = Array(columns).fill(1);
@@ -1074,8 +1074,8 @@ function initMatrixRainBackground() {
             return;
         }
 
-        // Fade effect
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.03)';
+        // Fade effect - lighter fade to show more characters
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.015)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.font = `${fontSize}px monospace`;
