@@ -280,10 +280,10 @@ window.addEventListener('load', () => {
 });
 
 // Auto-center on window resize
-let resizeTimeout;
+let autoCenterResizeTimeout;
 window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
+    clearTimeout(autoCenterResizeTimeout);
+    autoCenterResizeTimeout = setTimeout(() => {
         autoCenterContent();
     }, 250);
 });
