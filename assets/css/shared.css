@@ -121,9 +121,7 @@ section {
     box-sizing: border-box;
 }
 
-.navbar.scrolled {
-    box-shadow: var(--shadow-md);
-}
+/* Navbar scroll effect removed - navbar stays fixed and consistent */
 
 .nav-wrapper {
     display: flex;
