@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KCOH Software Inc. - Latest Updates</title>
+    <description>Stay updated with the latest projects, services, and tech insights from KCOH Software Inc. Specializing in iOS/Swift development, web applications, and custom software solutions.</description>
+    <link>https://kcohsoftware.com</link>
+    <atom:link href="https://kcohsoftware.com/rss.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Mon, 09 Dec 2024 00:00:00 GMT</lastBuildDate>
+    <generator>KCOH Software Inc.</generator>
+    <webMaster>contact@kcohsoftware.com (KCOH Software Inc.)</webMaster>
+    <managingEditor>contact@kcohsoftware.com (KCOH Software Inc.)</managingEditor>
+    <category>Technology</category>
+    <category>Software Development</category>
+    <category>iOS Development</category>
+    <category>Web Development</category>
+    <ttl>1440</ttl>
+    <image>
+      <url>https://kcohsoftware.com/favicon.svg</url>
+      <title>KCOH Software Inc.</title>
+      <link>https://kcohsoftware.com</link>
+      <width>144</width>
+      <height>144</height>
+    </image>
+
+    <!-- Example Blog Post/Update 1 -->
+    <item>
+      <title>New iOS Task Manager App Launched on App Store</title>
+      <description><![CDATA[
+        We're excited to announce the launch of our latest iOS application - a full-featured task manager built with SwiftUI.
+        This productivity app includes cloud sync, smart notifications, and an intuitive user interface designed for maximum efficiency.
+        Download now from the App Store and boost your productivity!
+      ]]></description>
+      <link>https://kcohsoftware.com/portfolio.html#ios-task-manager</link>
+      <guid isPermaLink="true">https://kcohsoftware.com/portfolio.html#ios-task-manager</guid>
+      <pubDate>Mon, 09 Dec 2024 10:00:00 GMT</pubDate>
+      <author>contact@kcohsoftware.com (KCOH Software Inc.)</author>
+      <category>iOS Development</category>
+      <category>Mobile Apps</category>
+      <category>Product Launch</category>
+    </item>
+
+    <!-- Example Blog Post/Update 2 -->
+    <item>
+      <title>10+ Apps Now Available on the App Store</title>
+      <description><![CDATA[
+        A major milestone for KCOH Software Inc. - we've now published over 10 applications on the Apple App Store!
+        Our portfolio spans productivity tools, utilities, and custom business solutions, all built with Swift and SwiftUI.
+        Thank you to our clients and users for your continued support.
+      ]]></description>
+      <link>https://kcohsoftware.com/portfolio.html</link>
+      <guid isPermaLink="true">https://kcohsoftware.com/portfolio-milestone-2024</guid>
+      <pubDate>Fri, 06 Dec 2024 14:30:00 GMT</pubDate>
+      <author>contact@kcohsoftware.com (KCOH Software Inc.)</author>
+      <category>Company News</category>
+      <category>iOS Development</category>
+      <category>Milestones</category>
+    </item>
+
+    <!-- Example Blog Post/Update 3 -->
+    <item>
+      <title>Celebrating 5 Years of Software Excellence</title>
+      <description><![CDATA[
+        This month marks 5 years of KCOH Software Inc. delivering cutting-edge software solutions to clients worldwide.
+        From web applications to iOS apps, we've maintained a 99.9% project success rate.
+        Looking forward to many more years of innovation and collaboration!
+      ]]></description>
+      <link>https://kcohsoftware.com/about.html</link>
+      <guid isPermaLink="true">https://kcohsoftware.com/5-year-anniversary</guid>
+      <pubDate>Mon, 02 Dec 2024 09:00:00 GMT</pubDate>
+      <author>contact@kcohsoftware.com (KCOH Software Inc.)</author>
+      <category>Company News</category>
+      <category>Anniversary</category>
+      <category>Milestones</category>
+    </item>
+
+    <!-- Example Blog Post/Update 4 -->
+    <item>
+      <title>Enhanced Web Development Services Now Available</title>
+      <description><![CDATA[
+        We've expanded our service offerings with enhanced web development capabilities including:
+        - React & Next.js applications
+        - Node.js backend development
+        - Cloud deployment and hosting
+        - Real-time features with WebSockets
+        - RESTful API development
+        Contact us to discuss your next project!
+      ]]></description>
+      <link>https://kcohsoftware.com/services.html</link>
+      <guid isPermaLink="true">https://kcohsoftware.com/web-services-expansion</guid>
+      <pubDate>Wed, 27 Nov 2024 11:15:00 GMT</pubDate>
+      <author>contact@kcohsoftware.com (KCOH Software Inc.)</author>
+      <category>Web Development</category>
+      <category>Services</category>
+      <category>Announcements</category>
+    </item>
+
+    <!-- Example Blog Post/Update 5 -->
+    <item>
+      <title>UI/UX Design Tips: Creating Intuitive Mobile Interfaces</title>
+      <description><![CDATA[
+        Great design is invisible. In this insight, we share our approach to creating intuitive mobile interfaces:
+        1. Start with user research and personas
+        2. Follow platform guidelines (iOS Human Interface Guidelines)
+        3. Prioritize simplicity and clarity
+        4. Use consistent visual language
+        5. Test with real users early and often
+        Learn more about our design process on our services page.
+      ]]></description>
+      <link>https://kcohsoftware.com/services.html#ui-ux-design</link>
+      <guid isPermaLink="true">https://kcohsoftware.com/blog/ui-ux-tips-mobile</guid>
+      <pubDate>Fri, 22 Nov 2024 15:45:00 GMT</pubDate>
+      <author>contact@kcohsoftware.com (KCOH Software Inc.)</author>
+      <category>UI/UX Design</category>
+      <category>Tips & Insights</category>
+      <category>Mobile Development</category>
+    </item>
+
+  </channel>
+</rss>

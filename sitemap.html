@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap | KCOH Software Inc.</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css?v=3.0.0">
+    <link rel="stylesheet" href="quick-wins.css?v=1.0.0">
+    <style>
+        .sitemap-page {
+            padding-top: 120px;
+            padding-bottom: 4rem;
+            min-height: 100vh;
+        }
+
+        .sitemap-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .sitemap-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .sitemap-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .sitemap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .sitemap-section {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .sitemap-section:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .sitemap-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sitemap-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sitemap-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .sitemap-links a:hover {
+            color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+            padding-left: 1rem;
+        }
+
+        .sitemap-links a::before {
+            content: '→';
+            color: #6366f1;
+            font-weight: 700;
+        }
+
+        .last-updated {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .sitemap-page {
+                padding-top: 100px;
+            }
+
+            .sitemap-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .sitemap-section {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#logoGradient)"/>
+                        <path d="M12 28L20 12L28 28M15 22H25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#8b5cf6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">KCOH Software Inc.</span>
+                </a>
+                <div class="nav-buttons">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 12h18M3 6h18M3 18h18" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="portfolio.html" class="nav-link">Portfolio</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link nav-link-cta">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sitemap Content -->
+    <section class="sitemap-page">
+        <div class="container">
+            <div class="sitemap-header">
+                <h1 class="sitemap-title">Site Map</h1>
+                <p class="sitemap-description">
+                    Complete navigation guide to all pages and sections of KCOH Software Inc.
+                </p>
+            </div>
+
+            <div class="sitemap-grid">
+                <!-- Main Pages -->
+                <div class="sitemap-section">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-width="2"/>
+                            <polyline points="9 22 9 12 15 12 15 22" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Main Pages</h2>
+                    <ul class="sitemap-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="sitemap-section">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke-width="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Services</h2>
+                    <ul class="sitemap-links">
+                        <li><a href="services.html#web-development">Web Development</a></li>
+                        <li><a href="services.html#mobile-apps">iOS App Development</a></li>
+                        <li><a href="services.html#ui-ux-design">UI/UX Design</a></li>
+                        <li><a href="services.html#cloud-solutions">Cloud Solutions</a></li>
+                        <li><a href="services.html#automation">Automation & Bots</a></li>
+                        <li><a href="services.html#consulting">Technical Consulting</a></li>
+                    </ul>
+                </div>
+
+                <!-- Portfolio Categories -->
+                <div class="sitemap-section">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="7" height="7" stroke-width="2"/>
+                            <rect x="14" y="3" width="7" height="7" stroke-width="2"/>
+                            <rect x="14" y="14" width="7" height="7" stroke-width="2"/>
+                            <rect x="3" y="14" width="7" height="7" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Portfolio</h2>
+                    <ul class="sitemap-links">
+                        <li><a href="portfolio.html#all">All Projects</a></li>
+                        <li><a href="portfolio.html#web">Web Applications</a></li>
+                        <li><a href="portfolio.html#mobile">Mobile Apps</a></li>
+                        <li><a href="portfolio.html#design">Design Work</a></li>
+                        <li><a href="portfolio.html#automation">Automation Projects</a></li>
+                    </ul>
+                </div>
+
+                <!-- About Sections -->
+                <div class="sitemap-section">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2"/>
+                            <circle cx="12" cy="7" r="4" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">About</h2>
+                    <ul class="sitemap-links">
+                        <li><a href="about.html#story">Our Story</a></li>
+                        <li><a href="about.html#team">Meet the Team</a></li>
+                        <li><a href="about.html#values">Our Values</a></li>
+                        <li><a href="about.html#tech-stack">Technology Stack</a></li>
+                        <li><a href="about.html#process">Development Process</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Options -->
+                <div class="sitemap-section">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Get In Touch</h2>
+                    <ul class="sitemap-links">
+                        <li><a href="contact.html#form">Contact Form</a></li>
+                        <li><a href="contact.html#email">Email Us</a></li>
+                        <li><a href="contact.html#social">Social Media</a></li>
+                        <li><a href="contact.html#location">Location</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources & Info -->
+                <div class="sitemap-section">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path d="M12 16v-4M12 8h.01" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Resources</h2>
+                    <ul class="sitemap-links">
+                        <li><a href="sitemap.html">Site Map</a></li>
+                        <li><a href="404.html">404 Page</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="last-updated">
+                Last updated: December 2025 | &copy; 2025 KCOH Software Inc. All rights reserved.
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Widget (from quick-wins.css) -->
+    <div class="chat-widget">
+        <button class="chat-button" id="chatButton" aria-label="Open chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
+            </svg>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

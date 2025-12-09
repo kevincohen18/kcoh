@@ -3728,3 +3728,284 @@ if ('IntersectionObserver' in window) {
 }
 
 console.log('Auto-center contribution graph loaded ✓');
+
+// ============================================
+// CHAT WIDGET FUNCTIONALITY
+// ============================================
+
+function initChatWidget() {
+    const chatButton = document.getElementById('chatButton');
+    const chatBox = document.createElement('div');
+    chatBox.className = 'chat-box';
+    chatBox.id = 'chatBox';
+
+    chatBox.innerHTML = `
+        <div class="chat-header">
+            <div class="chat-header-content">
+                <div class="chat-avatar">KC</div>
+                <div class="chat-info">
+                    <h4>KCOH Support</h4>
+                    <p>Online now</p>
+                </div>
+            </div>
+            <button class="chat-close" id="chatClose" aria-label="Close chat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message bot">
+                <div class="message-avatar">KC</div>
+                <div class="message-bubble">
+                    Hi! 👋 Thanks for visiting KCOH Software Inc. How can I help you today?
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <form class="chat-input-form" id="chatForm">
+                <input
+                    type="text"
+                    class="chat-input"
+                    id="chatInput"
+                    placeholder="Type your message..."
+                    autocomplete="off"
+                    required
+                />
+                <button type="submit" class="chat-send" aria-label="Send message">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    `;
+
+    if (chatButton) {
+        chatButton.parentElement.appendChild(chatBox);
+
+        // Toggle chat box
+        chatButton.addEventListener('click', () => {
+            chatBox.classList.toggle('active');
+            if (chatBox.classList.contains('active')) {
+                document.getElementById('chatInput').focus();
+            }
+        });
+
+        // Close chat
+        const chatClose = document.getElementById('chatClose');
+        if (chatClose) {
+            chatClose.addEventListener('click', () => {
+                chatBox.classList.remove('active');
+            });
+        }
+
+        // Handle message sending
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        if (chatForm && chatInput && chatMessages) {
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const message = chatInput.value.trim();
+                if (!message) return;
+
+                // Add user message
+                addChatMessage(message, 'user', chatMessages);
+                chatInput.value = '';
+
+                // Simulate bot response
+                setTimeout(() => {
+                    const responses = [
+                        "Thanks for your message! I'll connect you with our team shortly.",
+                        "Great question! You can reach us at contact@kcohsoftware.com or fill out our contact form.",
+                        "I'd love to help! Please visit our Services page to see what we offer, or contact us directly for a custom solution.",
+                        "Thanks for reaching out! Our team typically responds within 24 hours. For urgent matters, please email us directly.",
+                        "That's a great project idea! I recommend booking a consultation call to discuss your requirements in detail."
+                    ];
+
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addChatMessage(randomResponse, 'bot', chatMessages);
+                }, 1000);
+            });
+        }
+    }
+}
+
+function addChatMessage(text, sender, container) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${sender}`;
+
+    const avatar = sender === 'bot' ? 'KC' : 'You';
+
+    messageDiv.innerHTML = `
+        <div class="message-avatar">${avatar}</div>
+        <div class="message-bubble">${text}</div>
+    `;
+
+    container.appendChild(messageDiv);
+
+    // Scroll to bottom
+    container.scrollTop = container.scrollHeight;
+}
+
+// Initialize chat widget when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChatWidget);
+} else {
+    initChatWidget();
+}
+
+console.log('Chat widget loaded ✓');
+
+// ============================================
+// SKELETON LOADING SCREENS
+// ============================================
+
+function initSkeletonLoaders() {
+    const loadingContainers = document.querySelectorAll('.loading-container');
+
+    loadingContainers.forEach(container => {
+        // Check if skeleton wrapper already exists
+        if (container.querySelector('.skeleton-wrapper')) {
+            return;
+        }
+
+        // Create skeleton wrapper
+        const skeletonWrapper = document.createElement('div');
+        skeletonWrapper.className = 'skeleton-wrapper';
+
+        // Determine skeleton type based on container's data attribute or class
+        const skeletonType = container.dataset.skeletonType || 'default';
+
+        // Generate skeleton HTML based on type
+        if (skeletonType === 'services') {
+            skeletonWrapper.innerHTML = generateServicesSkeleton();
+        } else if (skeletonType === 'portfolio') {
+            skeletonWrapper.innerHTML = generatePortfolioSkeleton();
+        } else if (skeletonType === 'list') {
+            skeletonWrapper.innerHTML = generateListSkeleton();
+        } else {
+            skeletonWrapper.innerHTML = generateDefaultSkeleton();
+        }
+
+        // Insert skeleton at the beginning
+        container.insertBefore(skeletonWrapper, container.firstChild);
+
+        // Simulate content loading (remove this in production - just for demo)
+        setTimeout(() => {
+            container.classList.add('loaded');
+        }, 2000);
+    });
+}
+
+function generateDefaultSkeleton() {
+    return `
+        <div class="container">
+            <div class="skeleton-grid">
+                ${generateSkeletonCard()}
+                ${generateSkeletonCard()}
+                ${generateSkeletonCard()}
+            </div>
+        </div>
+    `;
+}
+
+function generateSkeletonCard() {
+    return `
+        <div class="skeleton-card">
+            <div class="skeleton-header">
+                <div class="skeleton skeleton-avatar"></div>
+                <div>
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-subtitle"></div>
+                </div>
+            </div>
+            <div class="skeleton skeleton-text long"></div>
+            <div class="skeleton skeleton-text medium"></div>
+            <div class="skeleton skeleton-text short"></div>
+            <div class="skeleton skeleton-button"></div>
+        </div>
+    `;
+}
+
+function generateServicesSkeleton() {
+    return `
+        <div class="container">
+            <div class="skeleton-grid">
+                ${Array(6).fill('').map(() => `
+                    <div class="skeleton-service-card">
+                        <div class="skeleton skeleton-avatar" style="width: 50px; height: 50px;"></div>
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-text long"></div>
+                        <div class="skeleton skeleton-text medium"></div>
+                        <div class="skeleton skeleton-button"></div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function generatePortfolioSkeleton() {
+    return `
+        <div class="container">
+            <div class="skeleton-grid">
+                ${Array(6).fill('').map(() => `
+                    <div class="skeleton-portfolio-item">
+                        <div class="skeleton skeleton-portfolio-image"></div>
+                        <div class="skeleton-portfolio-content">
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-text medium"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function generateListSkeleton() {
+    return `
+        <div class="container">
+            ${Array(5).fill('').map(() => `
+                <div class="skeleton-list-item">
+                    <div class="skeleton skeleton-list-icon"></div>
+                    <div class="skeleton-list-content">
+                        <div class="skeleton skeleton-list-title"></div>
+                        <div class="skeleton skeleton-list-text"></div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// Auto-initialize loading containers on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSkeletonLoaders);
+} else {
+    initSkeletonLoaders();
+}
+
+// Utility function to manually trigger loading state
+window.showSkeletonLoader = function(containerSelector, type = 'default') {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    container.classList.remove('loaded');
+    container.dataset.skeletonType = type;
+    initSkeletonLoaders();
+};
+
+// Utility function to hide skeleton and show content
+window.hideSkeletonLoader = function(containerSelector) {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    container.classList.add('loaded');
+};
+
+console.log('Skeleton loaders loaded ✓');

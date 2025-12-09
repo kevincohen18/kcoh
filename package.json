@@ -1,0 +1,17 @@
+{
+  "name": "kcoh-software-website",
+  "version": "1.0.0",
+  "description": "KCOH Software Inc. - Professional Software Development Services",
+  "scripts": {
+    "build": "echo 'No build needed - static site'"
+  },
+  "keywords": [
+    "static-site",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Kevin Cohen - KCOH Software Inc.",
+  "license": "MIT"
+}
+
