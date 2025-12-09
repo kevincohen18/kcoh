@@ -1034,8 +1034,8 @@ function initMatrixRainBackground() {
         width: 100% !important;
         height: 100% !important;
         pointer-events: none !important;
-        z-index: 0 !important;
-        opacity: 0.2 !important;
+        z-index: 1 !important;
+        opacity: 0.25 !important;
         will-change: contents;
     `;
     // Insert at the very beginning of body to ensure it's behind everything
