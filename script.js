@@ -3062,42 +3062,24 @@ function initHolographicGrid() {
     });
 }
 
-// Glitch Text Effect on Hover (FIXED - excludes terminal/code titles)
-function initGlitchText() {
+// Modern Gradient Shimmer Effect on Hover - Professional & Sleek
+function initModernHoverEffect() {
     const headers = document.querySelectorAll('.section-title');
 
     headers.forEach(header => {
-        let glitchInterval;
-
-        // Store original text immediately
-        header.dataset.originalText = header.textContent;
-
-        // Skip glitch effect for terminal/code style titles and testimonials
+        // Skip effect for terminal/code style titles
         const text = header.textContent.trim();
-        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ') || text.includes('Code Showcase') || text.includes('Client Testimonials') || text.includes('Testimonials')) {
+        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ')) {
             return;
         }
 
+        // Add shimmer class on hover
         header.addEventListener('mouseenter', () => {
-            const originalText = header.dataset.originalText;
-            const glitchChars = '!<>-_\\/[]{}—=+*^?#________';
-
-            glitchInterval = setInterval(() => {
-                header.textContent = originalText
-                    .split('')
-                    .map(char => {
-                        if (Math.random() < 0.1) {
-                            return glitchChars[Math.floor(Math.random() * glitchChars.length)];
-                        }
-                        return char;
-                    })
-                    .join('');
-            }, 50);
+            header.classList.add('title-shimmer');
         });
 
         header.addEventListener('mouseleave', () => {
-            clearInterval(glitchInterval);
-            header.textContent = header.dataset.originalText;
+            header.classList.remove('title-shimmer');
         });
     });
 }
@@ -3178,7 +3160,7 @@ window.addEventListener('load', () => {
         initMatrixRain();
         const codeTyping = initCodeTyping();
         initMagneticCursor();
-        initGlitchEffect();
+        // initGlitchEffect(); // Replaced with modern shimmer effect
         initHolographicCards();
         initCircuitBoard();
         initInteractiveParticles();
@@ -3239,7 +3221,7 @@ window.addEventListener('load', () => {
         // initCyberScan(); // Removed - horizontal scan line effect
         initDataStream();
         initHolographicGrid();
-        initGlitchText();
+        initModernHoverEffect();
         initBinaryRain();
         initNeonPulse();
 
