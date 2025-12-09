@@ -186,27 +186,72 @@ const aliases = {
     'cls': 'clear'
 };
 
+// Achievement unlock function
+function unlockTerminalAchievement() {
+    // Wait for achievement system to be available
+    setTimeout(() => {
+        if (typeof unlockAchievement === 'function') {
+            unlockAchievement({
+                icon: '💻',
+                text: 'Terminal Hacker',
+                description: 'Discovered the interactive terminal!'
+            });
+        } else {
+            // Fallback if achievement system not loaded yet
+            const checkInterval = setInterval(() => {
+                if (typeof unlockAchievement === 'function') {
+                    clearInterval(checkInterval);
+                    unlockAchievement({
+                        icon: '💻',
+                        text: 'Terminal Hacker',
+                        description: 'Discovered the interactive terminal!'
+                    });
+                }
+            }, 100);
+            // Stop checking after 5 seconds
+            setTimeout(() => clearInterval(checkInterval), 5000);
+        }
+    }, 100);
+}
+
 // Initialize Interactive Terminal
 function initInteractiveTerminalPortfolio() {
     const terminalInput = document.getElementById('terminalInput');
     const terminalOutput = document.getElementById('terminalOutput');
     const terminalPrompt = document.getElementById('terminalPrompt');
     const terminalCursor = document.getElementById('terminalCursor');
+    const terminalInputLine = document.getElementById('terminalInputLine');
 
     if (!terminalInput || !terminalOutput) return;
 
-    // Focus terminal when section is visible
-    const terminalSection = document.querySelector('.terminal-portfolio');
-    if (terminalSection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => terminalInput.focus(), 500);
-                }
-            });
-        }, { threshold: 0.3 });
-        observer.observe(terminalSection);
+    let terminalDiscovered = false;
+
+    // Make terminal discoverable - show input on click/focus
+    function discoverTerminal() {
+        if (!terminalDiscovered) {
+            terminalDiscovered = true;
+            terminalInputLine.style.opacity = '1';
+            terminalInputLine.style.transition = 'opacity 0.5s ease';
+            terminalInput.placeholder = '';
+            unlockTerminalAchievement();
+        }
     }
+
+    // Discover on click anywhere in terminal
+    const terminalWindow = document.querySelector('.terminal-window');
+    if (terminalWindow) {
+        terminalWindow.addEventListener('click', discoverTerminal, { once: true });
+    }
+
+    // Discover on focus
+    terminalInput.addEventListener('focus', discoverTerminal, { once: true });
+    
+    // Discover on any keypress in terminal area
+    document.addEventListener('keydown', (e) => {
+        if (document.activeElement === terminalInput || terminalWindow?.contains(document.activeElement)) {
+            discoverTerminal();
+        }
+    }, { once: true });
 
     // Update prompt based on current path
     function updatePrompt() {

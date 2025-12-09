@@ -690,9 +690,11 @@ const EMAILJS_NEWSLETTER_TEMPLATE = 'template_4v48c53'; // Replace with your new
 // Get form elements
 const contactForm = document.getElementById('contactForm');
 const formInputs = contactForm ? contactForm.querySelectorAll('input, textarea') : [];
+const newsletterForm = document.getElementById('newsletterForm');
+const hasEmailForms = contactForm || newsletterForm;
 
 // Initialize EmailJS if available
-if (typeof emailjs !== 'undefined') {
+if (hasEmailForms && typeof emailjs !== 'undefined') {
     try {
         emailjs.init(EMAILJS_PUBLIC_KEY);
         console.log('EmailJS initialized successfully ✓');
@@ -705,7 +707,7 @@ if (typeof emailjs !== 'undefined') {
     } catch (error) {
         console.error('EmailJS initialization error:', error);
     }
-} else {
+} else if (hasEmailForms) {
     console.warn('EmailJS library not loaded. Forms will use mailto fallback.');
     console.warn('Make sure EmailJS SDK is loaded: https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js');
 }
@@ -842,7 +844,6 @@ if (contactForm) {
 }
 
 // Newsletter Form
-const newsletterForm = document.getElementById('newsletterForm');
 if (newsletterForm) {
     newsletterForm.addEventListener('submit', async (e) => {
         e.preventDefault();
