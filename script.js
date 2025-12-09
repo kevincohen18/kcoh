@@ -60,13 +60,13 @@ let lastScroll = 0;
 
 const handleNavbarScroll = throttleRAF(() => {
     const currentScroll = window.pageYOffset;
-
+    
     if (currentScroll > 100) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-
+    
     lastScroll = currentScroll;
 });
 
@@ -85,7 +85,7 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             // Use requestAnimationFrame for smooth animation triggering
             requestAnimationFrame(() => {
-                entry.target.classList.add('visible');
+            entry.target.classList.add('visible');
                 // Remove will-change after animation
                 if (entry.target.style.willChange) {
                     setTimeout(() => {
@@ -174,11 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Animate contact info items
-        document.querySelectorAll('.contact-item').forEach((el, index) => {
-            el.classList.add('slide-in-left');
-            el.style.transitionDelay = `${index * 0.15}s`;
-            observer.observe(el);
-        });
+    document.querySelectorAll('.contact-item').forEach((el, index) => {
+        el.classList.add('slide-in-left');
+        el.style.transitionDelay = `${index * 0.15}s`;
+        observer.observe(el);
+    });
 
         // Animate form intro
         const formIntro = contactSection.querySelector('.form-intro');
@@ -235,8 +235,8 @@ function safeRemoveLoader(delay = 0) {
     const loader = document.getElementById('loader');
     if (!loader) return;
 
-    setTimeout(() => {
-        loader.classList.add('hidden');
+        setTimeout(() => {
+            loader.classList.add('hidden');
         setTimeout(() => {
             if (loader.parentNode) {
                 loader.parentNode.removeChild(loader);
@@ -696,7 +696,7 @@ const hasEmailForms = contactForm || newsletterForm;
 // Initialize EmailJS if available
 if (hasEmailForms && typeof emailjs !== 'undefined') {
     try {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
+    emailjs.init(EMAILJS_PUBLIC_KEY);
         console.log('EmailJS initialized successfully ✓');
         console.log('EmailJS Config:', {
             publicKey: EMAILJS_PUBLIC_KEY,
@@ -910,7 +910,7 @@ if (newsletterForm) {
         } catch (error) {
             // Log error in development only
             if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                console.error('Newsletter subscription error:', error);
+            console.error('Newsletter subscription error:', error);
             }
             showFormMessage(newsletterForm, 'Failed to subscribe. Please try again.', 'error');
             
@@ -958,11 +958,11 @@ function showFormMessage(form, message, type) {
         form.insertBefore(messageDiv, inputGroup.nextSibling);
     } else {
         // For other forms, insert before submit button
-        const submitButton = form.querySelector('button[type="submit"]');
-        if (submitButton) {
-            submitButton.parentNode.insertBefore(messageDiv, submitButton);
-        } else {
-            form.appendChild(messageDiv);
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.parentNode.insertBefore(messageDiv, submitButton);
+    } else {
+        form.appendChild(messageDiv);
         }
     }
     
@@ -971,8 +971,8 @@ function showFormMessage(form, message, type) {
         setTimeout(() => {
             messageDiv.style.opacity = '0';
             messageDiv.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                messageDiv.remove();
+        setTimeout(() => {
+            messageDiv.remove();
             }, 300);
         }, 5000);
     }
@@ -1214,10 +1214,10 @@ function initCodeTyping() {
 
         setTimeout(() => {
             if (!isVisible) {
-                lineIndex = 0;
-                charIndex = 0;
-                currentLine = '';
-                codeDisplay.innerHTML = '';
+            lineIndex = 0;
+            charIndex = 0;
+            currentLine = '';
+            codeDisplay.innerHTML = '';
             }
         }, 400);
     };
@@ -1908,8 +1908,24 @@ function initInteractiveTerminal() {
         font-size: 0.9rem;
         max-height: 200px;
         overflow-y: auto;
+        word-wrap: break-word;
     `;
     terminalOutput.innerHTML = `<div>Welcome to KCOH Terminal v1.0</div><div>Type 'help' for available commands</div>`;
+    
+    // Add CSS for links in terminal
+    const linkStyle = document.createElement('style');
+    linkStyle.textContent = `
+        #terminal-output a {
+            color: #6366f1 !important;
+            text-decoration: underline !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+        }
+        #terminal-output a:hover {
+            color: #8b5cf6 !important;
+        }
+    `;
+    document.head.appendChild(linkStyle);
 
     const terminalInput = document.createElement('input');
     terminalInput.type = 'text';
@@ -2563,8 +2579,8 @@ function generateGraph(grid, weeks, days, namePattern, letters) {
                     level = 4;
                 }
                 box.classList.add(`level-${level}`);
-                const contributions = level * Math.floor(Math.random() * 5) + level;
-                box.title = `${contributions} contributions`;
+            const contributions = level * Math.floor(Math.random() * 5) + level;
+            box.title = `${contributions} contributions`;
             }
 
             box.addEventListener('mouseenter', () => {
@@ -3265,7 +3281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initPageTransitions();
     initModernHoverEffect();
     initDeveloperPalette();
-    enhanceLoadingScreen();
+        enhanceLoadingScreen();
 });
 
 // Initialize all effects progressively for optimal performance
@@ -3282,7 +3298,7 @@ window.addEventListener('load', () => {
     // Phase 2: Secondary effects (slight delay for smooth loading)
     requestAnimationFrame(() => {
         setTimeout(() => {
-            initHolographicCards();
+        initHolographicCards();
             initKonamiCode();
             initEasterEggs();
             initShakeEffects();
@@ -3299,8 +3315,8 @@ window.addEventListener('load', () => {
         if (window.innerWidth > 768) {
             initMatrixRain();
             initEnhancedMatrixRain();
-            initCircuitBoard();
-            initInteractiveParticles();
+        initCircuitBoard();
+        initInteractiveParticles();
             initMagneticCursor();
             initBinaryRain();
             initDataStream();
