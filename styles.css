@@ -1729,8 +1729,11 @@ section * {
         grid-template-columns: 1fr;
     }
 
-    .contact-page {
-        padding-top: 60px;
+    .contact-page,
+    .services-page,
+    .portfolio-page,
+    .about-page {
+        padding-top: 90px;
     }
 }
 
