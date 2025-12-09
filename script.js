@@ -2304,11 +2304,35 @@ function initDeveloperPalette() {
     `;
 
     const closeBtn = palette.querySelector('.dev-palette-close');
+    
+    // Ensure close button is clickable
+    if (closeBtn) {
+        closeBtn.style.pointerEvents = 'auto';
+        closeBtn.style.cursor = 'pointer';
+        closeBtn.style.zIndex = '100000';
+        closeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            closePalette();
+        });
+    }
     let userPinned = false;
 
-    const openPalette = () => palette.classList.add('open');
-    const closePalette = () => palette.classList.remove('open');
-    const togglePalette = () => palette.classList.toggle('open');
+    const openPalette = () => {
+        palette.classList.add('open');
+        palette.style.pointerEvents = 'auto';
+    };
+    const closePalette = () => {
+        palette.classList.remove('open');
+        palette.style.pointerEvents = 'none';
+    };
+    const togglePalette = () => {
+        if (palette.classList.contains('open')) {
+            closePalette();
+        } else {
+            openPalette();
+        }
+    };
 
     const pinPalette = () => {
         userPinned = true;

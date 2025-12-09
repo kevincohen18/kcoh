@@ -2858,13 +2858,17 @@ html {
     opacity: 0;
     pointer-events: none;
     transition: all 0.35s ease;
-    z-index: 10002;
+    z-index: 99999 !important;
 }
 
 .dev-palette.open {
     opacity: 1;
     transform: translateY(0);
-    pointer-events: auto;
+    pointer-events: auto !important;
+}
+
+.dev-palette * {
+    pointer-events: auto !important;
 }
 
 .dev-palette-header {
