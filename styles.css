@@ -1101,8 +1101,8 @@ section * {
 .portfolio-placeholder {
     width: 80px;
     height: 80px;
-    color: white;
-    opacity: 0.8;
+    color: var(--text-primary);
+    opacity: 0.5;
 }
 
 .portfolio-photo {
