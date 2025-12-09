@@ -658,6 +658,13 @@ function validateField(field) {
             isValid = false;
             errorMessage = 'Please enter a valid email address';
         }
+    } else if (field.type === 'tel' && field.id === 'phone' && value) {
+        // Validate phone number format: XXX-XXX-XXXX (10 digits)
+        const digitsOnly = value.replace(/\D/g, '');
+        if (digitsOnly.length < 10) {
+            isValid = false;
+            errorMessage = 'Please enter a valid phone number (10 digits)';
+        }
     }
 
     if (!isValid) {
