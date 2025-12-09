@@ -933,12 +933,12 @@ section * {
 
 .services-page,
 .portfolio-page {
-    padding-top: 100px;
+    padding-top: 120px;
     padding-bottom: 3rem;
 }
 
 .about-page {
-    padding-top: 100px;
+    padding-top: 120px;
     padding-bottom: 4rem;
 }
 
@@ -1344,7 +1344,7 @@ section * {
 
 /* Contact Section */
 .contact-page {
-    padding-top: 100px;
+    padding-top: 120px;
     padding-bottom: 3rem;
     min-height: 100vh;
     overflow-x: hidden;
