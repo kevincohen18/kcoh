@@ -4142,7 +4142,6 @@ html {
         opacity: 0.9;
         transform: translateY(0);
     }
-    }
 }
 
 /* Enhanced Hero Animations */
@@ -5366,7 +5365,7 @@ html {
     /* Hero section improvements */
     .hero {
         padding: 0;
-        padding-top: calc(90px + 2rem);
+        padding-top: calc(70px + 2rem);
         padding-bottom: 3rem;
         min-height: auto;
     }
@@ -5390,6 +5389,40 @@ html {
     .terminal-line,
     .terminal-response {
         font-size: 0.85rem;
+    }
+
+    .hero-badges {
+        gap: 0.75rem;
+        margin: 0 0 1.5rem;
+    }
+
+    .dev-badge {
+        font-size: 0.9rem;
+        padding: 0.65rem 1.25rem;
+        gap: 0.5rem;
+    }
+
+    .apple-logo-icon {
+        width: 24px !important;
+        height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+        min-width: 24px;
+        min-height: 24px;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        margin: 1.5rem auto 2rem;
+    }
+
+    .code-stats {
+        gap: 1rem;
+        flex-direction: column;
+    }
+
+    .code-stat {
+        min-width: auto;
     }
 
     .back-to-top {
