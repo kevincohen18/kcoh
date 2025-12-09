@@ -233,7 +233,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // Helper to safely remove loader overlay
 function safeRemoveLoader(delay = 0) {
     const loader = document.getElementById('loader');
-    if (!loader) return;
+    // Always restore scrollability even if loader element isn't present (e.g., subpages)
+    if (!loader) {
+        document.body.classList.remove('loading');
+        document.body.classList.add('ready');
+        document.body.style.overflow = 'auto';
+        document.body.style.opacity = '1';
+        return;
+    }
 
         setTimeout(() => {
             loader.classList.add('hidden');
@@ -1027,8 +1034,8 @@ function initMatrixRainBackground() {
         width: 100% !important;
         height: 100% !important;
         pointer-events: none !important;
-        z-index: -1 !important;
-        opacity: 0.15 !important;
+        z-index: 0 !important;
+        opacity: 0.2 !important;
         will-change: contents;
     `;
     // Insert at the very beginning of body to ensure it's behind everything
