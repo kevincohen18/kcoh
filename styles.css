@@ -3969,9 +3969,226 @@ html {
     color: #e2e8f0;
 }
 
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #e2e8f0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    outline: none;
+    caret-color: #6366f1;
+}
+
+.terminal-input:focus + .cursor-blink {
+    opacity: 1;
+}
+
+.terminal-output {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.terminal-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 4px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 4px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.5);
+}
+
+.terminal-line {
+    margin: 0.5rem 0;
+    color: #e2e8f0;
+}
+
+.terminal-command {
+    margin: 0.5rem 0;
+    color: #e2e8f0;
+}
+
+.terminal-error {
+    color: #ef4444;
+    margin: 0.5rem 0;
+}
+
+.terminal-info-line {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+}
+
+.terminal-ls {
+    margin: 0.5rem 0;
+    color: #e2e8f0;
+}
+
+.dir-name {
+    color: #6366f1;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.dir-name:hover {
+    color: #8b5cf6;
+    text-decoration: underline;
+}
+
+.file-name {
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.file-name:hover {
+    color: #e2e8f0;
+    text-decoration: underline;
+}
+
+.file-size {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    min-width: 60px;
+    display: inline-block;
+}
+
+.file-date {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    min-width: 120px;
+    display: inline-block;
+}
+
+.file-content {
+    color: #cbd5e1;
+    white-space: pre-wrap;
+    font-family: 'Courier New', monospace;
+}
+
+.terminal-cat {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: rgba(99, 102, 241, 0.05);
+    border-radius: 0.25rem;
+    border-left: 2px solid #6366f1;
+}
+
+.terminal-help {
+    margin: 0.5rem 0;
+    line-height: 1.8;
+}
+
+.help-section {
+    color: #6366f1;
+    font-weight: 600;
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.help-category {
+    color: #8b5cf6;
+    font-weight: 600;
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.help-command {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.help-option {
+    color: #94a3b8;
+    margin-left: 2rem;
+}
+
+.terminal-link {
+    color: #6366f1;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.terminal-link:hover {
+    color: #8b5cf6;
+}
+
+.terminal-welcome {
+    margin-bottom: 1rem;
+}
+
+.terminal-completions {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.terminal-cowsay {
+    white-space: pre;
+    font-family: 'Courier New', monospace;
+    color: #cbd5e1;
+}
+
+.cowsay {
+    display: block;
+    line-height: 1.2;
+}
+
+.matrix-text {
+    color: #10b981;
+    font-weight: 600;
+    animation: matrixPulse 1s ease-in-out infinite;
+}
+
+@keyframes matrixPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.fortune-text {
+    color: #f59e0b;
+    font-style: italic;
+    display: block;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-left: 3px solid #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.terminal-neofetch {
+    white-space: pre;
+    font-family: 'Courier New', monospace;
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.neofetch-logo {
+    color: #6366f1;
+    font-weight: 600;
+}
+
 .cursor-blink {
     animation: cursorBlink 1s step-end infinite;
     color: #6366f1;
+    font-weight: 600;
 }
 
 @keyframes cursorBlink {
