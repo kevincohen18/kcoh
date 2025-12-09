@@ -275,50 +275,33 @@ function safeRemoveLoader(delay = 0) {
     }, delay);
 }
 
-// Auto-center content algorithm - centers page content vertically and horizontally
-function autoCenterContent() {
-    // Find the main content area (hero section or first main section)
-    const heroSection = document.querySelector('.hero');
-    const mainContent = heroSection || document.querySelector('main') || document.querySelector('.container') || document.body;
-    
-    if (!mainContent) return;
-    
-    // Get viewport dimensions
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    
-    // Get content dimensions and position
-    const contentRect = mainContent.getBoundingClientRect();
-    const contentWidth = contentRect.width;
-    const contentHeight = contentRect.height;
-    const contentTop = contentRect.top + window.pageYOffset;
-    const contentLeft = contentRect.left + window.pageXOffset;
-    
-    // Calculate center scroll positions
-    // Vertical: center content in viewport
-    const verticalCenter = contentTop + (contentHeight / 2) - (viewportHeight / 2);
-    
-    // Horizontal: center content in viewport (if content is wider than viewport)
-    let horizontalCenter = 0;
-    if (contentWidth > viewportWidth) {
-        horizontalCenter = contentLeft + (contentWidth / 2) - (viewportWidth / 2);
+// Auto-center GitHub contribution graph - centers graph horizontally for longer names
+function centerGitHubGraph() {
+    const graphWrapper = document.querySelector('.graph-grid-wrapper');
+    if (!graphWrapper) return;
+
+    const container = graphWrapper.closest('.graph-container');
+    if (!container) return;
+
+    const wrapperWidth = graphWrapper.scrollWidth;
+    const containerWidth = container.clientWidth;
+
+    // Only center if content is wider than container
+    if (wrapperWidth > containerWidth) {
+        const scrollPosition = (wrapperWidth - containerWidth) / 2;
+        graphWrapper.scrollLeft = scrollPosition;
+    } else {
+        graphWrapper.scrollLeft = 0;
     }
-    
-    // Scroll to center position
-    window.scrollTo({
-        top: Math.max(0, verticalCenter),
-        left: Math.max(0, horizontalCenter),
-        behavior: 'smooth'
-    });
 }
 
-// Auto-center on page load/refresh
+// Page load handler - handles loading screen and initialization
 window.addEventListener('load', () => {
-    // Also use history API to ensure consistent behavior
+    // Use history API to ensure consistent scroll behavior
     if (window.history.scrollRestoration) {
-        window.history.scrollRestoration = 'manual';
+        window.history.scrollRestoration = 'auto';
     }
-    
+
     const navigationEntry = performance.getEntriesByType('navigation')[0];
     const isRefresh = navigationEntry ? navigationEntry.type === 'reload' : performance.navigation?.type === 1;
 
@@ -331,30 +314,20 @@ window.addEventListener('load', () => {
 
     // Fallback guard in case anything hangs
     setTimeout(() => safeRemoveLoader(0), 3500);
-    
-    // Auto-center content after page loads (with delay to ensure layout is complete)
+
+    // Center GitHub graph after page loads
     setTimeout(() => {
-        autoCenterContent();
+        centerGitHubGraph();
     }, 100);
 });
 
-// Auto-center on window resize
-let autoCenterResizeTimeout;
+// Center graph on window resize
+let graphCenterResizeTimeout;
 window.addEventListener('resize', () => {
-    clearTimeout(autoCenterResizeTimeout);
-    autoCenterResizeTimeout = setTimeout(() => {
-        autoCenterContent();
+    clearTimeout(graphCenterResizeTimeout);
+    graphCenterResizeTimeout = setTimeout(() => {
+        centerGitHubGraph();
     }, 250);
-});
-
-// Auto-center on page show (back/forward navigation)
-window.addEventListener('pageshow', (event) => {
-    if (event.persisted) {
-        // Page was loaded from cache, auto-center
-        setTimeout(() => {
-            autoCenterContent();
-        }, 100);
-    }
 });
 
 // Removed parallax effects that cause overlaps during scroll
@@ -2701,7 +2674,7 @@ function generateGraph(grid, weeks, days, namePattern, letters) {
     letters.forEach(letter => {
         const letterPattern = namePattern[letter];
         if (!letterPattern) return;
-        
+
         const letterWidth = letterPattern[0].length;
 
         // Map pattern to grid coordinates
@@ -2762,6 +2735,13 @@ function generateGraph(grid, weeks, days, namePattern, letters) {
             grid.appendChild(box);
         }
     }
+
+    // Center the graph after generating (especially for longer names)
+    setTimeout(() => {
+        if (typeof centerGitHubGraph === 'function') {
+            centerGitHubGraph();
+        }
+    }, 50);
 }
 
 // Progressive Disclosure - Reveal elements on scroll
@@ -2934,6 +2914,13 @@ function initNameEditor() {
                 box.title = `${contributions} contributions`;
             }
         });
+
+        // Center the graph after updating (especially for longer names)
+        setTimeout(() => {
+            if (typeof centerGitHubGraph === 'function') {
+                centerGitHubGraph();
+            }
+        }, 50);
     }
 }
 

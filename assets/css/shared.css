@@ -56,6 +56,8 @@ body:not(.light-theme) .footer {
 
 html {
     scroll-behavior: smooth;
+    /* Improve mobile scrolling performance */
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Smooth fade-in animation for body */
@@ -80,6 +82,10 @@ body {
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
     position: relative;
+    /* Improve mobile scrolling performance */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent scroll chaining on mobile */
+    overscroll-behavior-y: none;
 }
 
 body.loading { overflow: hidden; }
