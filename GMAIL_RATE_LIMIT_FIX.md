@@ -43,9 +43,11 @@ Instead of forwarding directly to Gmail, consider:
    - Make sure you're not creating loops
    - Verify destination email is correct
 
-3. **Add SPF/DKIM Records** (if not already done)
-   - Cloudflare should provide these
-   - Add to your domain's DNS records
+3. **SPF/DKIM Records** ✅ (Already Added)
+   - MX records: route1.mx.cloudflare.net, route2.mx.cloudflare.net, route3.mx.cloudflare.net
+   - DKIM record: cf2024-1._domainkey.kcoh.ca
+   - SPF record: v=spf1 include:_spf.mx.cloudflare.net ~all
+   - All records are properly configured in DNS
 
 4. **Use Catch-All Address**
    - Instead of forwarding specific addresses
