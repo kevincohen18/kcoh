@@ -1005,10 +1005,18 @@ const isMinimalMode = () => document.body.classList.contains('minimal-mode');
 // Optimized Matrix Rain Background Effect (Site-wide)
 function initMatrixRainBackground() {
     // Check if already initialized
-    if (document.getElementById('matrix-background')) return;
+    if (document.getElementById('matrix-background')) {
+        console.log('Matrix background already initialized');
+        return;
+    }
     
     // Skip on mobile for performance
-    if (window.innerWidth <= 768) return;
+    if (window.innerWidth <= 768) {
+        console.log('Matrix background skipped on mobile');
+        return;
+    }
+    
+    console.log('Initializing matrix background...');
     
     const canvas = document.createElement('canvas');
     canvas.id = 'matrix-background';
