@@ -697,15 +697,17 @@ function initInteractiveTerminalPortfolio() {
 
     function handleCowsay(args) {
         const text = args.join(' ') || 'Hello from KCOH Terminal!';
+        const textLength = text.length;
+        const border = ' ' + '_'.repeat(textLength + 2);
         const cow = `
- <span class="cowsay">${text}</span>
-        <span class="cowsay">
-        \\   ^__^
-         \\  (oo)\\_______
-            (__)\\       )\\/\\
-                ||----w |
-                ||     ||
-        </span>`;
+<span class="cowsay">${border}</span>
+<span class="cowsay"> < ${text} ></span>
+<span class="cowsay">${border.replace('_', '-').replace(/_/g, '-')}</span>
+<span class="cowsay">        \\   ^__^</span>
+<span class="cowsay">         \\  (oo)\\_______</span>
+<span class="cowsay">            (__)\\       )\\/\\</span>
+<span class="cowsay">                ||----w |</span>
+<span class="cowsay">                ||     ||</span>`;
         addOutput(cow, 'terminal-cowsay');
     }
 
