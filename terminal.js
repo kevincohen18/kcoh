@@ -231,27 +231,46 @@ function initInteractiveTerminalPortfolio() {
         if (!terminalDiscovered) {
             terminalDiscovered = true;
             terminalInputLine.style.opacity = '1';
+            terminalInputLine.style.pointerEvents = 'auto';
             terminalInputLine.style.transition = 'opacity 0.5s ease';
-            terminalInput.placeholder = '';
             unlockTerminalAchievement();
+            // Focus input after a brief delay
+            setTimeout(() => {
+                terminalInput.focus();
+            }, 100);
         }
     }
 
-    // Discover on click anywhere in terminal
+    // Make terminal window clickable to discover
     const terminalWindow = document.querySelector('.terminal-window');
     if (terminalWindow) {
-        terminalWindow.addEventListener('click', discoverTerminal, { once: true });
+        // Make entire terminal clickable
+        terminalWindow.style.cursor = 'text';
+        terminalWindow.addEventListener('click', (e) => {
+            // Only discover if clicking on terminal body/output area, not if already discovered
+            if (!terminalDiscovered && e.target.closest('.terminal-body')) {
+                discoverTerminal();
+            }
+        });
     }
 
-    // Discover on focus
-    terminalInput.addEventListener('focus', discoverTerminal, { once: true });
-    
-    // Discover on any keypress in terminal area
+    // Discover on any keypress when terminal is focused/visible
     document.addEventListener('keydown', (e) => {
-        if (document.activeElement === terminalInput || terminalWindow?.contains(document.activeElement)) {
-            discoverTerminal();
+        if (!terminalDiscovered) {
+            const terminalSection = document.querySelector('.terminal-portfolio');
+            if (terminalSection) {
+                const rect = terminalSection.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                if (isVisible && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                    // Only discover on regular keypresses, not shortcuts
+                    const isRegularKey = e.key.length === 1 || ['Enter', 'Tab', 'Backspace', 'Delete', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key);
+                    if (isRegularKey) {
+                        discoverTerminal();
+                    }
+                }
+            }
         }
-    }, { once: true });
+    }, { once: false });
 
     // Update prompt based on current path
     function updatePrompt() {
