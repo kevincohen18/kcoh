@@ -1232,6 +1232,8 @@ section * {
     padding-top: 80px;
     padding-bottom: 3rem;
     min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
 }
 
 .contact-hero {
