@@ -234,6 +234,12 @@ function initInteractiveTerminalPortfolio() {
             terminalInputLine.style.pointerEvents = 'auto';
             terminalInputLine.style.transition = 'opacity 0.5s ease';
             unlockTerminalAchievement();
+            
+            // Show smart help prompt
+            setTimeout(() => {
+                addOutput(`<span class="terminal-info" style="color: #10b981; font-weight: 600;">💡 Tip: Type 'help' to see all available commands</span>`, 'terminal-tip');
+            }, 500);
+            
             // Focus input after a brief delay
             setTimeout(() => {
                 terminalInput.focus();
@@ -692,8 +698,75 @@ function initInteractiveTerminalPortfolio() {
 
     function handleMatrix() {
         addOutput(`<span class="matrix-text">Entering the Matrix... 🟢</span>`);
+        
+        // Create matrix rain effect directly in terminal
+        const matrixCanvas = document.createElement('canvas');
+        matrixCanvas.id = 'terminal-matrix-rain';
+        matrixCanvas.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.15;
+        `;
+        document.body.appendChild(matrixCanvas);
+        
+        const ctx = matrixCanvas.getContext('2d');
+        matrixCanvas.width = window.innerWidth;
+        matrixCanvas.height = window.innerHeight;
+        
+        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const fontSize = 16;
+        const columns = Math.floor(matrixCanvas.width / fontSize);
+        const drops = [];
+        
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
+            ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const gradient = ctx.createLinearGradient(0, drops[i] * fontSize, 0, (drops[i] + 1) * fontSize);
+                gradient.addColorStop(0, '#10b981');
+                gradient.addColorStop(1, '#6366f1');
+                ctx.fillStyle = gradient;
+                
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.98) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+            
+            requestAnimationFrame(drawMatrix);
+        }
+        
+        drawMatrix();
+        
+        // Auto-remove after 10 seconds
+        setTimeout(() => {
+            if (matrixCanvas && matrixCanvas.parentNode) {
+                matrixCanvas.parentNode.removeChild(matrixCanvas);
+            }
+        }, 10000);
+        
+        // Also try to call global function if available
         if (typeof initMatrixRain === 'function') {
-            initMatrixRain();
+            try {
+                initMatrixRain();
+            } catch (e) {
+                console.log('Matrix rain function not available');
+            }
         }
     }
 
