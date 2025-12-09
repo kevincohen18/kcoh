@@ -1037,8 +1037,8 @@ function initMatrixRainBackground() {
     const frameInterval = 1000 / targetFPS;
     
     function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         // Recalculate columns after resize
         columns = Math.floor(canvas.width / fontSize);
         drops = Array(columns).fill(1);
