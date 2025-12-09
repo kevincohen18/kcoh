@@ -1186,11 +1186,6 @@ section * {
 }
 
 /* About Section */
-.about-page {
-    padding-top: 100px;
-    padding-bottom: 4rem;
-}
-
 .about-hero {
     max-width: 900px;
     margin: 0 auto 2.5rem auto;
