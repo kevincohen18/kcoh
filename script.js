@@ -1,8 +1,7 @@
-// Force scroll to top on initial load (before DOM is ready)
+// Disable browser scroll restoration (we'll handle it manually)
 if (window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
 }
-window.scrollTo(0, 0);
 
 // Mobile Menu Toggle
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -196,10 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('loading');
 });
 
-// Scroll to top on page refresh/reload
-window.addEventListener('beforeunload', () => {
-    window.scrollTo(0, 0);
-});
+// Note: Auto-centering happens on load, not on beforeunload
 
 // Helper to safely remove loader overlay
 function safeRemoveLoader(delay = 0) {
@@ -220,12 +216,46 @@ function safeRemoveLoader(delay = 0) {
     }, delay);
 }
 
-// Force scroll to top on page load/refresh
-window.addEventListener('load', () => {
-    // Scroll to top immediately
-    window.scrollTo(0, 0);
+// Auto-center content algorithm - centers page content vertically and horizontally
+function autoCenterContent() {
+    // Find the main content area (hero section or first main section)
+    const heroSection = document.querySelector('.hero');
+    const mainContent = heroSection || document.querySelector('main') || document.querySelector('.container') || document.body;
     
-    // Also use history API to ensure we're at top
+    if (!mainContent) return;
+    
+    // Get viewport dimensions
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    
+    // Get content dimensions and position
+    const contentRect = mainContent.getBoundingClientRect();
+    const contentWidth = contentRect.width;
+    const contentHeight = contentRect.height;
+    const contentTop = contentRect.top + window.pageYOffset;
+    const contentLeft = contentRect.left + window.pageXOffset;
+    
+    // Calculate center scroll positions
+    // Vertical: center content in viewport
+    const verticalCenter = contentTop + (contentHeight / 2) - (viewportHeight / 2);
+    
+    // Horizontal: center content in viewport (if content is wider than viewport)
+    let horizontalCenter = 0;
+    if (contentWidth > viewportWidth) {
+        horizontalCenter = contentLeft + (contentWidth / 2) - (viewportWidth / 2);
+    }
+    
+    // Scroll to center position
+    window.scrollTo({
+        top: Math.max(0, verticalCenter),
+        left: Math.max(0, horizontalCenter),
+        behavior: 'smooth'
+    });
+}
+
+// Auto-center on page load/refresh
+window.addEventListener('load', () => {
+    // Also use history API to ensure consistent behavior
     if (window.history.scrollRestoration) {
         window.history.scrollRestoration = 'manual';
     }
@@ -242,13 +272,29 @@ window.addEventListener('load', () => {
 
     // Fallback guard in case anything hangs
     setTimeout(() => safeRemoveLoader(0), 3500);
+    
+    // Auto-center content after page loads (with delay to ensure layout is complete)
+    setTimeout(() => {
+        autoCenterContent();
+    }, 100);
 });
 
-// Ensure scroll to top on page show (back/forward navigation)
+// Auto-center on window resize
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        autoCenterContent();
+    }, 250);
+});
+
+// Auto-center on page show (back/forward navigation)
 window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
-        // Page was loaded from cache, scroll to top
-        window.scrollTo(0, 0);
+        // Page was loaded from cache, auto-center
+        setTimeout(() => {
+            autoCenterContent();
+        }, 100);
     }
 });
 
