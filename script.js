@@ -1974,8 +1974,18 @@ function initInteractiveTerminal() {
             } else if (cmd === 'party') {
                 output.innerHTML += `<div style="color: #a78bfa;">${commands[cmd]}</div>`;
                 triggerPartyMode();
+            } else if (cmd === 'portfolio') {
+                // Show portfolio with clickable hyperlink
+                output.innerHTML += `<div style="color: #a78bfa;">Visit <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" style="color: #6366f1; text-decoration: underline; cursor: pointer;">https://kevincohen.ca</a> to see my complete portfolio</div>`;
+            } else if (cmd === 'contact') {
+                // Show contact with clickable links
+                output.innerHTML += `<div style="color: #a78bfa;">Email: <a href="mailto:inquiries@kcoh.ca" style="color: #6366f1; text-decoration: underline; cursor: pointer;">inquiries@kcoh.ca</a> | Phone: <a href="tel:+15148988716" style="color: #6366f1; text-decoration: underline; cursor: pointer;">514-898-8716</a></div>`;
             } else if (commands[cmd]) {
-                output.innerHTML += `<div style="color: #a78bfa;">${commands[cmd]}</div>`;
+                // Check if command output contains URLs and make them clickable
+                let commandOutput = commands[cmd];
+                const urlRegex = /(https?:\/\/[^\s]+)/g;
+                commandOutput = commandOutput.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #6366f1; text-decoration: underline; cursor: pointer;">$1</a>');
+                output.innerHTML += `<div style="color: #a78bfa;">${commandOutput}</div>`;
             } else if (cmd) {
                 output.innerHTML += `<div style="color: #ef4444;">Command not found: ${cmd}</div>`;
             }
