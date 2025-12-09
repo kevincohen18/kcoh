@@ -569,10 +569,62 @@ techProgressBars.forEach(bar => {
     techObserver.observe(bar);
 });
 
+// Phone number auto-formatting
+function formatPhoneNumber(value) {
+    // Remove all non-digit characters
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    // Format as XXX-XXX-XXXX (10 digits)
+    if (phoneNumber.length <= 3) {
+        return phoneNumber;
+    } else if (phoneNumber.length <= 6) {
+        return phoneNumber.slice(0, 3) + '-' + phoneNumber.slice(3);
+    } else {
+        return phoneNumber.slice(0, 3) + '-' + phoneNumber.slice(3, 6) + '-' + phoneNumber.slice(6, 10);
+    }
+}
+
+// Initialize phone formatting
+document.addEventListener('DOMContentLoaded', () => {
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        // Remove any default value
+        phoneInput.value = '';
+        
+        phoneInput.addEventListener('input', (e) => {
+            const cursorPosition = e.target.selectionStart;
+            const oldValue = e.target.value;
+            const formatted = formatPhoneNumber(e.target.value);
+            
+            // Only update if formatting changed
+            if (formatted !== oldValue) {
+                e.target.value = formatted;
+                
+                // Restore cursor position (adjust for added dashes)
+                const addedChars = formatted.length - oldValue.length;
+                const newPosition = Math.min(cursorPosition + addedChars, formatted.length);
+                e.target.setSelectionRange(newPosition, newPosition);
+            }
+            
+            // Clear error state on input
+            if (phoneInput.classList.contains('error')) {
+                validateField(phoneInput);
+            }
+        });
+        
+        phoneInput.addEventListener('blur', () => {
+            validateField(phoneInput);
+        });
+    }
+});
+
 // Enhanced form validation
 const validationInputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
 
 validationInputs.forEach(input => {
+    // Skip phone input as it has its own handler
+    if (input.id === 'phone') return;
+    
     input.addEventListener('blur', () => {
         validateField(input);
     });
