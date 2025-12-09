@@ -1311,7 +1311,7 @@ section * {
 }
 
 .contact-form {
-    background: var(--bg-light);
+    background-color: #0f172a;
     padding: 2.5rem;
     border-radius: 1rem;
     box-shadow: var(--shadow-md);
@@ -2281,7 +2281,7 @@ body:not(.light-theme) .form-message-error .form-message-icon {
 .newsletter-section {
     margin-top: 4rem;
     padding: 2rem;
-    background: var(--bg-light);
+    background-color: #0f172a;
     border-radius: 1rem;
     text-align: center;
 }
