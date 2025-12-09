@@ -132,12 +132,11 @@ section {
         0 8px 40px rgba(99, 102, 241, 0.1),
         0 10px 30px rgba(0, 0, 0, 0.35);
     z-index: 1000 !important;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease-in-out, background 0.3s ease, box-shadow 0.3s ease;
     width: 100%;
     max-width: 100vw;
     box-sizing: border-box;
-    transform: none !important;
-    will-change: auto;
+    will-change: transform;
 }
 
 /* Navbar scroll effect removed - navbar stays fixed and consistent */

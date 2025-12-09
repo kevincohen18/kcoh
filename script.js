@@ -54,17 +54,41 @@ navLinks.forEach(link => {
     });
 });
 
-// Navbar scroll effect removed - navbar stays fixed and consistent
-// Ensure navbar stays fixed - prevent any position manipulation
-if (document.getElementById('navbar')) {
-    const navbar = document.getElementById('navbar');
-    // Force fixed position on load
+// Navbar hide on scroll down, show on scroll up
+let lastScroll = 0;
+let scrollTimeout;
+const navbar = document.getElementById('navbar');
+
+if (navbar) {
+    // Ensure navbar stays fixed
     navbar.style.position = 'fixed';
     navbar.style.top = '0';
     navbar.style.left = '0';
     navbar.style.right = '0';
     navbar.style.transform = 'none';
     navbar.style.willChange = 'auto';
+    navbar.style.transition = 'transform 0.3s ease-in-out';
+
+    const handleNavbarScroll = throttleRAF(() => {
+        const currentScroll = window.pageYOffset;
+        
+        // Show navbar at top of page
+        if (currentScroll <= 10) {
+            navbar.style.transform = 'translateY(0)';
+        }
+        // Hide navbar when scrolling down
+        else if (currentScroll > lastScroll && currentScroll > 100) {
+            navbar.style.transform = 'translateY(-100%)';
+        }
+        // Show navbar when scrolling up
+        else if (currentScroll < lastScroll) {
+            navbar.style.transform = 'translateY(0)';
+        }
+        
+        lastScroll = currentScroll;
+    });
+
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 }
 
 // Smooth scroll is now handled by the enhanced smoothScrollTo function below
