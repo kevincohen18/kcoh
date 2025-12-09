@@ -748,7 +748,7 @@ function initInteractiveTerminalPortfolio() {
         const parts = input.split(' ');
         if (parts.length === 1) {
             // Command completion
-            const commands = ['ls', 'cd', 'pwd', 'cat', 'help', 'clear', 'whoami', 'date', 'echo', 'find', 'history', 'projects', 'portfolio', 'contact', 'about', 'skills', 'apps', 'matrix', 'cowsay', 'fortune', 'neofetch'];
+            const commands = ['ls', 'cd', 'pwd', 'cat', 'help', 'clear', 'whoami', 'date', 'echo', 'find', 'history', 'projects', 'portfolio', 'contact', 'about', 'skills', 'apps', 'cowsay', 'fortune', 'neofetch'];
             return commands.filter(cmd => cmd.startsWith(input));
         } else {
             // File/directory completion
