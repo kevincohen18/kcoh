@@ -401,7 +401,7 @@ body:not(.light-theme) .theme-toggle .moon-icon {
     padding: 0;
     overflow: hidden;
     margin-top: 0;
-    padding-top: calc(80px + 4rem);
+    padding-top: calc(120px + 4rem);
     padding-bottom: 100px;
     transform: none !important;
     will-change: auto;
@@ -928,7 +928,7 @@ section * {
     position: relative;
     z-index: 1;
     margin-top: 0;
-    padding-top: 100px;
+    padding-top: 120px;
 }
 
 .services-page,
