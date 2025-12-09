@@ -2729,9 +2729,12 @@ function initTerminalTypingEffect() {
     setTimeout(typeCommand, 500);
 }
 
-// Typing Effect for Hero Title (FIXED - store original text properly)
+// Typing Effect for Hero Title and Terminal Prompt (Synced)
 function initHeroTypingEffect() {
     const textElement = document.querySelector('.typing-animation');
+    const terminalLine = document.querySelector('.terminal-line');
+    const terminalResponse = document.querySelector('.terminal-response');
+    
     if (!textElement) return;
 
     const texts = [
@@ -2744,10 +2747,63 @@ function initHeroTypingEffect() {
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
+    let terminalTyped = false;
+    let responseTyped = false;
 
     // Store original text as data attribute to prevent glitch interference
     textElement.dataset.originalText = textElement.textContent;
     textElement.dataset.isTyping = 'true';
+
+    // Store original terminal text
+    const originalTerminalLine = terminalLine ? terminalLine.textContent : '$ whoami';
+    const originalTerminalResponse = terminalResponse ? terminalResponse.textContent : 'Kevin Cohen';
+
+    // Initialize terminal as empty
+    if (terminalLine) {
+        terminalLine.textContent = '';
+        terminalLine.dataset.originalText = originalTerminalLine;
+    }
+    if (terminalResponse) {
+        terminalResponse.textContent = '';
+        terminalResponse.dataset.originalText = originalTerminalResponse;
+    }
+
+    let terminalCharIndex = 0;
+    let responseCharIndex = 0;
+
+    function typeTerminal() {
+        if (isMinimalMode()) return;
+
+        // Type terminal line first
+        if (terminalLine && !terminalTyped) {
+            if (terminalCharIndex < originalTerminalLine.length) {
+                terminalLine.textContent = originalTerminalLine.substring(0, terminalCharIndex + 1);
+                terminalCharIndex++;
+                setTimeout(typeTerminal, 80);
+                return;
+            } else {
+                terminalTyped = true;
+                // Small pause before response
+                setTimeout(typeTerminal, 300);
+                return;
+            }
+        }
+
+        // Type terminal response
+        if (terminalResponse && terminalTyped && !responseTyped) {
+            if (responseCharIndex < originalTerminalResponse.length) {
+                terminalResponse.textContent = originalTerminalResponse.substring(0, responseCharIndex + 1);
+                responseCharIndex++;
+                setTimeout(typeTerminal, 80);
+                return;
+            } else {
+                responseTyped = true;
+                // Start hero title typing after terminal is done
+                setTimeout(type, 500);
+                return;
+            }
+        }
+    }
 
     function type() {
         if (isMinimalMode()) return;
@@ -2776,8 +2832,8 @@ function initHeroTypingEffect() {
         setTimeout(type, typeSpeed);
     }
 
-    // Start typing effect after a delay
-    setTimeout(type, 2000);
+    // Start terminal typing first, then hero title will start after
+    setTimeout(typeTerminal, 1000);
 }
 
 // Hacker-Style Terminal Animation
