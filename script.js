@@ -2316,6 +2316,7 @@ function initDeveloperPalette() {
             closePalette();
         });
     }
+    
     let userPinned = false;
 
     const openPalette = () => {
@@ -2339,8 +2340,13 @@ function initDeveloperPalette() {
         openPalette();
     };
 
-    closeBtn.addEventListener('click', closePalette);
-    palette.addEventListener('click', pinPalette);
+    // Close button already has event listener from above, don't add duplicate
+    palette.addEventListener('click', (e) => {
+        // Only pin if clicking on palette itself, not on close button
+        if (e.target === palette || e.target.closest('.dev-palette-list') || e.target.closest('.dev-palette-hint')) {
+            pinPalette();
+        }
+    });
 
     const paletteButton = document.querySelector('.palette-toggle');
     if (paletteButton) {
