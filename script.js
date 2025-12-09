@@ -1912,20 +1912,32 @@ function initInteractiveTerminal() {
     `;
     terminalOutput.innerHTML = `<div>Welcome to KCOH Terminal v1.0</div><div>Type 'help' for available commands</div>`;
     
-    // Add CSS for links in terminal
-    const linkStyle = document.createElement('style');
-    linkStyle.textContent = `
-        #terminal-output a {
-            color: #6366f1 !important;
-            text-decoration: underline !important;
-            cursor: pointer !important;
-            pointer-events: auto !important;
-        }
-        #terminal-output a:hover {
-            color: #8b5cf6 !important;
-        }
-    `;
-    document.head.appendChild(linkStyle);
+    // Add CSS for links in terminal (only add once)
+    if (!document.getElementById('terminal-link-styles')) {
+        const linkStyle = document.createElement('style');
+        linkStyle.id = 'terminal-link-styles';
+        linkStyle.textContent = `
+            #terminal-output a,
+            #interactive-terminal a {
+                color: #6366f1 !important;
+                text-decoration: underline !important;
+                cursor: pointer !important;
+                pointer-events: auto !important;
+                position: relative !important;
+                z-index: 10 !important;
+            }
+            #terminal-output a:hover,
+            #interactive-terminal a:hover {
+                color: #8b5cf6 !important;
+                text-decoration: underline !important;
+            }
+            #terminal-output a:visited,
+            #interactive-terminal a:visited {
+                color: #a78bfa !important;
+            }
+        `;
+        document.head.appendChild(linkStyle);
+    }
 
     const terminalInput = document.createElement('input');
     terminalInput.type = 'text';
