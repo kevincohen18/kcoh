@@ -1732,13 +1732,13 @@ section * {
     .services-page,
     .portfolio-page,
     .about-page {
-        padding-top: 90px;
+        padding-top: 110px;
     }
 }
 
 @media (max-width: 768px) {
     .contact-page {
-        padding-top: 90px;
+        padding-top: 110px;
         padding-bottom: 2rem;
     }
 
