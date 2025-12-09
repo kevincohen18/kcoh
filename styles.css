@@ -870,7 +870,10 @@ section * {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shimmer 1.5s linear infinite;
-    transform: translateY(-2px);
+    transform: translateY(-2px) translateZ(0);
+    will-change: background-position, transform;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
 }
 
 @keyframes shimmer {

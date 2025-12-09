@@ -1,3 +1,34 @@
+// ============================================
+// PERFORMANCE UTILITIES
+// ============================================
+
+// Debounce function to limit function calls during rapid events
+function debounce(func, wait = 16) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Throttle function using requestAnimationFrame for optimal performance
+function throttleRAF(func) {
+    let ticking = false;
+    return function(...args) {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                func.apply(this, args);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    };
+}
+
 // Disable browser scroll restoration (we'll handle it manually)
 if (window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
@@ -23,21 +54,23 @@ navLinks.forEach(link => {
     });
 });
 
-// Navbar scroll effect
+// Navbar scroll effect (throttled for performance)
 const navbar = document.getElementById('navbar');
 let lastScroll = 0;
 
-window.addEventListener('scroll', () => {
+const handleNavbarScroll = throttleRAF(() => {
     const currentScroll = window.pageYOffset;
-    
+
     if (currentScroll > 100) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-    
+
     lastScroll = currentScroll;
 });
+
+window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 
 // Smooth scroll is now handled by the enhanced smoothScrollTo function below
 
@@ -3153,85 +3186,94 @@ function initNeonPulse() {
     });
 }
 
-// Initialize all modern effects
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        enhanceLoadingScreen();
-        initMatrixRain();
-        const codeTyping = initCodeTyping();
-        initMagneticCursor();
-        // initGlitchEffect(); // Replaced with modern shimmer effect
-        initHolographicCards();
-        initCircuitBoard();
-        initInteractiveParticles();
-        initPageTransitions();
-        initTerminalCommands();
+// PERFORMANCE OPTIMIZED: Progressive effect loading
+// Load critical effects immediately, lazy-load heavy effects
 
-        // New ultra-interactive effects
+// Critical effects - Load on DOMContentLoaded for instant interactivity
+document.addEventListener('DOMContentLoaded', () => {
+    // Essential UI effects - Load first for immediate responsiveness
+    initPageTransitions();
+    initModernHoverEffect();
+    initDeveloperPalette();
+    enhanceLoadingScreen();
+});
+
+// Initialize all effects progressively for optimal performance
+window.addEventListener('load', () => {
+    // Phase 1: Critical interactive effects (immediate)
+    requestAnimationFrame(() => {
+        const codeTyping = initCodeTyping();
+        initHeroTypingEffect();
+        initTerminalCommands();
+        initInteractiveStats();
+        initMinimalMode(codeTyping);
+    });
+
+    // Phase 2: Secondary effects (slight delay for smooth loading)
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            initHolographicCards();
+            initKonamiCode();
+            initEasterEggs();
+            initShakeEffects();
+            initCodeEditor();
+            initGitHubGraph();
+            initNameEditor();
+            initHackerTerminal();
+            initProgressiveDisclosure();
+        }, 100);
+    });
+
+    // Phase 3: Heavy canvas effects (lazy load when browser is idle)
+    const loadHeavyEffects = () => {
+        if (window.innerWidth > 768) {
+            initMatrixRain();
+            initEnhancedMatrixRain();
+            initCircuitBoard();
+            initInteractiveParticles();
+            initMagneticCursor();
+            initBinaryRain();
+            initDataStream();
+            initHolographicGrid();
+            initNeonPulse();
+        }
+    };
+
+    // Use requestIdleCallback for heavy effects to avoid blocking
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadHeavyEffects, { timeout: 2000 });
+    } else {
+        setTimeout(loadHeavyEffects, 500);
+    }
+
+    // Phase 4: Nice-to-have effects (lowest priority)
+    const loadOptionalEffects = () => {
         initClickExplosion();
         initMouseTrail();
         initRippleEffect();
-        initKonamiCode();
         initInteractiveTerminal();
         initAchievementBadges();
         initParallaxLayers();
-        initInteractiveStats();
-        initShakeEffects();
-        initDeveloperPalette();
-        initMinimalMode(codeTyping);
-        initEasterEggs();
+    };
 
-        // New movie-style coding effects
-        initCodeEditor();
-        initGitHubGraph();
-        initNameEditor();
-        
-        // Only initialize heavy effects on desktop for better mobile performance
-        if (window.innerWidth > 768) {
-            initEnhancedMatrixRain();
-        }
-        
-        initHeroTypingEffect();
-        initHackerTerminal();
-        initProgressiveDisclosure();
-        
-        // Mobile-specific optimizations
-        if (window.innerWidth <= 768) {
-            // Reduce animation complexity on mobile
-            document.documentElement.style.setProperty('--animation-duration', '0.3s');
-            
-            // Disable heavy canvas effects
-            const particlesCanvas = document.getElementById('particles');
-            if (particlesCanvas) {
-                particlesCanvas.style.display = 'none';
-            }
-            
-            // Optimize intersection observer for mobile
-            const mobileObserverOptions = {
-                threshold: 0.05,
-                rootMargin: '0px 0px -100px 0px'
-            };
-            
-            // Update observer with mobile-optimized settings
-            if (typeof observer !== 'undefined') {
-                observer.disconnect();
-                // Recreate with mobile settings if needed
-            }
-        }
-        // initCyberScan(); // Removed - horizontal scan line effect
-        initDataStream();
-        initHolographicGrid();
-        initModernHoverEffect();
-        initBinaryRain();
-        initNeonPulse();
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadOptionalEffects, { timeout: 3000 });
+    } else {
+        setTimeout(loadOptionalEffects, 1000);
+    }
 
-        // Development-only console messages
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            console.log('%c🚀 All interactive effects loaded!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
-            console.log('%c💡 Pro tip: Try Ctrl+` to open terminal, Konami code for surprise, or double-click the logo!', 'color: #8b5cf6; font-size: 12px;');
-            console.log('%c🎬 Movie-style coding effects activated!', 'color: #a78bfa; font-size: 14px; font-weight: bold;');
-        }
-    }, 1000);
+    // Mobile-specific optimizations
+    if (window.innerWidth <= 768) {
+        document.documentElement.style.setProperty('--animation-duration', '0.3s');
+        const particlesCanvas = document.getElementById('particles');
+        if (particlesCanvas) particlesCanvas.style.display = 'none';
+    }
+
+    // Development console messages
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        console.log('%c⚡ Performance-optimized loading complete!', 'color: #10b981; font-size: 16px; font-weight: bold;');
+        console.log('%c💡 Pro tip: Effects load progressively for optimal performance', 'color: #8b5cf6; font-size: 12px;');
+    }
 });
 
 // ============================================

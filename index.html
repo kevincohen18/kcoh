@@ -32,12 +32,22 @@
     <link rel="apple-touch-icon" href="favicon.svg">
     
     <title>KCOH Software Inc. - Professional Software Development Services</title>
+
+    <!-- Performance: Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+
     <link rel="stylesheet" href="styles.css">
-    <link rel="preload" href="success.png" as="image">
+
+    <!-- Performance: Resource hints for fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Performance: Load fonts asynchronously to prevent render blocking -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
     <style>
         /* Prevent layout shift during font load */
         body {
@@ -1083,8 +1093,8 @@ class ModelTrainer:
         </div>
     </footer>
 
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="script.js"></script>
+    <!-- EmailJS SDK - Deferred for performance -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
