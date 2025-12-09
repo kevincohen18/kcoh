@@ -1013,21 +1013,30 @@ function initMatrixRainBackground() {
     const canvas = document.createElement('canvas');
     canvas.id = 'matrix-background';
     canvas.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
-        opacity: 0.12;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        pointer-events: none !important;
+        z-index: -1 !important;
+        opacity: 0.15 !important;
         will-change: contents;
     `;
     // Insert at the very beginning of body to ensure it's behind everything
-    if (document.body.firstChild) {
-        document.body.insertBefore(canvas, document.body.firstChild);
+    if (document.body) {
+        if (document.body.firstChild) {
+            document.body.insertBefore(canvas, document.body.firstChild);
+        } else {
+            document.body.appendChild(canvas);
+        }
     } else {
-        document.body.appendChild(canvas);
+        // Wait for body if not ready
+        setTimeout(() => {
+            if (document.body) {
+                document.body.insertBefore(canvas, document.body.firstChild);
+            }
+        }, 100);
     }
 
     const ctx = canvas.getContext('2d');
