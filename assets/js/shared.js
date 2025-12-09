@@ -71,6 +71,17 @@ navLinks.forEach(link => {
 // NAVBAR SCROLL EFFECT - REMOVED
 // ============================================
 // Navbar scroll effect removed - navbar stays fixed and consistent
+// Ensure navbar stays fixed - prevent any position manipulation
+if (document.getElementById('navbar')) {
+    const navbar = document.getElementById('navbar');
+    // Force fixed position on load
+    navbar.style.position = 'fixed';
+    navbar.style.top = '0';
+    navbar.style.left = '0';
+    navbar.style.right = '0';
+    navbar.style.transform = 'none';
+    navbar.style.willChange = 'auto';
+}
 
 // ============================================
 // INTERSECTION OBSERVER FOR ANIMATIONS
