@@ -51,7 +51,7 @@ body:not(.light-theme) .hero-background {
 
 body.dark-theme .footer,
 body:not(.light-theme) .footer {
-    background: #030712;
+    background-color: #0f172a;
 }
 
 html {
