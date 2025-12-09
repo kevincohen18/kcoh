@@ -1019,11 +1019,16 @@ function initMatrixRainBackground() {
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 0;
-        opacity: 0.06;
+        z-index: -1;
+        opacity: 0.12;
         will-change: contents;
     `;
-    document.body.insertBefore(canvas, document.body.firstChild);
+    // Insert at the very beginning of body to ensure it's behind everything
+    if (document.body.firstChild) {
+        document.body.insertBefore(canvas, document.body.firstChild);
+    } else {
+        document.body.appendChild(canvas);
+    }
 
     const ctx = canvas.getContext('2d');
     let animationFrameId;
@@ -3400,9 +3405,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Load matrix background early for site-wide effect (desktop only)
     if (window.innerWidth > 768) {
-        requestAnimationFrame(() => {
+        // Small delay to ensure body is ready
+        setTimeout(() => {
             initMatrixRainBackground();
-        });
+        }, 100);
     }
 });
 
