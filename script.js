@@ -3489,11 +3489,32 @@ window.addEventListener('load', () => {
         }
     };
 
-    // Use requestIdleCallback for heavy effects to avoid blocking
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadHeavyEffects, { timeout: 2000 });
+    // Load matrix animation immediately on mobile, use requestIdleCallback for desktop
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+        // Load immediately on mobile for better visibility
+        initMatrixRainBackground();
+        // Other effects can wait
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                if (window.innerWidth > 768) {
+                    loadHeavyEffects();
+                }
+            }, { timeout: 2000 });
+        } else {
+            setTimeout(() => {
+                if (window.innerWidth > 768) {
+                    loadHeavyEffects();
+                }
+            }, 500);
+        }
     } else {
-        setTimeout(loadHeavyEffects, 500);
+        // Use requestIdleCallback for desktop to avoid blocking
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadHeavyEffects, { timeout: 2000 });
+        } else {
+            setTimeout(loadHeavyEffects, 500);
+        }
     }
 
     // Phase 4: Nice-to-have effects (lowest priority)
