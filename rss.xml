@@ -25,14 +25,14 @@
 
     <!-- Example Blog Post/Update 1 -->
     <item>
-      <title>New iOS Task Manager App Launched on App Store</title>
+      <title>MetalWorth: Precious Metals Tracking App Now Available</title>
       <description><![CDATA[
-        We're excited to announce the launch of our latest iOS application - a full-featured task manager built with SwiftUI.
-        This productivity app includes cloud sync, smart notifications, and an intuitive user interface designed for maximum efficiency.
-        Download now from the App Store and boost your productivity!
+        We're excited to announce MetalWorth - a comprehensive iOS app for tracking precious metals prices and managing your portfolio.
+        Features include live market prices, interactive candlestick charts, portfolio management, price alerts, and multi-currency support.
+        Perfect for collectors, jewelers, investors, and hobbyists. Available now on the App Store!
       ]]></description>
-      <link>https://kcohsoftware.com/portfolio.html#ios-task-manager</link>
-      <guid isPermaLink="true">https://kcohsoftware.com/portfolio.html#ios-task-manager</guid>
+      <link>https://kevincohen.ca/apps/metalworth</link>
+      <guid isPermaLink="true">https://kevincohen.ca/apps/metalworth</guid>
       <pubDate>Mon, 09 Dec 2024 10:00:00 GMT</pubDate>
       <author>contact@kcohsoftware.com (KCOH Software Inc.)</author>
       <category>iOS Development</category>
