@@ -1009,25 +1009,20 @@ function initMatrixRainBackground() {
         return;
     }
     
-    // Skip on mobile for performance
-    if (window.innerWidth <= 768) {
-        console.log('Matrix background skipped on mobile');
-        return;
-    }
-    
     console.log('Initializing matrix background...');
     
+    const isMobile = window.innerWidth <= 768;
     const canvas = document.createElement('canvas');
     canvas.id = 'matrix-background';
     canvas.style.cssText = `
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
+        width: 100vw !important;
+        height: 100vh !important;
         pointer-events: none !important;
         z-index: 1 !important;
-        opacity: 0.25 !important;
+        opacity: ${isMobile ? 0.15 : 0.25} !important;
         will-change: contents;
     `;
     // Insert at the very beginning of body to ensure it's behind everything
@@ -1049,23 +1044,27 @@ function initMatrixRainBackground() {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let lastFrameTime = 0;
-    const targetFPS = 30; // Reduced from 60 for better performance
+    let isMobile = window.innerWidth <= 768;
+    const targetFPS = isMobile ? 20 : 30; // Lower FPS on mobile for better performance
     const frameInterval = 1000 / targetFPS;
     
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let fontSize = isMobile ? 16 : 18; // Slightly smaller on mobile
+    
     function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+        isMobile = window.innerWidth <= 768;
+        fontSize = isMobile ? 16 : 18;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         // Recalculate columns after resize
         columns = Math.floor(canvas.width / fontSize);
         drops = Array(columns).fill(1);
     }
     
-    resizeCanvas();
-
-    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const fontSize = 18; // Slightly larger for better visibility at lower opacity
-    let columns = Math.floor(canvas.width / fontSize);
+    let columns = Math.floor(window.innerWidth / fontSize);
     let drops = Array(columns).fill(1);
+    
+    resizeCanvas();
 
     function draw(currentTime) {
         // Throttle to target FPS
@@ -1087,8 +1086,9 @@ function initMatrixRainBackground() {
 
         ctx.font = `${fontSize}px monospace`;
 
-        // Draw fewer characters for performance (every other column on smaller screens)
-        const step = window.innerWidth < 1200 ? 2 : 1;
+        // Draw fewer characters for performance (every other column on smaller screens, even fewer on mobile)
+        const currentIsMobile = window.innerWidth <= 768;
+        const step = currentIsMobile ? 3 : (window.innerWidth < 1200 ? 2 : 1);
         
         for (let i = 0; i < drops.length; i += step) {
             // Gradient effect for visual appeal
@@ -3473,12 +3473,14 @@ window.addEventListener('load', () => {
 
     // Phase 3: Heavy canvas effects (lazy load when browser is idle)
     const loadHeavyEffects = () => {
+        // Matrix background loads early for site-wide effect (now enabled on mobile with optimizations)
+        initMatrixRainBackground();
+        
+        // Other heavy effects only on desktop for performance
         if (window.innerWidth > 768) {
-            // Matrix background loads early for site-wide effect
-            initMatrixRainBackground();
             initEnhancedMatrixRain();
-        initCircuitBoard();
-        initInteractiveParticles();
+            initCircuitBoard();
+            initInteractiveParticles();
             initMagneticCursor();
             initBinaryRain();
             initDataStream();
