@@ -47,23 +47,26 @@ if (window.history.scrollRestoration) {
 // MOBILE MENU
 // ============================================
 
-// Mobile Menu Toggle
+// Mobile Menu Toggle - Now always visible as bottom tab bar on mobile
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navMenu = document.getElementById('navMenu');
 
-if (mobileMenuToggle) {
-    mobileMenuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        mobileMenuToggle.classList.toggle('active');
-    });
+// On mobile, navigation is always visible as bottom tab bar, so hide the toggle
+if (window.innerWidth <= 768 && mobileMenuToggle) {
+    mobileMenuToggle.style.display = 'none';
 }
 
-// Close mobile menu when clicking on a link
+// Close mobile menu when clicking on a link (not needed for tab bar, but keep for compatibility)
 const navLinks = document.querySelectorAll('.nav-link');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        mobileMenuToggle.classList.remove('active');
+        // Tab bar stays visible, no need to close
+        if (window.innerWidth > 768) {
+            navMenu.classList.remove('active');
+            if (mobileMenuToggle) {
+                mobileMenuToggle.classList.remove('active');
+            }
+        }
     });
 });
 

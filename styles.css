@@ -277,6 +277,15 @@ section {
     line-height: 1;
     position: relative;
     z-index: 1;
+    text-decoration: none !important;
+    border: none !important;
+    border-bottom: none !important;
+}
+
+.logo-subtext::after,
+.logo-subtext::before {
+    display: none !important;
+    content: none !important;
 }
 
 /* Logo hover effects */
@@ -5314,11 +5323,34 @@ html {
 }
 
 @media (max-width: 768px) {
+    /* Add padding to body for bottom tab bar */
+    body {
+        padding-bottom: 70px;
+    }
+
     /* Navigation improvements */
     .nav-wrapper {
         padding: 0.75rem 0;
         gap: 0.5rem;
         flex-wrap: nowrap;
+    }
+
+    .logo {
+        flex-shrink: 1;
+        /* Increase tap area for mobile */
+        padding: 0.5rem;
+        margin: -0.5rem;
+        min-height: 44px; /* iOS minimum tap target */
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-text-container {
+        padding: 0.4rem 0.75rem;
+        /* Ensure full tap area */
+        min-height: 44px;
+        display: flex;
+        align-items: center;
     }
 
     .logo-text-container {
@@ -5334,10 +5366,7 @@ html {
     }
 
     .mobile-menu-toggle {
-        display: flex;
-        order: 2;
-        margin-left: auto;
-        flex-shrink: 0;
+        display: none !important; /* Hide on mobile since tab bar is always visible */
     }
 
     .theme-toggle {
@@ -5348,25 +5377,81 @@ html {
 
     .nav-menu {
         position: fixed;
-        top: 70px;
-        left: -100%;
-        flex-direction: column;
-        background: var(--bg-white);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        flex-direction: row;
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(10px);
         width: 100%;
         max-width: 100vw;
-        padding: 2rem;
-        box-shadow: var(--shadow-lg);
-        transition: left 0.3s ease;
-        gap: 1rem;
-        align-items: flex-start;
+        padding: 0.75rem 0.5rem;
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        gap: 0;
+        align-items: center;
+        justify-content: space-around;
         z-index: 999;
-        max-height: calc(100vh - 70px);
-        overflow-y: auto;
         box-sizing: border-box;
+        border-top: 1px solid rgba(99, 102, 241, 0.2);
+        display: flex;
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .nav-menu li {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-menu .nav-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.25rem;
+        width: 100%;
+        min-height: 44px; /* iOS minimum tap target */
+        font-size: 0.75rem;
+        text-align: center;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+        position: relative;
+    }
+
+    .nav-menu .nav-link::after {
+        display: none; /* Remove underline on mobile */
+    }
+
+    .nav-menu .nav-link:hover,
+    .nav-menu .nav-link:active {
+        color: var(--primary-color);
+    }
+
+    /* Active state indicator */
+    .nav-menu .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .nav-menu .nav-link:hover::before,
+    .nav-menu .nav-link:active::before {
+        transform: scaleX(1);
     }
 
     .nav-menu.active {
-        left: 0;
+        transform: translateY(0);
+        opacity: 1;
     }
 
     /* Hero section improvements */
