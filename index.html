@@ -39,12 +39,12 @@
     <title>KCOH Software Inc. - Professional Software Development Services</title>
 
     <!-- Performance: Preload critical resources with cache busting -->
-    <link rel="preload" href="styles.css?v=3.1.0" as="style">
-    <link rel="preload" href="script.js?v=3.1.0" as="script">
+    <link rel="preload" href="styles.css?v=3.2.0" as="style">
+    <link rel="preload" href="script.js?v=3.2.0" as="script">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
 
-    <link rel="stylesheet" href="styles.css?v=3.1.0">
-    <link rel="stylesheet" href="quick-wins.css?v=1.1.0">
+    <link rel="stylesheet" href="styles.css?v=3.2.0">
+    <link rel="stylesheet" href="quick-wins.css?v=1.2.0">
 
     <!-- Performance: Resource hints for fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,7 +74,7 @@
             "@type": "ContactPoint",
             "telephone": "+1-514-898-8716",
             "contactType": "Customer Service",
-            "email": "inquiries@kcoh.ca",
+            "email": "contact@kcoh.ca",
             "areaServed": "CA",
             "availableLanguage": ["English", "French"]
         },
@@ -119,6 +119,9 @@
         </svg>
     </button>
 
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="container">
@@ -135,16 +138,55 @@
                     <span></span>
                 </button>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="services.html" class="nav-link">Services</a></li>
-                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
-                    <li><a href="about.html" class="nav-link">About</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="index.html" class="nav-link" data-page="home">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span>Home</span>
+                    </a></li>
+                    <li><a href="services.html" class="nav-link" data-page="services">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span>Services</span>
+                    </a></li>
+                    <li><a href="portfolio.html" class="nav-link" data-page="portfolio">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <span>Portfolio</span>
+                    </a></li>
+                    <li><a href="about.html" class="nav-link" data-page="about">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>About</span>
+                    </a></li>
+                    <li><a href="contact.html" class="nav-link" data-page="contact">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span>Contact</span>
+                    </a></li>
                 </ul>
-                <button class="palette-toggle" aria-label="Open shortcuts">
-                    <span class="palette-icon">⌘</span>
-                </button>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <div class="nav-controls">
+                    <button class="search-toggle" id="searchToggle" aria-label="Search" data-tooltip="Search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <button class="palette-toggle" aria-label="Open shortcuts" data-tooltip="Shortcuts">
+                        <span class="palette-icon">⌘</span>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" data-tooltip="Toggle theme">
                     <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -163,6 +205,20 @@
             </div>
         </div>
     </nav>
+
+    <!-- Search Bar -->
+    <div class="search-container" id="searchContainer">
+        <div class="search-wrapper">
+            <input type="search" id="searchInput" class="search-input" placeholder="Search..." autocomplete="off">
+            <button class="search-close" id="searchClose" aria-label="Close search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -630,7 +686,7 @@ class ModelTrainer:
                                 <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                             </svg>
                         </a>
-                        <a href="mailto:inquiries@kcoh.ca" class="social-link" aria-label="Email">
+                        <a href="mailto:contact@kcoh.ca" class="social-link" aria-label="Email">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                 <polyline points="22,6 12,13 2,6"></polyline>
@@ -666,7 +722,7 @@ class ModelTrainer:
         </button>
     </div>
 
-<script src="script.js?v=3.1.0" defer></script>
-    <script src="terminal.js?v=3.1.0" defer></script>
+<script src="script.js?v=3.2.0" defer></script>
+    <script src="terminal.js?v=3.2.0" defer></script>
 </body>
 </html>

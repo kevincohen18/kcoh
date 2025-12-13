@@ -775,7 +775,7 @@ if (contactForm) {
                         from_email: formData.email,
                         subject: formData.subject,
                         message: formData.message,
-                        to_email: 'inquiries@kcoh.ca'
+                        to_email: 'contact@kcoh.ca'
                     }
                 });
                 
@@ -792,7 +792,7 @@ if (contactForm) {
                         from_email: formData.email, // Also include for compatibility
                         subject: formData.subject,
                         message: formData.message,
-                        to_email: 'inquiries@kcoh.ca'
+                        to_email: 'contact@kcoh.ca'
                     }
                 );
                 
@@ -809,7 +809,7 @@ if (contactForm) {
                 submitButton.disabled = false;
             } else {
                 // Fallback: Send email via mailto link
-                const mailtoLink = `mailto:inquiries@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`)}`;
+                const mailtoLink = `mailto:contact@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`)}`;
                 window.location.href = mailtoLink;
                 
                 // Show success message
@@ -842,7 +842,7 @@ if (contactForm) {
             } else if (error.message) {
                 errorMessage += `Error: ${error.message}. `;
             }
-            errorMessage += 'Please try again or email us directly at inquiries@kcoh.ca';
+            errorMessage += 'Please try again or email us directly at contact@kcoh.ca';
             
             showFormMessage(contactForm, errorMessage, 'error');
             
@@ -889,7 +889,7 @@ if (newsletterForm) {
                     EMAILJS_NEWSLETTER_TEMPLATE,
                     {
                         email: email,
-                        to_email: 'inquiries@kcoh.ca'
+                        to_email: 'contact@kcoh.ca'
                     }
                 );
                 
@@ -2085,7 +2085,7 @@ function initInteractiveTerminal() {
         skills: 'Swift, SwiftUI, React, Node.js, Python, AWS, Docker, and more!',
         apps: '10+ published iOS apps on the App Store built with Swift & SwiftUI 🍎',
         portfolio: 'Visit https://kevincohen.ca to see my complete portfolio',
-        contact: 'Email: inquiries@kcoh.ca | Phone: 514-898-8716',
+        contact: 'Email: contact@kcoh.ca | Phone: 514-898-8716',
         clear: '',
         matrix: 'Entering the Matrix... 🟢',
         party: '🎉 Party mode activated! 🎊',
@@ -2113,7 +2113,7 @@ function initInteractiveTerminal() {
                 output.innerHTML += `<div style="color: #a78bfa;">Visit <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" style="color: #6366f1; text-decoration: underline; cursor: pointer;">https://kevincohen.ca</a> to see my complete portfolio</div>`;
             } else if (cmd === 'contact') {
                 // Show contact with clickable links
-                output.innerHTML += `<div style="color: #a78bfa;">Email: <a href="mailto:inquiries@kcoh.ca" style="color: #6366f1; text-decoration: underline; cursor: pointer;">inquiries@kcoh.ca</a> | Phone: <a href="tel:+15148988716" style="color: #6366f1; text-decoration: underline; cursor: pointer;">514-898-8716</a></div>`;
+                output.innerHTML += `<div style="color: #a78bfa;">Email: <a href="mailto:contact@kcoh.ca" style="color: #6366f1; text-decoration: underline; cursor: pointer;">contact@kcoh.ca</a> | Phone: <a href="tel:+15148988716" style="color: #6366f1; text-decoration: underline; cursor: pointer;">514-898-8716</a></div>`;
             } else if (commands[cmd]) {
                 // Check if command output contains URLs and make them clickable
                 let commandOutput = commands[cmd];
@@ -3767,6 +3767,81 @@ console.log('Auto-center contribution graph loaded ✓');
 // CHAT WIDGET FUNCTIONALITY
 // ============================================
 
+// Smart Chat Responses Database
+const chatResponses = {
+    services: {
+        response: "We offer iOS app development, full-stack web development, custom software solutions, and technical consulting. Which service interests you?",
+        quickReplies: [
+            { text: "iOS App Development", icon: "📱", response: "ios" },
+            { text: "Web Development", icon: "🌐", response: "web" },
+            { text: "Custom Software", icon: "⚙️", response: "custom" },
+            { text: "View All Services", icon: "📋", action: "link", url: "services.html" }
+        ]
+    },
+    ios: {
+        response: "I specialize in iOS development with Swift and SwiftUI! I have 10+ apps published on the App Store. I can help with new app development, app updates, or app consulting. What's your iOS project about?",
+        quickReplies: [
+            { text: "New App Development", icon: "✨", response: "newapp" },
+            { text: "Existing App Updates", icon: "🔄", response: "updates" },
+            { text: "View Portfolio", icon: "📱", action: "link", url: "https://kevincohen.ca" },
+            { text: "Get a Quote", icon: "💬", response: "quote" }
+        ]
+    },
+    web: {
+        response: "I build modern web applications using React, Node.js, and the latest technologies. From landing pages to complex web apps, I can help bring your vision to life.",
+        quickReplies: [
+            { text: "Single Page Website", icon: "📄", response: "website" },
+            { text: "Web Application", icon: "💻", response: "webapp" },
+            { text: "E-commerce", icon: "🛒", response: "ecommerce" },
+            { text: "Get a Quote", icon: "💬", response: "quote" }
+        ]
+    },
+    custom: {
+        response: "Custom software solutions tailored to your specific needs! Whether it's automation, integrations, or specialized tools, I can develop the perfect solution for your business.",
+        quickReplies: [
+            { text: "Automation Tools", icon: "🤖", response: "automation" },
+            { text: "API Development", icon: "🔌", response: "api" },
+            { text: "System Integration", icon: "🔗", response: "integration" },
+            { text: "Discuss My Project", icon: "💬", response: "quote" }
+        ]
+    },
+    quote: {
+        response: "Great! I'd love to discuss your project. You can reach me at:\n\n📧 contact@kcoh.ca\n📞 +1-514-898-8716\n\nOr fill out the contact form and I'll get back to you within 24 hours!",
+        quickReplies: [
+            { text: "Contact Form", icon: "📝", action: "link", url: "contact.html" },
+            { text: "Email Me", icon: "📧", action: "email", url: "mailto:contact@kcoh.ca" },
+            { text: "View Portfolio", icon: "🔗", action: "link", url: "https://kevincohen.ca" },
+            { text: "Start Over", icon: "🔄", response: "welcome" }
+        ]
+    },
+    portfolio: {
+        response: "Check out my portfolio at kevincohen.ca to see my iOS apps, web projects, and case studies. I've built everything from productivity apps to complex business solutions!",
+        quickReplies: [
+            { text: "Visit Portfolio", icon: "🚀", action: "link", url: "https://kevincohen.ca" },
+            { text: "iOS Apps", icon: "📱", action: "link", url: "https://kevincohen.ca" },
+            { text: "Discuss a Project", icon: "💬", response: "quote" },
+            { text: "Back to Menu", icon: "🏠", response: "welcome" }
+        ]
+    },
+    pricing: {
+        response: "Pricing varies based on project scope and complexity. Here's a general overview:\n\n• Simple websites: Starting at $2,000\n• iOS apps: Starting at $5,000\n• Custom software: Custom quote\n\nContact me for a detailed quote!",
+        quickReplies: [
+            { text: "Get Custom Quote", icon: "💰", response: "quote" },
+            { text: "View Services", icon: "📋", response: "services" },
+            { text: "Contact Form", icon: "📝", action: "link", url: "contact.html" }
+        ]
+    },
+    welcome: {
+        response: "Hi! 👋 I'm Kevin from KCOH Software Inc. I build iOS apps and custom software solutions. How can I help you today?",
+        quickReplies: [
+            { text: "View Services", icon: "🔧", response: "services" },
+            { text: "See Portfolio", icon: "📱", response: "portfolio" },
+            { text: "Get a Quote", icon: "💬", response: "quote" },
+            { text: "Pricing Info", icon: "💰", response: "pricing" }
+        ]
+    }
+};
+
 function initChatWidget() {
     const chatButton = document.getElementById('chatButton');
     const chatBox = document.createElement('div');
@@ -3788,14 +3863,8 @@ function initChatWidget() {
                 </svg>
             </button>
         </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-message bot">
-                <div class="message-avatar">KC</div>
-                <div class="message-bubble">
-                    Hi! 👋 Thanks for visiting KCOH Software Inc. How can I help you today?
-                </div>
-            </div>
-        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="quick-replies" id="quickReplies"></div>
         <div class="chat-input-area">
             <form class="chat-input-form" id="chatForm">
                 <input
@@ -3804,7 +3873,6 @@ function initChatWidget() {
                     id="chatInput"
                     placeholder="Type your message..."
                     autocomplete="off"
-                    required
                 />
                 <button type="submit" class="chat-send" aria-label="Send message">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -3817,6 +3885,12 @@ function initChatWidget() {
 
     if (chatButton) {
         chatButton.parentElement.appendChild(chatBox);
+
+        const chatMessages = document.getElementById('chatMessages');
+        const quickRepliesContainer = document.getElementById('quickReplies');
+
+        // Show welcome message
+        showChatResponse('welcome', chatMessages, quickRepliesContainer);
 
         // Toggle chat box
         chatButton.addEventListener('click', () => {
@@ -3837,52 +3911,131 @@ function initChatWidget() {
         // Handle message sending
         const chatForm = document.getElementById('chatForm');
         const chatInput = document.getElementById('chatInput');
-        const chatMessages = document.getElementById('chatMessages');
 
-        if (chatForm && chatInput && chatMessages) {
+        if (chatForm && chatInput) {
             chatForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-
                 const message = chatInput.value.trim();
                 if (!message) return;
 
-                // Add user message
-                addChatMessage(message, 'user', chatMessages);
+                handleUserMessage(message, chatMessages, quickRepliesContainer);
                 chatInput.value = '';
-
-                // Simulate bot response
-                setTimeout(() => {
-                    const responses = [
-                        "Thanks for your message! I'll connect you with our team shortly.",
-                        "Great question! You can reach us at contact@kcohsoftware.com or fill out our contact form.",
-                        "I'd love to help! Please visit our Services page to see what we offer, or contact us directly for a custom solution.",
-                        "Thanks for reaching out! Our team typically responds within 24 hours. For urgent matters, please email us directly.",
-                        "That's a great project idea! I recommend booking a consultation call to discuss your requirements in detail."
-                    ];
-
-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                    addChatMessage(randomResponse, 'bot', chatMessages);
-                }, 1000);
             });
         }
+    }
+}
+
+function handleUserMessage(message, chatMessages, quickRepliesContainer) {
+    // Add user message
+    addChatMessage(message, 'user', chatMessages);
+
+    // Clear quick replies
+    quickRepliesContainer.innerHTML = '';
+
+    // Show typing indicator
+    showTypingIndicator(chatMessages);
+
+    setTimeout(() => {
+        removeTypingIndicator(chatMessages);
+
+        // Smart response matching
+        const lowerMessage = message.toLowerCase();
+        let responseKey = 'quote'; // default
+
+        if (lowerMessage.includes('service') || lowerMessage.includes('what do you') || lowerMessage.includes('what can')) {
+            responseKey = 'services';
+        } else if (lowerMessage.includes('ios') || lowerMessage.includes('app') || lowerMessage.includes('mobile') || lowerMessage.includes('iphone')) {
+            responseKey = 'ios';
+        } else if (lowerMessage.includes('web') || lowerMessage.includes('website') || lowerMessage.includes('site')) {
+            responseKey = 'web';
+        } else if (lowerMessage.includes('portfolio') || lowerMessage.includes('work') || lowerMessage.includes('example')) {
+            responseKey = 'portfolio';
+        } else if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('how much')) {
+            responseKey = 'pricing';
+        } else if (lowerMessage.includes('custom') || lowerMessage.includes('automation') || lowerMessage.includes('api')) {
+            responseKey = 'custom';
+        }
+
+        showChatResponse(responseKey, chatMessages, quickRepliesContainer);
+    }, 1000);
+}
+
+function showChatResponse(responseKey, chatMessages, quickRepliesContainer) {
+    const response = chatResponses[responseKey];
+    if (!response) return;
+
+    // Add bot response
+    addChatMessage(response.response, 'bot', chatMessages);
+
+    // Show quick replies
+    if (response.quickReplies) {
+        quickRepliesContainer.innerHTML = '';
+        response.quickReplies.forEach(reply => {
+            const btn = document.createElement('button');
+            btn.className = 'quick-reply-btn';
+            btn.innerHTML = `
+                <span>${reply.icon}</span>
+                <span>${reply.text}</span>
+            `;
+
+            btn.addEventListener('click', () => {
+                if (reply.action === 'link') {
+                    window.open(reply.url, '_blank');
+                } else if (reply.action === 'email') {
+                    window.location.href = reply.url;
+                } else if (reply.response) {
+                    addChatMessage(reply.text, 'user', chatMessages);
+                    quickRepliesContainer.innerHTML = '';
+                    showTypingIndicator(chatMessages);
+
+                    setTimeout(() => {
+                        removeTypingIndicator(chatMessages);
+                        showChatResponse(reply.response, chatMessages, quickRepliesContainer);
+                    }, 800);
+                }
+            });
+
+            quickRepliesContainer.appendChild(btn);
+        });
     }
 }
 
 function addChatMessage(text, sender, container) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${sender}`;
-
     const avatar = sender === 'bot' ? 'KC' : 'You';
 
     messageDiv.innerHTML = `
         <div class="message-avatar">${avatar}</div>
-        <div class="message-bubble">${text}</div>
+        <div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>
     `;
 
     container.appendChild(messageDiv);
-
-    // Scroll to bottom
     container.scrollTop = container.scrollHeight;
+}
+
+function showTypingIndicator(container) {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message bot typing-message';
+    typingDiv.innerHTML = `
+        <div class="message-avatar">KC</div>
+        <div class="message-bubble">
+            <div class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+    `;
+    container.appendChild(typingDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+function removeTypingIndicator(container) {
+    const typingMsg = container.querySelector('.typing-message');
+    if (typingMsg) {
+        typingMsg.remove();
+    }
 }
 
 // Initialize chat widget when DOM is ready

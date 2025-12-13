@@ -669,7 +669,7 @@ function initInteractiveTerminalPortfolio() {
 
     function handleContact() {
         addOutput(`<span class="help-section">Contact Information:</span>`);
-        addOutput(`  Email: <a href="mailto:inquiries@kcoh.ca" class="terminal-link">inquiries@kcoh.ca</a>`);
+        addOutput(`  Email: <a href="mailto:contact@kcoh.ca" class="terminal-link">contact@kcoh.ca</a>`);
         addOutput(`  Phone: <a href="tel:+15148988716" class="terminal-link">514-898-8716</a>`);
         addOutput(`  Portfolio: <a href="https://kevincohen.ca" target="_blank" class="terminal-link">kevincohen.ca</a>`);
     }
