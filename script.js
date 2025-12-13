@@ -1,4 +1,10 @@
 // ============================================
+// SCRIPT LOAD CONFIRMATION
+// ============================================
+console.log('%c[KCOH] Script.js loaded successfully', 'color: #10b981; font-weight: bold');
+console.log('[KCOH] Timestamp:', new Date().toISOString());
+
+// ============================================
 // PERFORMANCE UTILITIES
 // ============================================
 
@@ -251,9 +257,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Helper to safely remove loader overlay
 function safeRemoveLoader(delay = 0) {
+    console.log('[KCOH] safeRemoveLoader called with delay:', delay);
     const loader = document.getElementById('loader');
     // Always restore scrollability even if loader element isn't present (e.g., subpages)
     if (!loader) {
+        console.log('[KCOH] No loader element found - restoring page');
         document.body.classList.remove('loading');
         document.body.classList.add('ready');
         document.body.style.overflow = 'auto';
@@ -261,9 +269,12 @@ function safeRemoveLoader(delay = 0) {
         return;
     }
 
+    console.log('[KCOH] Loader found - scheduling removal');
         setTimeout(() => {
+            console.log('[KCOH] Hiding loader...');
             loader.classList.add('hidden');
         setTimeout(() => {
+            console.log('[KCOH] Removing loader from DOM');
             if (loader.parentNode) {
                 loader.parentNode.removeChild(loader);
             }
@@ -271,6 +282,7 @@ function safeRemoveLoader(delay = 0) {
             document.body.classList.remove('loading');
             document.body.classList.add('ready');
             document.body.style.overflow = 'auto';
+            console.log('[KCOH] Page ready!');
         }, 400);
     }, delay);
 }
@@ -1010,8 +1022,8 @@ function initMatrixRainBackground() {
     }
     
     console.log('Initializing matrix background...');
-    
-    const isMobile = window.innerWidth <= 768;
+
+    let isMobile = window.innerWidth <= 768;
     const canvas = document.createElement('canvas');
     canvas.id = 'matrix-background';
     canvas.style.cssText = `
@@ -1044,7 +1056,6 @@ function initMatrixRainBackground() {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let lastFrameTime = 0;
-    let isMobile = window.innerWidth <= 768;
     const targetFPS = isMobile ? 20 : 30; // Lower FPS on mobile for better performance
     const frameInterval = 1000 / targetFPS;
     
@@ -4032,3 +4043,26 @@ window.hideSkeletonLoader = function(containerSelector) {
 };
 
 console.log('Skeleton loaders loaded ✓');
+
+// ============================================
+// FAILSAFE LOADER REMOVAL
+// ============================================
+// Ensure loader is removed even if there are errors
+(function() {
+    console.log('Failsafe loader removal initialized');
+
+    // Immediate check - if DOM is already loaded, remove loader now
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        console.log('DOM already ready, removing loader immediately');
+        setTimeout(() => safeRemoveLoader(0), 100);
+    }
+
+    // Backup failsafe - remove after 2 seconds no matter what
+    setTimeout(() => {
+        const loader = document.getElementById('loader');
+        if (loader && !loader.classList.contains('hidden')) {
+            console.log('Failsafe: Forcing loader removal');
+            safeRemoveLoader(0);
+        }
+    }, 2000);
+})();
