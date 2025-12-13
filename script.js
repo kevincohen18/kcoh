@@ -258,27 +258,33 @@ function initSearch() {
                     </div>
                 </div>
             `).join('');
-
-            // Add keyboard navigation
-            const resultItems = searchResults.querySelectorAll('.search-results-item');
-            let selectedIndex = -1;
-
-            searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    selectedIndex = Math.min(selectedIndex + 1, resultItems.length - 1);
-                    resultItems[selectedIndex]?.focus();
-                } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    selectedIndex = Math.max(selectedIndex - 1, -1);
-                    if (selectedIndex === -1) {
-                        searchInput.focus();
-                    } else {
-                        resultItems[selectedIndex]?.focus();
-                    }
-                }
-            });
         }, 150));
+    }
+
+    // Keyboard navigation for search results (outside input listener to avoid duplicates)
+    if (searchInput) {
+        let selectedIndex = -1;
+        searchInput.addEventListener('keydown', (e) => {
+            if (!searchContainer.classList.contains('active')) return;
+            
+            const resultItems = searchResults?.querySelectorAll('.search-results-item');
+            if (!resultItems || resultItems.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIndex = Math.min(selectedIndex + 1, resultItems.length - 1);
+                resultItems[selectedIndex]?.focus();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIndex = Math.max(selectedIndex - 1, -1);
+                if (selectedIndex === -1) {
+                    searchInput.focus();
+                } else {
+                    resultItems[selectedIndex]?.focus();
+                }
+            }
+        });
+    }
     }
 
     // Initialize with empty state
@@ -312,11 +318,7 @@ if (mobileMenuToggle) {
     });
 }
 
-// ============================================
-// TODO SYSTEM
-// ============================================
-
-function initTodoSystem() {
+// TODO system removed - not needed
     const todoToggle = document.getElementById('todoToggle');
     const todoContainer = document.getElementById('todoContainer');
     const todoClose = document.getElementById('todoClose');
@@ -480,12 +482,7 @@ function initTodoSystem() {
         saveTodos();
     });
 
-    // Close on Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && todoContainer.classList.contains('active')) {
-            closeTodo();
-        }
-    });
+    // Close on Escape (handled in main keydown listener)
 
     // Initial render
     renderTodos();
@@ -1465,6 +1462,9 @@ const isMinimalMode = () => document.body.classList.contains('minimal-mode');
 
 // Optimized Matrix Rain Background Effect (Site-wide)
 function initMatrixRainBackground() {
+    // Blue matrix effect enabled to match site theme
+    // return;
+    
     // Check if already initialized
     if (document.getElementById('matrix-background')) {
         console.log('Matrix background already initialized');
@@ -1552,11 +1552,11 @@ function initMatrixRainBackground() {
         const step = currentIsMobile ? 3 : (window.innerWidth < 1200 ? 2 : 1);
         
         for (let i = 0; i < drops.length; i += step) {
-            // Gradient effect for visual appeal
+            // Blue gradient effect to match site theme
             const gradient = ctx.createLinearGradient(0, drops[i] * fontSize, 0, (drops[i] + 1) * fontSize);
-            gradient.addColorStop(0, '#10b981');
-            gradient.addColorStop(0.5, '#6366f1');
-            gradient.addColorStop(1, '#a78bfa');
+            gradient.addColorStop(0, '#6366f1');  // Blue (brand color)
+            gradient.addColorStop(0.5, '#8b5cf6'); // Purple (secondary)
+            gradient.addColorStop(1, '#a78bfa');   // Light purple
             ctx.fillStyle = gradient;
 
             const char = chars[Math.floor(Math.random() * chars.length)];
@@ -3387,6 +3387,9 @@ function initNameEditor() {
 
 // Enhanced Matrix Rain Effect (Movie-Style)
 function initEnhancedMatrixRain() {
+    // Disabled - green text effect removed
+    return;
+    
     const canvas = document.createElement('canvas');
     canvas.id = 'enhanced-matrix';
     canvas.style.cssText = `
@@ -3889,6 +3892,14 @@ function initNeonPulse() {
 // PERFORMANCE OPTIMIZED: Progressive effect loading
 // Load critical effects immediately, lazy-load heavy effects
 
+// Remove any existing matrix background canvases
+function removeMatrixBackgrounds() {
+    const matrixCanvas = document.getElementById('matrix-background');
+    const enhancedCanvas = document.getElementById('enhanced-matrix');
+    if (matrixCanvas) matrixCanvas.remove();
+    if (enhancedCanvas) enhancedCanvas.remove();
+}
+
 // Critical effects - Load on DOMContentLoaded for instant interactivity
 document.addEventListener('DOMContentLoaded', () => {
     // Essential UI effects - Load first for immediate responsiveness
@@ -3897,13 +3908,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initDeveloperPalette();
         enhanceLoadingScreen();
     
-    // Load matrix background early for site-wide effect (desktop only)
-    if (window.innerWidth > 768) {
-        // Small delay to ensure body is ready
-        setTimeout(() => {
-            initMatrixRainBackground();
-        }, 100);
-    }
+    // Matrix background disabled - green text effect removed
+    // Remove any existing matrix canvases
+    removeMatrixBackgrounds();
 });
 
 // Initialize all effects progressively for optimal performance
@@ -3934,12 +3941,12 @@ window.addEventListener('load', () => {
 
     // Phase 3: Heavy canvas effects (lazy load when browser is idle)
     const loadHeavyEffects = () => {
-        // Matrix background loads early for site-wide effect (now enabled on mobile with optimizations)
-        initMatrixRainBackground();
+        // Matrix background disabled - green text effect removed
+        // initMatrixRainBackground(); // Disabled
         
         // Other heavy effects only on desktop for performance
         if (window.innerWidth > 768) {
-            initEnhancedMatrixRain();
+            // initEnhancedMatrixRain(); // Disabled
             initCircuitBoard();
             initInteractiveParticles();
             initMagneticCursor();
@@ -3953,8 +3960,8 @@ window.addEventListener('load', () => {
     // Load matrix animation immediately on mobile, use requestIdleCallback for desktop
     const isMobile = window.innerWidth <= 768;
     if (isMobile) {
-        // Load immediately on mobile for better visibility
-        initMatrixRainBackground();
+        // Matrix background disabled - green text effect removed
+        // initMatrixRainBackground(); // Disabled
         // Other effects can wait
         if ('requestIdleCallback' in window) {
             requestIdleCallback(() => {
