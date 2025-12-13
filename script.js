@@ -100,7 +100,7 @@ function initNavbarScroll() {
     handleScroll();
 }
 
-// Search Functionality
+// Enhanced Search Functionality
 function initSearch() {
     const searchToggle = document.getElementById('searchToggle');
     const searchContainer = document.getElementById('searchContainer');
@@ -110,59 +110,180 @@ function initSearch() {
 
     if (!searchToggle || !searchContainer) return;
 
-    // Toggle search
-    searchToggle.addEventListener('click', () => {
+    // Comprehensive search index
+    const searchIndex = [
+        { title: 'Home', url: 'index.html', description: 'Main landing page', keywords: ['home', 'main', 'landing', 'start', 'begin'] },
+        { title: 'Services', url: 'services.html', description: 'Software development services', keywords: ['services', 'development', 'software', 'apps', 'web', 'mobile', 'ios', 'swift', 'react'] },
+        { title: 'Portfolio', url: 'portfolio.html', description: 'Project showcase and work examples', keywords: ['portfolio', 'projects', 'work', 'examples', 'showcase', 'apps', 'applications'] },
+        { title: 'About', url: 'about.html', description: 'About KCOH Software Inc.', keywords: ['about', 'company', 'team', 'information', 'who', 'kevin', 'cohen'] },
+        { title: 'Contact', url: 'contact.html', description: 'Get in touch with us', keywords: ['contact', 'email', 'reach', 'message', 'get in touch', 'hire', 'inquiry'] },
+        { title: 'MetalWorth App', url: 'https://kevincohen.ca/apps/metalworth', description: 'Precious metals tracking iOS app', keywords: ['metalworth', 'metals', 'gold', 'silver', 'precious', 'ios app', 'app store'] }
+    ];
+
+    // Open search
+    function openSearch() {
         searchContainer.classList.add('active');
-        setTimeout(() => searchInput?.focus(), 100);
-    });
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            if (searchInput) {
+                searchInput.focus();
+                searchInput.select();
+            }
+        }, 100);
+    }
 
     // Close search
     function closeSearch() {
         searchContainer.classList.remove('active');
+        document.body.style.overflow = '';
         if (searchInput) searchInput.value = '';
         if (searchResults) searchResults.innerHTML = '';
     }
 
+    // Toggle search
+    searchToggle.addEventListener('click', openSearch);
+
+    // Close search
     searchClose?.addEventListener('click', closeSearch);
 
-    // Close on Escape
+    // Keyboard shortcuts: Cmd/Ctrl+K to open, Escape to close
     document.addEventListener('keydown', (e) => {
+        // Cmd+K (Mac) or Ctrl+K (Windows/Linux)
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            if (searchContainer.classList.contains('active')) {
+                closeSearch();
+            } else {
+                openSearch();
+            }
+        }
+        
+        // Escape to close
         if (e.key === 'Escape' && searchContainer.classList.contains('active')) {
             closeSearch();
         }
+
+        // Enter to navigate to first result
+        if (e.key === 'Enter' && searchContainer.classList.contains('active') && searchInput?.value.trim()) {
+            const firstResult = searchResults?.querySelector('.search-results-item');
+            if (firstResult) {
+                firstResult.click();
+            }
+        }
     });
 
-    // Search functionality
-    if (searchInput) {
-        const searchPages = [
-            { title: 'Home', url: 'index.html', description: 'Main landing page' },
-            { title: 'Services', url: 'services.html', description: 'Software development services' },
-            { title: 'Portfolio', url: 'portfolio.html', description: 'Project showcase' },
-            { title: 'About', url: 'about.html', description: 'About KCOH Software Inc.' },
-            { title: 'Contact', url: 'contact.html', description: 'Get in touch' }
-        ];
-
+    // Enhanced search functionality
+    if (searchInput && searchResults) {
         searchInput.addEventListener('input', debounce((e) => {
             const query = e.target.value.toLowerCase().trim();
-            if (!searchResults) return;
-
+            
             if (query.length === 0) {
-                searchResults.innerHTML = '';
+                searchResults.innerHTML = '<div class="search-empty">Start typing to search...</div>';
                 return;
             }
 
-            const results = searchPages.filter(page => 
-                page.title.toLowerCase().includes(query) || 
-                page.description.toLowerCase().includes(query)
-            );
+            if (query.length < 2) {
+                searchResults.innerHTML = '<div class="search-empty">Type at least 2 characters</div>';
+                return;
+            }
 
-            searchResults.innerHTML = results.map(page => `
-                <div class="search-results-item" onclick="window.location.href='${page.url}'">
-                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">${page.title}</div>
-                    <div style="font-size: 0.875rem; color: var(--text-secondary);">${page.description}</div>
+            // Score-based search
+            const scoredResults = searchIndex.map(page => {
+                let score = 0;
+                const queryWords = query.split(' ').filter(w => w.length > 0);
+                
+                // Title match (highest priority)
+                if (page.title.toLowerCase().includes(query)) {
+                    score += 100;
+                }
+                // Exact title match
+                if (page.title.toLowerCase() === query) {
+                    score += 50;
+                }
+                // Description match
+                if (page.description.toLowerCase().includes(query)) {
+                    score += 30;
+                }
+                // Keywords match
+                page.keywords.forEach(keyword => {
+                    if (keyword.toLowerCase().includes(query)) {
+                        score += 20;
+                    }
+                    queryWords.forEach(word => {
+                        if (keyword.toLowerCase().includes(word)) {
+                            score += 10;
+                        }
+                    });
+                });
+                // Word-by-word matching
+                queryWords.forEach(word => {
+                    if (page.title.toLowerCase().includes(word)) score += 15;
+                    if (page.description.toLowerCase().includes(word)) score += 5;
+                });
+
+                return { ...page, score };
+            })
+            .filter(page => page.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 8); // Limit to 8 results
+
+            if (scoredResults.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="search-empty">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">No results found</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);">Try different keywords</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Highlight matching text
+            function highlightText(text, query) {
+                if (!query) return text;
+                const regex = new RegExp(`(${query})`, 'gi');
+                return text.replace(regex, '<mark>$1</mark>');
+            }
+
+            searchResults.innerHTML = scoredResults.map(page => `
+                <div class="search-results-item" onclick="window.location.href='${page.url}'" onkeydown="if(event.key==='Enter') window.location.href='${page.url}'" tabindex="0">
+                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">
+                        ${highlightText(page.title, query)}
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                        ${highlightText(page.description, query)}
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; opacity: 0.7;">
+                        ${page.url}
+                    </div>
                 </div>
             `).join('');
-        }, 200));
+
+            // Add keyboard navigation
+            const resultItems = searchResults.querySelectorAll('.search-results-item');
+            let selectedIndex = -1;
+
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    selectedIndex = Math.min(selectedIndex + 1, resultItems.length - 1);
+                    resultItems[selectedIndex]?.focus();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    selectedIndex = Math.max(selectedIndex - 1, -1);
+                    if (selectedIndex === -1) {
+                        searchInput.focus();
+                    } else {
+                        resultItems[selectedIndex]?.focus();
+                    }
+                }
+            });
+        }, 150));
+    }
+
+    // Initialize with empty state
+    if (searchResults) {
+        searchResults.innerHTML = '<div class="search-empty">Start typing to search...</div>';
     }
 }
 
@@ -191,6 +312,185 @@ if (mobileMenuToggle) {
     });
 }
 
+// ============================================
+// TODO SYSTEM
+// ============================================
+
+function initTodoSystem() {
+    const todoToggle = document.getElementById('todoToggle');
+    const todoContainer = document.getElementById('todoContainer');
+    const todoClose = document.getElementById('todoClose');
+    const todoInput = document.getElementById('todoInput');
+    const todoAddBtn = document.getElementById('todoAddBtn');
+    const todoList = document.getElementById('todoList');
+    const todoFilters = document.querySelectorAll('.todo-filter');
+    const todoCount = document.getElementById('todoCount');
+    const todoClearCompleted = document.getElementById('todoClearCompleted');
+
+    if (!todoToggle || !todoContainer) return;
+
+    // Load todos from localStorage
+    let todos = JSON.parse(localStorage.getItem('kcoh-todos') || '[]');
+    let currentFilter = 'all';
+
+    // Save todos to localStorage
+    function saveTodos() {
+        localStorage.setItem('kcoh-todos', JSON.stringify(todos));
+        renderTodos();
+    }
+
+    // Generate unique ID
+    function generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    // Render todos
+    function renderTodos() {
+        if (!todoList) return;
+
+        const filteredTodos = todos.filter(todo => {
+            if (currentFilter === 'active') return !todo.completed;
+            if (currentFilter === 'completed') return todo.completed;
+            return true;
+        });
+
+        if (filteredTodos.length === 0) {
+            todoList.innerHTML = `
+                <div class="todo-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--text-primary);">No tasks</div>
+                    <div style="font-size: 0.875rem;">${currentFilter === 'all' ? 'Add a task to get started!' : `No ${currentFilter} tasks`}</div>
+                </div>
+            `;
+        } else {
+            todoList.innerHTML = filteredTodos.map(todo => `
+                <div class="todo-item ${todo.completed ? 'completed' : ''}" data-id="${todo.id}">
+                    <div class="todo-checkbox ${todo.completed ? 'checked' : ''}" onclick="toggleTodo('${todo.id}')"></div>
+                    <div class="todo-text">${escapeHtml(todo.text)}</div>
+                    <button class="todo-delete" onclick="deleteTodo('${todo.id}')" aria-label="Delete todo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Update count
+        const activeCount = todos.filter(t => !t.completed).length;
+        const totalCount = todos.length;
+        if (todoCount) {
+            todoCount.textContent = `${activeCount} of ${totalCount} tasks`;
+        }
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Add todo
+    function addTodo() {
+        const text = todoInput?.value.trim();
+        if (!text) return;
+
+        todos.push({
+            id: generateId(),
+            text: text,
+            completed: false,
+            createdAt: new Date().toISOString()
+        });
+
+        todoInput.value = '';
+        saveTodos();
+    }
+
+    // Toggle todo completion
+    window.toggleTodo = function(id) {
+        const todo = todos.find(t => t.id === id);
+        if (todo) {
+            todo.completed = !todo.completed;
+            saveTodos();
+        }
+    };
+
+    // Delete todo
+    window.deleteTodo = function(id) {
+        todos = todos.filter(t => t.id !== id);
+        saveTodos();
+    };
+
+    // Open todo panel
+    function openTodo() {
+        todoContainer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => todoInput?.focus(), 100);
+    }
+
+    // Close todo panel
+    function closeTodo() {
+        todoContainer.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Event listeners
+    todoToggle.addEventListener('click', openTodo);
+    todoClose?.addEventListener('click', closeTodo);
+
+    // Keyboard shortcut: Ctrl+T
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 't') {
+            e.preventDefault();
+            if (todoContainer.classList.contains('active')) {
+                closeTodo();
+            } else {
+                openTodo();
+            }
+        }
+    });
+
+    // Add todo on Enter
+    todoInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            addTodo();
+        }
+    });
+
+    todoAddBtn?.addEventListener('click', addTodo);
+
+    // Filter todos
+    todoFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            todoFilters.forEach(f => f.classList.remove('active'));
+            filter.classList.add('active');
+            currentFilter = filter.dataset.filter;
+            renderTodos();
+        });
+    });
+
+    // Clear completed
+    todoClearCompleted?.addEventListener('click', () => {
+        todos = todos.filter(t => !t.completed);
+        saveTodos();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && todoContainer.classList.contains('active')) {
+            closeTodo();
+        }
+    });
+
+    // Initial render
+    renderTodos();
+}
+
 // Initialize all navigation enhancements
 document.addEventListener('DOMContentLoaded', () => {
     setActiveNavLink();
@@ -198,6 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavbarScroll();
     initSearch();
     initNavLinkAnimations();
+    initTodoSystem();
 });
 
 // Close mobile menu when clicking on a link
