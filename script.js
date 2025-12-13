@@ -285,7 +285,6 @@ function initSearch() {
             }
         });
     }
-    }
 
     // Initialize with empty state
     if (searchResults) {
@@ -318,7 +317,8 @@ if (mobileMenuToggle) {
     });
 }
 
-// TODO system removed - not needed
+// TODO system initialization
+function initTodoSystem() {
     const todoToggle = document.getElementById('todoToggle');
     const todoContainer = document.getElementById('todoContainer');
     const todoClose = document.getElementById('todoClose');
