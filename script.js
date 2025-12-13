@@ -40,6 +40,146 @@ if (window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
 }
 
+// ============================================
+// NAVIGATION ENHANCEMENTS
+// ============================================
+
+// Active Page Detection
+function setActiveNavLink() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+
+// Scroll Progress Indicator
+function initScrollProgress() {
+    const progressBar = document.getElementById('scrollProgress');
+    if (!progressBar) return;
+
+    function updateProgress() {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+        progressBar.style.width = scrollPercent + '%';
+    }
+
+    window.addEventListener('scroll', throttleRAF(updateProgress));
+    updateProgress();
+}
+
+// Navbar Scroll Effect
+function initNavbarScroll() {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+
+    let lastScroll = 0;
+    const scrollThreshold = 50;
+
+    function handleScroll() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > scrollThreshold) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        lastScroll = currentScroll;
+    }
+
+    window.addEventListener('scroll', throttleRAF(handleScroll));
+    handleScroll();
+}
+
+// Search Functionality
+function initSearch() {
+    const searchToggle = document.getElementById('searchToggle');
+    const searchContainer = document.getElementById('searchContainer');
+    const searchInput = document.getElementById('searchInput');
+    const searchClose = document.getElementById('searchClose');
+    const searchResults = document.getElementById('searchResults');
+
+    if (!searchToggle || !searchContainer) return;
+
+    // Toggle search
+    searchToggle.addEventListener('click', () => {
+        searchContainer.classList.add('active');
+        setTimeout(() => searchInput?.focus(), 100);
+    });
+
+    // Close search
+    function closeSearch() {
+        searchContainer.classList.remove('active');
+        if (searchInput) searchInput.value = '';
+        if (searchResults) searchResults.innerHTML = '';
+    }
+
+    searchClose?.addEventListener('click', closeSearch);
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchContainer.classList.contains('active')) {
+            closeSearch();
+        }
+    });
+
+    // Search functionality
+    if (searchInput) {
+        const searchPages = [
+            { title: 'Home', url: 'index.html', description: 'Main landing page' },
+            { title: 'Services', url: 'services.html', description: 'Software development services' },
+            { title: 'Portfolio', url: 'portfolio.html', description: 'Project showcase' },
+            { title: 'About', url: 'about.html', description: 'About KCOH Software Inc.' },
+            { title: 'Contact', url: 'contact.html', description: 'Get in touch' }
+        ];
+
+        searchInput.addEventListener('input', debounce((e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!searchResults) return;
+
+            if (query.length === 0) {
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            const results = searchPages.filter(page => 
+                page.title.toLowerCase().includes(query) || 
+                page.description.toLowerCase().includes(query)
+            );
+
+            searchResults.innerHTML = results.map(page => `
+                <div class="search-results-item" onclick="window.location.href='${page.url}'">
+                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">${page.title}</div>
+                    <div style="font-size: 0.875rem; color: var(--text-secondary);">${page.description}</div>
+                </div>
+            `).join('');
+        }, 200));
+    }
+}
+
+// Staggered Nav Link Animation
+function initNavLinkAnimations() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach((link, index) => {
+        link.style.opacity = '0';
+        link.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+            link.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            link.style.opacity = '1';
+            link.style.transform = 'translateY(0)';
+        }, 100 * index);
+    });
+}
+
 // Mobile Menu Toggle
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navMenu = document.getElementById('navMenu');
@@ -50,6 +190,15 @@ if (mobileMenuToggle) {
         mobileMenuToggle.classList.toggle('active');
     });
 }
+
+// Initialize all navigation enhancements
+document.addEventListener('DOMContentLoaded', () => {
+    setActiveNavLink();
+    initScrollProgress();
+    initNavbarScroll();
+    initSearch();
+    initNavLinkAnimations();
+});
 
 // Close mobile menu when clicking on a link
 const navLinks = document.querySelectorAll('.nav-link');
