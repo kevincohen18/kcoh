@@ -5,6 +5,30 @@ console.log('%c[KCOH] Script.js loaded successfully', 'color: #10b981; font-weig
 console.log('[KCOH] Timestamp:', new Date().toISOString());
 
 // ============================================
+// CRITICAL FAILSAFE - MUST BE FIRST
+// ============================================
+// Remove loader immediately - this MUST run before anything else
+(function() {
+    console.log('[KCOH] Emergency failsafe activated');
+
+    // Remove loader after 1 second no matter what
+    setTimeout(function() {
+        const loader = document.getElementById('loader');
+        if (loader) {
+            console.log('[KCOH] Failsafe removing loader');
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+            setTimeout(function() {
+                if (loader.parentNode) loader.parentNode.removeChild(loader);
+            }, 500);
+        }
+        document.body.style.overflow = 'auto';
+        document.body.classList.remove('loading');
+        document.body.classList.add('ready');
+    }, 1000);
+})();
+
+// ============================================
 // PERFORMANCE UTILITIES
 // ============================================
 
@@ -4653,26 +4677,3 @@ window.hideSkeletonLoader = function(containerSelector) {
 };
 
 console.log('Skeleton loaders loaded ✓');
-
-// ============================================
-// FAILSAFE LOADER REMOVAL
-// ============================================
-// Ensure loader is removed even if there are errors
-(function() {
-    console.log('Failsafe loader removal initialized');
-
-    // Immediate check - if DOM is already loaded, remove loader now
-    if (document.readyState === 'interactive' || document.readyState === 'complete') {
-        console.log('DOM already ready, removing loader immediately');
-        setTimeout(() => safeRemoveLoader(0), 100);
-    }
-
-    // Backup failsafe - remove after 2 seconds no matter what
-    setTimeout(() => {
-        const loader = document.getElementById('loader');
-        if (loader && !loader.classList.contains('hidden')) {
-            console.log('Failsafe: Forcing loader removal');
-            safeRemoveLoader(0);
-        }
-    }, 2000);
-})();
