@@ -4546,6 +4546,17 @@ body::before {
     opacity: 0.05;
 }
 
+/* Remove scanline from featured project banner */
+.featured-project-banner {
+    position: relative;
+    z-index: 2; /* Above body::before scanline */
+}
+
+.featured-project-banner * {
+    position: relative;
+    z-index: 1;
+}
+
 @keyframes scanline {
     0% { transform: translateY(0); }
     100% { transform: translateY(100%); }
@@ -4577,6 +4588,23 @@ body::before {
     animation: gridMove 20s linear infinite;
     pointer-events: none;
     z-index: 0;
+}
+
+/* Remove grid lines from featured project banner */
+.featured-project-banner::after,
+.featured-project-banner .container::before,
+.featured-project-banner .container::after,
+.featured-visual::before,
+.featured-visual::after,
+.featured-mockup::before,
+.featured-mockup::after,
+.phone-frame::after,
+.phone-screen::before,
+.phone-screen::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    background-image: none !important;
 }
 
 @keyframes gridMove {

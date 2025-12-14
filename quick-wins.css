@@ -2,25 +2,19 @@
    QUICK WINS - Additional Features
    ============================================ */
 
-/* Featured Project Banner */
+/* ============================================
+   FEATURED PROJECT BANNER - Clean Rewrite
+   ============================================ */
+
 .featured-project-banner {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+    background: #0f172a;
     border-top: 1px solid rgba(99, 102, 241, 0.1);
     border-bottom: 1px solid rgba(99, 102, 241, 0.1);
     padding: 4rem 0;
     position: relative;
     overflow: hidden;
-}
-
-.featured-project-banner::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-    animation: pulse 15s ease-in-out infinite;
+    z-index: 2;
+    isolation: isolate;
 }
 
 .featured-project-banner .container {
@@ -62,15 +56,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    border: none !important;
-    border-bottom: none !important;
-    position: relative;
-}
-
-.featured-title::after,
-.featured-title::before {
-    display: none !important;
-    content: none !important;
 }
 
 .featured-description {
@@ -140,11 +125,6 @@
     animation: float 6s ease-in-out infinite;
 }
 
-.featured-mockup svg {
-    width: 100%;
-    height: auto;
-}
-
 .phone-frame {
     width: 200px;
     height: 400px;
@@ -208,10 +188,64 @@
     }
 }
 
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .featured-project-banner {
+        padding: 3rem 0;
+    }
+
+    .featured-project-banner .container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .featured-title {
+        font-size: 1.5rem;
+    }
+
+    .featured-description {
+        font-size: 1rem;
+    }
+
+    .featured-stats {
+        gap: 1rem;
+    }
+
+    .featured-mockup {
+        width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .featured-stats {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}
+
+@keyframes logoGlow {
+    0%, 100% {
+        opacity: 0.95;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 /* Trust Badges Bar */
 .trust-badges-bar {
-    background: rgba(31, 41, 55, 0.5);
-    backdrop-filter: blur(10px);
+    background: #0f172a;
     border-bottom: 1px solid rgba(99, 102, 241, 0.1);
     padding: 2rem 0;
 }
@@ -227,17 +261,17 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: rgba(99, 102, 241, 0.05);
-    border: 1px solid rgba(99, 102, 241, 0.2);
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(99, 102, 241, 0.15);
     border-radius: 0.75rem;
     transition: all 0.3s ease;
 }
 
 .trust-badge:hover {
     transform: translateY(-2px);
-    border-color: rgba(99, 102, 241, 0.4);
-    background: rgba(99, 102, 241, 0.1);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(15, 23, 42, 0.95);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .trust-icon {
@@ -282,9 +316,18 @@
     width: 12px;
     height: 12px;
     background: #10b981;
-    border-radius: 50%;
+    border-radius: 50% !important; /* Ensure it's circular, not square */
     box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
     animation: pulse 2s ease-in-out infinite;
+}
+
+/* Ensure status indicator doesn't appear in featured project section */
+.featured-project-banner .status-indicator,
+.featured-visual .status-indicator,
+.featured-mockup .status-indicator,
+.phone-frame .status-indicator,
+.phone-screen .status-indicator {
+    display: none !important;
 }
 
 @keyframes pulse {
@@ -374,6 +417,7 @@
     justify-content: center;
     transition: all 0.3s ease;
     position: relative;
+    overflow: visible; /* Ensure ::after pseudo-element is visible */
 }
 
 .chat-button:hover {
@@ -396,8 +440,9 @@
     height: 16px;
     background: #10b981;
     border: 3px solid #0f172a;
-    border-radius: 50%;
+    border-radius: 50% !important; /* Ensure it's always circular */
     animation: pulse 2s ease-in-out infinite;
+    z-index: 1;
 }
 
 .chat-box {

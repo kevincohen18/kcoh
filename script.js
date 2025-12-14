@@ -2623,7 +2623,7 @@ function initInteractiveTerminal() {
     });
 
     const commands = {
-        help: 'Available commands: help, about, skills, apps, portfolio, contact, clear, matrix, party, swift',
+        help: 'Available commands: help, about, skills, apps, portfolio, contact, whoami, ls, pwd, date, echo, cowsay, fortune, clear, matrix, party, swift',
         about: 'KCOH Software Inc. - Professional software development with 10+ iOS apps on App Store',
         skills: 'Swift, SwiftUI, React, Node.js, Python, AWS, Docker, and more!',
         apps: '10+ published iOS apps on the App Store built with Swift & SwiftUI 🍎',
@@ -2641,7 +2641,8 @@ function initInteractiveTerminal() {
 
     terminalInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            const cmd = terminalInput.value.trim().toLowerCase();
+            const fullInput = terminalInput.value.trim();
+            const cmd = fullInput.toLowerCase();
             const output = terminalOutput;
 
             output.innerHTML += `<div style="margin-top: 0.5rem;">$ ${terminalInput.value}</div>`;
@@ -2649,7 +2650,7 @@ function initInteractiveTerminal() {
             if (cmd === 'clear') {
                 output.innerHTML = '';
             } else if (cmd === 'party') {
-                output.innerHTML += `<div style="color: #a78bfa;">${commands[cmd]}</div>`;
+                output.innerHTML += `<div style="color: #a78bfa;">${commands['party']}</div>`;
                 triggerPartyMode();
             } else if (cmd === 'portfolio') {
                 // Show portfolio with clickable hyperlink
@@ -2657,6 +2658,57 @@ function initInteractiveTerminal() {
             } else if (cmd === 'contact') {
                 // Show contact with clickable links
                 output.innerHTML += `<div style="color: #a78bfa;">Email: <a href="mailto:contact@kcoh.ca" style="color: #6366f1; text-decoration: underline; cursor: pointer;">contact@kcoh.ca</a> | Phone: <a href="tel:+15148988716" style="color: #6366f1; text-decoration: underline; cursor: pointer;">514-898-8716</a></div>`;
+            } else if (cmd.startsWith('echo ')) {
+                // Echo command - output whatever comes after 'echo '
+                const text = fullInput.substring(5);
+                output.innerHTML += `<div style="color: #a78bfa;">${text}</div>`;
+            } else if (cmd.startsWith('cowsay ') || cmd.startsWith('cosway ')) {
+                // Cowsay command - ASCII art cow
+                const prefix = cmd.startsWith('cowsay ') ? 7 : 7; // Both are 7 chars
+                const text = fullInput.substring(prefix) || 'Hello from KCOH!';
+                const textLength = text.length;
+                const border = ' ' + '_'.repeat(textLength + 2);
+                const cow = `
+                    <div style="color: #10b981; font-family: monospace; white-space: pre; line-height: 1.2;">${border}
+< ${text} >
+ ${border.replace(/_/g, '-')}
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||</div>`;
+                output.innerHTML += cow;
+            } else if (cmd === 'cowsay' || cmd === 'cosway') {
+                // Cowsay with no args
+                const text = 'Hello from KCOH!';
+                const textLength = text.length;
+                const border = ' ' + '_'.repeat(textLength + 2);
+                const cow = `
+                    <div style="color: #10b981; font-family: monospace; white-space: pre; line-height: 1.2;">${border}
+< ${text} >
+ ${border.replace(/_/g, '-')}
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||</div>`;
+                output.innerHTML += cow;
+            } else if (cmd === 'fortune') {
+                // Fortune command - random programming quote
+                const fortunes = [
+                    'The best code is code you never have to write.',
+                    'Premature optimization is the root of all evil.',
+                    'Code is like humor. When you have to explain it, it\'s bad.',
+                    'First, solve the problem. Then, write the code.',
+                    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+                    'The only way to learn a new programming language is by writing programs in it.',
+                    'Programs must be written for people to read, and only incidentally for machines to execute.',
+                    'Talk is cheap. Show me the code.',
+                    'There are only two hard things in Computer Science: cache invalidation and naming things.',
+                    'Make it work, make it right, make it fast.'
+                ];
+                const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+                output.innerHTML += `<div style="color: #fbbf24; font-style: italic;">${fortune}</div>`;
             } else if (commands[cmd]) {
                 // Check if command output contains URLs and make them clickable
                 let commandOutput = commands[cmd];
@@ -2664,7 +2716,7 @@ function initInteractiveTerminal() {
                 commandOutput = commandOutput.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #6366f1; text-decoration: underline; cursor: pointer;">$1</a>');
                 output.innerHTML += `<div style="color: #a78bfa;">${commandOutput}</div>`;
             } else if (cmd) {
-                output.innerHTML += `<div style="color: #ef4444;">Command not found: ${cmd}</div>`;
+                output.innerHTML += `<div style="color: #ef4444;">Command not found: ${cmd}<br>Type 'help' for available commands</div>`;
             }
 
             output.scrollTop = output.scrollHeight;

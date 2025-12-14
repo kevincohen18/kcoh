@@ -183,7 +183,8 @@ const aliases = {
     '..': 'cd ..',
     '~': 'cd ~',
     '?': 'help',
-    'cls': 'clear'
+    'cls': 'clear',
+    'cosway': 'cowsay'  // Common typo for cowsay
 };
 
 // Achievement unlock function
@@ -290,7 +291,7 @@ function initInteractiveTerminalPortfolio() {
     function getCurrentDir() {
         const pathParts = terminalState.currentPath.split('/').filter(p => p);
         let current = fileSystem['~'];
-        
+
         for (const part of pathParts) {
             if (part === '~') continue;
             if (current && current.children && current.children[part]) {
@@ -299,6 +300,60 @@ function initInteractiveTerminalPortfolio() {
                 return null;
             }
         }
+        return current;
+    }
+
+    // Resolve a path relative to current directory
+    function resolvePath(path) {
+        if (path === '~' || path === '/') {
+            return fileSystem['~'];
+        }
+
+        // Handle parent directory
+        if (path === '..') {
+            const parts = terminalState.currentPath.split('/').filter(p => p);
+            if (parts.length > 1) {
+                parts.pop();
+                const parentPath = parts.join('/');
+                const parentParts = parentPath.split('/').filter(p => p);
+                let current = fileSystem['~'];
+                for (const part of parentParts) {
+                    if (part === '~') continue;
+                    if (current && current.children && current.children[part]) {
+                        current = current.children[part];
+                    } else {
+                        return null;
+                    }
+                }
+                return current;
+            }
+            return fileSystem['~'];
+        }
+
+        // Handle absolute paths starting with ~
+        if (path.startsWith('~')) {
+            path = path.substring(1);
+            if (path.startsWith('/')) path = path.substring(1);
+        }
+
+        // Start from current directory
+        let current = getCurrentDir();
+        if (!current) return null;
+
+        // Navigate through path parts
+        const parts = path.split('/').filter(p => p);
+        for (const part of parts) {
+            if (part === '..') {
+                // Go up one level - need to track parent
+                // For simplicity, return null for now
+                return null;
+            } else if (current.children && current.children[part]) {
+                current = current.children[part];
+            } else {
+                return null;
+            }
+        }
+
         return current;
     }
 
@@ -416,15 +471,54 @@ function initInteractiveTerminalPortfolio() {
 
     // Command handlers
     function handleLs(flags, args) {
-        const dir = getCurrentDir();
-        if (!dir || dir.type !== 'directory') {
+        let targetDir = getCurrentDir();
+        let targetPath = args[0]; // Get the path argument if provided
+
+        // If a path is provided, navigate to it
+        if (targetPath) {
+            // Remove trailing slash if present
+            targetPath = targetPath.replace(/\/$/, '');
+
+            // Resolve the path
+            const target = resolvePath(targetPath);
+
+            if (!target) {
+                addOutput(`<span class="error">ls: cannot access '${targetPath}': No such file or directory</span>`, 'terminal-error');
+                return;
+            }
+
+            // If it's a file, show file info
+            if (target.type === 'file') {
+                const size = formatSize(target.size || 1024);
+                const perms = '-rw-r--r--';
+                const date = 'Dec  9 06:18';
+                const filename = targetPath.split('/').pop() || targetPath;
+                addOutput(
+                    `<span class="file-line">
+                        <span class="permissions">${perms}</span>
+                        <span class="file-size">${size.padEnd(6)}</span>
+                        <span class="file-date">${date}</span>
+                        <span class="file-name">${filename}</span>
+                    </span>`,
+                    'file-line'
+                );
+                return;
+            }
+
+            // If it's a directory, list its contents
+            if (target.type === 'directory') {
+                targetDir = target;
+            }
+        }
+
+        if (!targetDir || targetDir.type !== 'directory') {
             addOutput(`<span class="error">ls: cannot access directory: No such file or directory</span>`, 'terminal-error');
             return;
         }
 
         const showAll = flags.includes('-a') || flags.includes('-la') || flags.includes('-al');
         const showLong = flags.includes('-l') || flags.includes('-la') || flags.includes('-al');
-        const children = dir.children || {};
+        const children = targetDir.children || {};
 
         if (showLong) {
             let total = 0;
@@ -471,6 +565,7 @@ function initInteractiveTerminalPortfolio() {
 
     function handleCd(args) {
         if (args.length === 0) {
+            terminalState.previousPath = terminalState.currentPath;
             terminalState.currentPath = '~';
             updatePrompt();
             return;
@@ -479,41 +574,64 @@ function initInteractiveTerminalPortfolio() {
         const target = args[0];
         let newPath = terminalState.currentPath;
 
+        // Handle special cases
+        if (target === '-') {
+            const temp = terminalState.currentPath;
+            terminalState.currentPath = terminalState.previousPath;
+            terminalState.previousPath = temp;
+            updatePrompt();
+            return;
+        }
+
+        if (target === '~' || target === '/') {
+            terminalState.previousPath = terminalState.currentPath;
+            terminalState.currentPath = '~';
+            updatePrompt();
+            return;
+        }
+
         if (target === '..') {
             const parts = newPath.split('/').filter(p => p);
-            if (parts.length > 0 && parts[0] !== '~') {
-                parts.pop();
-                newPath = parts.length > 0 ? parts.join('/') : '~';
-                if (!newPath.startsWith('~')) newPath = '~/' + newPath;
-            } else if (parts.length > 1) {
+            if (parts.length > 1) {
                 parts.pop();
                 newPath = parts.join('/');
+                if (!newPath.startsWith('~')) newPath = '~/' + newPath;
             } else {
                 newPath = '~';
             }
-        } else if (target === '~' || target === '/') {
-            newPath = '~';
-        } else if (target === '-') {
-            newPath = terminalState.previousPath;
-        } else {
-            const currentDir = getCurrentDir();
-            if (!currentDir || currentDir.type !== 'directory') {
-                addOutput(`<span class="error">cd: ${target}: No such file or directory</span>`, 'terminal-error');
-                return;
-            }
+            terminalState.previousPath = terminalState.currentPath;
+            terminalState.currentPath = newPath;
+            updatePrompt();
+            return;
+        }
 
-            const children = currentDir.children || {};
-            if (children[target] && children[target].type === 'directory') {
-                if (newPath === '~') {
-                    newPath = `~/${target}`;
-                } else {
-                    newPath = `${newPath}/${target}`;
-                }
+        // Try to resolve the path
+        const targetDir = resolvePath(target);
+
+        if (!targetDir) {
+            addOutput(`<span class="error">cd: ${target}: No such file or directory</span>`, 'terminal-error');
+            return;
+        }
+
+        if (targetDir.type !== 'directory') {
+            addOutput(`<span class="error">cd: ${target}: Not a directory</span>`, 'terminal-error');
+            return;
+        }
+
+        // Build the new path
+        if (target.startsWith('~')) {
+            newPath = target;
+        } else {
+            if (newPath === '~') {
+                newPath = `~/${target}`;
             } else {
-                addOutput(`<span class="error">cd: ${target}: Not a directory</span>`, 'terminal-error');
-                return;
+                newPath = `${newPath}/${target}`;
             }
         }
+
+        // Clean up path (remove trailing slashes, double slashes, etc.)
+        newPath = newPath.replace(/\/+/g, '/').replace(/\/$/, '');
+        if (!newPath) newPath = '~';
 
         terminalState.previousPath = terminalState.currentPath;
         terminalState.currentPath = newPath;
@@ -530,22 +648,29 @@ function initInteractiveTerminalPortfolio() {
             return;
         }
 
-        const filename = args[0];
-        const currentDir = getCurrentDir();
-        if (!currentDir || currentDir.type !== 'directory') {
-            addOutput(`<span class="error">cat: ${filename}: No such file or directory</span>`, 'terminal-error');
+        const filepath = args[0];
+
+        // Try to resolve as a path first
+        const target = resolvePath(filepath);
+
+        if (!target) {
+            addOutput(`<span class="error">cat: ${filepath}: No such file or directory</span>`, 'terminal-error');
             return;
         }
 
-        const children = currentDir.children || {};
-        if (children[filename] && children[filename].type === 'file') {
-            const content = children[filename].content || '';
+        if (target.type === 'directory') {
+            addOutput(`<span class="error">cat: ${filepath}: Is a directory</span>`, 'terminal-error');
+            return;
+        }
+
+        if (target.type === 'file') {
+            const content = target.content || '';
             const lines = content.split('\n');
             lines.forEach(line => {
                 addOutput(`<span class="file-content">${escapeHtml(line)}</span>`, 'terminal-cat');
             });
         } else {
-            addOutput(`<span class="error">cat: ${filename}: No such file or directory</span>`, 'terminal-error');
+            addOutput(`<span class="error">cat: ${filepath}: No such file or directory</span>`, 'terminal-error');
         }
     }
 
