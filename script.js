@@ -4531,7 +4531,7 @@ function initChatWidget() {
         chatButton.addEventListener('click', () => {
             const isActive = chatBox.classList.contains('active');
             chatBox.classList.toggle('active');
-            
+
             if (chatBox.classList.contains('active')) {
                 console.log('[KCOH] Chat opened');
                 chatBox.style.display = 'flex';
@@ -4539,9 +4539,18 @@ function initChatWidget() {
                 if (chatMessages.children.length === 0) {
                     resetChatContext(); // Reset context for new conversation
                     showChatResponse('welcome', chatMessages, quickRepliesContainer);
+                    // Ensure chat starts at top to show full welcome message
+                    setTimeout(() => {
+                        chatMessages.scrollTop = 0;
+                    }, 100);
+                } else {
+                    // If messages exist, scroll to show latest
+                    setTimeout(() => {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 100);
                 }
                 document.getElementById('chatInput').focus();
-                
+
                 // Adjust back-to-top button position when chat is open
                 adjustBackToTopPosition(true);
             } else {
@@ -4579,17 +4588,105 @@ function initChatWidget() {
         const chatInput = document.getElementById('chatInput');
 
         if (chatForm && chatInput) {
+            // Handle form submit
             chatForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const message = chatInput.value.trim();
-                if (!message) return;
+                if (!message || message.length > 500) return; // Character limit
 
                 handleUserMessage(message, chatMessages, quickRepliesContainer);
                 chatInput.value = '';
+                updateCharacterCounter(chatInput, 0);
+            });
+
+            // Add character counter
+            const counterDiv = document.createElement('div');
+            counterDiv.className = 'char-counter';
+            counterDiv.textContent = '0/500';
+            chatInput.parentElement.appendChild(counterDiv);
+
+            // Update character counter on input
+            chatInput.addEventListener('input', (e) => {
+                const length = e.target.value.length;
+                updateCharacterCounter(e.target, length);
+            });
+
+            // Keyboard shortcuts: Shift+Enter for newline (convert to textarea)
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    chatForm.dispatchEvent(new Event('submit'));
+                }
             });
         }
+
+        // Load conversation from localStorage when chat opens
+        loadConversationFromStorage(chatMessages, quickRepliesContainer);
     }
     console.log('[KCOH] initChatWidget: ready (hidden by default)');
+}
+
+// Character counter update function
+function updateCharacterCounter(input, length) {
+    const counter = input.parentElement.querySelector('.char-counter');
+    if (counter) {
+        counter.textContent = `${length}/500`;
+        if (length > 450) {
+            counter.style.color = '#ef4444';
+        } else if (length > 400) {
+            counter.style.color = '#f59e0b';
+        } else {
+            counter.style.color = '';
+        }
+    }
+}
+
+// Save conversation to localStorage
+function saveConversationToStorage() {
+    try {
+        const messages = chatContext.conversationHistory;
+        const data = {
+            messages,
+            timestamp: Date.now(),
+            expiresAt: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+        };
+        localStorage.setItem('kcoh_chat_history', JSON.stringify(data));
+    } catch (e) {
+        console.warn('Failed to save conversation:', e);
+    }
+}
+
+// Load conversation from localStorage
+function loadConversationFromStorage(chatMessages, quickRepliesContainer) {
+    try {
+        const stored = localStorage.getItem('kcoh_chat_history');
+        if (!stored) return;
+
+        const data = JSON.parse(stored);
+
+        // Check if expired
+        if (Date.now() > data.expiresAt) {
+            localStorage.removeItem('kcoh_chat_history');
+            return;
+        }
+
+        // Restore conversation (up to last 50 messages)
+        const messages = data.messages.slice(-50);
+        messages.forEach(msg => {
+            if (msg.role === 'user') {
+                addChatMessage(msg.message, 'user', chatMessages);
+            } else if (msg.role === 'bot' && msg.responseKey) {
+                const response = chatResponses[msg.responseKey];
+                if (response) {
+                    addChatMessage(response.response, 'bot', chatMessages);
+                }
+            }
+        });
+
+        chatContext.conversationHistory = messages;
+    } catch (e) {
+        console.warn('Failed to load conversation:', e);
+    }
 }
 
 // Chat conversation context tracking
@@ -4609,19 +4706,11 @@ function resetChatContext() {
 }
 
 // Adjust back-to-top button position based on chat box state
+// Note: Back-to-top is now on left side, so no adjustment needed
 function adjustBackToTopPosition(chatOpen) {
-    const backToTopBtn = document.querySelector('.back-to-top');
-    const chatBox = document.querySelector('.chat-box');
-    if (!backToTopBtn || !chatBox) return;
-    
-    if (chatOpen) {
-        const chatHeight = chatBox.getBoundingClientRect().height || 0;
-        const offset = 24;
-        const newBottom = chatHeight + offset;
-        backToTopBtn.style.bottom = `${newBottom}px`;
-    } else {
-        backToTopBtn.style.bottom = '';
-    }
+    // No longer needed - back-to-top is on left side, chat is on right side
+    // Keeping function for compatibility but it does nothing
+    return;
 }
 
 function handleUserMessage(message, chatMessages, quickRepliesContainer) {
@@ -4630,9 +4719,12 @@ function handleUserMessage(message, chatMessages, quickRepliesContainer) {
 
     // Track conversation
     chatContext.conversationHistory.push({ role: 'user', message: message.toLowerCase() });
-    if (chatContext.conversationHistory.length > 10) {
-        chatContext.conversationHistory.shift(); // Keep last 10 messages
+    if (chatContext.conversationHistory.length > 50) {
+        chatContext.conversationHistory.shift(); // Keep last 50 messages
     }
+
+    // Save to localStorage
+    saveConversationToStorage();
 
     // Clear quick replies
     quickRepliesContainer.innerHTML = '';
@@ -4646,8 +4738,11 @@ function handleUserMessage(message, chatMessages, quickRepliesContainer) {
         // Smart response matching with scoring system
         const responseKey = detectIntent(message);
         chatContext.lastTopic = responseKey;
-        
+
         showChatResponse(responseKey, chatMessages, quickRepliesContainer);
+
+        // Save bot response to localStorage
+        saveConversationToStorage();
     }, 1000);
 }
 
@@ -4854,13 +4949,72 @@ function addChatMessage(text, sender, container) {
     messageDiv.className = `chat-message ${sender}`;
     const avatar = sender === 'bot' ? 'KC' : 'You';
 
+    // Sanitize text to prevent XSS
+    const sanitizedText = sanitizeHTML(text);
+
+    // Get current timestamp
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
     messageDiv.innerHTML = `
         <div class="message-avatar">${avatar}</div>
-        <div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>
+        <div class="message-content">
+            <div class="message-bubble">${sanitizedText.replace(/\n/g, '<br>')}</div>
+            <div class="message-footer">
+                <span class="message-timestamp">${timeString}</span>
+                <button class="copy-message-btn" title="Copy message" aria-label="Copy message to clipboard">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
     `;
 
+    // Add copy functionality
+    const copyBtn = messageDiv.querySelector('.copy-message-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            // Get plain text (remove HTML)
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = sanitizedText;
+            const plainText = tempDiv.textContent || tempDiv.innerText;
+
+            navigator.clipboard.writeText(plainText).then(() => {
+                // Visual feedback
+                copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+                }, 1500);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        });
+    }
+
     container.appendChild(messageDiv);
-    container.scrollTop = container.scrollHeight;
+
+    // Smooth scroll to bottom (unless it's the first message)
+    setTimeout(() => {
+        // If this is the first message, keep it at top
+        if (container.children.length === 1) {
+            container.scrollTop = 0;
+        } else {
+            // Otherwise scroll to show latest message
+            container.scrollTo({
+                top: container.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    }, 100);
+}
+
+// Sanitize HTML to prevent XSS attacks
+function sanitizeHTML(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 function showTypingIndicator(container) {

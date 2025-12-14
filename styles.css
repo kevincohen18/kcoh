@@ -3446,8 +3446,8 @@ body:not(.light-theme) .form-message-error .form-message-icon {
 /* Back to Top Button */
 .back-to-top {
     position: fixed;
-    bottom: 100px; /* Positioned above chat widget button (60px + 30px bottom + 10px gap) */
-    right: 30px;
+    bottom: 30px; /* Positioned at bottom-left, away from chat widget */
+    left: 30px;
     width: 50px;
     height: 50px;
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
@@ -3466,11 +3466,7 @@ body:not(.light-theme) .form-message-error .form-message-icon {
     pointer-events: none;
 }
 
-/* Adjust back-to-top position when chat box is open */
-.chat-box.active ~ .back-to-top,
-body:has(.chat-box.active) .back-to-top {
-    bottom: 720px; /* Above open chat box (600px height + 100px bottom + 20px gap) */
-}
+/* Back-to-top is on left side, no adjustment needed when chat box is open */
 
 .back-to-top.visible {
     pointer-events: auto;
@@ -7090,17 +7086,14 @@ html {
     }
 
     .back-to-top {
-        bottom: 100px; /* Positioned above chat widget button on mobile */
-        right: 20px;
+        bottom: 20px; /* Positioned at bottom-left on mobile, away from chat widget */
+        left: 20px;
+        right: auto; /* Override any right positioning */
         width: 45px;
         height: 45px;
     }
     
-    /* Adjust back-to-top when chat box is open on mobile */
-    .chat-box.active ~ .back-to-top,
-    body:has(.chat-box.active) .back-to-top {
-        bottom: calc(85vh + 20px); /* Above open chat box on mobile */
-    }
+    /* No adjustment needed - back-to-top is on left side, chat is on right */
 
     body.cookie-visible .back-to-top {
         bottom: calc(100px + 100px);
