@@ -401,11 +401,13 @@
 }
 
 .chat-box {
-    position: absolute;
-    bottom: 80px;
-    right: 0;
-    width: 380px;
-    max-height: 600px;
+    position: fixed;
+    bottom: 100px; /* Positioned above chat button (60px + 30px bottom + 10px gap) */
+    right: 30px;
+    width: 400px;
+    height: 600px;
+    max-height: calc(100vh - 120px);
+    min-height: 500px;
     background: var(--bg-white);
     border-radius: 1rem;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
@@ -413,6 +415,7 @@
     display: none;
     flex-direction: column;
     overflow: hidden;
+    z-index: 1002; /* Above chat widget and back-to-top button */
 }
 
 .chat-box.active {
@@ -484,12 +487,13 @@
 .chat-messages {
     flex: 1;
     min-height: 200px;
-    max-height: 300px;
+    max-height: none;
     padding: 1.5rem;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    overflow-x: hidden;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -696,8 +700,10 @@
 /* Tablet and smaller desktop */
 @media (max-width: 1024px) and (min-width: 769px) {
     .chat-box {
-        width: 360px;
-        max-height: 550px;
+        width: 380px;
+        height: 580px;
+        max-height: calc(100vh - 120px);
+        min-height: 480px;
     }
 }
 
@@ -719,9 +725,12 @@
         right: 0;
         left: 0;
         width: 100%;
+        height: 80vh;
         max-height: 80vh;
+        min-height: 60vh;
         border-radius: 1rem 1rem 0 0;
         box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 1002; /* Ensure it's above everything on mobile */
     }
 
     .chat-messages {
@@ -736,7 +745,9 @@
 
 @media (max-width: 480px) {
     .chat-box {
+        height: 85vh;
         max-height: 85vh;
+        min-height: 70vh;
     }
 
     .quick-replies {

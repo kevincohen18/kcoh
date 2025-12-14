@@ -802,6 +802,14 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         centerGitHubGraph();
     }, 100);
+
+    // Remove any lingering background canvases from previous sessions
+    ['holographic-grid', 'circuit-board', 'binary-rain', 'data-stream-container'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.parentNode) {
+            el.parentNode.removeChild(el);
+        }
+    });
 });
 
 // Center graph on window resize
@@ -856,6 +864,54 @@ const statsObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.stat-item').forEach(stat => {
     statsObserver.observe(stat);
 });
+
+// Animate metric values on about page
+function animateMetricValue(element, target, duration = 2000) {
+    const start = 0;
+    const increment = target / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current);
+        }
+    }, 16);
+}
+
+// Observe metric values for animation on about page
+const metricObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const metricValue = entry.target;
+            const targetCount = parseInt(metricValue.getAttribute('data-count'));
+            if (targetCount && !metricValue.classList.contains('animated')) {
+                metricValue.classList.add('animated');
+                metricValue.textContent = '0';
+                animateMetricValue(metricValue, targetCount);
+                metricObserver.unobserve(metricValue);
+            }
+        }
+    });
+}, { threshold: 0.5 });
+
+// Initialize metric animation
+function initMetricAnimation() {
+    document.querySelectorAll('.metric-value-modern[data-count]').forEach(metric => {
+        metricObserver.observe(metric);
+    });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMetricAnimation);
+} else {
+    // DOM already loaded
+    initMetricAnimation();
+}
 
 // Removed button ripple to keep click visuals minimal (confetti remains)
 
@@ -1034,22 +1090,35 @@ if (themeToggle) {
 }
 
 // Animate tech progress bars on scroll
-const techProgressBars = document.querySelectorAll('.tech-progress');
-
 const techObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const progress = entry.target;
             const progressValue = progress.getAttribute('data-progress');
-            progress.style.width = progressValue + '%';
+            if (progressValue) {
+                progress.style.width = progressValue + '%';
+            }
             techObserver.unobserve(progress);
         }
     });
 }, { threshold: 0.5 });
 
-techProgressBars.forEach(bar => {
-    techObserver.observe(bar);
-});
+function initTechProgressBars() {
+    const techProgressBars = document.querySelectorAll('.tech-progress');
+    techProgressBars.forEach(bar => {
+        // Reset width to 0 for animation
+        bar.style.width = '0%';
+        techObserver.observe(bar);
+    });
+}
+
+// Initialize tech progress bars when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTechProgressBars);
+} else {
+    // DOM already loaded
+    initTechProgressBars();
+}
 
 // Phone number auto-formatting
 function formatPhoneNumber(value) {
@@ -2863,106 +2932,117 @@ function initShakeEffects() {
     document.head.appendChild(shakeStyle);
 }
 
-// Developer Command Palette (press ? or Ctrl+K) - only on home page
+// Developer Command Palette - only via toolbar button, never auto
 function initDeveloperPalette() {
     const isHome = window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html') || window.location.pathname === '' || window.location.pathname === '/index.html';
-    if (!isHome) return;
-    const palette = document.createElement('div');
-    palette.className = 'dev-palette';
-    palette.innerHTML = `
-        <div class="dev-palette-header">
-            <span>Developer Shortcuts</span>
-            <span class="dev-palette-close">✕</span>
-        </div>
-        <div class="dev-palette-list">
-            <span><span class="dev-key">Ctrl + \`</span>Open interactive terminal</span>
-            <span><span class="dev-key">Ctrl + K</span>Toggle this palette</span>
-            <span><span class="dev-key">?</span>Show/hide shortcuts</span>
-            <span><span class="dev-key">Konami</span>Confetti surprise</span>
-            <span><span class="dev-key">Click</span>Particle + ripple effects</span>
-            <span><span class="dev-key">Hover</span>Magnetic cards + tilt</span>
-        </div>
-        <div class="dev-palette-hint">Press "?" or Ctrl+K from anywhere to view shortcuts.</div>
-    `;
-
-    const closeBtn = palette.querySelector('.dev-palette-close');
-
-    // Ensure close button is clickable
-    if (closeBtn) {
-        closeBtn.style.pointerEvents = 'auto';
-        closeBtn.style.cursor = 'pointer';
-        closeBtn.style.zIndex = '100000';
-        closeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            closePalette();
-        });
+    if (!isHome) {
+        console.log('[KCOH] Developer palette skipped: not on home page');
+        return;
     }
-    
-    let userPinned = false;
+    const paletteButton = document.querySelector('.palette-toggle');
+    if (!paletteButton) {
+        console.log('[KCOH] Developer palette skipped: toolbar toggle not found');
+        return;
+    }
+    console.log('[KCOH] Developer palette initializing (lazy create + guard)');
+
+    // Guard against stray insertions before user clicks
+    let paletteAllowed = false;
+    let palette = null;
+
+    const removeStrayPalettes = (reason) => {
+        document.querySelectorAll('.dev-palette').forEach(el => {
+            if (!palette || el !== palette) {
+                console.log(`[KCOH] Removing stray developer palette (${reason})`);
+                el.remove();
+            }
+        });
+    };
+
+    // Mutation observer to prevent unexpected auto-insertions
+    const observer = new MutationObserver(() => {
+        if (!paletteAllowed) {
+            removeStrayPalettes('guard (not allowed yet)');
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    const createPalette = () => {
+        if (palette) return palette;
+        removeStrayPalettes('pre-create cleanup');
+
+        palette = document.createElement('div');
+        palette.className = 'dev-palette';
+        palette.innerHTML = `
+            <div class="dev-palette-header">
+                <span>Developer Shortcuts</span>
+                <span class="dev-palette-close">✕</span>
+            </div>
+            <div class="dev-palette-list">
+                <span><span class="dev-key">Ctrl + \`</span>Open interactive terminal</span>
+                <span><span class="dev-key">Ctrl + K</span>Open search</span>
+                <span><span class="dev-key">Ctrl + T</span>Open todo panel</span>
+                <span><span class="dev-key">?</span>Toggle shortcuts palette</span>
+                <span><span class="dev-key">Esc</span>Close active panel</span>
+                <span><span class="dev-key">Konami</span>Confetti surprise</span>
+                <span><span class="dev-key">Click</span>Particle explosion</span>
+                <span><span class="dev-key">Hover</span>Magnetic cursor + card tilt</span>
+            </div>
+            <div class="dev-palette-hint">Press \"?\" or click the ⌘ button to view shortcuts.</div>
+        `;
+
+        const closeBtn = palette.querySelector('.dev-palette-close');
+        if (closeBtn) {
+            closeBtn.style.pointerEvents = 'auto';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.style.zIndex = '100000';
+            closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                closePalette();
+            });
+        }
+
+        document.body.appendChild(palette);
+        closePalette();
+        console.log('[KCOH] Developer palette DOM created (closed by default)');
+        return palette;
+    };
 
     const openPalette = () => {
+        paletteAllowed = true;
+        createPalette();
         palette.classList.add('open');
         palette.style.pointerEvents = 'auto';
+        console.log('[KCOH] Developer palette opened from toolbar button');
     };
+
     const closePalette = () => {
+        if (!palette) return;
         palette.classList.remove('open');
         palette.style.pointerEvents = 'none';
+        console.log('[KCOH] Developer palette closed');
     };
-    const togglePalette = () => {
-        if (palette.classList.contains('open')) {
+
+    paletteButton.addEventListener('click', () => {
+        if (palette && palette.classList.contains('open')) {
             closePalette();
         } else {
             openPalette();
         }
-    };
-
-    const pinPalette = () => {
-        userPinned = true;
-        openPalette();
-    };
-
-    // Close button already has event listener from above, don't add duplicate
-    palette.addEventListener('click', (e) => {
-        // Only pin if clicking on palette itself, not on close button
-        if (e.target === palette || e.target.closest('.dev-palette-list') || e.target.closest('.dev-palette-hint')) {
-            pinPalette();
-        }
     });
-
-    const paletteButton = document.querySelector('.palette-toggle');
-    if (paletteButton) {
-        paletteButton.addEventListener('click', () => {
-            pinPalette();
-        });
-    }
 
     document.addEventListener('keydown', (e) => {
         const key = e.key ? e.key.toLowerCase() : '';
-        const isQuestionMark = e.key === '?' || (e.key === '/' && e.shiftKey);
-        const isCtrlK = e.ctrlKey && key === 'k';
-
-        if (isQuestionMark || isCtrlK) {
-            e.preventDefault();
-            togglePalette();
-        }
-
         if (key === 'escape') {
+            console.log('[KCOH] Escape pressed -> close developer palette');
             closePalette();
         }
     });
 
-    document.body.appendChild(palette);
-
-    // Auto-show palette briefly on first load (desktop/minimal disabled)
-    if (!isMinimalMode()) {
-        openPalette();
-        setTimeout(() => {
-            if (!userPinned && !isMinimalMode()) {
-                closePalette();
-            }
-        }, 3000);
-    }
+    // Initial sweep to remove any leftover palette from previous render
+    removeStrayPalettes('initial sweep');
+    console.log('[KCOH] Developer palette ready: waiting for toolbar click (no popup on load)');
 }
 
 // Minimal mode toggle (hides flashy elements)
@@ -2975,8 +3055,9 @@ function initMinimalMode(codeTyping) {
         toggleBtn.setAttribute('aria-pressed', String(isOn));
         toggleBtn.textContent = isOn ? 'Minimal mode: On' : 'Minimal mode';
         if (isOn && codeTyping?.hide) codeTyping.hide();
-        const palette = document.querySelector('.dev-palette');
-        if (isOn && palette) palette.classList.remove('open');
+        // Developer palette disabled - no need to check
+        // const palette = document.querySelector('.dev-palette');
+        // if (isOn && palette) palette.classList.remove('open');
     };
 
     toggleBtn.addEventListener('click', () => {
@@ -3930,7 +4011,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initPageTransitions();
     initModernHoverEffect();
     initDeveloperPalette();
-        enhanceLoadingScreen();
+    // Remove any existing developer palette elements that might have been created prior to guard
+    const existingPalette = document.querySelector('.dev-palette');
+    if (existingPalette) {
+        console.log('[KCOH] Removing existing developer palette element (post-init sweep)');
+        existingPalette.remove();
+    }
+    console.log('[KCOH] DOMContentLoaded: core UI initialized');
+
+    enhanceLoadingScreen();
     
     // Matrix background disabled - green text effect removed
     // Remove any existing matrix canvases
@@ -3971,12 +4060,13 @@ window.addEventListener('load', () => {
         // Other heavy effects only on desktop for performance
         if (window.innerWidth > 768) {
             // initEnhancedMatrixRain(); // Disabled
-            initCircuitBoard();
-            initInteractiveParticles();
+            // Visual background canvases disabled for consistent, uniform backdrop
+            // initCircuitBoard();
+            // initInteractiveParticles();
             initMagneticCursor();
-            initBinaryRain();
-            initDataStream();
-            initHolographicGrid();
+            // initBinaryRain();
+            // initDataStream();
+            // initHolographicGrid();
             initNeonPulse();
         }
     };
@@ -4245,7 +4335,7 @@ if ('IntersectionObserver' in window) {
 console.log('Auto-center contribution graph loaded ✓');
 
 // ============================================
-// CHAT WIDGET FUNCTIONALITY
+// CHAT WIDGET FUNCTIONALITY - HOMEPAGE ONLY
 // ============================================
 
 // Smart Chat Responses Database
@@ -4296,7 +4386,7 @@ const chatResponses = {
         ]
     },
     portfolio: {
-        response: "Check out my portfolio at kevincohen.ca to see my iOS apps, web projects, and case studies. I've built everything from productivity apps to complex business solutions!",
+        response: "View my app portfolio at kevincohen.ca — 10+ published iOS apps with case studies.",
         quickReplies: [
             { text: "Visit Portfolio", icon: "🚀", action: "link", url: "https://kevincohen.ca" },
             { text: "iOS Apps", icon: "📱", action: "link", url: "https://kevincohen.ca" },
@@ -4324,6 +4414,13 @@ const chatResponses = {
 };
 
 function initChatWidget() {
+    console.log('[KCOH] initChatWidget: start');
+    // Remove any stray chat boxes before creating a new one
+    document.querySelectorAll('.chat-box').forEach((box) => {
+        console.log('[KCOH] initChatWidget: removing stray chat box');
+        box.remove();
+    });
+
     const chatButton = document.getElementById('chatButton');
     const chatBox = document.createElement('div');
     chatBox.className = 'chat-box';
@@ -4366,18 +4463,40 @@ function initChatWidget() {
 
     if (chatButton) {
         chatButton.parentElement.appendChild(chatBox);
+        console.log('[KCOH] initChatWidget: chat box added next to chat button');
+        
+        // Ensure chat box is hidden by default
+        chatBox.classList.remove('active');
+        chatBox.style.display = 'none';
 
         const chatMessages = document.getElementById('chatMessages');
         const quickRepliesContainer = document.getElementById('quickReplies');
 
-        // Show welcome message
-        showChatResponse('welcome', chatMessages, quickRepliesContainer);
+        // Show welcome message only when chat is opened
+        // Don't show it immediately - wait for user to open chat
 
         // Toggle chat box
         chatButton.addEventListener('click', () => {
+            const isActive = chatBox.classList.contains('active');
             chatBox.classList.toggle('active');
+            
             if (chatBox.classList.contains('active')) {
+                console.log('[KCOH] Chat opened');
+                chatBox.style.display = 'flex';
+                // Show welcome message only on first open
+                if (chatMessages.children.length === 0) {
+                    resetChatContext(); // Reset context for new conversation
+                    showChatResponse('welcome', chatMessages, quickRepliesContainer);
+                }
                 document.getElementById('chatInput').focus();
+                
+                // Adjust back-to-top button position when chat is open
+                adjustBackToTopPosition(true);
+            } else {
+                console.log('[KCOH] Chat closed via toggle');
+                chatBox.style.display = 'none';
+                // Reset back-to-top button position when chat is closed
+                adjustBackToTopPosition(false);
             }
         });
 
@@ -4385,9 +4504,23 @@ function initChatWidget() {
         const chatClose = document.getElementById('chatClose');
         if (chatClose) {
             chatClose.addEventListener('click', () => {
+                console.log('[KCOH] Chat closed via header close');
                 chatBox.classList.remove('active');
+                chatBox.style.display = 'none';
+                // Reset back-to-top button position when chat is closed
+                adjustBackToTopPosition(false);
             });
         }
+
+        // Close with Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && chatBox.classList.contains('active')) {
+                console.log('[KCOH] Chat closed via Escape');
+                chatBox.classList.remove('active');
+                chatBox.style.display = 'none';
+                adjustBackToTopPosition(false);
+            }
+        });
 
         // Handle message sending
         const chatForm = document.getElementById('chatForm');
@@ -4404,11 +4537,50 @@ function initChatWidget() {
             });
         }
     }
+    console.log('[KCOH] initChatWidget: ready (hidden by default)');
+}
+
+// Chat conversation context tracking
+let chatContext = {
+    conversationHistory: [],
+    lastTopic: null,
+    userIntent: null
+};
+
+// Reset chat context (call when chat is closed/reopened)
+function resetChatContext() {
+    chatContext = {
+        conversationHistory: [],
+        lastTopic: null,
+        userIntent: null
+    };
+}
+
+// Adjust back-to-top button position based on chat box state
+function adjustBackToTopPosition(chatOpen) {
+    const backToTopBtn = document.querySelector('.back-to-top');
+    const chatBox = document.querySelector('.chat-box');
+    if (!backToTopBtn || !chatBox) return;
+    
+    if (chatOpen) {
+        const chatHeight = chatBox.getBoundingClientRect().height || 0;
+        const offset = 24;
+        const newBottom = chatHeight + offset;
+        backToTopBtn.style.bottom = `${newBottom}px`;
+    } else {
+        backToTopBtn.style.bottom = '';
+    }
 }
 
 function handleUserMessage(message, chatMessages, quickRepliesContainer) {
     // Add user message
     addChatMessage(message, 'user', chatMessages);
+
+    // Track conversation
+    chatContext.conversationHistory.push({ role: 'user', message: message.toLowerCase() });
+    if (chatContext.conversationHistory.length > 10) {
+        chatContext.conversationHistory.shift(); // Keep last 10 messages
+    }
 
     // Clear quick replies
     quickRepliesContainer.innerHTML = '';
@@ -4419,39 +4591,149 @@ function handleUserMessage(message, chatMessages, quickRepliesContainer) {
     setTimeout(() => {
         removeTypingIndicator(chatMessages);
 
-        // Smart response matching
-        const lowerMessage = message.toLowerCase();
-        let responseKey = 'quote'; // default
-
-        if (lowerMessage.includes('service') || lowerMessage.includes('what do you') || lowerMessage.includes('what can')) {
-            responseKey = 'services';
-        } else if (lowerMessage.includes('ios') || lowerMessage.includes('app') || lowerMessage.includes('mobile') || lowerMessage.includes('iphone')) {
-            responseKey = 'ios';
-        } else if (lowerMessage.includes('web') || lowerMessage.includes('website') || lowerMessage.includes('site')) {
-            responseKey = 'web';
-        } else if (lowerMessage.includes('portfolio') || lowerMessage.includes('work') || lowerMessage.includes('example')) {
-            responseKey = 'portfolio';
-        } else if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('how much')) {
-            responseKey = 'pricing';
-        } else if (lowerMessage.includes('custom') || lowerMessage.includes('automation') || lowerMessage.includes('api')) {
-            responseKey = 'custom';
-        }
-
+        // Smart response matching with scoring system
+        const responseKey = detectIntent(message);
+        chatContext.lastTopic = responseKey;
+        
         showChatResponse(responseKey, chatMessages, quickRepliesContainer);
     }, 1000);
 }
 
+// Enhanced intent detection with scoring
+function detectIntent(message) {
+    const lowerMessage = message.toLowerCase().trim();
+    const words = lowerMessage.split(/\s+/);
+    
+    // Intent patterns with weights
+    const intents = {
+        services: {
+            keywords: ['service', 'services', 'what do you', 'what can', 'offer', 'provide', 'do you do', 'capabilities'],
+            weight: 0
+        },
+        ios: {
+            keywords: ['ios', 'iphone', 'ipad', 'swift', 'swiftui', 'app store', 'mobile app', 'apple', 'xcode'],
+            weight: 0
+        },
+        web: {
+            keywords: ['web', 'website', 'site', 'react', 'node', 'javascript', 'frontend', 'backend', 'full stack'],
+            weight: 0
+        },
+        portfolio: {
+            keywords: ['portfolio', 'work', 'example', 'projects', 'show me', 'see', 'what have', 'built', 'created'],
+            weight: 0
+        },
+        pricing: {
+            keywords: ['price', 'cost', 'how much', 'pricing', 'budget', 'afford', 'expensive', 'cheap', 'rate', 'fee'],
+            weight: 0
+        },
+        custom: {
+            keywords: ['custom', 'automation', 'api', 'integration', 'system', 'tool', 'solution', 'bespoke'],
+            weight: 0
+        },
+        quote: {
+            keywords: ['quote', 'contact', 'reach', 'email', 'phone', 'discuss', 'talk', 'meet', 'consultation', 'hire'],
+            weight: 0
+        },
+        greeting: {
+            keywords: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings'],
+            weight: 0
+        },
+        goodbye: {
+            keywords: ['bye', 'goodbye', 'thanks', 'thank you', 'see you', 'later', 'appreciate'],
+            weight: 0
+        }
+    };
+
+    // Calculate scores for each intent
+    Object.keys(intents).forEach(intent => {
+        intents[intent].keywords.forEach(keyword => {
+            if (lowerMessage.includes(keyword)) {
+                // Longer keywords get higher weight
+                intents[intent].weight += keyword.length;
+            }
+        });
+        
+        // Check for exact word matches (higher priority)
+        words.forEach(word => {
+            if (intents[intent].keywords.includes(word)) {
+                intents[intent].weight += 5;
+            }
+        });
+    });
+
+    // Context-aware adjustments
+    if (chatContext.lastTopic) {
+        // Boost related intents based on conversation flow
+        if (chatContext.lastTopic === 'services') {
+            intents.ios.weight += 2;
+            intents.web.weight += 2;
+            intents.custom.weight += 2;
+        }
+        if (chatContext.lastTopic === 'ios' || chatContext.lastTopic === 'web' || chatContext.lastTopic === 'custom') {
+            intents.quote.weight += 3;
+        }
+    }
+
+    // Find highest scoring intent
+    let bestIntent = 'welcome';
+    let maxWeight = 0;
+
+    Object.keys(intents).forEach(intent => {
+        if (intents[intent].weight > maxWeight) {
+            maxWeight = intents[intent].weight;
+            bestIntent = intent;
+        }
+    });
+
+    // Fallback logic for ambiguous messages
+    if (maxWeight === 0) {
+        // Check for question words
+        if (lowerMessage.includes('?') || lowerMessage.match(/\b(what|how|when|where|why|who|can|will|do|does|is|are)\b/)) {
+            return 'services'; // Default to services for questions
+        }
+        // Check for greetings
+        if (intents.greeting.weight > 0) {
+            return 'welcome';
+        }
+        // Default fallback
+        return 'quote';
+    }
+
+    // Handle special cases
+    if (bestIntent === 'greeting' && chatContext.conversationHistory.length <= 2) {
+        return 'welcome';
+    }
+    
+    if (bestIntent === 'goodbye') {
+        return 'quote'; // Route to contact for goodbye
+    }
+
+    return bestIntent;
+}
+
 function showChatResponse(responseKey, chatMessages, quickRepliesContainer) {
     const response = chatResponses[responseKey];
-    if (!response) return;
+    if (!response) {
+        // Fallback response if key doesn't exist
+        addChatMessage("I'm here to help! You can ask me about services, portfolio, pricing, or get a quote. How can I assist you?", 'bot', chatMessages);
+        showChatResponse('welcome', chatMessages, quickRepliesContainer);
+        return;
+    }
+
+    // Track bot response in context
+    chatContext.conversationHistory.push({ role: 'bot', responseKey: responseKey });
+    chatContext.userIntent = responseKey;
 
     // Add bot response
     addChatMessage(response.response, 'bot', chatMessages);
 
+    // Get contextual quick replies
+    const contextualReplies = getContextualReplies(responseKey, response.quickReplies || []);
+
     // Show quick replies
-    if (response.quickReplies) {
+    if (contextualReplies.length > 0) {
         quickRepliesContainer.innerHTML = '';
-        response.quickReplies.forEach(reply => {
+        contextualReplies.forEach(reply => {
             const btn = document.createElement('button');
             btn.className = 'quick-reply-btn';
             btn.innerHTML = `
@@ -4465,6 +4747,7 @@ function showChatResponse(responseKey, chatMessages, quickRepliesContainer) {
                 } else if (reply.action === 'email') {
                     window.location.href = reply.url;
                 } else if (reply.response) {
+                    // Add user message from quick reply
                     addChatMessage(reply.text, 'user', chatMessages);
                     quickRepliesContainer.innerHTML = '';
                     showTypingIndicator(chatMessages);
@@ -4479,6 +4762,39 @@ function showChatResponse(responseKey, chatMessages, quickRepliesContainer) {
             quickRepliesContainer.appendChild(btn);
         });
     }
+}
+
+// Get contextual quick replies based on conversation flow
+function getContextualReplies(responseKey, defaultReplies) {
+    // If user has been asking about services, prioritize quote/contact options
+    if (chatContext.conversationHistory.length > 2) {
+        const recentTopics = chatContext.conversationHistory
+            .filter(msg => msg.responseKey)
+            .slice(-3)
+            .map(msg => msg.responseKey);
+        
+        // If user has explored services, show quote prominently
+        if (recentTopics.includes('services') || recentTopics.includes('ios') || recentTopics.includes('web')) {
+            const quoteReply = defaultReplies.find(r => r.response === 'quote' || r.text.toLowerCase().includes('quote'));
+            if (quoteReply && defaultReplies[0]?.response !== 'quote') {
+                // Move quote to first position
+                return [quoteReply, ...defaultReplies.filter(r => r !== quoteReply)];
+            }
+        }
+        
+        // If user asked about pricing, prioritize contact
+        if (recentTopics.includes('pricing')) {
+            const contactReplies = defaultReplies.filter(r => 
+                r.response === 'quote' || 
+                r.action === 'link' && r.url.includes('contact') ||
+                r.action === 'email'
+            );
+            const otherReplies = defaultReplies.filter(r => !contactReplies.includes(r));
+            return [...contactReplies, ...otherReplies];
+        }
+    }
+    
+    return defaultReplies;
 }
 
 function addChatMessage(text, sender, container) {
@@ -4519,11 +4835,19 @@ function removeTypingIndicator(container) {
     }
 }
 
-// Initialize chat widget when DOM is ready
+// Initialize chat widget when DOM is ready - Only on homepage
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initChatWidget);
+    document.addEventListener('DOMContentLoaded', () => {
+        // Only initialize on homepage (index.html)
+        if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+            initChatWidget();
+        }
+    });
 } else {
-    initChatWidget();
+    // Only initialize on homepage (index.html)
+    if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+        initChatWidget();
+    }
 }
 
 console.log('Chat widget loaded ✓');

@@ -219,6 +219,12 @@ function enhanceLoadingScreen() {
 // ============================================
 
 function initDeveloperPalette() {
+    // DISABLED - Developer palette completely removed
+    console.log('[KCOH] Shared developer palette disabled - function returns immediately');
+    return;
+    const paletteButton = document.querySelector('.palette-toggle');
+    if (!paletteButton) return;
+
     const palette = document.createElement('div');
     palette.className = 'dev-palette';
     palette.innerHTML = `
@@ -239,23 +245,20 @@ function initDeveloperPalette() {
 
     const closeBtn = palette.querySelector('.dev-palette-close');
     closeBtn.addEventListener('click', () => {
+        console.log('[KCOH] Shared palette close button -> close');
         palette.classList.remove('show');
     });
 
     document.body.appendChild(palette);
 
-    // Toggle palette with Ctrl+K or ?
-    document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey && e.key === 'k') || e.key === '?') {
-            e.preventDefault();
-            palette.classList.toggle('show');
-        }
-
-        // Close palette with Escape
-        if (e.key === 'Escape') {
-            palette.classList.remove('show');
-        }
+    // Only allow palette via toolbar button; keep it closed by default
+    paletteButton.addEventListener('click', () => {
+        const shouldOpen = !palette.classList.contains('show');
+        console.log(`[KCOH] Shared palette button -> ${shouldOpen ? 'open' : 'close'}`);
+        palette.classList.toggle('show');
     });
+    palette.classList.remove('show');
+    console.log('[KCOH] Shared developer palette initialized (closed by default)');
 }
 
 // ============================================
@@ -292,7 +295,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Essential UI effects - Load first for immediate responsiveness
     initPageTransitions();
     initModernHoverEffect();
-    initDeveloperPalette();
+    // Developer palette disabled - removed completely
+    // initDeveloperPalette();
+    
+    // Remove any existing developer palette elements that might have been created
+    const existingPalette = document.querySelector('.dev-palette');
+    if (existingPalette) {
+        console.log('[KCOH] Shared: Removing existing developer palette element');
+        existingPalette.remove();
+    }
+    
     enhanceLoadingScreen();
 });
 
