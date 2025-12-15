@@ -75,12 +75,23 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <div class="nav-wrapper">
-                <a href="index.html" class="logo">
-                    <div class="logo-text-container">
-                        <span class="logo-text">KCOH</span>
-                        <span class="logo-subtext">Software Inc.</span>
-                    </div>
-                </a>
+                <div class="nav-left">
+                    <a href="index.html" class="logo">
+                        <div class="logo-text-container">
+                            <span class="logo-text">KCOH</span>
+                            <span class="logo-subtext">Software Inc.</span>
+                        </div>
+                    </a>
+                    <a href="https://cal.com/kevincohen-kcoh" target="_blank" rel="noopener noreferrer" class="nav-cta-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        <span>Book a Call</span>
+                    </a>
+                </div>
                 <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -135,22 +146,6 @@
                     <button class="palette-toggle" aria-label="Open shortcuts" data-tooltip="Shortcuts">
                         <span class="palette-icon">⌘</span>
                     </button>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" data-tooltip="Toggle theme">
-                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>
@@ -160,90 +155,116 @@
     <section id="portfolio" class="portfolio portfolio-page">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">Real apps solving real problems • iOS to full-stack delivery</p>
+                <h2 class="section-title">Systems I've Built & Operated</h2>
+                <p class="section-subtitle">Products and platforms I've shipped and run in production</p>
             </div>
             <div class="portfolio-grid">
                 <!-- MetalWorth -->
                 <div class="portfolio-item">
-                    <div class="portfolio-image">
+                    <div class="portfolio-image portfolio-image-metalworth">
                         <img src="MetalWorth_Logo_Clear.png" alt="MetalWorth - precious metals tracking iOS app" class="portfolio-photo" loading="lazy" width="400" height="250">
                         <div class="portfolio-overlay">
-                            <a href="https://kevincohen.ca/apps/metalworth" target="_blank" rel="noopener noreferrer" class="portfolio-link">View on App Store</a>
+                            <a href="https://apps.apple.com/ca/app/metalworth/id6755134355" target="_blank" rel="noopener noreferrer" class="portfolio-link">View on App Store</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
                         <h3>MetalWorth</h3>
-                        <p><strong>Impact:</strong> Track live gold/silver prices with portfolio management<br>
-                        <strong>Built with:</strong> Native iOS using Swift + SwiftUI + Firebase<br>
-                        <strong>Published:</strong> Live on App Store with real-time data integration</p>
+                        <p class="portfolio-primary">Real time precious metals tracking with live portfolio management.</p>
+                        <p class="portfolio-status">Live on the App Store across iOS and watchOS with production users.</p>
+                        <div class="portfolio-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Role</span>
+                                <span class="detail-value">Designed, built, and operated end to end</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Built with</span>
+                                <span class="detail-value">Native iOS and watchOS using Swift and SwiftUI with live CloudKit data and external pricing feeds</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data sources</span>
+                                <span class="detail-value">Integrated with Kitco for reliable real time precious metals pricing</span>
+                            </div>
+                        </div>
                         <div class="portfolio-tags">
                             <span class="tag">Swift</span>
                             <span class="tag">SwiftUI</span>
-                            <span class="tag">Firebase</span>
+                            <span class="tag">CloudKit</span>
+                            <span class="tag">Kitco</span>
+                            <span class="tag">iOS</span>
+                            <span class="tag">watchOS</span>
                             <span class="tag">App Store</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- iOS Portfolio -->
-                <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <div class="portfolio-placeholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                                <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                            </svg>
-                        </div>
+                <div class="portfolio-item portfolio-item-featured">
+                    <div class="portfolio-image portfolio-image-ios">
+                        <img src="App Store Icon.png" alt="App Store - 10+ iOS apps published" class="portfolio-photo" loading="lazy" width="400" height="250">
                         <div class="portfolio-overlay">
                             <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" class="portfolio-link">View Full Portfolio</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3>10+ iOS Apps</h3>
-                        <p><strong>Impact:</strong> Published apps across finance, productivity, lifestyle categories<br>
-                        <strong>Expertise:</strong> Full App Store launch cycle from concept to approval<br>
-                        <strong>Stack:</strong> Swift, UIKit, SwiftUI, Core Data, REST APIs</p>
+                        <h3>10+ iOS Apps Built and Shipped</h3>
+                        <p class="portfolio-primary">Finance, productivity, and decision support applications.</p>
+                        <p class="portfolio-status">Full ownership from concept through development and App Store release.</p>
+                        <div class="portfolio-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Focus</span>
+                                <span class="detail-value">Stable architecture, live data, and long term maintainability</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Stack</span>
+                                <span class="detail-value">Swift, SwiftUI, UIKit, CloudKit, Core Data, REST APIs</span>
+                            </div>
+                        </div>
+                        <div class="app-store-link-wrapper">
+                            <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" class="app-store-link">
+                                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="app-store-badge" width="140" height="46" loading="lazy">
+                            </a>
+                        </div>
                         <div class="portfolio-tags">
                             <span class="tag">Swift</span>
                             <span class="tag">iOS</span>
                             <span class="tag">App Store</span>
-                            <span class="tag">10+ Apps</span>
+                            <span class="tag">Live Data</span>
                         </div>
-                        <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" class="app-store-link">
-                            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="app-store-badge" width="120" height="40" loading="lazy">
-                        </a>
                     </div>
                 </div>
 
-                <!-- Web Apps -->
+                <!-- Internal Platforms -->
                 <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <div class="portfolio-placeholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                <line x1="8" y1="21" x2="16" y2="21"></line>
-                                <line x1="12" y1="17" x2="12" y2="21"></line>
-                            </svg>
-                        </div>
+                    <div class="portfolio-image portfolio-image-systems">
+                        <img src="Success logo.png" alt="Internal Platforms & Business Systems - Growth and scaling" class="portfolio-photo" loading="lazy" width="400" height="250">
                         <div class="portfolio-overlay">
-                            <a href="contact.html" class="portfolio-link">Request Details</a>
+                            <a href="contact.html" class="portfolio-link">Learn More</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3>Web Platforms</h3>
-                        <p><strong>Solutions:</strong> MVPs and production web apps for startups + SMBs<br>
-                        <strong>Focus:</strong> Fast delivery (4-8 weeks), clean architecture, AWS deployment<br>
-                        <strong>Stack:</strong> React, Node.js, PostgreSQL, Docker, CI/CD pipelines</p>
+                        <h3>Internal Platforms and Business Systems</h3>
+                        <p class="portfolio-primary">Internal systems built to automate operations and track business activity.</p>
+                        <p class="portfolio-status">Built for my own products and platforms.</p>
+                        <div class="portfolio-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Focus</span>
+                                <span class="detail-value">Automation, live data visibility, and systems designed to scale without manual work</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Stack</span>
+                                <span class="detail-value">Swift based services, live databases, internal dashboards, and supporting web tools</span>
+                            </div>
+                        </div>
                         <div class="portfolio-tags">
-                            <span class="tag">React</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">AWS</span>
-                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">Swift</span>
+                            <span class="tag">CloudKit</span>
+                            <span class="tag">Live Databases</span>
+                            <span class="tag">Internal Systems</span>
                         </div>
                     </div>
                 </div>
             </div>
+            <p class="portfolio-trust-line">Everything shown here was built, shipped, and operated in production.</p>
         </div>
     </section>
 

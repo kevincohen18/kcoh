@@ -213,41 +213,67 @@ section {
 
 .nav-wrapper {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
-    gap: 2rem;
+    gap: 1.5rem;
     flex-wrap: nowrap;
     position: relative;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-shrink: 0;
 }
 
 .nav-wrapper > * {
     flex-shrink: 0;
 }
 
-/* Center navigation menu - Desktop only */
-@media (min-width: 769px) {
-    .nav-menu {
-        position: absolute !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        display: flex !important;
-        list-style: none;
-        gap: 0.5rem;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-        top: auto !important;
-        bottom: auto !important;
-        right: auto !important;
-        width: auto !important;
-        max-width: none !important;
-        background: transparent !important;
-        backdrop-filter: none !important;
-        box-shadow: none !important;
-        border: none !important;
-        z-index: auto !important;
-    }
+.nav-menu {
+    flex: 1;
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.nav-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.1rem;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+}
+
+.nav-cta-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.nav-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
+}
+
+.nav-cta-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
 }
 
 /* Logo Redesign - Clean with Border Effects */
@@ -376,8 +402,8 @@ section {
 .nav-controls {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-left: auto;
+    gap: 0.75rem;
+    margin-left: 1rem;
 }
 
 .search-toggle,
@@ -1638,29 +1664,19 @@ section * {
     color: var(--text-primary);
     position: relative;
     display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+    transition: color 0.3s ease;
     cursor: default;
 }
 
 /* Modern Shimmer Effect on Hover - Professional & Sleek */
 .section-title.title-shimmer {
-    background: linear-gradient(
-        120deg,
-        var(--text-primary) 0%,
-        var(--primary-color) 25%,
-        var(--secondary-color) 50%,
-        var(--primary-color) 75%,
-        var(--text-primary) 100%
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 1.5s linear infinite;
-    transform: translateY(-2px) translateZ(0);
-    will-change: background-position, transform;
-    backface-visibility: hidden;
-    -webkit-font-smoothing: subpixel-antialiased;
+    background: none !important;
+    background-clip: initial;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    color: var(--text-primary);
+    animation: none !important;
+    transform: none !important;
 }
 
 @keyframes shimmer {
@@ -1687,8 +1703,19 @@ section * {
 }
 
 .section-title.title-shimmer::after {
-    width: 80px;
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+    width: 60px;
+    box-shadow: none;
+}
+
+/* Ensure titles stay stationary on hover */
+.section-title:hover {
+    animation: none !important;
+    transform: none !important;
+}
+
+.section-title::before,
+.section-title::after {
+    animation: none;
 }
 
 @keyframes expandLine {
@@ -1870,18 +1897,21 @@ section * {
 /* Removed purple overlay - using subtle border glow instead */
 
 .portfolio-item {
-    transform: translateZ(0);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: none;
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, background 0.3s ease;
 }
 
 .portfolio-item:hover {
-    transform: translateY(-4px) translateZ(0);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(99, 102, 241, 0.2);
-    border-color: rgba(99, 102, 241, 0.4);
-    background: rgba(31, 41, 55, 0.8);
+    transform: none;
+    box-shadow: 
+        0 8px 24px rgba(99, 102, 241, 0.3),
+        0 0 0 1px rgba(99, 102, 241, 0.4),
+        0 0 40px rgba(99, 102, 241, 0.15),
+        inset 0 0 20px rgba(99, 102, 241, 0.05);
+    border-color: rgba(99, 102, 241, 0.6);
+    background: rgba(31, 41, 55, 0.85);
     z-index: 10;
     position: relative;
-    will-change: transform;
 }
 
 /* Removed purple overlay hover effect */
@@ -1936,14 +1966,14 @@ section * {
     background: var(--bg-dark);
     padding: 1rem;
     filter: saturate(1) contrast(1.02);
-    transform: scale(1);
-    transition: transform 0.35s ease, filter 0.35s ease, padding 0.35s ease;
+    transform: none;
+    transition: filter 0.35s ease;
 }
 
 .portfolio-item:hover .portfolio-photo {
-    transform: scale(1.02);
+    transform: none;
     filter: saturate(1.05) contrast(1.05);
-    padding: 0.85rem;
+    padding: 1rem;
 }
 
 .portfolio-placeholder svg {
@@ -4641,13 +4671,7 @@ body::before {
 }
 
 /* Enhanced Portfolio Hover */
-.portfolio-item {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.portfolio-item:hover {
-    transform: translateY(-15px) scale(1.03) rotateZ(-1deg);
-}
+/* Removed shake effect - using glow instead */
 
 /* Tech Progress Bar Glow */
 .tech-progress {

@@ -635,23 +635,24 @@ body:not(.light-theme) .theme-toggle .moon-icon {
 
 /* Modern shimmer effect for title hover */
 .section-title.title-shimmer {
-    background: linear-gradient(
-        90deg,
-        #6366f1 0%,
-        #8b5cf6 25%,
-        #a78bfa 50%,
-        #8b5cf6 75%,
-        #6366f1 100%
-    );
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 1.5s ease-in-out;
-    transform: translateY(-2px) translateZ(0);
-    will-change: background-position, transform;
-    backface-visibility: hidden;
-    -webkit-font-smoothing: subpixel-antialiased;
+    background: none !important;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    background-clip: initial;
+    color: var(--text-primary);
+    animation: none !important;
+    transform: none !important;
+}
+
+/* Keep titles stationary on hover */
+.section-title:hover {
+    animation: none !important;
+    transform: none !important;
+}
+
+.section-title::before,
+.section-title::after {
+    animation: none;
 }
 
 @keyframes shimmer {

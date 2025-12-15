@@ -708,8 +708,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add active class to current section in navigation
 const sections = document.querySelectorAll('section[id]');
+const sectionNavLinks = Array.from(navLinks || []).filter(link => {
+    const href = link.getAttribute('href') || '';
+    return href.startsWith('#');
+});
 
 function highlightNavigation() {
+    // Only adjust nav links that point to in-page anchors; otherwise keep page-level active state
+    if (!sectionNavLinks.length || !sections.length) return;
+
     const scrollY = window.pageYOffset;
     
     sections.forEach(section => {
@@ -719,7 +726,7 @@ function highlightNavigation() {
         const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
         
         if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            navLinks.forEach(link => link.classList.remove('active'));
+            sectionNavLinks.forEach(link => link.classList.remove('active'));
             if (navLink) {
                 navLink.classList.add('active');
             }
@@ -1960,44 +1967,17 @@ function initMagneticCursor() {
     });
 }
 
-// Glitch Effect for Headers
+// Glitch Effect for Headers (disabled for stability)
 function initGlitchEffect() {
     const headers = document.querySelectorAll('.section-title');
     headers.forEach(header => {
-        header.addEventListener('mouseenter', () => {
-            header.style.animation = 'glitch 0.3s infinite';
-        });
-        header.addEventListener('mouseleave', () => {
-            header.style.animation = '';
-        });
+        header.style.animation = 'none';
+        header.style.transform = 'none';
     });
 
-    // Add glitch keyframes to document
+    // Preserve other helper keyframes without the glitch animation
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes glitch {
-            0% {
-                text-shadow: 2px 2px #6366f1, -2px -2px #8b5cf6;
-                transform: translate(0);
-            }
-            25% {
-                text-shadow: -2px -2px #6366f1, 2px 2px #8b5cf6;
-                transform: translate(-2px, 2px);
-            }
-            50% {
-                text-shadow: 2px -2px #6366f1, -2px 2px #8b5cf6;
-                transform: translate(2px, -2px);
-            }
-            75% {
-                text-shadow: -2px 2px #6366f1, 2px -2px #8b5cf6;
-                transform: translate(-2px, -2px);
-            }
-            100% {
-                text-shadow: 2px 2px #6366f1, -2px -2px #8b5cf6;
-                transform: translate(0);
-            }
-        }
-
         .cursor { animation: blink 0.7s infinite; }
 
         @keyframes blink {
@@ -2040,7 +2020,8 @@ function initGlitchEffect() {
 
 // Holographic Card Effect
 function initHolographicCards() {
-    const cards = document.querySelectorAll('.service-card, .portfolio-item, .testimonial-card');
+    // Exclude portfolio items - they have their own static glow effects
+    const cards = document.querySelectorAll('.service-card, .testimonial-card');
     cards.forEach(card => {
         card.classList.add('holographic-card');
 
@@ -2960,38 +2941,10 @@ function initInteractiveStats() {
     });
 }
 
-// Card Shake Effect
+// Card Shake Effect - DISABLED (no shake effects anywhere)
 function initShakeEffects() {
-    const cards = document.querySelectorAll('.service-card, .portfolio-item');
-
-    cards.forEach(card => {
-        let shakeTimeout;
-
-        card.addEventListener('mouseenter', () => {
-            shakeTimeout = setTimeout(() => {
-                card.style.animation = 'cardShake 0.5s ease';
-            }, 500);
-        });
-
-        card.addEventListener('mouseleave', () => {
-            clearTimeout(shakeTimeout);
-            card.style.animation = '';
-        });
-
-        card.addEventListener('animationend', () => {
-            card.style.animation = '';
-        });
-    });
-
-    const shakeStyle = document.createElement('style');
-    shakeStyle.textContent = `
-        @keyframes cardShake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px) rotate(-1deg); }
-            20%, 40%, 60%, 80% { transform: translateX(3px) rotate(1deg); }
-        }
-    `;
-    document.head.appendChild(shakeStyle);
+    // Shake effect completely disabled - no cards should shake
+    return;
 }
 
 // Developer Command Palette - only via toolbar button, never auto
@@ -3965,25 +3918,19 @@ function initHolographicGrid() {
     });
 }
 
-// Modern Gradient Shimmer Effect on Hover - Professional & Sleek
+// Title hover effect removed to keep headings stable
 function initModernHoverEffect() {
     const headers = document.querySelectorAll('.section-title');
 
     headers.forEach(header => {
-        // Skip effect for terminal/code style titles
-        const text = header.textContent.trim();
-        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ')) {
-            return;
-        }
+        // Remove any lingering shimmer class and inline animations
+        header.classList.remove('title-shimmer');
+        header.style.animation = 'none';
+        header.style.transform = 'none';
 
-        // Add shimmer class on hover
-        header.addEventListener('mouseenter', () => {
-            header.classList.add('title-shimmer');
-        });
-
-        header.addEventListener('mouseleave', () => {
-            header.classList.remove('title-shimmer');
-        });
+        // Remove any previously attached hover listeners by replacing node
+        const cleanHeader = header.cloneNode(true);
+        header.replaceWith(cleanHeader);
     });
 }
 

@@ -262,27 +262,21 @@ function initDeveloperPalette() {
 }
 
 // ============================================
-// MODERN HOVER EFFECT FOR TITLES
+// TITLE HOVER EFFECT REMOVED FOR STABILITY
 // ============================================
 
 function initModernHoverEffect() {
     const headers = document.querySelectorAll('.section-title');
 
     headers.forEach(header => {
-        // Skip effect for terminal/code style titles
-        const text = header.textContent.trim();
-        if (text.startsWith('$') || text.includes('~/') || text.includes('ls ')) {
-            return;
-        }
+        // Keep hover neutral and strip any existing shimmer class/animation
+        header.classList.remove('title-shimmer');
+        header.style.animation = 'none';
+        header.style.transform = 'none';
 
-        // Add shimmer class on hover
-        header.addEventListener('mouseenter', () => {
-            header.classList.add('title-shimmer');
-        });
-
-        header.addEventListener('mouseleave', () => {
-            header.classList.remove('title-shimmer');
-        });
+        // Remove any old listeners by cloning the node
+        const cleanHeader = header.cloneNode(true);
+        header.replaceWith(cleanHeader);
     });
 }
 

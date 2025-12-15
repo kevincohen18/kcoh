@@ -166,12 +166,23 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <div class="nav-wrapper">
-                <a href="index.html" class="logo">
-                    <div class="logo-text-container">
-                        <span class="logo-text">KCOH</span>
-                        <span class="logo-subtext">Software Inc.</span>
-                    </div>
-                </a>
+                <div class="nav-left">
+                    <a href="index.html" class="logo">
+                        <div class="logo-text-container">
+                            <span class="logo-text">KCOH</span>
+                            <span class="logo-subtext">Software Inc.</span>
+                        </div>
+                    </a>
+                    <a href="https://cal.com/kevincohen-kcoh" target="_blank" rel="noopener noreferrer" class="nav-cta-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        <span>Book a Call</span>
+                    </a>
+                </div>
                 <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -226,22 +237,7 @@
                     <button class="palette-toggle" aria-label="Open shortcuts" data-tooltip="Shortcuts">
                         <span class="palette-icon">⌘</span>
                     </button>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" data-tooltip="Toggle theme">
-                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
+                </div>
             </div>
         </div>
     </nav>
@@ -269,41 +265,44 @@
             <div class="hero-content">
                 <div class="terminal-prompt">
                     <span class="terminal-line">$ whoami</span>
-                    <span class="terminal-response">Kevin Cohen</span>
+                    <span class="terminal-response">Business Systems Engineer</span>
                 </div>
                 <h1 class="hero-title">
-                    <span class="gradient-text typing-animation">iOS & Web Apps That Ship Fast</span><br>
-                    <span class="subtitle-typing">MVP to App Store in 4-8 Weeks</span>
+                    <span class="gradient-text typing-animation">Software Systems That Scale Your Operations</span><br>
+                    <span class="subtitle-typing">Automation · Clarity · Leverage</span>
                 </h1>
                 <div class="hero-badges">
                     <span class="dev-badge bounce-1">
-                        <img src="Apple Logo.png" alt="Apple" class="apple-logo-icon" width="32" height="32" loading="lazy" />
-                        10+ Apps on App Store
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                        Scaled a 7-Figure Digital Platform
                     </span>
-                    <span class="dev-badge bounce-2">🚀 Full-Stack Delivery</span>
-                </div>
-                <div class="tech-stack-animation" id="tech-stack">
-                    <div class="tech-icon">Swift</div>
-                    <div class="tech-icon">React</div>
-                    <div class="tech-icon">Node.js</div>
-                    <div class="tech-icon">AWS</div>
-                    <div class="tech-icon">API</div>
+                    <span class="dev-badge bounce-2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        2,500+ Active Platform Members
+                    </span>
                 </div>
                 <p class="hero-subtitle">
-                    I help founders and product teams ship native iOS apps, web platforms, and APIs—on schedule, with clean code. <br>
-                    <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" style="color: #a78bfa; text-decoration: underline;">See 10+ apps on App Store →</a>
-                </p>
+                    I design and build software systems that replace manual operations, give businesses financial clarity, and let them scale without adding complexity.                </p>
                 <div class="hero-buttons">
-                    <a href="contact.html#contact" class="btn btn-primary pulse-animation"><span>Get a Free Estimate</span></a>
-                    <a href="portfolio.html" class="btn btn-secondary">View Case Studies</a>
+                    <a href="contact.html#contact" class="btn btn-primary pulse-animation"><span>Discuss Your Systems</span></a>
+                    <a href="portfolio.html" class="btn btn-secondary">View Systems Built</a>
                 </div>
                 <div class="hero-proof-links" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease 1s, transform 0.6s ease 1s; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
-                    <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" class="proof-link" style="color: #a78bfa; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: rgba(167, 139, 250, 0.1); border-radius: 8px; border: 1px solid rgba(167, 139, 250, 0.2); transition: all 0.3s ease;">
+                    <div class="proof-link" style="color: #9ca3af; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: rgba(99, 102, 241, 0.05); border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.15);">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <polyline points="20 6 9 17 4 12"/>
                         </svg>
-                        <span style="font-weight: 500;">View 10+ Apps on App Store</span>
-                    </a>
+                        <span style="font-weight: 500;">Scaled business to 7-figures with automated systems</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -317,50 +316,56 @@
     <section id="case-studies" class="case-studies" style="padding: 5rem 0; background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Featured Work</h2>
-                <p class="section-subtitle">Real apps • Real results • Real impact</p>
+                <h2 class="section-title">Systems Built</h2>
+                <p class="section-subtitle">Real businesses • Real automation • Real leverage</p>
             </div>
             <div class="case-studies-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
-                <!-- MetalWorth Case Study -->
+                <!-- Case Study 1: Virtual Goods Business -->
                 <div class="case-study-card" style="background: rgba(17, 24, 39, 0.8); border-radius: 12px; padding: 2rem; border: 1px solid rgba(99, 102, 241, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                    <div class="case-badge" style="display: inline-block; padding: 0.5rem 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 6px; color: #a78bfa; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;">iOS App • Live on App Store</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">MetalWorth</h3>
-                    <p style="color: #9ca3af; margin-bottom: 1.5rem; line-height: 1.6;"><strong>Problem:</strong> Precious metals investors needed real-time pricing and portfolio tracking.<br><br><strong>Solution:</strong> Built native iOS app with live gold/silver prices, interactive charts, and portfolio management using Swift + Firebase.<br><br><strong>Result:</strong> Successfully published on App Store with real-time data integration.</p>
-                    <div class="tech-tags" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Swift</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">SwiftUI</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Firebase</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">REST API</span>
+                    <div class="case-badge" style="display: inline-block; padding: 0.5rem 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 6px; color: #a78bfa; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;">E-Commerce • 7-Figure Scale</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">Virtual Goods Business Automation</h3>
+                    <p style="color: #9ca3af; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Context:</strong> Online business selling virtual goods, targeting 7-figure revenue with minimal team.<br><br>
+                        <strong>Problem:</strong> Manual order processing, inventory tracking, customer support, and financial reporting created operational bottlenecks limiting scale.<br><br>
+                        <strong>System Built:</strong> End-to-end automation platform with automated fulfillment, inventory management, integrated payment processing, customer portal, and real-time financial dashboards.<br><br>
+                        <strong>Result:</strong> Scaled to 2,500+ customers with 95%+ automation. Revenue hit 7-figures with minimal manual intervention.</p>
+                    <div class="tech-tags" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Workflow Automation</span>
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Financial Systems</span>
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Customer Portal</span>
                     </div>
-                    <a href="https://kevincohen.ca/apps/metalworth" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #a78bfa; text-decoration: none; font-weight: 500;">View on App Store →</a>
                 </div>
 
-                <!-- Portfolio Showcase -->
+                <!-- Case Study 2: SMB Operations Platform -->
                 <div class="case-study-card" style="background: rgba(17, 24, 39, 0.8); border-radius: 12px; padding: 2rem; border: 1px solid rgba(99, 102, 241, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                    <div class="case-badge" style="display: inline-block; padding: 0.5rem 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 6px; color: #a78bfa; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;">iOS Apps • Multiple Launches</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">10+ Apps on App Store</h3>
-                    <p style="color: #9ca3af; margin-bottom: 1.5rem; line-height: 1.6;"><strong>Portfolio:</strong> Successfully shipped 10+ native iOS applications across different categories including finance, productivity, lifestyle, and utilities.<br><br><strong>Expertise:</strong> Full iOS development lifecycle from concept to App Store approval, including UI/UX, backend integration, and ongoing maintenance.</p>
-                    <div class="tech-tags" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Swift</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">UIKit</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">SwiftUI</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Core Data</span>
+                    <div class="case-badge" style="display: inline-block; padding: 0.5rem 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 6px; color: #a78bfa; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;">SMB • Operations</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">Internal Operations Platform</h3>
+                    <p style="color: #9ca3af; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Context:</strong> Growing SMB with 20+ employees struggling with scattered tools and manual workflows.<br><br>
+                        <strong>Problem:</strong> Time tracking, project management, invoicing, and reporting done across 6 different tools. No single source of truth.<br><br>
+                        <strong>System Built:</strong> Unified internal platform with centralized data, automated time tracking, project workflows, invoice generation, and executive dashboards.<br><br>
+                        <strong>Result:</strong> Reduced tool count from 6 to 1. Cut administrative time by 60%. Real-time visibility into projects and finances.</p>
+                    <div class="tech-tags" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Internal Tools</span>
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Dashboards</span>
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Process Automation</span>
                     </div>
-                    <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #a78bfa; text-decoration: none; font-weight: 500;">View Full Portfolio →</a>
                 </div>
 
-                <!-- Full-Stack Platform -->
+                <!-- Case Study 3: Financial Visibility System -->
                 <div class="case-study-card" style="background: rgba(17, 24, 39, 0.8); border-radius: 12px; padding: 2rem; border: 1px solid rgba(99, 102, 241, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                    <div class="case-badge" style="display: inline-block; padding: 0.5rem 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 6px; color: #a78bfa; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;">Web Platform • Full-Stack</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">Web Applications</h3>
-                    <p style="color: #9ca3af; margin-bottom: 1.5rem; line-height: 1.6;"><strong>Expertise:</strong> Built responsive web applications and APIs for startups and SMBs.<br><br><strong>Stack:</strong> Modern React frontends with Node.js/Express backends, deployed on AWS with CI/CD pipelines.<br><br><strong>Focus:</strong> Fast MVP delivery, clean code, and scalable architecture.</p>
-                    <div class="tech-tags" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">React</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Node.js</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">AWS</span>
-                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">PostgreSQL</span>
+                    <div class="case-badge" style="display: inline-block; padding: 0.5rem 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 6px; color: #a78bfa; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;">Finance • Decision Support</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">Financial Operations System</h3>
+                    <p style="color: #9ca3af; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Context:</strong> Multi-location business with complex revenue streams and cost structures.<br><br>
+                        <strong>Problem:</strong> Financial data scattered across systems. Reporting took days. No real-time P&L visibility. Decisions made on stale data.<br><br>
+                        <strong>System Built:</strong> Centralized financial platform integrating payment processors, banking data, and accounting systems with automated reconciliation and live dashboards.<br><br>
+                        <strong>Result:</strong> Real-time P&L visibility. Reporting time reduced from 3 days to minutes. Data-driven decision making enabled.</p>
+                    <div class="tech-tags" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Financial Automation</span>
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Data Integration</span>
+                        <span style="padding: 0.25rem 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 4px; font-size: 0.875rem; color: #a78bfa;">Real-Time Reporting</span>
                     </div>
-                    <a href="portfolio.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #a78bfa; text-decoration: none; font-weight: 500;">View More Projects →</a>
                 </div>
             </div>
         </div>
@@ -370,24 +375,24 @@
     <section id="process" class="process-section" style="padding: 5rem 0; background: rgba(17, 24, 39, 0.5);">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">How We Work</h2>
-                <p class="section-subtitle">Clear process • Weekly demos • On-time delivery</p>
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Systems thinking • Predictable delivery • Measurable leverage</p>
             </div>
             <div class="process-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem; position: relative;">
                 <!-- Step 1 -->
                 <div class="process-step" style="position: relative; padding: 2rem; background: rgba(99, 102, 241, 0.05); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
                     <div class="step-number" style="width: 48px; height: 48px; background: linear-gradient(135deg, #6366f1, #a855f7); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">1</div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">Discovery</h3>
-                    <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1rem;">We scope requirements, clarify goals, and give you a transparent timeline + cost estimate.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">Understand the System</h3>
+                    <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1rem;">Map your current workflows, identify bottlenecks, and understand where manual processes are limiting scale.</p>
                     <ul style="color: #9ca3af; font-size: 0.875rem; list-style: none; padding: 0;">
                         <li style="padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Requirements doc
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Process mapping
                         </li>
                         <li style="padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Fixed quote
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Bottleneck analysis
                         </li>
                         <li style="padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Tech stack plan
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Data flow audit
                         </li>
                     </ul>
                 </div>
@@ -395,17 +400,17 @@
                 <!-- Step 2 -->
                 <div class="process-step" style="position: relative; padding: 2rem; background: rgba(99, 102, 241, 0.05); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
                     <div class="step-number" style="width: 48px; height: 48px; background: linear-gradient(135deg, #6366f1, #a855f7); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">2</div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">Build</h3>
-                    <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1rem;">We ship in 2-week sprints with weekly demos. You see progress, give feedback, and we iterate.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">Identify Leverage</h3>
+                    <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1rem;">Determine which automations will yield the highest operational ROI and prioritize the build accordingly.</p>
                     <ul style="color: #9ca3af; font-size: 0.875rem; list-style: none; padding: 0;">
                         <li style="padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Weekly demos
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> ROI analysis
                         </li>
                         <li style="padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Async updates
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Prioritization
                         </li>
                         <li style="padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Clean code
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> System design
                         </li>
                     </ul>
                 </div>
@@ -413,17 +418,17 @@
                 <!-- Step 3 -->
                 <div class="process-step" style="position: relative; padding: 2rem; background: rgba(99, 102, 241, 0.05); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
                     <div class="step-number" style="width: 48px; height: 48px; background: linear-gradient(135deg, #6366f1, #a855f7); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">3</div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">Ship</h3>
-                    <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1rem;">We deploy to production, handle App Store submission, and ensure everything runs smoothly.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">Design & Build Automation</h3>
+                    <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1rem;">Build the system with clean architecture, proper testing, and integration with your existing tools and data.</p>
                     <ul style="color: #9ca3af; font-size: 0.875rem; list-style: none; padding: 0;">
                         <li style="padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Production deploy
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Automated workflows
                         </li>
                         <li style="padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> App Store launch
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Data integration
                         </li>
                         <li style="padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Monitoring setup
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Testing & QA
                         </li>
                     </ul>
                 </div>
@@ -431,72 +436,19 @@
                 <!-- Step 4 -->
                 <div class="process-step" style="position: relative; padding: 2rem; background: rgba(99, 102, 241, 0.05); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
                     <div class="step-number" style="width: 48px; height: 48px; background: linear-gradient(135deg, #6366f1, #a855f7); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">4</div>
-                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">Support</h3>
-                    <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1rem;">Post-launch support, bug fixes, and feature additions. We're here when you need us.</p>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;">Ship, Support, Iterate</h3>
+                    <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1rem;">Deploy to production, train your team, monitor performance, and iterate based on actual usage data.</p>
                     <ul style="color: #9ca3af; font-size: 0.875rem; list-style: none; padding: 0;">
                         <li style="padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Bug fixes
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Production deployment
                         </li>
                         <li style="padding-left: 1.5rem; position: relative; margin-bottom: 0.5rem;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Updates
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Team training
                         </li>
                         <li style="padding-left: 1.5rem; position: relative;">
-                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> New features
+                            <span style="position: absolute; left: 0; color: #a78bfa;">✓</span> Ongoing optimization
                         </li>
                     </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Project Banner -->
-    <section class="featured-project-banner">
-        <div class="container">
-            <div class="featured-content">
-                <div class="featured-badge">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                    Featured Project
-                </div>
-                <h3 class="featured-title">MetalWorth</h3>
-                <p class="featured-description">Track live gold, silver and bullion prices with interactive charts, manage your precious metals portfolio, and get price alerts. Perfect for collectors, jewelers, and investors.</p>
-                <div class="featured-stats">
-                    <span class="featured-stat">
-                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
-                        </svg>
-                        Live Prices
-                    </span>
-                    <span class="featured-stat">
-                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        Interactive Charts
-                    </span>
-                    <span class="featured-stat">
-                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
-                            <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
-                        </svg>
-                        Portfolio Manager
-                    </span>
-                </div>
-                <a href="https://kevincohen.ca/apps/metalworth" target="_blank" rel="noopener noreferrer" class="featured-link">
-                    View Project Details
-                    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                    </svg>
-                </a>
-            </div>
-            <div class="featured-visual">
-                <div class="featured-mockup">
-                    <div class="phone-frame">
-                        <div class="phone-screen">
-                            <img src="MetalWorth_Logo_Clear.png" alt="MetalWorth App Logo" class="app-logo-display">
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

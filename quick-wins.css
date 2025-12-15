@@ -1199,3 +1199,488 @@
         height: 200px;
     }
 }
+
+/* ============================================
+   PREMIUM PORTFOLIO REDESIGN
+   ============================================ */
+
+/* Section Header - Stronger Framing */
+.portfolio-page .section-header {
+    margin-bottom: 3rem;
+    padding-top: 0;
+}
+
+.portfolio-page .section-title {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.portfolio-page .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+    border-radius: 2px;
+}
+
+.portfolio-page .section-subtitle {
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* Portfolio Grid - Better Spacing */
+.portfolio-grid {
+    margin-top: 2.5rem;
+    gap: 2.5rem;
+}
+
+/* Base Portfolio Item */
+.portfolio-item {
+    background: rgba(31, 41, 55, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(55, 65, 81, 0.5);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Featured Card (Middle) - Visually Dominant */
+.portfolio-item-featured {
+    border-radius: 1.25rem;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(99, 102, 241, 0.2);
+    background: rgba(31, 41, 55, 0.7);
+}
+
+.portfolio-item-featured::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 1.25rem;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.portfolio-item-featured:hover::before {
+    opacity: 1;
+}
+
+/* Image Containers with Gradients and Glows */
+.portfolio-image {
+    width: 100%;
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+/* MetalWorth - Gold toned radial glow */
+.portfolio-image-metalworth {
+    background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(139, 69, 19, 0.1));
+}
+
+.portfolio-image-metalworth::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(184, 134, 11, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* iOS Card - Soft blue glow */
+.portfolio-image-ios {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.1));
+    height: 320px; /* Slightly taller for featured card */
+}
+
+.portfolio-image-ios::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Systems Card - Cool neutral glow */
+.portfolio-image-systems {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(67, 56, 202, 0.1));
+}
+
+.portfolio-image-systems::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Portfolio Photo - Centered with glow on hover */
+.portfolio-photo {
+    width: auto;
+    height: 70%;
+    max-width: 80%;
+    object-fit: contain;
+    object-position: center;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
+}
+
+.portfolio-item:hover .portfolio-photo {
+    transform: none;
+    filter: drop-shadow(0 8px 24px rgba(99, 102, 241, 0.4));
+}
+
+/* Portfolio Content - Better Hierarchy */
+.portfolio-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+}
+
+/* Title with Gradient Effect */
+.portfolio-content h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+    transform: none !important;
+    transition: none !important;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    display: inline-block;
+}
+
+/* Ensure portfolio titles never move on hover */
+.portfolio-item:hover .portfolio-content h3,
+.portfolio-item .portfolio-content h3:hover {
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Primary Text - Enhanced with Accent */
+.portfolio-primary {
+    color: #e0e7ff;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    transform: none !important;
+    transition: none !important;
+    position: relative;
+    padding-left: 1rem;
+    border-left: 3px solid rgba(99, 102, 241, 0.5);
+}
+
+.portfolio-item:hover .portfolio-primary {
+    border-left-color: rgba(99, 102, 241, 0.8);
+    color: #f3f4f6;
+}
+
+/* Status/Proof Line - Enhanced */
+.portfolio-status {
+    color: #a78bfa;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    width: fit-content;
+}
+
+.portfolio-status::before {
+    content: '✓';
+    color: #6366f1;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.portfolio-item:hover .portfolio-status {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #c4b5fd;
+}
+
+/* Secondary Details - Enhanced Design */
+.portfolio-details {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(31, 41, 55, 0.4);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+.portfolio-item:hover .portfolio-details {
+    background: rgba(31, 41, 55, 0.5);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.detail-label {
+    font-size: 0.7rem;
+    color: #a78bfa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.detail-label::before {
+    content: '→';
+    color: #6366f1;
+    font-weight: 700;
+}
+
+.detail-value {
+    font-size: 0.9rem;
+    color: #d1d5db;
+    line-height: 1.6;
+    padding-left: 1.25rem;
+}
+
+.portfolio-item:hover .detail-value {
+    color: #e5e7eb;
+}
+
+/* Tags - Enhanced with Gradient Accents */
+.portfolio-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.portfolio-item:hover .portfolio-tags {
+    border-top-color: rgba(99, 102, 241, 0.4);
+}
+
+.portfolio-tags .tag {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.1));
+    padding: 0.375rem 0.875rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    color: #c4b5fd;
+    font-weight: 500;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-tags .tag::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.15));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-tags .tag {
+    color: #ddd6fe;
+    border-color: rgba(99, 102, 241, 0.5);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.15));
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+.portfolio-item:hover .portfolio-tags .tag::before {
+    opacity: 1;
+}
+
+/* App Store Badge - Larger and Centered for Featured Card */
+.app-store-link-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.portfolio-item-featured .app-store-link-wrapper {
+    margin: 2rem 0;
+}
+
+.app-store-badge {
+    height: 46px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.portfolio-item:hover .app-store-badge {
+    transform: none;
+    filter: drop-shadow(0 4px 16px rgba(99, 102, 241, 0.5));
+}
+
+/* Hover Effects - Purple Glow (No Movement) */
+.portfolio-item:hover {
+    transform: none;
+    box-shadow: 
+        0 8px 24px rgba(99, 102, 241, 0.3),
+        0 0 0 1px rgba(99, 102, 241, 0.4),
+        0 0 40px rgba(99, 102, 241, 0.15),
+        inset 0 0 20px rgba(99, 102, 241, 0.05);
+    border-color: rgba(99, 102, 241, 0.6);
+    background: rgba(31, 41, 55, 0.85);
+}
+
+.portfolio-item-featured:hover {
+    transform: none;
+    box-shadow: 
+        0 12px 32px rgba(99, 102, 241, 0.4),
+        0 0 0 1px rgba(168, 85, 247, 0.5),
+        0 0 60px rgba(99, 102, 241, 0.2),
+        inset 0 0 30px rgba(168, 85, 247, 0.08);
+    border-color: rgba(168, 85, 247, 0.7);
+}
+
+.portfolio-item:hover .portfolio-image::before {
+    opacity: 1;
+}
+
+.portfolio-item:hover .portfolio-status {
+    opacity: 1;
+}
+
+.portfolio-item:hover .detail-value {
+    opacity: 0.9;
+}
+
+/* Trust Line */
+.portfolio-trust-line {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    opacity: 0.6;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(55, 65, 81, 0.3);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+/* Overlay */
+.portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+}
+
+.portfolio-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    background: rgba(99, 102, 241, 0.9);
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.portfolio-link:hover {
+    background: rgba(99, 102, 241, 1);
+    transform: scale(1.05);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .portfolio-page .section-title {
+        font-size: 2rem;
+    }
+
+    .portfolio-grid {
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .portfolio-item-featured {
+        border-radius: 1rem;
+    }
+
+    .portfolio-image {
+        height: 240px;
+    }
+
+    .portfolio-image-ios {
+        height: 240px;
+    }
+
+    .portfolio-content {
+        padding: 1.5rem;
+    }
+
+    .portfolio-content h3 {
+        font-size: 1.25rem;
+    }
+
+    .portfolio-primary {
+        font-size: 1rem;
+    }
+
+    .portfolio-trust-line {
+        font-size: 0.8125rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+    }
+}
