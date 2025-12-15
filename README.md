@@ -133,6 +133,191 @@ fetch('/api/contact', {
 - Add testimonials section
 - Create a case studies section
 
+---
+
+## 🤖 AI Agent – Operational & Quality Assurance Guide
+
+### Overview
+
+This document defines best practices, responsibilities, and safeguards an AI Agent must follow to ensure smooth, reliable, secure, and error-free operation.
+
+It is designed to guide development, deployment, monitoring, and continuous improvement of an AI agent in production environments.
+
+### 🎯 Objectives
+
+The AI Agent must:
+
+- Operate reliably with minimal downtime
+- Prevent, detect, and recover from errors gracefully
+- Provide transparent logging and traceability
+- Assess and mitigate risks proactively
+- Deliver consistent value to users
+- Maintain security, privacy, and ethical standards
+
+### 🧠 Core Responsibilities of the AI Agent
+
+#### 1. Task Execution
+
+- Clearly understand task intent before execution
+- Validate all inputs before processing
+- Break complex tasks into manageable steps
+- Confirm outputs meet expected formats and constraints
+
+#### 2. Decision-Making
+
+- Use deterministic logic where possible
+- Document assumptions made during reasoning
+- Avoid irreversible actions without confirmation
+- Default to safe failure instead of unsafe success
+
+### 🛡️ Error Prevention & Handling
+
+#### Input Validation
+
+Validate:
+- Data types
+- Required fields
+- Boundary limits
+- Data integrity
+
+Reject or sanitize malformed inputs
+
+#### Error Handling Strategy
+
+- Use structured error handling (try/catch or equivalent)
+- Categorize errors:
+  - User errors
+  - System errors
+  - External dependency failures
+- Return clear, human-readable error messages
+- Never expose sensitive system details in errors
+
+#### Graceful Degradation
+
+If a subsystem fails:
+- Fall back to safe defaults
+- Notify the user if needed
+- Log the failure for review
+
+### 🐞 Debug Logging & Observability
+
+#### Logging Principles
+
+Logs must be:
+- Structured
+- Timestamped
+- Severity-labeled
+- Context-rich
+
+#### Log Levels
+
+| Level | Usage |
+|-------|-------|
+| DEBUG | Detailed internal state, used during development |
+| INFO | Normal operational events |
+| WARN | Unexpected but recoverable situations |
+| ERROR | Failed operations requiring attention |
+| CRITICAL | System-level failures |
+
+#### Logging Best Practices
+
+**Log:**
+- Inputs (sanitized)
+- Decision points
+- External API calls
+- Errors and recovery steps
+
+**Avoid logging:**
+- Passwords
+- API keys
+- Personal identifiable information (PII)
+
+### 🔍 Monitoring & Health Checks
+
+- Implement automated health checks
+- Track:
+  - Response time
+  - Error rates
+  - Resource usage
+- Alert maintainers on threshold breaches
+- Maintain uptime and performance dashboards
+
+### ⚠️ Risk Assessment & Mitigation
+
+#### Identified Risks
+
+| Risk | Description | Mitigation |
+|------|-------------|------------|
+| Hallucination | Generating incorrect information | Use validation, confidence scoring |
+| Data Leakage | Exposure of sensitive data | Strict data handling & redaction |
+| Over-Automation | Acting without user consent | Confirmation gates |
+| Dependency Failure | External services go down | Retry logic & fallbacks |
+| Bias | Unfair or skewed outputs | Regular audits & diverse training data |
+
+#### Risk Mitigation Practices
+
+- Perform regular risk reviews
+- Maintain audit logs
+- Limit autonomous actions by scope
+- Require human-in-the-loop for high-impact decisions
+
+### 🔐 Security & Privacy
+
+- Follow principle of least privilege
+- Encrypt data in transit and at rest
+- Comply with relevant regulations (GDPR, SOC2, etc.)
+- Automatically redact sensitive information
+- Log access and action history
+
+### 👤 User Experience & Benefits
+
+#### How This Benefits Users
+
+✅ Reliable and predictable behavior  
+✅ Clear feedback when something goes wrong  
+✅ Faster issue resolution through logging  
+✅ Trust through transparency and safety  
+✅ Reduced downtime and errors  
+✅ Secure handling of personal data
+
+#### User-Centric Design
+
+- Provide understandable responses
+- Avoid technical jargon when interacting with users
+- Offer actionable suggestions when failures occur
+
+### 🔄 Continuous Improvement
+
+- Analyze logs and errors regularly
+- Incorporate user feedback
+- Perform regression testing after updates
+- Continuously refine prompts, rules, and safeguards
+
+### 📋 Compliance & Documentation
+
+- Maintain up-to-date documentation
+- Version control all configuration changes
+- Keep changelogs for transparency
+- Document known limitations clearly
+
+### ✅ Definition of "Smooth Operation"
+
+An AI Agent is considered operating smoothly when:
+
+- Errors are rare, logged, and recoverable
+- Users receive accurate and helpful responses
+- System behavior is observable and auditable
+- Risks are controlled and continuously monitored
+- Security and privacy are never compromised
+
+### 📌 Final Note
+
+This AI Agent is designed with reliability, safety, transparency, and user trust as first-class principles.
+
+Every action taken by the agent should prioritize correctness over speed and safety over autonomy.
+
+---
+
 ## License
 
 © 2024 KCOH Software Inc. All rights reserved.
@@ -147,3 +332,13 @@ For questions or support, please contact:
 
 Built with ❤️ by KCOH Software Inc.
 
+---
+
+## ⚠️ EXTRAS: CRITICAL!!!
+
+**ALWAYS DELETE THE .md FILES THAT WE ALREADY COMPLETED**
+
+Completed task files (fixes, completed setups) should be deleted. Keep only:
+- Reference guides (BUILD.md, CODE_PROTECTION_GUIDE.md)
+- Ongoing work (TODO.md, IMPROVEMENTS.md)
+- Active setup/troubleshooting guides still in use

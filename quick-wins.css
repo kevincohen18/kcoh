@@ -1,3 +1,13 @@
+/**
+ * Copyright © 2025 KCOH Software Inc. All Rights Reserved.
+ *
+ * This software and associated documentation files (the "Software")
+ * are proprietary and confidential. Unauthorized copying, modification,
+ * distribution, or use of this Software, via any medium, is strictly prohibited.
+ *
+ * For licensing inquiries, contact: contact@kcoh.ca
+ */
+
 /* ============================================
    QUICK WINS - Additional Features
    ============================================ */
@@ -535,13 +545,16 @@
     max-height: none;
     padding: 1.5rem;
     padding-top: 1.5rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1.5rem; /* Increased bottom padding to ensure messages aren't cut off */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    /* Ensure messages are fully visible when scrolled */
+    scroll-padding-top: 1.5rem;
+    scroll-padding-bottom: 1.5rem; /* Ensure bottom messages aren't cut off */
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -609,7 +622,9 @@
     overflow-wrap: break-word;
     word-break: break-word;
     hyphens: auto;
-    line-height: 1.5;
+    line-height: 1.6; /* Slightly increased for better readability */
+    /* Ensure message bubbles aren't cut off */
+    min-height: fit-content;
 }
 
 .chat-message.user .message-bubble {
@@ -651,6 +666,62 @@
 
 .copy-message-btn:hover {
     opacity: 1;
+}
+
+/* Clickable links in chat messages */
+.chat-link {
+    color: #60a5fa;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.chat-link:hover {
+    color: #93c5fd;
+    text-decoration: underline;
+}
+
+.chat-link:visited {
+    color: #a78bfa;
+}
+
+/* Email links */
+.chat-email {
+    color: #34d399;
+}
+
+.chat-email:hover {
+    color: #6ee7b7;
+}
+
+/* Phone links */
+.chat-phone {
+    color: #fbbf24;
+}
+
+.chat-phone:hover {
+    color: #fcd34d;
+}
+
+/* URL links */
+.chat-url {
+    color: #60a5fa;
+}
+
+.chat-url:hover {
+    color: #93c5fd;
+}
+
+/* Links in user messages (white background) */
+.chat-message.user .chat-link {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+
+.chat-message.user .chat-link:hover {
+    text-decoration-color: rgba(255, 255, 255, 1);
 }
 
 .chat-input-area {
@@ -710,18 +781,42 @@
     height: 20px;
 }
 
-/* Quick Reply Buttons */
+/* Quick Reply Buttons - Hidden by default, shown when needed */
 .quick-replies {
-    display: flex;
+    display: none; /* Hidden by default */
     flex-direction: column;
     gap: 0.5rem;
-    padding: 1rem 1rem 0.5rem;
-    animation: fadeIn 0.3s ease;
-    max-height: 220px;
-    overflow-y: auto;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
     flex-shrink: 0;
     background: var(--bg-white);
     border-top: 1px solid rgba(99, 102, 241, 0.1);
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+/* Show quick replies when they have content and are active */
+.quick-replies.has-replies {
+    display: flex;
+    padding: 1rem 1rem 0.5rem;
+    max-height: 220px;
+    overflow-y: auto;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 220px;
+        padding-top: 1rem;
+        padding-bottom: 0.5rem;
+    }
 }
 
 .quick-replies::-webkit-scrollbar {

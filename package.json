@@ -1,17 +1,27 @@
 {
   "name": "kcoh-software-website",
-  "version": "1.0.0",
-  "description": "KCOH Software Inc. - Professional Software Development Services",
+  "version": "3.4.0",
+  "description": "KCOH Software Inc. - Professional software development portfolio website",
+  "private": true,
   "scripts": {
-    "build": "echo 'No build needed - static site'"
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "terser script.js -o dist/script.min.js -c -m --comments /^!/ && terser terminal.js -o dist/terminal.min.js -c -m --comments /^!/",
+    "build:css": "cleancss -o dist/styles.min.css styles.css && cleancss -o dist/quick-wins.min.css quick-wins.css",
+    "obfuscate": "npm run obfuscate:script && npm run obfuscate:terminal",
+    "obfuscate:script": "javascript-obfuscator script.js --output dist/script.obfuscated.js --compact true --control-flow-flattening true --dead-code-injection true --string-array true --string-array-threshold 0.75",
+    "obfuscate:terminal": "javascript-obfuscator terminal.js --output dist/terminal.obfuscated.js --compact true --control-flow-flattening true --dead-code-injection true --string-array true --string-array-threshold 0.75"
+  },
+  "author": "KCOH Software Inc. <contact@kcoh.ca>",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "terser": "^5.26.0",
+    "clean-css-cli": "^5.6.3",
+    "javascript-obfuscator": "^4.1.0"
   },
   "keywords": [
-    "static-site",
-    "html",
-    "css",
-    "javascript"
-  ],
-  "author": "Kevin Cohen - KCOH Software Inc.",
-  "license": "MIT"
+    "portfolio",
+    "ios-development",
+    "web-development",
+    "software-engineering"
+  ]
 }
-

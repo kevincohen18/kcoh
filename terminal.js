@@ -1,3 +1,13 @@
+/**
+ * Copyright © 2025 KCOH Software Inc. All Rights Reserved.
+ *
+ * This software and associated documentation files (the "Software")
+ * are proprietary and confidential. Unauthorized copying, modification,
+ * distribution, or use of this Software, via any medium, is strictly prohibited.
+ *
+ * For licensing inquiries, contact: contact@kcoh.ca
+ */
+
 // ============================================
 // INTERACTIVE TERMINAL SYSTEM
 // ============================================

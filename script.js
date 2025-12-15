@@ -1,3 +1,13 @@
+/**
+ * Copyright © 2025 KCOH Software Inc. All Rights Reserved.
+ *
+ * This software and associated documentation files (the "Software")
+ * are proprietary and confidential. Unauthorized copying, modification,
+ * distribution, or use of this Software, via any medium, is strictly prohibited.
+ *
+ * For licensing inquiries, contact: contact@kcoh.ca
+ */
+
 // ============================================
 // SCRIPT LOAD CONFIRMATION
 // ============================================
@@ -4540,9 +4550,15 @@ function initChatWidget() {
                     resetChatContext(); // Reset context for new conversation
                     showChatResponse('welcome', chatMessages, quickRepliesContainer);
                     // Ensure chat starts at top to show full welcome message
+                    // Wait for message and quick replies to fully render
                     setTimeout(() => {
+                        // Force scroll to top and prevent any auto-scroll
                         chatMessages.scrollTop = 0;
-                    }, 100);
+                        chatMessages.scrollTo({ top: 0, behavior: 'auto' });
+                        // Force a reflow to ensure proper positioning
+                        void chatMessages.offsetHeight;
+                        chatMessages.scrollTop = 0;
+                    }, 400);
                 } else {
                     // If messages exist, scroll to show latest
                     setTimeout(() => {
@@ -4609,6 +4625,33 @@ function initChatWidget() {
             chatInput.addEventListener('input', (e) => {
                 const length = e.target.value.length;
                 updateCharacterCounter(e.target, length);
+                // Hide quick replies when user starts typing
+                if (length > 0) {
+                    // Clear any pending timeouts
+                    if (quickRepliesContainer.dataset.showTimeout) {
+                        clearTimeout(parseInt(quickRepliesContainer.dataset.showTimeout));
+                        delete quickRepliesContainer.dataset.showTimeout;
+                    }
+                    if (quickRepliesContainer.dataset.hideTimeout) {
+                        clearTimeout(parseInt(quickRepliesContainer.dataset.hideTimeout));
+                        delete quickRepliesContainer.dataset.hideTimeout;
+                    }
+                    quickRepliesContainer.classList.remove('has-replies');
+                }
+            });
+            
+            // Hide quick replies when input is focused (user is typing)
+            chatInput.addEventListener('focus', () => {
+                // Clear any pending timeouts
+                if (quickRepliesContainer.dataset.showTimeout) {
+                    clearTimeout(parseInt(quickRepliesContainer.dataset.showTimeout));
+                    delete quickRepliesContainer.dataset.showTimeout;
+                }
+                if (quickRepliesContainer.dataset.hideTimeout) {
+                    clearTimeout(parseInt(quickRepliesContainer.dataset.hideTimeout));
+                    delete quickRepliesContainer.dataset.hideTimeout;
+                }
+                quickRepliesContainer.classList.remove('has-replies');
             });
 
             // Keyboard shortcuts: Shift+Enter for newline (convert to textarea)
@@ -4726,7 +4769,17 @@ function handleUserMessage(message, chatMessages, quickRepliesContainer) {
     // Save to localStorage
     saveConversationToStorage();
 
-    // Clear quick replies
+    // Hide quick replies when user sends a message
+    // Clear any pending timeouts
+    if (quickRepliesContainer.dataset.showTimeout) {
+        clearTimeout(parseInt(quickRepliesContainer.dataset.showTimeout));
+        delete quickRepliesContainer.dataset.showTimeout;
+    }
+    if (quickRepliesContainer.dataset.hideTimeout) {
+        clearTimeout(parseInt(quickRepliesContainer.dataset.hideTimeout));
+        delete quickRepliesContainer.dataset.hideTimeout;
+    }
+    quickRepliesContainer.classList.remove('has-replies');
     quickRepliesContainer.innerHTML = '';
 
     // Show typing indicator
@@ -4877,7 +4930,7 @@ function showChatResponse(responseKey, chatMessages, quickRepliesContainer) {
     // Get contextual quick replies
     const contextualReplies = getContextualReplies(responseKey, response.quickReplies || []);
 
-    // Show quick replies
+    // Show quick replies only when they're useful (not always visible)
     if (contextualReplies.length > 0) {
         quickRepliesContainer.innerHTML = '';
         contextualReplies.forEach(reply => {
@@ -4889,6 +4942,18 @@ function showChatResponse(responseKey, chatMessages, quickRepliesContainer) {
             `;
 
             btn.addEventListener('click', () => {
+                // Clear any pending timeouts
+                if (quickRepliesContainer.dataset.showTimeout) {
+                    clearTimeout(parseInt(quickRepliesContainer.dataset.showTimeout));
+                }
+                if (quickRepliesContainer.dataset.hideTimeout) {
+                    clearTimeout(parseInt(quickRepliesContainer.dataset.hideTimeout));
+                }
+                
+                // Hide quick replies when one is clicked
+                quickRepliesContainer.classList.remove('has-replies');
+                quickRepliesContainer.innerHTML = '';
+                
                 if (reply.action === 'link') {
                     window.open(reply.url, '_blank');
                 } else if (reply.action === 'email') {
@@ -4896,7 +4961,6 @@ function showChatResponse(responseKey, chatMessages, quickRepliesContainer) {
                 } else if (reply.response) {
                     // Add user message from quick reply
                     addChatMessage(reply.text, 'user', chatMessages);
-                    quickRepliesContainer.innerHTML = '';
                     showTypingIndicator(chatMessages);
 
                     setTimeout(() => {
@@ -4908,6 +4972,37 @@ function showChatResponse(responseKey, chatMessages, quickRepliesContainer) {
 
             quickRepliesContainer.appendChild(btn);
         });
+        
+        // Show quick replies with a delay to not block the message
+        // Auto-hide after 30 seconds if user doesn't interact
+        const showTimeout = setTimeout(() => {
+            quickRepliesContainer.classList.add('has-replies');
+            
+            // Auto-hide after 30 seconds of inactivity
+            const hideTimeout = setTimeout(() => {
+                quickRepliesContainer.classList.remove('has-replies');
+            }, 30000);
+            
+            // Store timeout ID to clear if user interacts
+            quickRepliesContainer.dataset.hideTimeout = hideTimeout;
+        }, 500); // Show after message is visible
+        
+        // Store show timeout to clear if needed
+        quickRepliesContainer.dataset.showTimeout = showTimeout;
+        
+        // If this is the welcome message (first message), ensure it stays at top
+        if (chatMessages.children.length === 1 && responseKey === 'welcome') {
+            setTimeout(() => {
+                chatMessages.scrollTop = 0;
+                chatMessages.scrollTo({ top: 0, behavior: 'auto' });
+                void chatMessages.offsetHeight;
+                chatMessages.scrollTop = 0;
+            }, 250);
+        }
+    } else {
+        // Hide quick replies if no replies available
+        quickRepliesContainer.classList.remove('has-replies');
+        quickRepliesContainer.innerHTML = '';
     }
 }
 
@@ -4952,6 +5047,9 @@ function addChatMessage(text, sender, container) {
     // Sanitize text to prevent XSS
     const sanitizedText = sanitizeHTML(text);
 
+    // Convert URLs to clickable links
+    const linkedText = linkifyText(sanitizedText);
+
     // Get current timestamp
     const now = new Date();
     const timeString = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
@@ -4959,7 +5057,7 @@ function addChatMessage(text, sender, container) {
     messageDiv.innerHTML = `
         <div class="message-avatar">${avatar}</div>
         <div class="message-content">
-            <div class="message-bubble">${sanitizedText.replace(/\n/g, '<br>')}</div>
+            <div class="message-bubble">${linkedText.replace(/\n/g, '<br>')}</div>
             <div class="message-footer">
                 <span class="message-timestamp">${timeString}</span>
                 <button class="copy-message-btn" title="Copy message" aria-label="Copy message to clipboard">
@@ -4995,19 +5093,23 @@ function addChatMessage(text, sender, container) {
 
     container.appendChild(messageDiv);
 
-    // Smooth scroll to bottom (unless it's the first message)
-    setTimeout(() => {
-        // If this is the first message, keep it at top
-        if (container.children.length === 1) {
-            container.scrollTop = 0;
-        } else {
-            // Otherwise scroll to show latest message
-            container.scrollTo({
-                top: container.scrollHeight,
-                behavior: 'smooth'
+    // Don't auto-scroll for the first message (welcome message should stay at top)
+    // Only scroll to bottom for subsequent messages, ensuring full message is visible
+    if (container.children.length > 1) {
+        // This is not the first message, scroll to show latest message fully
+        // Use requestAnimationFrame to ensure DOM is updated
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                // Scroll to bottom with padding to ensure full message is visible
+                const scrollPosition = container.scrollHeight - container.clientHeight;
+                container.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'smooth'
+                });
             });
-        }
-    }, 100);
+        });
+    }
+    // For first message, don't scroll - let the chat open handler manage it
 }
 
 // Sanitize HTML to prevent XSS attacks
@@ -5015,6 +5117,52 @@ function sanitizeHTML(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+// Convert URLs, emails, and phone numbers to clickable links
+function linkifyText(text) {
+    let result = text;
+
+    // First, handle email addresses (must be done before URLs to prevent conflicts)
+    const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
+    result = result.replace(emailRegex, (email) => {
+        return `<a href="mailto:${email}" class="chat-link chat-email" title="Send email to ${email}">${email}</a>`;
+    });
+
+    // Then, handle phone numbers (international and North American formats)
+    const phoneRegex = /(\+?\d{1,3}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9})/g;
+    result = result.replace(phoneRegex, (phone) => {
+        // Clean phone number for tel: link (remove spaces, dashes, parentheses)
+        const cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '');
+        // Only linkify if it looks like a valid phone number (at least 10 digits)
+        if (cleanPhone.length >= 10) {
+            return `<a href="tel:${cleanPhone}" class="chat-link chat-phone" title="Call ${phone}">${phone}</a>`;
+        }
+        return phone;
+    });
+
+    // Finally, handle URLs (avoid matching emails that were already processed)
+    // Use a more specific regex that won't match email addresses
+    const urlRegex = /(?<![@\w])(https?:\/\/[^\s<]+|(?:www\.)[^\s<]+|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s<]*)?)(?![@\w])/gi;
+    result = result.replace(urlRegex, (match) => {
+        // Skip if this is part of an email (already processed)
+        if (match.includes('@') || result.includes(`mailto:${match}`)) {
+            return match;
+        }
+
+        let url = match;
+        let href = url;
+
+        // Add https:// if missing and not already a complete URL
+        if (!url.match(/^https?:\/\//i)) {
+            href = 'https://' + url;
+        }
+
+        // Create clickable link with styling
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="chat-link chat-url" title="Open ${url}">${url}</a>`;
+    });
+
+    return result;
 }
 
 function showTypingIndicator(container) {
@@ -5031,7 +5179,16 @@ function showTypingIndicator(container) {
         </div>
     `;
     container.appendChild(typingDiv);
-    container.scrollTop = container.scrollHeight;
+    // Ensure typing indicator is fully visible
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            const scrollPosition = container.scrollHeight - container.clientHeight;
+            container.scrollTo({
+                top: scrollPosition,
+                behavior: 'smooth'
+            });
+        });
+    });
 }
 
 function removeTypingIndicator(container) {
