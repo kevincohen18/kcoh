@@ -9,7 +9,10 @@
     "build:css": "cleancss -o dist/styles.min.css styles.css && cleancss -o dist/quick-wins.min.css quick-wins.css",
     "obfuscate": "npm run obfuscate:script && npm run obfuscate:terminal",
     "obfuscate:script": "javascript-obfuscator script.js --output dist/script.obfuscated.js --compact true --control-flow-flattening true --dead-code-injection true --string-array true --string-array-threshold 0.75",
-    "obfuscate:terminal": "javascript-obfuscator terminal.js --output dist/terminal.obfuscated.js --compact true --control-flow-flattening true --dead-code-injection true --string-array true --string-array-threshold 0.75"
+    "obfuscate:terminal": "javascript-obfuscator terminal.js --output dist/terminal.obfuscated.js --compact true --control-flow-flattening true --dead-code-injection true --string-array true --string-array-threshold 0.75",
+    "version:patch": "node bump-version.js",
+    "version:minor": "node bump-version.js minor",
+    "version:major": "node bump-version.js major"
   },
   "author": "KCOH Software Inc. <contact@kcoh.ca>",
   "license": "UNLICENSED",

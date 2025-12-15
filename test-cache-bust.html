@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache Bust Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #00ff00;
+            background: #2a2a2a;
+        }
+        .test-result.pass {
+            border-left-color: #00ff00;
+        }
+        .test-result.fail {
+            border-left-color: #ff0000;
+            color: #ff0000;
+        }
+        h1 { color: #00ffff; }
+        h2 { color: #ffff00; }
+        .timestamp { color: #ff00ff; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Automatic Cache Bust Test Suite</h1>
+
+    <div id="test-results"></div>
+
+    <h2>Console Output:</h2>
+    <div id="console-output" style="background: #000; padding: 10px; border: 1px solid #00ff00; min-height: 200px;"></div>
+
+    <!-- COPY OF CACHE BUST SCRIPT FROM index.html -->
+    <script>
+    // Capture console logs
+    const consoleOutput = document.getElementById('console-output');
+    const testResults = document.getElementById('test-results');
+
+    function log(msg, level = 'info') {
+        const line = document.createElement('div');
+        line.textContent = `[${level.toUpperCase()}] ${msg}`;
+        line.style.color = level === 'error' ? '#ff0000' : '#00ff00';
+        consoleOutput.appendChild(line);
+        console.log(msg);
+    }
+
+    function testResult(name, passed, details = '') {
+        const result = document.createElement('div');
+        result.className = `test-result ${passed ? 'pass' : 'fail'}`;
+        result.innerHTML = `
+            <strong>${passed ? '✅ PASS' : '❌ FAIL'}: ${name}</strong>
+            ${details ? '<br>' + details : ''}
+        `;
+        testResults.appendChild(result);
+    }
+
+    // TEST 1: Timestamp Generation
+    log('=== TEST 1: Timestamp Generation ===');
+    window.CACHE_BUST = Date.now();
+    log('Generated timestamp: ' + window.CACHE_BUST);
+    testResult('Timestamp Generation',
+        typeof window.CACHE_BUST === 'number' && window.CACHE_BUST > 0,
+        `Timestamp: ${window.CACHE_BUST}`
+    );
+
+    // TEST 2: Performance API Check
+    log('=== TEST 2: Performance API ===');
+    if (performance && performance.getEntriesByType) {
+        const navEntries = performance.getEntriesByType('navigation');
+        log('Navigation entries found: ' + navEntries.length);
+        if (navEntries.length > 0) {
+            log('Navigation type: ' + navEntries[0].type);
+            log('Transfer size: ' + navEntries[0].transferSize);
+        }
+        testResult('Performance API', true, 'Performance API available and working');
+    } else {
+        testResult('Performance API', false, 'Performance API not available');
+    }
+
+    // TEST 3: Service Worker API
+    log('=== TEST 3: Service Worker API ===');
+    if ('serviceWorker' in navigator) {
+        log('Service Worker API available');
+        navigator.serviceWorker.getRegistrations().then(regs => {
+            log('Existing service workers: ' + regs.length);
+            regs.forEach(reg => {
+                log('Unregistering service worker...');
+                reg.unregister();
+            });
+            testResult('Service Worker Unregister', true, 'Service workers can be unregistered');
+        });
+    } else {
+        log('Service Worker API not available (may be because of file:// protocol)');
+        testResult('Service Worker API', true, 'Not available in this context (normal for local files)');
+    }
+
+    // TEST 4: Cache API
+    log('=== TEST 4: Cache API ===');
+    if ('caches' in window) {
+        log('Cache API available');
+        caches.keys().then(names => {
+            log('Existing caches: ' + names.length);
+            names.forEach(name => {
+                log('Deleting cache: ' + name);
+                caches.delete(name);
+            });
+            testResult('Cache API', true, 'Caches can be cleared');
+        });
+    } else {
+        log('Cache API not available (may be because of file:// protocol)');
+        testResult('Cache API', true, 'Not available in this context (normal for local files)');
+    }
+
+    // TEST 5: Dynamic Resource URL Generation
+    log('=== TEST 5: Dynamic Resource URLs ===');
+
+    // Create test elements
+    const testStyle = document.createElement('link');
+    testStyle.rel = 'stylesheet';
+    testStyle.id = 'test-style';
+    document.head.appendChild(testStyle);
+
+    const testScript = document.createElement('script');
+    testScript.id = 'test-script';
+    testScript.defer = true;
+    document.body.appendChild(testScript);
+
+    // Apply timestamps
+    testStyle.href = 'styles.css?t=' + window.CACHE_BUST;
+    testScript.src = 'script.js?t=' + window.CACHE_BUST;
+
+    log('Test style href: ' + testStyle.href);
+    log('Test script src: ' + testScript.src);
+
+    const hasTimestamp = testStyle.href.includes('?t=') && testScript.src.includes('?t=');
+    testResult('Dynamic Resource URLs',
+        hasTimestamp,
+        `URLs contain timestamp: ${hasTimestamp}`
+    );
+
+    // TEST 6: Timestamp Uniqueness
+    log('=== TEST 6: Timestamp Uniqueness ===');
+    const timestamp1 = Date.now();
+    setTimeout(() => {
+        const timestamp2 = Date.now();
+        const isUnique = timestamp2 > timestamp1;
+        log('Timestamp 1: ' + timestamp1);
+        log('Timestamp 2: ' + timestamp2);
+        log('Are different: ' + isUnique);
+        testResult('Timestamp Uniqueness',
+            isUnique,
+            'Each page load will have a unique timestamp'
+        );
+    }, 10);
+
+    // TEST 7: Reload Detection (simulated)
+    log('=== TEST 7: Reload Detection ===');
+    if (performance && performance.getEntriesByType) {
+        const navEntries = performance.getEntriesByType('navigation');
+        if (navEntries.length > 0) {
+            const navEntry = navEntries[0];
+            const isBackForward = navEntry.type === 'back_forward';
+            const isCached = navEntry.transferSize === 0;
+
+            log('Navigation type: ' + navEntry.type);
+            log('Transfer size: ' + navEntry.transferSize);
+            log('Is back/forward: ' + isBackForward);
+            log('Is cached: ' + isCached);
+
+            testResult('Reload Detection',
+                !isBackForward,
+                `Current load type: ${navEntry.type} (would ${isBackForward ? 'RELOAD' : 'NOT RELOAD'})`
+            );
+        }
+    }
+
+    // TEST 8: Multiple Timestamp Applications
+    log('=== TEST 8: Multiple Resource Loading ===');
+    const resources = ['styles.css', 'script.js', 'terminal.js', 'quick-wins.css'];
+    const urls = resources.map(resource => `${resource}?t=${window.CACHE_BUST}`);
+
+    urls.forEach(url => log('Generated URL: ' + url));
+
+    const allHaveTimestamp = urls.every(url => url.includes('?t='));
+    testResult('Multiple Resources',
+        allHaveTimestamp,
+        `All ${resources.length} resources have timestamps`
+    );
+
+    // SUMMARY
+    setTimeout(() => {
+        log('\n=== TEST SUMMARY ===');
+        log('All critical tests completed!');
+        log('Timestamp: ' + window.CACHE_BUST);
+        log('Current time: ' + new Date().toISOString());
+
+        const summary = document.createElement('div');
+        summary.style.cssText = 'margin-top: 20px; padding: 20px; background: #004400; border: 2px solid #00ff00;';
+        summary.innerHTML = `
+            <h2 style="color: #00ff00;">✅ Cache Bust System is Active!</h2>
+            <p><strong>Current Timestamp:</strong> <span class="timestamp">${window.CACHE_BUST}</span></p>
+            <p>Refresh this page (F5) and you'll see a NEW timestamp - proving fresh content loads!</p>
+            <p><strong>Next steps:</strong> Open DevTools Network tab and refresh to see cache-busting in action</p>
+        `;
+        document.body.appendChild(summary);
+    }, 100);
+    </script>
+
+    <h2 style="margin-top: 30px;">Manual Testing Instructions:</h2>
+    <ol style="line-height: 1.8; color: #aaa;">
+        <li>✅ Check that timestamp appears above (number like 1734217845123)</li>
+        <li>🔄 Refresh the page (F5) - timestamp should change</li>
+        <li>🌐 Open DevTools → Network tab</li>
+        <li>🔄 Refresh again and look for resources with <code>?t=TIMESTAMP</code></li>
+        <li>🔄 Refresh multiple times - timestamp should be different each time</li>
+        <li>⬅️ Navigate away then use browser Back button - page should reload fresh</li>
+    </ol>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "version": "3.4.0",
+  "timestamp": "2025-12-14T22:00:00Z",
+  "changes": [
+    "Added automatic cache busting",
+    "Enhanced chatbot with email and phone links",
+    "Improved chat message text wrapping",
+    "Added copyright protection"
+  ]
+}
