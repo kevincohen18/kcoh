@@ -45,13 +45,9 @@
     <script>
     // Generate timestamp bucket for this session (5-minute buckets to avoid constant reload)
     (function() {
-        const BUCKET_MS = 15 * 60 * 1000;
-        const now = Date.now();
+        // Use a stable cache-bust per session; set once, reuse until tab closes
         const saved = Number(sessionStorage.getItem('CACHE_BUST_TS') || 0);
-        const currentBucket = Math.floor(now / BUCKET_MS) * BUCKET_MS;
-        const cacheBust = (!saved || Math.floor(saved / BUCKET_MS) !== Math.floor(now / BUCKET_MS))
-            ? currentBucket
-            : saved;
+        const cacheBust = saved || Date.now();
         sessionStorage.setItem('CACHE_BUST_TS', cacheBust);
         window.CACHE_BUST = cacheBust;
         console.log('[Cache Bust] Timestamp:', window.CACHE_BUST);
@@ -807,13 +803,6 @@ class ModelTrainer:
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                             </svg>
                         </a>
-                        <a href="rss.xml" class="social-link" aria-label="RSS Feed" title="Subscribe to our RSS feed">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 11a9 9 0 0 1 9 9"></path>
-                                <path d="M4 4a16 16 0 0 1 16 16"></path>
-                                <circle cx="5" cy="19" r="1"></circle>
-                            </svg>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -841,24 +830,5 @@ document.getElementById('main-script').src = 'script.js?t=' + window.CACHE_BUST;
 document.getElementById('terminal-script').src = 'terminal.js?t=' + window.CACHE_BUST;
 </script>
 
-<!-- Additional cache prevention: reload on page show if from cache -->
-<script>
-// Reload if page is restored from back/forward cache (prevent infinite loop with sessionStorage flag)
-window.addEventListener('pageshow', function(event) {
-    // Check if we already reloaded this session to prevent infinite loops
-    const hasReloaded = sessionStorage.getItem('cache-bust-reloaded');
-
-    if (event.persisted && !hasReloaded) {
-        console.log('[Cache Bust] Page restored from bfcache, reloading for fresh content...');
-        sessionStorage.setItem('cache-bust-reloaded', 'true');
-        location.reload(true);
-    }
-});
-
-// Clear the reload flag when page is unloaded normally
-window.addEventListener('beforeunload', function() {
-    sessionStorage.removeItem('cache-bust-reloaded');
-});
-</script>
 </body>
 </html>
