@@ -1879,7 +1879,7 @@ body:not(.light-theme) .theme-toggle .moon-icon {
 
 .btn-primary {
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-    color: white;
+    color: #ffffff !important;
     box-shadow: var(--shadow-md);
     position: relative;
     overflow: hidden;
