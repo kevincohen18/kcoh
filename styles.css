@@ -225,6 +225,11 @@ section {
     align-items: center;
     gap: 1.1rem;
     flex-shrink: 0;
+    min-width: 0; /* Allow flex items to shrink if needed */
+}
+
+.nav-left .nav-cta-btn {
+    flex-shrink: 0; /* Prevent button from shrinking */
 }
 
 .nav-wrapper > * {
@@ -246,34 +251,75 @@ section {
 .nav-cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.65rem 1.1rem;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
+    gap: 0.6rem;
+    padding: 0.7rem 1.25rem;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
     color: #fff;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 0.95rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    border-radius: 0.625rem;
+    border: none;
+    box-shadow: 
+        0 4px 14px rgba(99, 102, 241, 0.4),
+        0 2px 4px rgba(99, 102, 241, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    min-height: 40px;
+}
+
+.nav-cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.nav-cta-btn:hover::before {
+    left: 100%;
 }
 
 .nav-cta-btn svg {
     width: 18px;
     height: 18px;
     flex-shrink: 0;
+    stroke-width: 2.5;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+.nav-cta-btn span {
+    position: relative;
+    z-index: 1;
 }
 
 .nav-cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(99, 102, 241, 0.45);
+    transform: translateY(-1px);
+    box-shadow: 
+        0 6px 20px rgba(99, 102, 241, 0.5),
+        0 4px 8px rgba(99, 102, 241, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #a855f7 100%);
 }
 
 .nav-cta-btn:active {
     transform: translateY(0);
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+    box-shadow: 
+        0 2px 8px rgba(99, 102, 241, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.nav-cta-btn:focus {
+    outline: 2px solid rgba(99, 102, 241, 0.5);
+    outline-offset: 2px;
 }
 
 /* Case Studies */
@@ -2883,7 +2929,7 @@ section * {
     order: 1;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: var(--text-primary);
+    color: var(--text-secondary);
     font-size: 0.95rem;
 }
 
@@ -2894,7 +2940,8 @@ section * {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     order: 2;
     width: 100%;
     padding: 0.875rem;
@@ -2903,6 +2950,27 @@ section * {
     font-family: inherit;
     font-size: 1rem;
     transition: all 0.3s ease;
+    background: var(--bg-white);
+    color: var(--text-primary);
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d1d5db' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.875rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-group select option {
     background: var(--bg-white);
     color: var(--text-primary);
 }
@@ -3208,7 +3276,8 @@ section * {
     }
 
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
         padding: 0.75rem;
         font-size: 0.95rem;
     }
@@ -6985,6 +7054,11 @@ html {
     section {
         padding: 100px 0;
     }
+
+    .nav-cta-btn {
+        padding: 0.65rem 1.15rem;
+        font-size: 0.88rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -7024,6 +7098,18 @@ html {
 
     .logo-subtext {
         font-size: 0.6rem;
+    }
+
+    .nav-cta-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        gap: 0.5rem;
+        min-height: 38px;
+    }
+
+    .nav-cta-btn svg {
+        width: 16px;
+        height: 16px;
     }
 
     .mobile-menu-toggle {
@@ -7668,6 +7754,22 @@ html {
         padding: 40px 0;
     }
 
+    .nav-cta-btn {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.8rem;
+        gap: 0.45rem;
+        min-height: 36px;
+    }
+
+    .nav-cta-btn svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .nav-left {
+        gap: 0.75rem;
+    }
+
     .service-card {
         margin: 0;
         padding: 1.25rem;
@@ -7701,7 +7803,8 @@ html {
     }
 
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
         padding: 0.75rem;
         font-size: 0.95rem;
     }
