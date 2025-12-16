@@ -52,3 +52,4 @@ build/
 # Custom scripts (not tracked)
 push-all.sh
 push_all.py
+push_gui.py
