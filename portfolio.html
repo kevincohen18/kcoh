@@ -43,7 +43,7 @@
     <link rel="stylesheet" id="quick-wins-styles" href="quick-wins.css">
     <script>
         (function() {
-            const BUCKET_MS = 5 * 60 * 1000;
+            const BUCKET_MS = 15 * 60 * 1000;
             const now = Date.now();
             const saved = Number(sessionStorage.getItem('CACHE_BUST_TS') || 0);
             const currentBucket = Math.floor(now / BUCKET_MS) * BUCKET_MS;
