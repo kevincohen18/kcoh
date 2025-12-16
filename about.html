@@ -38,9 +38,18 @@
 
     <title>About Us - KCOH Software Inc.</title>
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles.css?v=3.4.0">
-    <link rel="stylesheet" href="quick-wins.css?v=1.3.0">
+    <!-- Stylesheets with cache bust -->
+    <link rel="stylesheet" id="main-styles" href="styles.css">
+    <link rel="stylesheet" id="quick-wins-styles" href="quick-wins.css">
+    <script>
+        window.CACHE_BUST = Date.now();
+        ['main-styles', 'quick-wins-styles'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && el.href) {
+                el.href = el.href.split('?')[0] + '?t=' + window.CACHE_BUST;
+            }
+        });
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -446,6 +455,12 @@
     </footer>
 
 <!-- Scripts -->
-    <script src="script.js?v=3.4.0" defer></script>
+    <script id="main-script" src="script.js" defer></script>
+    <script>
+        const mainScript = document.getElementById('main-script');
+        if (mainScript && mainScript.src) {
+            mainScript.src = mainScript.src.split('?')[0] + '?t=' + (window.CACHE_BUST || Date.now());
+        }
+    </script>
 </body>
 </html>
