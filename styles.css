@@ -545,6 +545,13 @@ section {
     text-decoration: underline;
 }
 
+.developer-showcase,
+.terminal-portfolio,
+.github-activity,
+.code-showcase {
+    display: none;
+}
+
 .section-callout {
     max-width: 700px;
     margin: 1.5rem auto 0;
