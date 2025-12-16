@@ -48,3 +48,7 @@ build/
 *.tmp
 *.temp
 .cache/
+
+# Custom scripts (not tracked)
+push-all.sh
+push_all.py
