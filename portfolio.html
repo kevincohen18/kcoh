@@ -42,13 +42,23 @@
     <link rel="stylesheet" id="main-styles" href="styles.css">
     <link rel="stylesheet" id="quick-wins-styles" href="quick-wins.css">
     <script>
-        window.CACHE_BUST = Date.now();
-        ['main-styles', 'quick-wins-styles'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el && el.href) {
-                el.href = el.href.split('?')[0] + '?t=' + window.CACHE_BUST;
-            }
-        });
+        (function() {
+            const BUCKET_MS = 5 * 60 * 1000;
+            const now = Date.now();
+            const saved = Number(sessionStorage.getItem('CACHE_BUST_TS') || 0);
+            const currentBucket = Math.floor(now / BUCKET_MS) * BUCKET_MS;
+            const cacheBust = (!saved || Math.floor(saved / BUCKET_MS) !== Math.floor(now / BUCKET_MS))
+                ? currentBucket
+                : saved;
+            sessionStorage.setItem('CACHE_BUST_TS', cacheBust);
+            window.CACHE_BUST = cacheBust;
+            ['main-styles', 'quick-wins-styles'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.href) {
+                    el.href = el.href.split('?')[0] + '?t=' + window.CACHE_BUST;
+                }
+            });
+        })();
     </script>
 
     <!-- Fonts -->

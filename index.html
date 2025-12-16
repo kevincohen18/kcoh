@@ -43,9 +43,19 @@
 
     <!-- AUTOMATIC CACHE BUSTING - Always loads fresh content, zero manual work -->
     <script>
-    // Generate timestamp for this session
-    window.CACHE_BUST = Date.now();
-    console.log('[Cache Bust] Timestamp:', window.CACHE_BUST);
+    // Generate timestamp bucket for this session (5-minute buckets to avoid constant reload)
+    (function() {
+        const BUCKET_MS = 5 * 60 * 1000;
+        const now = Date.now();
+        const saved = Number(sessionStorage.getItem('CACHE_BUST_TS') || 0);
+        const currentBucket = Math.floor(now / BUCKET_MS) * BUCKET_MS;
+        const cacheBust = (!saved || Math.floor(saved / BUCKET_MS) !== Math.floor(now / BUCKET_MS))
+            ? currentBucket
+            : saved;
+        sessionStorage.setItem('CACHE_BUST_TS', cacheBust);
+        window.CACHE_BUST = cacheBust;
+        console.log('[Cache Bust] Timestamp:', window.CACHE_BUST);
+    })();
 
     // Unregister all service workers (they cache aggressively)
     if ('serviceWorker' in navigator) {
