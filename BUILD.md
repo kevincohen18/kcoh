@@ -259,4 +259,4 @@ If you encounter issues:
 
 **Remember:** Code protection is about making it harder, not impossible. Focus on innovation, not just hiding code!
 
-**Copyright © 2025 KCOH Software Inc. All Rights Reserved.**
+**Copyright © 2026 KCOH Software Inc. All Rights Reserved.**

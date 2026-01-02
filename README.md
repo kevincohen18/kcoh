@@ -320,7 +320,7 @@ Every action taken by the agent should prioritize correctness over speed and saf
 
 ## License
 
-© 2025 KCOH Software Inc. All rights reserved.
+© 2026 KCOH Software Inc. All rights reserved.
 
 ## Contact
 

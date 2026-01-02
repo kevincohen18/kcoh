@@ -1,5 +1,5 @@
 /**
- * Copyright © 2025 KCOH Software Inc. All Rights Reserved.
+ * Copyright © 2026 KCOH Software Inc. All Rights Reserved.
  *
  * This software and associated documentation files (the "Software")
  * are proprietary and confidential. Unauthorized copying, modification,

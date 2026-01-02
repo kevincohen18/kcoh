@@ -74,7 +74,7 @@ terser script.js -o script.min.js -c -m
 **What you CAN do:**
 1. **Copyright Notice** - Add to your code:
    ```javascript
-   // Copyright © 2025 KCOH Software Inc. All Rights Reserved.
+   // Copyright © 2026 KCOH Software Inc. All Rights Reserved.
    // Unauthorized copying, modification, or distribution is prohibited.
    ```
 
@@ -172,7 +172,7 @@ terser script.js -o script.min.js -c -m
 Add to top of `script.js`:
 ```javascript
 /**
- * Copyright © 2025 KCOH Software Inc. All Rights Reserved.
+ * Copyright © 2026 KCOH Software Inc. All Rights Reserved.
  * 
  * This software and associated documentation files (the "Software")
  * are proprietary and confidential. Unauthorized copying, modification,
@@ -263,5 +263,5 @@ pying your design** - Focus on innovation, not hiding
 
 ---
 
-*Last Updated: 2025-01-XX*
+*Last Updated: 2026-01-XX*
 
