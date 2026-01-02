@@ -1,6 +1,6 @@
 {
   "version": "3.4.0",
-  "timestamp": "2026-12-14T22:00:00Z",
+  "timestamp": "2026-01-14T22:00:00Z",
   "changes": [
     "Added automatic cache busting",
     "Enhanced chatbot with email and phone links",
