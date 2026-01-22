@@ -178,7 +178,7 @@ Add to top of `script.js`:
  * are proprietary and confidential. Unauthorized copying, modification,
  * distribution, or use of this Software, via any medium, is strictly prohibited.
  * 
- * For licensing inquiries, contact: contact@kcoh.ca
+ * For licensing inquiries, contact: inquiries@kcoh.ca
  */
 ```
 

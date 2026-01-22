@@ -1,10 +1,18 @@
+# robots.txt for KCOH Software Inc.
+# Last updated: January 2026
+
+# Allow all search engines to crawl the site
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://kcoh.ca/sitemap.xml
-
-# Disallow admin areas (if any)
+# Disallow admin and private directories (if any exist)
 Disallow: /admin/
 Disallow: /private/
+Disallow: /dist/
+Disallow: /node_modules/
 
+# Sitemap location
+Sitemap: https://kcoh.ca/sitemap.xml
+
+# Crawl delay (optional, helps prevent server overload)
+Crawl-delay: 1

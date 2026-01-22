@@ -27,8 +27,8 @@
             // Check if page was loaded from cache
             if (navEntry.transferSize === 0 || navEntry.type === 'back_forward') {
                 console.log('[Auto Cache Bust] Cached page detected, forcing reload...');
-                // Force hard reload (bypass cache)
-                location.reload(true);
+                // Force reload
+                location.reload();
                 return;
             }
         }
@@ -107,7 +107,7 @@
     window.addEventListener('pageshow', function(event) {
         if (event.persisted) {
             console.log('[Auto Cache Bust] Page restored from bfcache, reloading...');
-            location.reload(true);
+            location.reload();
         }
     });
 

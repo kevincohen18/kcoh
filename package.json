@@ -14,7 +14,7 @@
     "version:minor": "node bump-version.js minor",
     "version:major": "node bump-version.js major"
   },
-  "author": "KCOH Software Inc. <contact@kcoh.ca>",
+  "author": "KCOH Software Inc. <inquiries@kcoh.ca>",
   "license": "UNLICENSED",
   "devDependencies": {
     "terser": "^5.26.0",

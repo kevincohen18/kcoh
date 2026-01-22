@@ -5,7 +5,7 @@
  * are proprietary and confidential. Unauthorized copying, modification,
  * distribution, or use of this Software, via any medium, is strictly prohibited.
  *
- * For licensing inquiries, contact: contact@kcoh.ca
+ * For licensing inquiries, contact: inquiries@kcoh.ca
  */
 
 // ============================================
@@ -804,8 +804,7 @@ function initInteractiveTerminalPortfolio() {
 
     function handleContact() {
         addOutput(`<span class="help-section">Contact Information:</span>`);
-        addOutput(`  Email: <a href="mailto:contact@kcoh.ca" class="terminal-link">contact@kcoh.ca</a>`);
-        addOutput(`  Phone: <a href="tel:+15148988716" class="terminal-link">514-898-8716</a>`);
+        addOutput(`  Email: <a href="mailto:inquiries@kcoh.ca" class="terminal-link">inquiries@kcoh.ca</a>`);
         addOutput(`  Portfolio: <a href="https://kevincohen.ca" target="_blank" class="terminal-link">kevincohen.ca</a>`);
     }
 

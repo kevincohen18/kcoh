@@ -5,7 +5,7 @@
  * are proprietary and confidential. Unauthorized copying, modification,
  * distribution, or use of this Software, via any medium, is strictly prohibited.
  *
- * For licensing inquiries, contact: contact@kcoh.ca
+ * For licensing inquiries, contact: inquiries@kcoh.ca
  */
 
 // ============================================
@@ -351,7 +351,6 @@ if (mobileMenuToggle) {
     });
 }
 
-// TODO system initialization
 function initTodoSystem() {
     const todoToggle = document.getElementById('todoToggle');
     const todoContainer = document.getElementById('todoContainer');
@@ -838,11 +837,6 @@ window.addEventListener('resize', () => {
     }, 250);
 });
 
-// Removed parallax effects that cause overlaps during scroll
-// Parallax disabled to prevent overlapping issues
-
-// Removed mouse parallax to prevent overlaps
-
 // Animate numbers in stats
 function animateNumber(element, target, duration = 2000) {
     const start = 0;
@@ -929,8 +923,6 @@ if (document.readyState === 'loading') {
     // DOM already loaded
     initMetricAnimation();
 }
-
-// Removed button ripple to keep click visuals minimal (confetti remains)
 
 // Particle System for Hero Section
 function initParticles() {
@@ -1059,8 +1051,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         smoothScrollTo(target);
     });
 });
-
-// Removed problematic parallax effect that caused overlapping issues
 
 // Back to Top Button
 const backToTop = document.getElementById('backToTop');
@@ -1332,7 +1322,7 @@ if (contactForm) {
                         from_email: formData.email,
                         subject: formData.subject,
                         message: formData.message,
-                        to_email: 'contact@kcoh.ca'
+                        to_email: 'inquiries@kcoh.ca'
                     }
                 });
                 
@@ -1349,7 +1339,7 @@ if (contactForm) {
                         from_email: formData.email, // Also include for compatibility
                         subject: formData.subject,
                         message: formData.message,
-                        to_email: 'contact@kcoh.ca'
+                        to_email: 'inquiries@kcoh.ca'
                     }
                 );
                 
@@ -1366,7 +1356,7 @@ if (contactForm) {
                 submitButton.disabled = false;
             } else {
                 // Fallback: Send email via mailto link
-                const mailtoLink = `mailto:contact@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`)}`;
+                const mailtoLink = `mailto:inquiries@kcoh.ca?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`)}`;
                 window.location.href = mailtoLink;
                 
                 // Show success message
@@ -1399,7 +1389,7 @@ if (contactForm) {
             } else if (error.message) {
                 errorMessage += `Error: ${error.message}. `;
             }
-            errorMessage += 'Please try again or email us directly at contact@kcoh.ca';
+            errorMessage += 'Please try again or email us directly at inquiries@kcoh.ca';
             
             showFormMessage(contactForm, errorMessage, 'error');
             
@@ -1446,7 +1436,7 @@ if (newsletterForm) {
                     EMAILJS_NEWSLETTER_TEMPLATE,
                     {
                         email: email,
-                        to_email: 'contact@kcoh.ca'
+                        to_email: 'inquiries@kcoh.ca'
                     }
                 );
                 
@@ -2619,7 +2609,7 @@ function initInteractiveTerminal() {
         skills: 'Swift, SwiftUI, React, Node.js, Python, AWS, Docker, and more!',
         apps: '10+ published iOS apps on the App Store built with Swift & SwiftUI 🍎',
         portfolio: 'Visit https://kevincohen.ca to see my complete portfolio',
-        contact: 'Email: contact@kcoh.ca | Phone: 514-898-8716',
+        contact: 'Email: inquiries@kcoh.ca',
         clear: '',
         matrix: 'Entering the Matrix... 🟢',
         party: '🎉 Party mode activated! 🎊',
@@ -2648,7 +2638,7 @@ function initInteractiveTerminal() {
                 output.innerHTML += `<div style="color: #a78bfa;">Visit <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" style="color: #6366f1; text-decoration: underline; cursor: pointer;">https://kevincohen.ca</a> to see my complete portfolio</div>`;
             } else if (cmd === 'contact') {
                 // Show contact with clickable links
-                output.innerHTML += `<div style="color: #a78bfa;">Email: <a href="mailto:contact@kcoh.ca" style="color: #6366f1; text-decoration: underline; cursor: pointer;">contact@kcoh.ca</a> | Phone: <a href="tel:+15148988716" style="color: #6366f1; text-decoration: underline; cursor: pointer;">514-898-8716</a></div>`;
+                output.innerHTML += `<div style="color: #a78bfa;">Email: <a href="mailto:inquiries@kcoh.ca" style="color: #6366f1; text-decoration: underline; cursor: pointer;">inquiries@kcoh.ca</a></div>`;
             } else if (cmd.startsWith('echo ')) {
                 // Echo command - output whatever comes after 'echo '
                 const text = fullInput.substring(5);
@@ -4386,10 +4376,10 @@ const chatResponses = {
         ]
     },
     quote: {
-        response: "Great! I'd love to discuss your project. You can reach me at:\n\n📧 contact@kcoh.ca\n📞 +1-514-898-8716\n\nOr fill out the contact form and I'll get back to you within 24 hours!",
+        response: "Great! I'd love to discuss your project. You can reach me at:\n\n📧 inquiries@kcoh.ca\n\nOr fill out the contact form and I'll get back to you within 24 hours!",
         quickReplies: [
             { text: "Contact Form", icon: "📝", action: "link", url: "contact.html" },
-            { text: "Email Me", icon: "📧", action: "email", url: "mailto:contact@kcoh.ca" },
+            { text: "Email Me", icon: "📧", action: "email", url: "mailto:inquiries@kcoh.ca" },
             { text: "View Portfolio", icon: "🔗", action: "link", url: "https://kevincohen.ca" },
             { text: "Start Over", icon: "🔄", response: "welcome" }
         ]
