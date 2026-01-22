@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#6366f1">
 
     <!-- Content Security Policy: Protects against XSS attacks -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.emailjs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.emailjs.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
 
     <!-- Cache Control: Force revalidation on custom domain -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -42,55 +42,15 @@
     <title>KCOH Software Inc. - Professional Software Development Services</title>
 
     <!-- AUTOMATIC CACHE BUSTING - Always loads fresh content, zero manual work -->
-    <script>
-    // Generate timestamp bucket for this session (5-minute buckets to avoid constant reload)
-    (function() {
-        // Use a stable cache-bust per session; set once, reuse until tab closes
-        const saved = Number(sessionStorage.getItem('CACHE_BUST_TS') || 0);
-        const cacheBust = saved || Date.now();
-        sessionStorage.setItem('CACHE_BUST_TS', cacheBust);
-        window.CACHE_BUST = cacheBust;
-        console.log('[Cache Bust] Timestamp:', window.CACHE_BUST);
-    })();
-
-    // Unregister all service workers (they cache aggressively)
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(regs => {
-            regs.forEach(reg => {
-                console.log('[Cache Bust] Unregistering service worker');
-                reg.unregister();
-            });
-        });
-    }
-
-    // Clear all caches
-    if ('caches' in window) {
-        caches.keys().then(names => {
-            names.forEach(name => {
-                console.log('[Cache Bust] Clearing cache:', name);
-                caches.delete(name);
-            });
-        });
-    }
-    </script>
+    <script src="init.js"></script>
 
     <!-- Performance: Preload critical resources with automatic cache busting -->
     <link rel="preload" as="style" id="preload-styles">
     <link rel="preload" as="script" id="preload-script">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
-    <script>
-    // Apply timestamp to preload links
-    document.getElementById('preload-styles').href = 'styles.css?t=' + window.CACHE_BUST;
-    document.getElementById('preload-script').href = 'script.js?t=' + window.CACHE_BUST;
-    </script>
 
     <link rel="stylesheet" id="main-styles">
     <link rel="stylesheet" id="quick-wins-styles">
-    <script>
-    // Apply timestamp to stylesheets
-    document.getElementById('main-styles').href = 'styles.css?t=' + window.CACHE_BUST;
-    document.getElementById('quick-wins-styles').href = 'quick-wins.css?t=' + window.CACHE_BUST;
-    </script>
 
     <!-- Performance: Resource hints for fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,23 +60,6 @@
     <!-- Performance: Load fonts asynchronously to prevent render blocking -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
-    <style>
-        /* Prevent layout shift during font load */
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        /* Hero availability notice responsive styles */
-        @media (max-width: 768px) {
-            .hero-availability-notice {
-                padding: 0.75rem 1.25rem !important;
-                font-size: 0.9rem !important;
-                flex-wrap: wrap !important;
-                justify-content: center !important;
-                text-align: center !important;
-            }
-        }
-    </style>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -864,13 +807,8 @@ class ModelTrainer:
     </div>
 
 <!-- Scripts with automatic cache busting -->
-<script id="main-script" defer></script>
-<script id="terminal-script" defer></script>
-<script>
-// Apply timestamp to scripts
-document.getElementById('main-script').src = 'script.js?t=' + window.CACHE_BUST;
-document.getElementById('terminal-script').src = 'terminal.js?t=' + window.CACHE_BUST;
-</script>
+<script id="main-script" src="script.js" defer></script>
+<script id="terminal-script" src="terminal.js" defer></script>
 
 </body>
 </html>

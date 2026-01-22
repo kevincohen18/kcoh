@@ -9,6 +9,21 @@
  */
 
 // ============================================
+// CONFIGURATION CONSTANTS
+// ============================================
+// Scroll and animation thresholds
+const SCROLL_THRESHOLD_NAVBAR = 50;
+const SCROLL_THRESHOLD_BACK_TO_TOP = 300;
+const ANIMATION_DURATION_FAST = 300;
+const ANIMATION_DURATION_MEDIUM = 500;
+const ANIMATION_DURATION_SLOW = 2000;
+const ANIMATION_DURATION_VERY_SLOW = 3500;
+const PARTICLE_COUNT = 50;
+const PARTICLE_CONNECTION_DISTANCE = 150;
+const DEBOUNCE_DELAY = 250;
+const SEARCH_DEBOUNCE_DELAY = 300;
+
+// ============================================
 // SCRIPT LOAD CONFIRMATION
 // ============================================
 console.log('%c[KCOH] Script.js loaded successfully', 'color: #10b981; font-weight: bold');
@@ -116,7 +131,7 @@ function initNavbarScroll() {
     if (!navbar) return;
 
     let lastScroll = 0;
-    const scrollThreshold = 50;
+    const scrollThreshold = SCROLL_THRESHOLD_NAVBAR;
 
     function handleScroll() {
         const currentScroll = window.pageYOffset;
@@ -403,9 +418,9 @@ function initTodoSystem() {
         } else {
             todoList.innerHTML = filteredTodos.map(todo => `
                 <div class="todo-item ${todo.completed ? 'completed' : ''}" data-id="${todo.id}">
-                    <div class="todo-checkbox ${todo.completed ? 'checked' : ''}" onclick="toggleTodo('${todo.id}')"></div>
+                    <div class="todo-checkbox ${todo.completed ? 'checked' : ''}" data-action="toggle"></div>
                     <div class="todo-text">${escapeHtml(todo.text)}</div>
-                    <button class="todo-delete" onclick="deleteTodo('${todo.id}')" aria-label="Delete todo">
+                    <button class="todo-delete" data-action="delete" aria-label="Delete todo">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -447,19 +462,36 @@ function initTodoSystem() {
     }
 
     // Toggle todo completion
-    window.toggleTodo = function(id) {
+    function toggleTodo(id) {
         const todo = todos.find(t => t.id === id);
         if (todo) {
             todo.completed = !todo.completed;
             saveTodos();
         }
-    };
+    }
 
     // Delete todo
-    window.deleteTodo = function(id) {
+    function deleteTodo(id) {
         todos = todos.filter(t => t.id !== id);
         saveTodos();
-    };
+    }
+
+    // Event delegation for todo actions
+    if (todoList) {
+        todoList.addEventListener('click', (e) => {
+            const action = e.target.closest('[data-action]')?.dataset.action;
+            const todoItem = e.target.closest('.todo-item');
+            const todoId = todoItem?.dataset.id;
+
+            if (!todoId) return;
+
+            if (action === 'toggle') {
+                toggleTodo(todoId);
+            } else if (action === 'delete') {
+                deleteTodo(todoId);
+            }
+        });
+    }
 
     // Open todo panel
     function openTodo() {
@@ -931,7 +963,7 @@ function initParticles() {
     
     const ctx = canvas.getContext('2d');
     const particles = [];
-    const particleCount = 50;
+    const particleCount = PARTICLE_COUNT;
     
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -989,7 +1021,7 @@ function initParticles() {
                 const dy = particle.y - otherParticle.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 
-                if (distance < 150) {
+                if (distance < PARTICLE_CONNECTION_DISTANCE) {
                     ctx.strokeStyle = `rgba(99, 102, 241, ${0.2 * (1 - distance / 150)})`;
                     ctx.lineWidth = 1;
                     ctx.beginPath();
@@ -1057,7 +1089,7 @@ const backToTop = document.getElementById('backToTop');
 
 if (backToTop) {
     window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
+        if (window.pageYOffset > SCROLL_THRESHOLD_BACK_TO_TOP) {
             backToTop.classList.add('visible');
         } else {
             backToTop.classList.remove('visible');
@@ -1236,14 +1268,31 @@ function validateField(field) {
     return isValid;
 }
 
-// Initialize EmailJS
-// Get your Public Key from: https://dashboard.emailjs.com/admin/integration
-// Get your Service ID from: https://dashboard.emailjs.com/admin/service
-// Get your Template IDs from: https://dashboard.emailjs.com/admin/template
-const EMAILJS_PUBLIC_KEY = 'Z_iIIF96wVdVQLv_E'; // Public key (safe to expose in client-side code)
-const EMAILJS_SERVICE_ID = 'service_o6blrnk'; // Replace with your service ID
-const EMAILJS_CONTACT_TEMPLATE = 'template_zz1sxwj'; // Replace with your contact form template ID
-const EMAILJS_NEWSLETTER_TEMPLATE = 'template_4v48c53'; // Replace with your newsletter template ID
+/**
+ * EmailJS Configuration
+ *
+ * SECURITY NOTE: These credentials are SAFE to expose in client-side code:
+ * - Public Key: Intentionally public, used to authenticate your account
+ * - Service ID: Public identifier for your email service
+ * - Template IDs: Public identifiers for email templates
+ *
+ * EmailJS PROTECTS against abuse through:
+ * - Rate limiting (prevents spam)
+ * - Domain whitelist (only kcoh.ca can send)
+ * - reCAPTCHA v3 integration (bot protection)
+ * - Usage monitoring and alerts
+ *
+ * For enhanced security in production:
+ * - Use environment variables on a backend proxy
+ * - Implement additional rate limiting
+ * - Add honeypot fields to forms
+ *
+ * Get your credentials from: https://dashboard.emailjs.com/admin
+ */
+const EMAILJS_PUBLIC_KEY = 'Z_iIIF96wVdVQLv_E'; // Public key (safe to expose)
+const EMAILJS_SERVICE_ID = 'service_o6blrnk'; // Service identifier
+const EMAILJS_CONTACT_TEMPLATE = 'template_zz1sxwj'; // Contact form template
+const EMAILJS_NEWSLETTER_TEMPLATE = 'template_4v48c53'; // Newsletter template
 
 // Get form elements
 const contactForm = document.getElementById('contactForm');

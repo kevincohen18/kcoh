@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#6366f1">
 
     <!-- Content Security Policy: Protects against XSS attacks -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.emailjs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.emailjs.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -39,23 +39,12 @@
     <title>Contact Us - KCOH Software Inc.</title>
 
     <!-- Stylesheets with cache bust -->
+    <!-- Cache busting initialization -->
+    <script src="init.js"></script>
+
+    <!-- Stylesheets with cache bust -->
     <link rel="stylesheet" id="main-styles" href="styles.css">
     <link rel="stylesheet" id="quick-wins-styles" href="quick-wins.css">
-    <script>
-        (function() {
-            // Stable cache-bust per session: set once and reuse
-            const saved = Number(sessionStorage.getItem('CACHE_BUST_TS') || 0);
-            const cacheBust = saved || Date.now();
-            sessionStorage.setItem('CACHE_BUST_TS', cacheBust);
-            window.CACHE_BUST = cacheBust;
-            ['main-styles', 'quick-wins-styles'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el && el.href) {
-                    el.href = el.href.split('?')[0] + '?t=' + window.CACHE_BUST;
-                }
-            });
-        })();
-    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -368,16 +357,9 @@
         </div>
     </footer>
 
-    <!-- EmailJS SDK -->
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <!-- EmailJS SDK with Subresource Integrity -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" integrity="sha384-SALc35EccAf6RzGw4iNsyj7kTPr33K7RoGzYu+7heZhT8s0GZouafRiCg1qy44AS" crossorigin="anonymous" defer></script>
     <!-- Scripts -->
     <script id="main-script" src="script.js" defer></script>
-    <script>
-        const mainScript = document.getElementById('main-script');
-        if (mainScript && mainScript.src) {
-            mainScript.src = mainScript.src.split('?')[0] + '?t=' + (window.CACHE_BUST || Date.now());
-        }
-    </script>
 </body>
 </html>
