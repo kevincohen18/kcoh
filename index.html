@@ -41,25 +41,16 @@
     
     <title>KCOH Software Inc. - Professional Software Development Services</title>
 
-    <!-- AUTOMATIC CACHE BUSTING - Always loads fresh content, zero manual work -->
-    <script src="init.js"></script>
-
-    <!-- Performance: Preload critical resources with automatic cache busting -->
-    <link rel="preload" as="style" id="preload-styles">
-    <link rel="preload" as="script" id="preload-script">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
-
-    <link rel="stylesheet" id="main-styles">
-    <link rel="stylesheet" id="quick-wins-styles">
-
-    <!-- Performance: Resource hints for fonts -->
+    <!-- Critical: Load CSS first to prevent flash of unstyled content -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-
-    <!-- Performance: Load fonts asynchronously to prevent render blocking -->
+    <link rel="stylesheet" id="main-styles" href="styles.css">
+    <link rel="stylesheet" id="quick-wins-styles" href="quick-wins.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Cache busting (runs after CSS is already loading) -->
+    <script src="init.js"></script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -118,7 +109,7 @@
     }]
     </script>
 </head>
-<body class="dark-theme">
+<body class="dark-theme loading">
     <!-- Loading Screen -->
     <div class="loader" id="loader">
         <div class="loader-content">
