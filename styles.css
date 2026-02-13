@@ -2344,14 +2344,6 @@ section:first-of-type {
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.15));
 }
 
-.portfolio-image-draftory::after {
-    content: 'Draftory';
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: rgba(59, 130, 246, 0.6);
-    letter-spacing: 0.05em;
-}
-
 .portfolio-image-skyroa {
     background: linear-gradient(135deg, rgba(74, 158, 255, 0.15), rgba(45, 125, 210, 0.15));
 }
@@ -2368,12 +2360,18 @@ section:first-of-type {
     background: linear-gradient(135deg, rgba(74, 144, 226, 0.15), rgba(0, 212, 255, 0.15));
 }
 
-.portfolio-image-frostynow::after {
-    content: 'FrostyNow';
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: rgba(0, 212, 255, 0.6);
-    letter-spacing: 0.05em;
+.portfolio-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 20px;
+    z-index: 1;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-logo {
+    transform: scale(1.08);
 }
 
 .portfolio-placeholder {
