@@ -364,192 +364,8 @@ if (mobileMenuToggle) {
     });
 }
 
-function initTodoSystem() {
-    const todoToggle = document.getElementById('todoToggle');
-    const todoContainer = document.getElementById('todoContainer');
-    const todoClose = document.getElementById('todoClose');
-    const todoInput = document.getElementById('todoInput');
-    const todoAddBtn = document.getElementById('todoAddBtn');
-    const todoList = document.getElementById('todoList');
-    const todoFilters = document.querySelectorAll('.todo-filter');
-    const todoCount = document.getElementById('todoCount');
-    const todoClearCompleted = document.getElementById('todoClearCompleted');
-
-    if (!todoToggle || !todoContainer) return;
-
-    // Load todos from localStorage
-    let todos = JSON.parse(localStorage.getItem('kcoh-todos') || '[]');
-    let currentFilter = 'all';
-
-    // Save todos to localStorage
-    function saveTodos() {
-        localStorage.setItem('kcoh-todos', JSON.stringify(todos));
-        renderTodos();
-    }
-
-    // Generate unique ID
-    function generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2);
-    }
-
-    // Render todos
-    function renderTodos() {
-        if (!todoList) return;
-
-        const filteredTodos = todos.filter(todo => {
-            if (currentFilter === 'active') return !todo.completed;
-            if (currentFilter === 'completed') return todo.completed;
-            return true;
-        });
-
-        if (filteredTodos.length === 0) {
-            todoList.innerHTML = `
-                <div class="todo-empty">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 11l3 3L22 4"></path>
-                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                    </svg>
-                    <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--text-primary);">No tasks</div>
-                    <div style="font-size: 0.875rem;">${currentFilter === 'all' ? 'Add a task to get started!' : `No ${currentFilter} tasks`}</div>
-                </div>
-            `;
-        } else {
-            todoList.innerHTML = filteredTodos.map(todo => `
-                <div class="todo-item ${todo.completed ? 'completed' : ''}" data-id="${todo.id}">
-                    <div class="todo-checkbox ${todo.completed ? 'checked' : ''}" data-action="toggle"></div>
-                    <div class="todo-text">${escapeHtml(todo.text)}</div>
-                    <button class="todo-delete" data-action="delete" aria-label="Delete todo">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        // Update count
-        const activeCount = todos.filter(t => !t.completed).length;
-        const totalCount = todos.length;
-        if (todoCount) {
-            todoCount.textContent = `${activeCount} of ${totalCount} tasks`;
-        }
-    }
-
-    // Escape HTML to prevent XSS
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    // Add todo
-    function addTodo() {
-        const text = todoInput?.value.trim();
-        if (!text) return;
-
-        todos.push({
-            id: generateId(),
-            text: text,
-            completed: false,
-            createdAt: new Date().toISOString()
-        });
-
-        todoInput.value = '';
-        saveTodos();
-    }
-
-    // Toggle todo completion
-    function toggleTodo(id) {
-        const todo = todos.find(t => t.id === id);
-        if (todo) {
-            todo.completed = !todo.completed;
-            saveTodos();
-        }
-    }
-
-    // Delete todo
-    function deleteTodo(id) {
-        todos = todos.filter(t => t.id !== id);
-        saveTodos();
-    }
-
-    // Event delegation for todo actions
-    if (todoList) {
-        todoList.addEventListener('click', (e) => {
-            const action = e.target.closest('[data-action]')?.dataset.action;
-            const todoItem = e.target.closest('.todo-item');
-            const todoId = todoItem?.dataset.id;
-
-            if (!todoId) return;
-
-            if (action === 'toggle') {
-                toggleTodo(todoId);
-            } else if (action === 'delete') {
-                deleteTodo(todoId);
-            }
-        });
-    }
-
-    // Open todo panel
-    function openTodo() {
-        todoContainer.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        setTimeout(() => todoInput?.focus(), 100);
-    }
-
-    // Close todo panel
-    function closeTodo() {
-        todoContainer.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    // Event listeners
-    todoToggle.addEventListener('click', openTodo);
-    todoClose?.addEventListener('click', closeTodo);
-
-    // Keyboard shortcut: Ctrl+T
-    document.addEventListener('keydown', (e) => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 't') {
-            e.preventDefault();
-            if (todoContainer.classList.contains('active')) {
-                closeTodo();
-            } else {
-                openTodo();
-            }
-        }
-    });
-
-    // Add todo on Enter
-    todoInput?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            addTodo();
-        }
-    });
-
-    todoAddBtn?.addEventListener('click', addTodo);
-
-    // Filter todos
-    todoFilters.forEach(filter => {
-        filter.addEventListener('click', () => {
-            todoFilters.forEach(f => f.classList.remove('active'));
-            filter.classList.add('active');
-            currentFilter = filter.dataset.filter;
-            renderTodos();
-        });
-    });
-
-    // Clear completed
-    todoClearCompleted?.addEventListener('click', () => {
-        todos = todos.filter(t => !t.completed);
-        saveTodos();
-    });
-
-    // Close on Escape (handled in main keydown listener)
-
-    // Initial render
-    renderTodos();
-}
+// Todo system removed — no toggle button existed in HTML
+function initTodoSystem() { return; }
 
 // Initialize all navigation enhancements
 document.addEventListener('DOMContentLoaded', () => {
@@ -4054,13 +3870,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Essential UI effects - Load first for immediate responsiveness
     initPageTransitions();
     initModernHoverEffect();
-    initDeveloperPalette();
-    // Remove any existing developer palette elements that might have been created prior to guard
-    const existingPalette = document.querySelector('.dev-palette');
-    if (existingPalette) {
-        console.log('[KCOH] Removing existing developer palette element (post-init sweep)');
-        existingPalette.remove();
-    }
     console.log('[KCOH] DOMContentLoaded: core UI initialized');
 
     // Matrix background disabled - green text effect removed
@@ -5178,22 +4987,7 @@ function removeTypingIndicator(container) {
     }
 }
 
-// Initialize chat widget when DOM is ready - Only on homepage
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        // Only initialize on homepage (index.html)
-        if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
-            initChatWidget();
-        }
-    });
-} else {
-    // Only initialize on homepage (index.html)
-    if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
-        initChatWidget();
-    }
-}
-
-console.log('Chat widget loaded ✓');
+// Chat widget removed — was non-functional (no backend)
 
 // ============================================
 // SKELETON LOADING SCREENS

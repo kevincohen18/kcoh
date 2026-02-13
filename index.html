@@ -88,7 +88,7 @@
     </script>
 
     <script type="application/ld+json">
-    {
+    [{
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         "name": "KCOH Software Inc.",
@@ -110,24 +110,12 @@
             "@type": "PostalAddress",
             "addressCountry": "CA"
         },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "addressCountry": "CA"
-        },
         "url": "https://kcoh.ca",
-        "telephone": "",
         "email": "inquiries@kcoh.ca",
         "priceRange": "$$$$",
         "openingHours": "Mo-Fr 09:00-17:00",
-        "areaServed": {
-            "@type": "GeoCircle",
-            "geoMidpoint": {
-                "@type": "GeoCoordinates",
-                "addressCountry": "CA"
-            },
-            "geoRadius": "worldwide"
-        }
-    }
+        "areaServed": "Worldwide"
+    }]
     </script>
 </head>
 <body class="dark-theme">
@@ -221,9 +209,6 @@
                             <path d="m21 21-4.35-4.35"></path>
                         </svg>
                     </button>
-                    <button class="palette-toggle" aria-label="Open shortcuts" data-tooltip="Shortcuts">
-                        <span class="palette-icon">⌘</span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -278,11 +263,13 @@
                     </span>
                 </div>
                 <p class="hero-subtitle">
-                    I build and operate software systems that automate operations, bring financial visibility, and let businesses scale without adding people.                <div class="hero-buttons">
+                    I build and operate software systems that automate operations, bring financial visibility, and let businesses scale without adding people.
+                </p>
+                <div class="hero-buttons">
                     <a href="https://cal.com/kevin-cohen-utwpmj/consultation" target="_blank" rel="noopener noreferrer" class="btn btn-primary pulse-animation"><span>Discuss Your Systems</span></a>
                     <a href="portfolio.html" class="btn btn-secondary">View Systems Built</a>
                 </div>
-                <div class="hero-availability-notice" style="display: inline-flex; align-items: center; gap: 0.75rem; margin: 1.5rem auto 0; padding: 0.875rem 1.5rem; background: rgba(99, 102, 241, 0.08); border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.2); color: #cbd5e1; font-weight: 600; font-size: 0.95rem;">
+                <div class="hero-availability-notice">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; color: #a78bfa;">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -390,9 +377,78 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="case-study-card">
+                    <div class="case-badge teal">SaaS platform</div>
+                    <h3 class="case-title">Draftory — Contract Generation & E-Signatures</h3>
+                    <div class="case-stats">
+                        <div class="case-stat">
+                            <div class="case-stat-label">PRODUCT</div>
+                            <div class="case-stat-value">From blank page to signed contract in minutes</div>
+                            <div class="case-stat-value">8 contract types with built-in e-signatures</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-label">STACK</div>
+                            <div class="case-stat-value">React, Node.js, Stripe, Cloudflare, Railway</div>
+                            <div class="case-stat-value">Native iOS app with SwiftUI</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-label">SECURITY</div>
+                            <div class="case-stat-value">AES-256-GCM encryption, cryptographic signatures</div>
+                            <div class="case-stat-value">Passkey auth, TOTP 2FA, full audit trails</div>
+                        </div>
+                    </div>
+                    <a href="https://draftory.ca" target="_blank" rel="noopener noreferrer" class="case-link">Visit draftory.ca</a>
+                </div>
+
+                <div class="case-study-card">
+                    <div class="case-badge orange">Fintech</div>
+                    <h3 class="case-title">Skyroa — Regulated Escrow for Digital Goods</h3>
+                    <div class="case-stats">
+                        <div class="case-stat">
+                            <div class="case-stat-label">PRODUCT</div>
+                            <div class="case-stat-value">Secure escrow protecting buyers and sellers</div>
+                            <div class="case-stat-value">KYC verification, dispute resolution, real-time chat</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-label">STACK</div>
+                            <div class="case-stat-value">NestJS, PostgreSQL, Redis, Stripe, Plaid</div>
+                            <div class="case-stat-value">React monorepo with Cloudflare Workers</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-label">COMPLIANCE</div>
+                            <div class="case-stat-value">FINTRAC-aligned, double-entry ledger</div>
+                            <div class="case-stat-value">Canadian FMSB application in progress</div>
+                        </div>
+                    </div>
+                    <a href="https://skyroa.com" target="_blank" rel="noopener noreferrer" class="case-link">Visit skyroa.com</a>
+                </div>
+
+                <div class="case-study-card">
+                    <div class="case-badge cyan">IoT / Hardware</div>
+                    <h3 class="case-title">FrostyNow — Smart Window Control System</h3>
+                    <div class="case-stats">
+                        <div class="case-stat">
+                            <div class="case-stat-label">PRODUCT</div>
+                            <div class="case-stat-value">IoT smart frost window control from iPhone</div>
+                            <div class="case-stat-value">Scheduling, timers, bulk control, push notifications</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-label">INTEGRATION</div>
+                            <div class="case-stat-value">Siri Shortcuts, Apple HomeKit bridge</div>
+                            <div class="case-stat-value">Real-time WebSocket device status</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-label">STACK</div>
+                            <div class="case-stat-value">Swift, SwiftUI, Socket.IO, AppIntents</div>
+                            <div class="case-stat-value">Face ID auth, passkeys, admin dashboard</div>
+                        </div>
+                    </div>
+                    <a href="https://frostynow.com" target="_blank" rel="noopener noreferrer" class="case-link">Visit frostynow.com</a>
+                </div>
             </div>
             <div class="section-note">
-                <p style="font-style: italic;">All systems shown were built and operated in production by me. Metrics reflect real usage and trust earned over time.</p>
+                <p class="section-note-text">All systems shown were built and operated in production by me. Metrics reflect real usage and trust earned over time.</p>
             </div>
         </div>
     </section>
@@ -457,25 +513,25 @@
     </section>
 
     <!-- Trust Bridge Section -->
-    <section class="trust-badges-bar" style="background: rgba(17, 24, 39, 0.6); padding: 4rem 0;">
+    <section class="trust-bridge">
         <div class="container">
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <h2 style="font-size: 1.75rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem;">From Operating a Platform to Building Systems for Others</h2>
-                <p style="color: #cbd5e1; font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
-                    I ran a live digital platform trusted by thousands. Handled payments, disputes, abuse, support, and uptime at scale. That experience taught me what systems thinking actually means under real operational pressure. KCOH Software Inc. applies that same judgment to businesses needing automation, financial clarity, and leverage.
+            <div class="trust-bridge-inner">
+                <h2 class="trust-bridge-title">From Operating a Platform to Building Systems for Others</h2>
+                <p class="trust-bridge-text">
+                    I ran a live digital platform trusted by thousands. Handled payments, disputes, abuse, support, and uptime at scale. That experience taught me what systems thinking actually means under real operational pressure. I apply that same judgment to businesses needing automation, financial clarity, and leverage.
                 </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2.5rem;">
+                <div class="trust-bridge-stats">
                     <div>
-                        <div style="font-size: 2rem; font-weight: 700; color: #a78bfa;">2,600</div>
-                        <div style="color: #9ca3af; margin-top: 0.5rem;">Total platform members</div>
+                        <div class="trust-stat-number">2,600</div>
+                        <div class="trust-stat-label">Total platform members</div>
                     </div>
                     <div>
-                        <div style="font-size: 2rem; font-weight: 700; color: #a78bfa;">Hundreds</div>
-                        <div style="color: #9ca3af; margin-top: 0.5rem;">Verified vouches earned</div>
+                        <div class="trust-stat-number">Hundreds</div>
+                        <div class="trust-stat-label">Verified vouches earned</div>
                     </div>
                     <div>
-                        <div style="font-size: 2rem; font-weight: 700; color: #a78bfa;">Largest</div>
-                        <div style="color: #9ca3af; margin-top: 0.5rem;">Platform in its niche worldwide</div>
+                        <div class="trust-stat-number">Largest</div>
+                        <div class="trust-stat-label">Platform in its niche worldwide</div>
                     </div>
                 </div>
             </div>
@@ -797,14 +853,6 @@ class ModelTrainer:
         </div>
     </footer>
 
-    <!-- Chat Widget - Homepage Only -->
-    <div class="chat-widget">
-        <button class="chat-button" id="chatButton" aria-label="Open chat">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2"/>
-            </svg>
-        </button>
-    </div>
 
 <!-- Scripts with automatic cache busting -->
 <script id="main-script" src="script.js" defer></script>
