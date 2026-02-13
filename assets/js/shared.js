@@ -204,13 +204,14 @@ function enhanceLoadingScreen() {
     // Hide loader after page loads
     window.addEventListener('load', () => {
         setTimeout(() => {
-            loader.style.opacity = '0';
+            loader.classList.add('hidden');
             setTimeout(() => {
-                loader.style.display = 'none';
+                if (loader.parentNode) loader.parentNode.removeChild(loader);
                 document.body.classList.remove('loading');
                 document.body.classList.add('ready');
-            }, 500);
-        }, 1000);
+                document.body.style.overflow = 'auto';
+            }, 450);
+        }, 600);
     });
 }
 

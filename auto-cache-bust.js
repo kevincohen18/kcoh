@@ -17,19 +17,14 @@
 
     console.log('[Auto Cache Bust] Initializing... Timestamp:', timestamp);
 
-    // === 1. FORCE RELOAD IF PAGE WAS CACHED ===
-    // This ensures we ALWAYS get fresh content on navigation
+    // === 1. DETECT CACHED PAGE LOADS ===
+    // Log when the page was served from cache (the loader handles the visual transition)
     if (performance && performance.getEntriesByType) {
         const navEntries = performance.getEntriesByType('navigation');
         if (navEntries.length > 0) {
             const navEntry = navEntries[0];
-
-            // Check if page was loaded from cache
             if (navEntry.transferSize === 0 || navEntry.type === 'back_forward') {
-                console.log('[Auto Cache Bust] Cached page detected, forcing reload...');
-                // Force reload
-                location.reload();
-                return;
+                console.log('[Auto Cache Bust] Cached page detected — loader will handle transition');
             }
         }
     }
@@ -107,6 +102,16 @@
     window.addEventListener('pageshow', function(event) {
         if (event.persisted) {
             console.log('[Auto Cache Bust] Page restored from bfcache, reloading...');
+            // Show loader overlay before reloading to prevent white flash
+            var loader = document.getElementById('loader');
+            if (!loader) {
+                loader = document.createElement('div');
+                loader.id = 'loader';
+                loader.className = 'loader';
+                loader.innerHTML = '<div class="loader-content"><div class="loader-logo">KCOH</div><div class="loader-spinner"></div></div>';
+                document.body.prepend(loader);
+            }
+            loader.classList.remove('hidden');
             location.reload();
         }
     });

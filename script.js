@@ -32,17 +32,15 @@ console.log('[KCOH] Timestamp:', new Date().toISOString());
 // ============================================
 // CRITICAL FAILSAFE - MUST BE FIRST
 // ============================================
-// Remove loader immediately - this MUST run before anything else
+// Failsafe: if loader is still visible after 4s, force-remove it.
+// Uses a longer timeout so it doesn't race with the normal safeRemoveLoader flow.
 (function() {
-    console.log('[KCOH] Emergency failsafe activated');
-
-    // Remove loader after 1 second no matter what
+    console.log('[KCOH] Failsafe registered');
     setTimeout(function() {
-        const loader = document.getElementById('loader');
-        if (loader) {
-            console.log('[KCOH] Failsafe removing loader');
-            loader.style.opacity = '0';
-            loader.style.visibility = 'hidden';
+        var loader = document.getElementById('loader');
+        if (loader && loader.parentNode) {
+            console.log('[KCOH] Failsafe removing loader (4s timeout)');
+            loader.classList.add('hidden');
             setTimeout(function() {
                 if (loader.parentNode) loader.parentNode.removeChild(loader);
             }, 500);
@@ -50,7 +48,7 @@ console.log('[KCOH] Timestamp:', new Date().toISOString());
         document.body.style.overflow = 'auto';
         document.body.classList.remove('loading');
         document.body.classList.add('ready');
-    }, 1000);
+    }, 4000);
 })();
 
 // ============================================
@@ -784,25 +782,24 @@ function safeRemoveLoader(delay = 0) {
         document.body.classList.remove('loading');
         document.body.classList.add('ready');
         document.body.style.overflow = 'auto';
-        document.body.style.opacity = '1';
         return;
     }
 
     console.log('[KCOH] Loader found - scheduling removal');
-        setTimeout(() => {
-            console.log('[KCOH] Hiding loader...');
-            loader.classList.add('hidden');
+    setTimeout(() => {
+        console.log('[KCOH] Hiding loader...');
+        loader.classList.add('hidden');
+        // Wait for the CSS transition (0.4s) then remove from DOM
         setTimeout(() => {
             console.log('[KCOH] Removing loader from DOM');
             if (loader.parentNode) {
                 loader.parentNode.removeChild(loader);
             }
-            document.body.style.opacity = '1';
             document.body.classList.remove('loading');
             document.body.classList.add('ready');
             document.body.style.overflow = 'auto';
             console.log('[KCOH] Page ready!');
-        }, 400);
+        }, 450);
     }, delay);
 }
 
@@ -837,14 +834,13 @@ window.addEventListener('load', () => {
     const isRefresh = navigationEntry ? navigationEntry.type === 'reload' : performance.navigation?.type === 1;
 
     if (isRefresh) {
+        // On refresh: briefly show loader with enhanced text, then fade out
         enhanceLoadingScreen();
-        safeRemoveLoader(1200);
+        safeRemoveLoader(600);
     } else {
+        // On first visit: remove immediately (content is already painted behind loader)
         safeRemoveLoader(0);
     }
-
-    // Fallback guard in case anything hangs
-    setTimeout(() => safeRemoveLoader(0), 3500);
 
     // Center GitHub graph after page loads
     setTimeout(() => {
@@ -4067,8 +4063,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     console.log('[KCOH] DOMContentLoaded: core UI initialized');
 
-    enhanceLoadingScreen();
-    
     // Matrix background disabled - green text effect removed
     // Remove any existing matrix canvases
     removeMatrixBackgrounds();
