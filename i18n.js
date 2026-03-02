@@ -169,6 +169,33 @@
         }
     }
 
+    // Cross-tab sync: when another tab changes the language, update this one
+    window.addEventListener('storage', function (e) {
+        if (e.key !== STORAGE_KEY) return;
+        var newLang = e.newValue;
+        if (newLang && SUPPORTED.indexOf(newLang) !== -1 && newLang !== getCurrentLang()) {
+            switchTo(newLang);
+        }
+    });
+
+    // Tab-switch-back: re-check localStorage when user returns to this tab
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) return;
+        var stored = localStorage.getItem(STORAGE_KEY);
+        if (stored && SUPPORTED.indexOf(stored) !== -1 && stored !== getCurrentLang()) {
+            switchTo(stored);
+        }
+    });
+
+    // Back/forward cache: ensure correct language after browser navigation
+    window.addEventListener('pageshow', function (e) {
+        if (!e.persisted) return;
+        var stored = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
+        if (stored !== getCurrentLang()) {
+            switchTo(stored);
+        }
+    });
+
     // Run on DOMContentLoaded or immediately if already loaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
