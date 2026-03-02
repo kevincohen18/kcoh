@@ -235,7 +235,8 @@ function initSearch() {
             }
 
             // Score-based search
-            const scoredResults = searchIndex.map(page => {
+            const activeIndex = window.__searchIndex || searchIndex;
+            const scoredResults = activeIndex.map(page => {
                 let score = 0;
                 const queryWords = query.split(' ').filter(w => w.length > 0);
                 

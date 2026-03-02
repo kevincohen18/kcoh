@@ -8,6 +8,8 @@
     <meta name="author" content="Kevin Cohen - KCOH Software Inc.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://kcoh.ca/contact.html">
+    <link rel="alternate" hreflang="fr" href="https://kcoh.ca/contact.html">
+    <link rel="alternate" hreflang="en" href="https://kcoh.ca/contact.html">
     <meta name="theme-color" content="#6366f1">
 
     <!-- Content Security Policy: Protects against XSS attacks -->
@@ -94,10 +96,10 @@
                             <line x1="8" y1="2" x2="8" y2="6"/>
                             <line x1="3" y1="10" x2="21" y2="10"/>
                         </svg>
-                        <span>Discuss your systems</span>
+                        <span data-i18n="shared.nav.discuss">Discuss your systems</span>
                     </a>
                 </div>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" data-i18n-aria="shared.nav.toggle_menu">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -108,7 +110,7 @@
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                             <polyline points="9 22 9 12 15 12 15 22"></polyline>
                         </svg>
-                        <span>Home</span>
+                        <span data-i18n="shared.nav.home">Home</span>
                     </a></li>
                     <li><a href="services.html" class="nav-link" data-page="services">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -117,7 +119,7 @@
                             <rect x="14" y="14" width="7" height="7"></rect>
                             <rect x="3" y="14" width="7" height="7"></rect>
                         </svg>
-                        <span>Services</span>
+                        <span data-i18n="shared.nav.services">Services</span>
                     </a></li>
                     <li><a href="portfolio.html" class="nav-link" data-page="portfolio">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -125,24 +127,25 @@
                             <line x1="8" y1="21" x2="16" y2="21"></line>
                             <line x1="12" y1="17" x2="12" y2="21"></line>
                         </svg>
-                        <span>Portfolio</span>
+                        <span data-i18n="shared.nav.portfolio">Portfolio</span>
                     </a></li>
                     <li><a href="about.html" class="nav-link" data-page="about">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <span>About</span>
+                        <span data-i18n="shared.nav.about">About</span>
                     </a></li>
                     <li><a href="contact.html" class="nav-link" data-page="contact">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                         </svg>
-                        <span>Contact</span>
+                        <span data-i18n="shared.nav.contact">Contact</span>
                     </a></li>
                 </ul>
                 <div class="nav-controls">
-                    <button class="search-toggle" id="searchToggle" aria-label="Search" data-tooltip="Search">
+                    <button class="lang-toggle" aria-label="Switch to French">FR</button>
+                    <button class="search-toggle" id="searchToggle" aria-label="Search" data-tooltip="Search" data-i18n-aria="shared.nav.search_aria" data-i18n-tooltip="shared.nav.search_tooltip">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
@@ -157,13 +160,13 @@
     <section id="contact" class="contact contact-page">
         <div class="container">
             <div class="contact-hero">
-                <div class="eyebrow">Contact</div>
-                <h1>Let's build something great together</h1>
-                <p>Have a project in mind? Tell me about it and I'll reply quickly with next steps. Prefer a call? Reach out directly.</p>
+                <div class="eyebrow" data-i18n="contact.eyebrow">Contact</div>
+                <h1 data-i18n="contact.title">Let's build something great together</h1>
+                <p data-i18n="contact.subtitle">Have a project in mind? Tell me about it and I'll reply quickly with next steps. Prefer a call? Reach out directly.</p>
                 <div class="contact-chips">
-                    <span class="chip">Replies in &lt; 24h</span>
-                    <span class="chip">EST • Worldwide projects</span>
-                    <span class="chip">Email / Phone / Video</span>
+                    <span class="chip" data-i18n="contact.chip1">Replies in &lt; 24h</span>
+                    <span class="chip" data-i18n="contact.chip2">EST • Worldwide projects</span>
+                    <span class="chip" data-i18n="contact.chip3">Email / Phone / Video</span>
                 </div>
             </div>
 
@@ -171,8 +174,8 @@
                 <div class="contact-column">
                     <div class="contact-card">
                         <div class="contact-card-header">
-                            <h3>Talk to a human</h3>
-                            <p>Fast responses, clear estimates, honest advice.</p>
+                            <h3 data-i18n="contact.card_title">Talk to a human</h3>
+                            <p data-i18n="contact.card_desc">Fast responses, clear estimates, honest advice.</p>
                         </div>
                         <div class="contact-methods">
                             <div class="contact-method">
@@ -183,7 +186,7 @@
                                     </svg>
                                 </div>
                                 <div class="contact-method-text">
-                                    <span class="label">Email</span>
+                                    <span class="label" data-i18n="contact.email_label">Email</span>
                                     <a href="mailto:inquiries@kcoh.ca" class="contact-link">inquiries@kcoh.ca</a>
                                 </div>
                             </div>
@@ -195,42 +198,42 @@
                                     </svg>
                                 </div>
                                 <div class="contact-method-text">
-                                    <span class="label">Portfolio</span>
+                                    <span class="label" data-i18n="contact.portfolio_label">Portfolio</span>
                                     <a href="https://kevincohen.ca" class="contact-link" target="_blank" rel="noopener noreferrer">kevincohen.ca</a>
                                 </div>
                             </div>
                         </div>
                         <div class="contact-cta">
-                            <a class="btn btn-secondary ghost-btn" href="https://cal.com/kevin-cohen-utwpmj/consultation" target="_blank" rel="noopener noreferrer"><span>Schedule a Call</span></a>
-                            <a class="btn btn-primary" href="mailto:inquiries@kcoh.ca"><span>Email me</span></a>
+                            <a class="btn btn-secondary ghost-btn" href="https://cal.com/kevin-cohen-utwpmj/consultation" target="_blank" rel="noopener noreferrer"><span data-i18n="contact.btn_schedule">Schedule a Call</span></a>
+                            <a class="btn btn-primary" href="mailto:inquiries@kcoh.ca"><span data-i18n="contact.btn_email">Email me</span></a>
                         </div>
                         <div class="contact-meta">
-                            <div class="meta-pill">Average reply: under 24h</div>
-                            <div class="meta-pill">Project kickoff in 7 days</div>
+                            <div class="meta-pill" data-i18n="contact.meta_reply">Average reply: under 24h</div>
+                            <div class="meta-pill" data-i18n="contact.meta_kickoff">Project kickoff in 7 days</div>
                         </div>
                     </div>
 
                     <div class="availability-card">
                         <div class="availability-row">
                             <div>
-                                <span class="label">Availability</span>
-                                <p class="availability-value">Available starting 2027</p>
-                                <p style="margin: 0.5rem 0 0 0; color: var(--text-secondary); font-size: 0.9rem;">2026 is fully booked</p>
+                                <span class="label" data-i18n="contact.availability_label">Availability</span>
+                                <p class="availability-value" data-i18n="contact.availability_value">Available starting 2027</p>
+                                <p style="margin: 0.5rem 0 0 0; color: var(--text-secondary); font-size: 0.9rem;" data-i18n="contact.availability_note">2026 is fully booked</p>
                             </div>
-                            <div class="availability-badge">2027</div>
+                            <div class="availability-badge" data-i18n="contact.availability_badge">2027</div>
                         </div>
                         <div class="availability-stats">
                             <div class="stat">
-                                <span class="label">Response</span>
-                                <strong>&lt; 24h</strong>
+                                <span class="label" data-i18n="contact.response_label">Response</span>
+                                <strong data-i18n="contact.response_value">&lt; 24h</strong>
                             </div>
                             <div class="stat">
-                                <span class="label">Timezone</span>
-                                <strong>EST (flexible)</strong>
+                                <span class="label" data-i18n="contact.timezone_label">Timezone</span>
+                                <strong data-i18n="contact.timezone_value">EST (flexible)</strong>
                             </div>
                             <div class="stat">
-                                <span class="label">Channels</span>
-                                <strong>Email / Phone / Video</strong>
+                                <span class="label" data-i18n="contact.channels_label">Channels</span>
+                                <strong data-i18n="contact.channels_value">Email / Phone / Video</strong>
                             </div>
                         </div>
                     </div>
@@ -238,66 +241,66 @@
 
                 <div class="contact-form-card">
                     <div class="form-intro">
-                        <h3>Send me a message</h3>
-                        <p>Tell me about your idea, timeline, and budget. I'll reply quickly with next steps.</p>
+                        <h3 data-i18n="contact.form_title">Send me a message</h3>
+                        <p data-i18n="contact.form_subtitle">Tell me about your idea, timeline, and budget. I'll reply quickly with next steps.</p>
                     </div>
                     <form class="contact-form" id="contactForm">
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name" data-i18n="contact.form_name">Name</label>
                         <input type="text" id="name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email <span class="required-asterisk">*</span></label>
+                        <label for="email" data-i18n="contact.form_email">Email <span class="required-asterisk">*</span></label>
                         <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone (optional)</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+                        <label for="phone" data-i18n="contact.form_phone">Phone (optional)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567" data-i18n-placeholder="contact.form_phone_placeholder">
                     </div>
                     <div class="form-group">
-                        <label for="subject">Project type</label>
-                        <input type="text" id="subject" name="subject" placeholder="Mobile app, web app, API, consulting..." required>
+                        <label for="subject" data-i18n="contact.form_project">Project type</label>
+                        <input type="text" id="subject" name="subject" placeholder="Mobile app, web app, API, consulting..." data-i18n-placeholder="contact.form_project_placeholder" required>
                     </div>
                     <div class="form-group">
-                        <label for="budget">Budget range</label>
+                        <label for="budget" data-i18n="contact.form_budget">Budget range</label>
                         <select id="budget" name="budget" required>
-                            <option value="">Select budget range</option>
-                            <option value="under-10k">Under $10,000</option>
-                            <option value="10k-25k">$10,000 - $25,000</option>
-                            <option value="25k-50k">$25,000 - $50,000</option>
-                            <option value="50k-100k">$50,000 - $100,000</option>
-                            <option value="100k-plus">$100,000+</option>
-                            <option value="not-sure">Not sure yet</option>
+                            <option value="" data-i18n="contact.form_budget_select">Select budget range</option>
+                            <option value="under-10k" data-i18n="contact.form_budget_under10k">Under $10,000</option>
+                            <option value="10k-25k" data-i18n="contact.form_budget_10k25k">$10,000 - $25,000</option>
+                            <option value="25k-50k" data-i18n="contact.form_budget_25k50k">$25,000 - $50,000</option>
+                            <option value="50k-100k" data-i18n="contact.form_budget_50k100k">$50,000 - $100,000</option>
+                            <option value="100k-plus" data-i18n="contact.form_budget_100kplus">$100,000+</option>
+                            <option value="not-sure" data-i18n="contact.form_budget_notsure">Not sure yet</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="timeline">Timeline</label>
+                        <label for="timeline" data-i18n="contact.form_timeline">Timeline</label>
                         <select id="timeline" name="timeline" required>
-                            <option value="">Select timeline</option>
-                            <option value="urgent">ASAP (1-2 weeks)</option>
-                            <option value="soon">Soon (1 month)</option>
-                            <option value="flexible">Flexible (2-3 months)</option>
-                            <option value="planning">Just planning</option>
+                            <option value="" data-i18n="contact.form_timeline_select">Select timeline</option>
+                            <option value="urgent" data-i18n="contact.form_timeline_urgent">ASAP (1-2 weeks)</option>
+                            <option value="soon" data-i18n="contact.form_timeline_soon">Soon (1 month)</option>
+                            <option value="flexible" data-i18n="contact.form_timeline_flexible">Flexible (2-3 months)</option>
+                            <option value="planning" data-i18n="contact.form_timeline_planning">Just planning</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="message">Message <span class="required-asterisk">*</span></label>
-                        <textarea id="message" name="message" rows="5" placeholder="Share goals, timeline, and must-haves." required></textarea>
+                        <label for="message" data-i18n="contact.form_message">Message <span class="required-asterisk">*</span></label>
+                        <textarea id="message" name="message" rows="5" placeholder="Share goals, timeline, and must-haves." data-i18n-placeholder="contact.form_message_placeholder" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary"><span>Send Message</span></button>
+                    <button type="submit" class="btn btn-primary"><span data-i18n="contact.form_submit">Send Message</span></button>
                     </form>
                 </div>
             </div>
             
             <div class="newsletter-section contact-newsletter">
                 <div>
-                    <h3>Stay Updated</h3>
-                    <p>Quarterly updates with new launches, tech insights, and tips.</p>
+                    <h3 data-i18n="contact.newsletter_title">Stay Updated</h3>
+                    <p data-i18n="contact.newsletter_desc">Quarterly updates with new launches, tech insights, and tips.</p>
                 </div>
                 <form class="newsletter-form" id="newsletterForm">
                     <div class="newsletter-input-group">
-                        <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
-                        <button type="submit" class="btn btn-secondary"><span>Subscribe</span></button>
+                        <input type="email" id="newsletterEmail" placeholder="Enter your email" data-i18n-placeholder="contact.newsletter_placeholder" required>
+                        <button type="submit" class="btn btn-secondary"><span data-i18n="contact.newsletter_btn">Subscribe</span></button>
                     </div>
                 </form>
             </div>
@@ -309,30 +312,30 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>KCOH Software Inc.</h3>
-                    <p>I build software systems that automate operations and bring financial clarity.</p>
+                    <h3 data-i18n="shared.footer.company_name">KCOH Software Inc.</h3>
+                    <p data-i18n="shared.footer.company_desc_alt">I build software systems that automate operations and bring financial clarity.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h4 data-i18n="shared.footer.quick_links">Quick Links</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html" data-i18n="shared.nav.home">Home</a></li>
+                        <li><a href="services.html" data-i18n="shared.nav.services">Services</a></li>
+                        <li><a href="portfolio.html" data-i18n="shared.nav.portfolio">Portfolio</a></li>
+                        <li><a href="about.html" data-i18n="shared.nav.about">About</a></li>
+                        <li><a href="contact.html" data-i18n="shared.nav.contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>What I Build</h4>
+                    <h4 data-i18n="shared.footer.what_i_build">What I Build</h4>
                     <ul>
-                        <li><a href="services.html">Automation Systems</a></li>
-                        <li><a href="services.html">iOS Apps</a></li>
-                        <li><a href="services.html">Financial Clarity Tools</a></li>
-                        <li><a href="services.html">Advisory</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.automation_systems">Automation Systems</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.ios_apps">iOS Apps</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.financial_clarity_tools">Financial Clarity Tools</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.advisory">Advisory</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Connect</h4>
+                    <h4 data-i18n="shared.footer.connect">Connect</h4>
                     <div class="social-links">
                         <a href="https://www.linkedin.com/in/kevin-cohen-entrepreneur/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -349,7 +352,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 KCOH Software Inc. All rights reserved.</p>
+                <p data-i18n="shared.footer.copyright">&copy; 2026 KCOH Software Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -358,5 +361,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" integrity="sha384-SALc35EccAf6RzGw4iNsyj7kTPr33K7RoGzYu+7heZhT8s0GZouafRiCg1qy44AS" crossorigin="anonymous" defer></script>
     <!-- Scripts -->
     <script id="main-script" src="script.js" defer></script>
+    <script src="i18n.js" defer></script>
 </body>
 </html>

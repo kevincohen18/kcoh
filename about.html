@@ -8,6 +8,8 @@
     <meta name="author" content="Kevin Cohen - KCOH Software Inc.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://kcoh.ca/about.html">
+    <link rel="alternate" hreflang="fr" href="https://kcoh.ca/about.html">
+    <link rel="alternate" hreflang="en" href="https://kcoh.ca/about.html">
     <meta name="theme-color" content="#6366f1">
 
     <!-- Content Security Policy: Protects against XSS attacks -->
@@ -91,10 +93,10 @@
                             <line x1="8" y1="2" x2="8" y2="6"/>
                             <line x1="3" y1="10" x2="21" y2="10"/>
                         </svg>
-                        <span>Discuss your systems</span>
+                        <span data-i18n="shared.nav.discuss">Discuss your systems</span>
                     </a>
                 </div>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" data-i18n-aria="shared.nav.toggle_menu">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -105,7 +107,7 @@
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                             <polyline points="9 22 9 12 15 12 15 22"></polyline>
                         </svg>
-                        <span>Home</span>
+                        <span data-i18n="shared.nav.home">Home</span>
                     </a></li>
                     <li><a href="services.html" class="nav-link" data-page="services">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -114,7 +116,7 @@
                             <rect x="14" y="14" width="7" height="7"></rect>
                             <rect x="3" y="14" width="7" height="7"></rect>
                         </svg>
-                        <span>Services</span>
+                        <span data-i18n="shared.nav.services">Services</span>
                     </a></li>
                     <li><a href="portfolio.html" class="nav-link" data-page="portfolio">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -122,24 +124,25 @@
                             <line x1="8" y1="21" x2="16" y2="21"></line>
                             <line x1="12" y1="17" x2="12" y2="21"></line>
                         </svg>
-                        <span>Portfolio</span>
+                        <span data-i18n="shared.nav.portfolio">Portfolio</span>
                     </a></li>
                     <li><a href="about.html" class="nav-link" data-page="about">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <span>About</span>
+                        <span data-i18n="shared.nav.about">About</span>
                     </a></li>
                     <li><a href="contact.html" class="nav-link" data-page="contact">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                         </svg>
-                        <span>Contact</span>
+                        <span data-i18n="shared.nav.contact">Contact</span>
                     </a></li>
                 </ul>
                 <div class="nav-controls">
-                    <button class="search-toggle" id="searchToggle" aria-label="Search" data-tooltip="Search">
+                    <button class="lang-toggle" aria-label="Switch to French">FR</button>
+                    <button class="search-toggle" id="searchToggle" aria-label="Search" data-tooltip="Search" data-i18n-aria="shared.nav.search_aria" data-i18n-tooltip="shared.nav.search_tooltip">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
@@ -158,24 +161,24 @@
                 <div class="about-hero-main">
                     <div class="about-eyebrow-redesigned">
                         <span class="eyebrow-dot"></span>
-                        <span>About</span>
+                        <span data-i18n="about.eyebrow">About</span>
                     </div>
-                    <h1 class="about-title-redesigned">Operator who builds systems under real constraints.</h1>
-                    <p class="about-subtitle-redesigned">I built and operated a 7 figure digital platform with 2,500+ members. Handled payments, disputes, support, abuse, and uptime. I apply that systems thinking to businesses through KCOH Software Inc.</p>
+                    <h1 class="about-title-redesigned" data-i18n="about.title">Operator who builds systems under real constraints.</h1>
+                    <p class="about-subtitle-redesigned" data-i18n="about.subtitle">I built and operated a 7 figure digital platform with 2,500+ members. Handled payments, disputes, support, abuse, and uptime. I apply that systems thinking to businesses through KCOH Software Inc.</p>
                     
                     <!-- Stats Grid -->
                     <div class="about-stats-redesigned">
                         <div class="stat-item-redesigned">
-                            <div class="stat-number-redesigned">2,500+</div>
-                            <div class="stat-label-redesigned">Platform Members</div>
+                            <div class="stat-number-redesigned" data-i18n="about.stat1_number">2,500+</div>
+                            <div class="stat-label-redesigned" data-i18n="about.stat1_label">Platform Members</div>
                         </div>
                         <div class="stat-item-redesigned">
-                            <div class="stat-number-redesigned">7 Figs</div>
-                            <div class="stat-label-redesigned">Revenue Operated</div>
+                            <div class="stat-number-redesigned" data-i18n="about.stat2_number">7 Figs</div>
+                            <div class="stat-label-redesigned" data-i18n="about.stat2_label">Revenue Operated</div>
                         </div>
                         <div class="stat-item-redesigned">
-                            <div class="stat-number-redesigned">10+</div>
-                            <div class="stat-label-redesigned">iOS Apps Shipped</div>
+                            <div class="stat-number-redesigned" data-i18n="about.stat3_number">10+</div>
+                            <div class="stat-label-redesigned" data-i18n="about.stat3_label">iOS Apps Shipped</div>
                         </div>
                     </div>
 
@@ -187,14 +190,14 @@
                                 <path d="M2 17l10 5 10-5"></path>
                                 <path d="M2 12l10 5 10-5"></path>
                             </svg>
-                            <span>Operated 7-figure platform</span>
+                            <span data-i18n="about.highlight1">Operated 7-figure platform</span>
                         </div>
                         <div class="highlight-item-redesigned">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="16 18 22 12 16 6"></polyline>
                                 <polyline points="8 6 2 12 8 18"></polyline>
                             </svg>
-                            <span>2,500+ platform members</span>
+                            <span data-i18n="about.highlight2">2,500+ platform members</span>
                         </div>
                         <div class="highlight-item-redesigned">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -203,7 +206,7 @@
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
-                            <span>Hundreds of reviews</span>
+                            <span data-i18n="about.highlight3">Hundreds of reviews</span>
                         </div>
                     </div>
                 </div>
@@ -221,27 +224,27 @@
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
                         </div>
-                        <h2>What I built</h2>
+                        <h2 data-i18n="about.card1_title">What I built</h2>
                     </div>
-                    <p class="card-description-redesigned">Operated a live platform at scale. Built iOS apps that shipped to the App Store. Automated workflows, payment systems, and support operations. Learned what breaks under pressure and what holds.</p>
+                    <p class="card-description-redesigned" data-i18n="about.card1_desc">Operated a live platform at scale. Built iOS apps that shipped to the App Store. Automated workflows, payment systems, and support operations. Learned what breaks under pressure and what holds.</p>
                     <ul class="card-list-redesigned">
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
-                            <span>Owned operations from code to support</span>
+                            <span data-i18n="about.card1_item1">Owned operations from code to support</span>
                         </li>
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
-                            <span>Handled real money flows and disputes</span>
+                            <span data-i18n="about.card1_item2">Handled real money flows and disputes</span>
                         </li>
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
-                            <span>Built systems that replaced manual work</span>
+                            <span data-i18n="about.card1_item3">Built systems that replaced manual work</span>
                         </li>
                     </ul>
                 </div>
@@ -254,27 +257,27 @@
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                         </div>
-                        <h2>How I work</h2>
+                        <h2 data-i18n="about.card2_title">How I work</h2>
                     </div>
-                    <p class="card-description-redesigned">Clear scoping. Fixed quotes after discovery. Weekly progress with actual working software. No surprises. No fluff. Focus on what creates leverage for your business.</p>
+                    <p class="card-description-redesigned" data-i18n="about.card2_desc">Clear scoping. Fixed quotes after discovery. Weekly progress with actual working software. No surprises. No fluff. Focus on what creates leverage for your business.</p>
                     <ul class="card-list-redesigned">
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
-                            <span>Map workflows, identify bottlenecks</span>
+                            <span data-i18n="about.card2_item1">Map workflows, identify bottlenecks</span>
                         </li>
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
-                            <span>Build systems that create leverage</span>
+                            <span data-i18n="about.card2_item2">Build systems that create leverage</span>
                         </li>
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
-                            <span>Deploy, train, iterate on results</span>
+                            <span data-i18n="about.card2_item3">Deploy, train, iterate on results</span>
                         </li>
                     </ul>
                 </div>
@@ -287,25 +290,25 @@
                                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
                             </svg>
                         </div>
-                        <h2>Why businesses hire me</h2>
+                        <h2 data-i18n="about.card3_title">Why businesses hire me</h2>
                     </div>
-                    <p class="card-description-redesigned">Track record of operating real systems. Judgment earned under actual constraints. Direct access to someone who has solved the problems you are facing now.</p>
+                    <p class="card-description-redesigned" data-i18n="about.card3_desc">Track record of operating real systems. Judgment earned under actual constraints. Direct access to someone who has solved the problems you are facing now.</p>
                     <div class="metrics-grid-redesigned">
                         <div class="metric-item-redesigned">
-                            <div class="metric-value-redesigned">2,500+</div>
-                            <div class="metric-label-redesigned">Platform Members</div>
+                            <div class="metric-value-redesigned" data-i18n="about.card3_metric1_value">2,500+</div>
+                            <div class="metric-label-redesigned" data-i18n="about.card3_metric1_label">Platform Members</div>
                         </div>
                         <div class="metric-item-redesigned">
-                            <div class="metric-value-redesigned">10+</div>
-                            <div class="metric-label-redesigned">iOS Apps</div>
+                            <div class="metric-value-redesigned" data-i18n="about.card3_metric2_value">10+</div>
+                            <div class="metric-label-redesigned" data-i18n="about.card3_metric2_label">iOS Apps</div>
                         </div>
                         <div class="metric-item-redesigned">
-                            <div class="metric-value-redesigned">7 Figs</div>
-                            <div class="metric-label-redesigned">Revenue Scale</div>
+                            <div class="metric-value-redesigned" data-i18n="about.card3_metric3_value">7 Figs</div>
+                            <div class="metric-label-redesigned" data-i18n="about.card3_metric3_label">Revenue Scale</div>
                         </div>
                     </div>
                     <div class="card-cta-wrapper">
-                        <a class="btn btn-primary" href="contact.html"><span>Discuss your systems</span></a>
+                        <a class="btn btn-primary" href="contact.html"><span data-i18n="about.card3_cta">Discuss your systems</span></a>
                     </div>
                 </div>
             </div>
@@ -313,8 +316,8 @@
             <!-- Approach Section - Redesigned -->
             <div class="about-approach-redesigned">
                 <div class="approach-header-redesigned">
-                    <h2>My Approach</h2>
-                    <p>How I deliver systems that create operational leverage</p>
+                    <h2 data-i18n="about.approach_title">My Approach</h2>
+                    <p data-i18n="about.approach_subtitle">How I deliver systems that create operational leverage</p>
                 </div>
                 <div class="approach-grid-redesigned">
                     <div class="approach-card-redesigned">
@@ -325,9 +328,9 @@
                                 <path d="M2 12l10 5 10-5"></path>
                             </svg>
                         </div>
-                        <div class="approach-label-redesigned">Approach</div>
-                        <h3>Systems Thinking</h3>
-                        <p>Automation and leverage, not just features.</p>
+                        <div class="approach-label-redesigned" data-i18n="about.approach1_label">Approach</div>
+                        <h3 data-i18n="about.approach1_title">Systems Thinking</h3>
+                        <p data-i18n="about.approach1_desc">Automation and leverage, not just features.</p>
                     </div>
                     <div class="approach-card-redesigned">
                         <div class="approach-icon-redesigned">
@@ -337,9 +340,9 @@
                                 <line x1="12" y1="17" x2="12" y2="21"></line>
                             </svg>
                         </div>
-                        <div class="approach-label-redesigned">Stack</div>
-                        <h3>Swift, React, Node, Cloud</h3>
-                        <p>Tools chosen for durability and speed.</p>
+                        <div class="approach-label-redesigned" data-i18n="about.approach2_label">Stack</div>
+                        <h3 data-i18n="about.approach2_title">Swift, React, Node, Cloud</h3>
+                        <p data-i18n="about.approach2_desc">Tools chosen for durability and speed.</p>
                     </div>
                     <div class="approach-card-redesigned">
                         <div class="approach-icon-redesigned">
@@ -350,9 +353,9 @@
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
                         </div>
-                        <div class="approach-label-redesigned">Pricing</div>
-                        <h3>Fixed After Discovery</h3>
-                        <p>Clear scope, clear quote, no surprises.</p>
+                        <div class="approach-label-redesigned" data-i18n="about.approach3_label">Pricing</div>
+                        <h3 data-i18n="about.approach3_title">Fixed After Discovery</h3>
+                        <p data-i18n="about.approach3_desc">Clear scope, clear quote, no surprises.</p>
                     </div>
                     <div class="approach-card-redesigned">
                         <div class="approach-icon-redesigned">
@@ -361,9 +364,9 @@
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                         </div>
-                        <div class="approach-label-redesigned">Delivery</div>
-                        <h3>Weekly Progress</h3>
-                        <p>Real software, measurable results.</p>
+                        <div class="approach-label-redesigned" data-i18n="about.approach4_label">Delivery</div>
+                        <h3 data-i18n="about.approach4_title">Weekly Progress</h3>
+                        <p data-i18n="about.approach4_desc">Real software, measurable results.</p>
                     </div>
                 </div>
             </div>
@@ -371,12 +374,12 @@
             <!-- CTA Section - Redesigned -->
             <div class="about-cta-redesigned">
                 <div class="cta-content-redesigned">
-                    <h2>Need systems that create operational leverage?</h2>
-                    <p>Let me review your workflows and identify where automation and financial clarity can reduce drag.</p>
+                    <h2 data-i18n="about.cta_title">Need systems that create operational leverage?</h2>
+                    <p data-i18n="about.cta_desc">Let me review your workflows and identify where automation and financial clarity can reduce drag.</p>
                 </div>
                 <div class="cta-buttons-redesigned">
-                    <a class="btn btn-primary" href="contact.html"><span>Discuss your systems</span></a>
-                    <a class="btn btn-secondary" href="portfolio.html"><span>View proof</span></a>
+                    <a class="btn btn-primary" href="contact.html"><span data-i18n="about.cta_btn_discuss">Discuss your systems</span></a>
+                    <a class="btn btn-secondary" href="portfolio.html"><span data-i18n="about.cta_btn_proof">View proof</span></a>
                 </div>
             </div>
         </div>
@@ -387,30 +390,30 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>KCOH Software Inc.</h3>
-                    <p>Software systems that automate operations and add financial clarity. Led by an operator who built and scaled a 7 figure platform.</p>
+                    <h3 data-i18n="shared.footer.company_name">KCOH Software Inc.</h3>
+                    <p data-i18n="shared.footer.company_desc">Software systems that automate operations and add financial clarity. Led by an operator who built and scaled a 7 figure platform.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h4 data-i18n="shared.footer.quick_links">Quick Links</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html" data-i18n="shared.nav.home">Home</a></li>
+                        <li><a href="services.html" data-i18n="shared.nav.services">Services</a></li>
+                        <li><a href="portfolio.html" data-i18n="shared.nav.portfolio">Portfolio</a></li>
+                        <li><a href="about.html" data-i18n="shared.nav.about">About</a></li>
+                        <li><a href="contact.html" data-i18n="shared.nav.contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>What I Build</h4>
+                    <h4 data-i18n="shared.footer.what_i_build">What I Build</h4>
                     <ul>
-                        <li><a href="services.html">Automation Systems</a></li>
-                        <li><a href="services.html">Financial Clarity Tools</a></li>
-                        <li><a href="services.html">iOS Apps</a></li>
-                        <li><a href="services.html">Web Platforms</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.automation_systems">Automation Systems</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.financial_clarity_tools">Financial Clarity Tools</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.ios_apps">iOS Apps</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.web_platforms">Web Platforms</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Connect</h4>
+                    <h4 data-i18n="shared.footer.connect">Connect</h4>
                     <div class="social-links">
                         <a href="https://www.linkedin.com/in/kevin-cohen-entrepreneur/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -427,12 +430,13 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 KCOH Software Inc. All rights reserved.</p>
+                <p data-i18n="shared.footer.copyright">&copy; 2026 KCOH Software Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
 <!-- Scripts -->
     <script id="main-script" src="script.js" defer></script>
+    <script src="i18n.js" defer></script>
 </body>
 </html>

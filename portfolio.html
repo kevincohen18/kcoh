@@ -8,6 +8,8 @@
     <meta name="author" content="Kevin Cohen - KCOH Software Inc.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://kcoh.ca/portfolio.html">
+    <link rel="alternate" hreflang="fr" href="https://kcoh.ca/portfolio.html">
+    <link rel="alternate" hreflang="en" href="https://kcoh.ca/portfolio.html">
     <meta name="theme-color" content="#6366f1">
 
     <!-- Content Security Policy: Protects against XSS attacks -->
@@ -92,10 +94,10 @@
                             <line x1="8" y1="2" x2="8" y2="6"/>
                             <line x1="3" y1="10" x2="21" y2="10"/>
                         </svg>
-                        <span>Discuss your systems</span>
+                        <span data-i18n="shared.nav.discuss">Discuss your systems</span>
                     </a>
                 </div>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" data-i18n-aria="shared.nav.toggle_menu">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -106,7 +108,7 @@
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                             <polyline points="9 22 9 12 15 12 15 22"></polyline>
                         </svg>
-                        <span>Home</span>
+                        <span data-i18n="shared.nav.home">Home</span>
                     </a></li>
                     <li><a href="services.html" class="nav-link" data-page="services">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -115,7 +117,7 @@
                             <rect x="14" y="14" width="7" height="7"></rect>
                             <rect x="3" y="14" width="7" height="7"></rect>
                         </svg>
-                        <span>Services</span>
+                        <span data-i18n="shared.nav.services">Services</span>
                     </a></li>
                     <li><a href="portfolio.html" class="nav-link" data-page="portfolio">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -123,24 +125,25 @@
                             <line x1="8" y1="21" x2="16" y2="21"></line>
                             <line x1="12" y1="17" x2="12" y2="21"></line>
                         </svg>
-                        <span>Portfolio</span>
+                        <span data-i18n="shared.nav.portfolio">Portfolio</span>
                     </a></li>
                     <li><a href="about.html" class="nav-link" data-page="about">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <span>About</span>
+                        <span data-i18n="shared.nav.about">About</span>
                     </a></li>
                     <li><a href="contact.html" class="nav-link" data-page="contact">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                         </svg>
-                        <span>Contact</span>
+                        <span data-i18n="shared.nav.contact">Contact</span>
                     </a></li>
                 </ul>
                 <div class="nav-controls">
-                    <button class="search-toggle" id="searchToggle" aria-label="Search" data-tooltip="Search">
+                    <button class="lang-toggle" aria-label="Switch to French">FR</button>
+                    <button class="search-toggle" id="searchToggle" aria-label="Search" data-tooltip="Search" data-i18n-aria="shared.nav.search_aria" data-i18n-tooltip="shared.nav.search_tooltip">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
@@ -155,8 +158,8 @@
     <section id="portfolio" class="portfolio portfolio-page">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Systems I've Built & Operated</h2>
-                <p class="section-subtitle">Products and platforms I've shipped and run in production</p>
+                <h2 class="section-title" data-i18n="portfolio.title">Systems I've Built & Operated</h2>
+                <p class="section-subtitle" data-i18n="portfolio.subtitle">Products and platforms I've shipped and run in production</p>
             </div>
             <div class="portfolio-grid">
                 <!-- MetalWorth -->
@@ -164,25 +167,25 @@
                     <div class="portfolio-image portfolio-image-metalworth">
                         <img src="MetalWorth_Logo_Clear.png" alt="MetalWorth - precious metals tracking iOS app" class="portfolio-photo" loading="lazy" width="400" height="250">
                         <div class="portfolio-overlay">
-                            <a href="https://apps.apple.com/ca/app/metalworth/id6755134355" target="_blank" rel="noopener noreferrer" class="portfolio-link">View on App Store</a>
+                            <a href="https://apps.apple.com/ca/app/metalworth/id6755134355" target="_blank" rel="noopener noreferrer" class="portfolio-link" data-i18n="portfolio.metalworth_link">View on App Store</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3>MetalWorth</h3>
-                        <p class="portfolio-primary">Real time precious metals tracking with live portfolio management.</p>
-                        <p class="portfolio-status">Live on the App Store across iOS and watchOS with production users.</p>
+                        <h3 data-i18n="portfolio.metalworth_title">MetalWorth</h3>
+                        <p class="portfolio-primary" data-i18n="portfolio.metalworth_primary">Real time precious metals tracking with live portfolio management.</p>
+                        <p class="portfolio-status" data-i18n="portfolio.metalworth_status">Live on the App Store across iOS and watchOS with production users.</p>
                         <div class="portfolio-details">
                             <div class="detail-item">
-                                <span class="detail-label">Role</span>
-                                <span class="detail-value">Designed, built, and operated end to end</span>
+                                <span class="detail-label" data-i18n="portfolio.metalworth_role_label">Role</span>
+                                <span class="detail-value" data-i18n="portfolio.metalworth_role_value">Designed, built, and operated end to end</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Built with</span>
-                                <span class="detail-value">Native iOS and watchOS using Swift and SwiftUI with live CloudKit data and external pricing feeds</span>
+                                <span class="detail-label" data-i18n="portfolio.metalworth_built_label">Built with</span>
+                                <span class="detail-value" data-i18n="portfolio.metalworth_built_value">Native iOS and watchOS using Swift and SwiftUI with live CloudKit data and external pricing feeds</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Data sources</span>
-                                <span class="detail-value">Integrated with Kitco for reliable real time precious metals pricing</span>
+                                <span class="detail-label" data-i18n="portfolio.metalworth_data_label">Data sources</span>
+                                <span class="detail-value" data-i18n="portfolio.metalworth_data_value">Integrated with Kitco for reliable real time precious metals pricing</span>
                             </div>
                         </div>
                         <div class="portfolio-tags">
@@ -202,21 +205,21 @@
                     <div class="portfolio-image portfolio-image-ios">
                         <img src="App Store Icon.png" alt="App Store - 10+ iOS apps published" class="portfolio-photo" loading="lazy" width="400" height="250">
                         <div class="portfolio-overlay">
-                            <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" class="portfolio-link">View Full Portfolio</a>
+                            <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" class="portfolio-link" data-i18n="portfolio.ios_link">View Full Portfolio</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3>10+ iOS Apps Built and Shipped</h3>
-                        <p class="portfolio-primary">Finance, productivity, and decision support applications.</p>
-                        <p class="portfolio-status">Full ownership from concept through development and App Store release.</p>
+                        <h3 data-i18n="portfolio.ios_title">10+ iOS Apps Built and Shipped</h3>
+                        <p class="portfolio-primary" data-i18n="portfolio.ios_primary">Finance, productivity, and decision support applications.</p>
+                        <p class="portfolio-status" data-i18n="portfolio.ios_status">Full ownership from concept through development and App Store release.</p>
                         <div class="portfolio-details">
                             <div class="detail-item">
-                                <span class="detail-label">Focus</span>
-                                <span class="detail-value">Stable architecture, live data, and long term maintainability</span>
+                                <span class="detail-label" data-i18n="portfolio.ios_focus_label">Focus</span>
+                                <span class="detail-value" data-i18n="portfolio.ios_focus_value">Stable architecture, live data, and long term maintainability</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Stack</span>
-                                <span class="detail-value">Swift, SwiftUI, UIKit, CloudKit, Core Data, REST APIs</span>
+                                <span class="detail-label" data-i18n="portfolio.ios_stack_label">Stack</span>
+                                <span class="detail-value" data-i18n="portfolio.ios_stack_value">Swift, SwiftUI, UIKit, CloudKit, Core Data, REST APIs</span>
                             </div>
                         </div>
                         <div class="app-store-link-wrapper">
@@ -238,25 +241,25 @@
                     <div class="portfolio-image portfolio-image-draftory">
                         <img src="Draftory-Logo.png" alt="Draftory — Contract Generation Platform" class="portfolio-logo" loading="lazy" width="120" height="120">
                         <div class="portfolio-overlay">
-                            <a href="https://draftory.ca" target="_blank" rel="noopener noreferrer" class="portfolio-link">Visit draftory.ca</a>
+                            <a href="https://draftory.ca" target="_blank" rel="noopener noreferrer" class="portfolio-link" data-i18n="portfolio.draftory_link">Visit draftory.ca</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3>Draftory</h3>
-                        <p class="portfolio-primary">Professional contract generation and e-signature platform. From blank page to signed contract in minutes.</p>
-                        <p class="portfolio-status">Live at draftory.ca with web app and native iOS app.</p>
+                        <h3 data-i18n="portfolio.draftory_title">Draftory</h3>
+                        <p class="portfolio-primary" data-i18n="portfolio.draftory_primary">Professional contract generation and e-signature platform. From blank page to signed contract in minutes.</p>
+                        <p class="portfolio-status" data-i18n="portfolio.draftory_status">Live at draftory.ca with web app and native iOS app.</p>
                         <div class="portfolio-details">
                             <div class="detail-item">
-                                <span class="detail-label">What it does</span>
-                                <span class="detail-value">Generates 8 contract types with built-in e-signatures, cryptographic audit trails, and law-firm quality PDF output</span>
+                                <span class="detail-label" data-i18n="portfolio.draftory_what_label">What it does</span>
+                                <span class="detail-value" data-i18n="portfolio.draftory_what_value">Generates 8 contract types with built-in e-signatures, cryptographic audit trails, and law-firm quality PDF output</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Built with</span>
-                                <span class="detail-value">React, Vite, Tailwind CSS, Node.js, Express, SQLite, Stripe, Cloudflare Pages, Railway</span>
+                                <span class="detail-label" data-i18n="portfolio.draftory_built_label">Built with</span>
+                                <span class="detail-value" data-i18n="portfolio.draftory_built_value">React, Vite, Tailwind CSS, Node.js, Express, SQLite, Stripe, Cloudflare Pages, Railway</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Security</span>
-                                <span class="detail-value">AES-256-GCM encryption, HMAC-SHA256 signatures, passkeys, TOTP 2FA, JWT auth</span>
+                                <span class="detail-label" data-i18n="portfolio.draftory_security_label">Security</span>
+                                <span class="detail-value" data-i18n="portfolio.draftory_security_value">AES-256-GCM encryption, HMAC-SHA256 signatures, passkeys, TOTP 2FA, JWT auth</span>
                             </div>
                         </div>
                         <div class="portfolio-tags">
@@ -274,25 +277,25 @@
                 <div class="portfolio-item">
                     <div class="portfolio-image portfolio-image-skyroa">
                         <div class="portfolio-overlay">
-                            <a href="https://skyroa.com" target="_blank" rel="noopener noreferrer" class="portfolio-link">Visit skyroa.com</a>
+                            <a href="https://skyroa.com" target="_blank" rel="noopener noreferrer" class="portfolio-link" data-i18n="portfolio.skyroa_link">Visit skyroa.com</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3>Skyroa</h3>
-                        <p class="portfolio-primary">Regulated escrow platform for digital goods. Secure conditional payments protecting both buyers and sellers.</p>
-                        <p class="portfolio-status">Live at skyroa.com. Canadian FMSB application in progress.</p>
+                        <h3 data-i18n="portfolio.skyroa_title">Skyroa</h3>
+                        <p class="portfolio-primary" data-i18n="portfolio.skyroa_primary">Regulated escrow platform for digital goods. Secure conditional payments protecting both buyers and sellers.</p>
+                        <p class="portfolio-status" data-i18n="portfolio.skyroa_status">Live at skyroa.com. Canadian FMSB application in progress.</p>
                         <div class="portfolio-details">
                             <div class="detail-item">
-                                <span class="detail-label">What it does</span>
-                                <span class="detail-value">Escrow protection with KYC identity verification, dispute resolution, real-time messaging, and FINTRAC-aligned compliance</span>
+                                <span class="detail-label" data-i18n="portfolio.skyroa_what_label">What it does</span>
+                                <span class="detail-value" data-i18n="portfolio.skyroa_what_value">Escrow protection with KYC identity verification, dispute resolution, real-time messaging, and FINTRAC-aligned compliance</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Built with</span>
-                                <span class="detail-value">NestJS, PostgreSQL, Prisma, Redis, Stripe, Plaid, React monorepo, Cloudflare Workers</span>
+                                <span class="detail-label" data-i18n="portfolio.skyroa_built_label">Built with</span>
+                                <span class="detail-value" data-i18n="portfolio.skyroa_built_value">NestJS, PostgreSQL, Prisma, Redis, Stripe, Plaid, React monorepo, Cloudflare Workers</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Architecture</span>
-                                <span class="detail-value">Double-entry ledger, tiered KYC system, state-machine trade flow, WebSocket real-time updates</span>
+                                <span class="detail-label" data-i18n="portfolio.skyroa_arch_label">Architecture</span>
+                                <span class="detail-value" data-i18n="portfolio.skyroa_arch_value">Double-entry ledger, tiered KYC system, state-machine trade flow, WebSocket real-time updates</span>
                             </div>
                         </div>
                         <div class="portfolio-tags">
@@ -311,25 +314,25 @@
                     <div class="portfolio-image portfolio-image-frostynow">
                         <img src="FrostyNow-Logo.png" alt="FrostyNow — Real-Time Weather App" class="portfolio-logo" loading="lazy" width="120" height="120">
                         <div class="portfolio-overlay">
-                            <a href="https://frostynow.com" target="_blank" rel="noopener noreferrer" class="portfolio-link">Visit frostynow.com</a>
+                            <a href="https://frostynow.com" target="_blank" rel="noopener noreferrer" class="portfolio-link" data-i18n="portfolio.frostynow_link">Visit frostynow.com</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3>FrostyNow</h3>
-                        <p class="portfolio-primary">Smart window control system. IoT device management from iPhone with scheduling, timers, and voice control.</p>
-                        <p class="portfolio-status">Native iOS app with real-time WebSocket backend on Railway.</p>
+                        <h3 data-i18n="portfolio.frostynow_title">FrostyNow</h3>
+                        <p class="portfolio-primary" data-i18n="portfolio.frostynow_primary">Smart window control system. IoT device management from iPhone with scheduling, timers, and voice control.</p>
+                        <p class="portfolio-status" data-i18n="portfolio.frostynow_status">Native iOS app with real-time WebSocket backend on Railway.</p>
                         <div class="portfolio-details">
                             <div class="detail-item">
-                                <span class="detail-label">What it does</span>
-                                <span class="detail-value">Controls smart frost windows via iPhone — scheduling, bulk control, push notifications, Siri Shortcuts, HomeKit bridge</span>
+                                <span class="detail-label" data-i18n="portfolio.frostynow_what_label">What it does</span>
+                                <span class="detail-value" data-i18n="portfolio.frostynow_what_value">Controls smart frost windows via iPhone — scheduling, bulk control, push notifications, Siri Shortcuts, HomeKit bridge</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Built with</span>
-                                <span class="detail-value">Swift, SwiftUI, Socket.IO, AppIntents, HomeKit, APNs, JWT auth with Face ID</span>
+                                <span class="detail-label" data-i18n="portfolio.frostynow_built_label">Built with</span>
+                                <span class="detail-value" data-i18n="portfolio.frostynow_built_value">Swift, SwiftUI, Socket.IO, AppIntents, HomeKit, APNs, JWT auth with Face ID</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Design</span>
-                                <span class="detail-value">iOS 26 Liquid Glass design system, floating snowflake particles, haptic feedback, VoiceOver accessible</span>
+                                <span class="detail-label" data-i18n="portfolio.frostynow_design_label">Design</span>
+                                <span class="detail-value" data-i18n="portfolio.frostynow_design_value">iOS 26 Liquid Glass design system, floating snowflake particles, haptic feedback, VoiceOver accessible</span>
                             </div>
                         </div>
                         <div class="portfolio-tags">
@@ -348,21 +351,21 @@
                     <div class="portfolio-image portfolio-image-systems">
                         <img src="Success logo.png" alt="Internal Platforms & Business Systems - Growth and scaling" class="portfolio-photo" loading="lazy" width="400" height="250">
                         <div class="portfolio-overlay">
-                            <a href="contact.html" class="portfolio-link">Learn More</a>
+                            <a href="contact.html" class="portfolio-link" data-i18n="portfolio.internal_link">Learn More</a>
                         </div>
                     </div>
                     <div class="portfolio-content">
-                        <h3>Internal Platforms and Business Systems</h3>
-                        <p class="portfolio-primary">Internal systems built to automate operations and track business activity.</p>
-                        <p class="portfolio-status">Built for my own products and platforms.</p>
+                        <h3 data-i18n="portfolio.internal_title">Internal Platforms and Business Systems</h3>
+                        <p class="portfolio-primary" data-i18n="portfolio.internal_primary">Internal systems built to automate operations and track business activity.</p>
+                        <p class="portfolio-status" data-i18n="portfolio.internal_status">Built for my own products and platforms.</p>
                         <div class="portfolio-details">
                             <div class="detail-item">
-                                <span class="detail-label">Focus</span>
-                                <span class="detail-value">Automation, live data visibility, and systems designed to scale without manual work</span>
+                                <span class="detail-label" data-i18n="portfolio.internal_focus_label">Focus</span>
+                                <span class="detail-value" data-i18n="portfolio.internal_focus_value">Automation, live data visibility, and systems designed to scale without manual work</span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Stack</span>
-                                <span class="detail-value">Swift based services, live databases, internal dashboards, and supporting web tools</span>
+                                <span class="detail-label" data-i18n="portfolio.internal_stack_label">Stack</span>
+                                <span class="detail-value" data-i18n="portfolio.internal_stack_value">Swift based services, live databases, internal dashboards, and supporting web tools</span>
                             </div>
                         </div>
                         <div class="portfolio-tags">
@@ -374,7 +377,7 @@
                     </div>
                 </div>
             </div>
-            <p class="portfolio-trust-line">Everything shown here was built, shipped, and operated in production.</p>
+            <p class="portfolio-trust-line" data-i18n="portfolio.trust_line">Everything shown here was built, shipped, and operated in production.</p>
         </div>
     </section>
 
@@ -383,30 +386,30 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>KCOH Software Inc.</h3>
-                    <p>I build software systems that automate operations and bring financial clarity.</p>
+                    <h3 data-i18n="shared.footer.company_name">KCOH Software Inc.</h3>
+                    <p data-i18n="shared.footer.company_desc_alt">I build software systems that automate operations and bring financial clarity.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h4 data-i18n="shared.footer.quick_links">Quick Links</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html" data-i18n="shared.nav.home">Home</a></li>
+                        <li><a href="services.html" data-i18n="shared.nav.services">Services</a></li>
+                        <li><a href="portfolio.html" data-i18n="shared.nav.portfolio">Portfolio</a></li>
+                        <li><a href="about.html" data-i18n="shared.nav.about">About</a></li>
+                        <li><a href="contact.html" data-i18n="shared.nav.contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>What I Build</h4>
+                    <h4 data-i18n="shared.footer.what_i_build">What I Build</h4>
                     <ul>
-                        <li><a href="services.html">Automation Systems</a></li>
-                        <li><a href="services.html">iOS Apps</a></li>
-                        <li><a href="services.html">Financial Clarity Tools</a></li>
-                        <li><a href="services.html">Advisory</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.automation_systems">Automation Systems</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.ios_apps">iOS Apps</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.financial_clarity_tools">Financial Clarity Tools</a></li>
+                        <li><a href="services.html" data-i18n="shared.footer.advisory">Advisory</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Connect</h4>
+                    <h4 data-i18n="shared.footer.connect">Connect</h4>
                     <div class="social-links">
                         <a href="https://www.linkedin.com/in/kevin-cohen-entrepreneur/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -423,7 +426,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 KCOH Software Inc. All rights reserved.</p>
+                <p data-i18n="shared.footer.copyright">&copy; 2026 KCOH Software Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -431,5 +434,6 @@
 
 <!-- Scripts -->
     <script id="main-script" src="script.js" defer></script>
+    <script src="i18n.js" defer></script>
 </body>
 </html>

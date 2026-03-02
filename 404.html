@@ -246,33 +246,35 @@
                 <div class="error-code">404</div>
             </div>
 
-            <h1 class="error-title">Oops! Page Not Found</h1>
-            <p class="error-message">
+            <h1 class="error-title" data-i18n="error.title">Oops! Page Not Found</h1>
+            <p class="error-message" data-i18n="error.message">
                 Looks like this page took a vacation to `/dev/null`. Don't worry, we'll help you find your way back!
             </p>
 
             <div class="error-suggestions">
-                <h3>🔍 Quick Links</h3>
+                <h3 data-i18n="error.quick_links">🔍 Quick Links</h3>
                 <ul>
-                    <li>→ <a href="index.html">Homepage</a> - Start fresh</li>
-                    <li>→ <a href="services.html">Services</a> - See what we offer</li>
-                    <li>→ <a href="portfolio.html">Portfolio</a> - Check out our work</li>
-                    <li>→ <a href="contact.html">Contact</a> - Get in touch</li>
+                    <li>→ <a href="index.html" data-i18n="error.link_home">Homepage</a> - Start fresh</li>
+                    <li>→ <a href="services.html" data-i18n="error.link_services">Services</a> - See what we offer</li>
+                    <li>→ <a href="portfolio.html" data-i18n="error.link_portfolio">Portfolio</a> - Check out our work</li>
+                    <li>→ <a href="contact.html" data-i18n="error.link_contact">Contact</a> - Get in touch</li>
                 </ul>
             </div>
 
             <div class="error-actions">
-                <a href="index.html" class="btn btn-primary"><span>Go Home</span></a>
-                <a href="contact.html" class="btn btn-secondary">Contact Support</a>
+                <a href="index.html" class="btn btn-primary"><span data-i18n="error.btn_home">Go Home</span></a>
+                <a href="contact.html" class="btn btn-secondary"><span data-i18n="error.btn_contact">Contact Support</span></a>
             </div>
 
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search our site..." />
+                <input type="text" id="searchInput" placeholder="Search our site..." data-i18n-placeholder="error.search_placeholder" />
                 <button onclick="searchSite()">Search</button>
             </div>
         </div>
     </div>
 
+    <script src="init.js"></script>
+    <script src="i18n.js" defer></script>
     <script>
         function searchSite() {
             const query = document.getElementById('searchInput').value;

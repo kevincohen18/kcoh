@@ -1096,6 +1096,7 @@ section {
     margin-left: 1rem;
 }
 
+.lang-toggle,
 .search-toggle,
 .palette-toggle,
 .theme-toggle {
@@ -1116,6 +1117,7 @@ section {
     overflow: hidden;
 }
 
+.lang-toggle::before,
 .search-toggle::before,
 .palette-toggle::before,
 .theme-toggle::before {
@@ -1131,6 +1133,7 @@ section {
     transition: width 0.4s ease, height 0.4s ease;
 }
 
+.lang-toggle:hover::before,
 .search-toggle:hover::before,
 .palette-toggle:hover::before,
 .theme-toggle:hover::before {
@@ -8949,4 +8952,38 @@ video {
         margin: 0 auto;
         padding: 0 2rem;
     }
+}
+
+/* =============================================
+   LANGUAGE TOGGLE & i18n FLASH PREVENTION
+   ============================================= */
+
+/* Language toggle button — extra styling beyond shared .lang-toggle rule above */
+.lang-toggle {
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1;
+}
+
+.lang-toggle:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    background: rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.2);
+}
+
+/* Flash prevention: when French is active, hide translatable elements until i18n.js is ready */
+html.lang-fr:not(.i18n-ready) [data-i18n],
+html.lang-fr:not(.i18n-ready) [data-i18n-placeholder],
+html.lang-fr:not(.i18n-ready) [data-i18n-value] {
+    visibility: hidden;
+}
+
+/* Never hide these — they contain no translatable text or are structural */
+html.lang-fr:not(.i18n-ready) .lang-toggle,
+html.lang-fr:not(.i18n-ready) .logo-text,
+html.lang-fr:not(.i18n-ready) .loader-logo {
+    visibility: visible;
 }
