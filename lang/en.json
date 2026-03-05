@@ -175,7 +175,8 @@
     "services": {
         "title": "Business Systems Engineering",
         "subtitle": "Software that automates operations, clarifies finances, and creates operational leverage",
-        "callout": "Who I serve: Revenue-generating businesses with operational complexity \u2022 Operators scaling past manual processes \u2022 Companies needing financial visibility and automated workflows",
+        "callout_label": "Who I serve:",
+        "callout": "Revenue-generating businesses with operational complexity \u2022 Operators scaling past manual processes \u2022 Companies needing financial visibility and automated workflows",
         "card1_title": "End-to-End Product Systems",
         "card1_desc": "I design, build, and operate cohesive systems (mobile + web + backend) with one owner\u2014no handoffs or silos.",
         "card1_f1": "One operator across mobile, web, and API",

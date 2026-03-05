@@ -788,7 +788,7 @@ section {
     position: relative;
 }
 
-.pricing-features li span {
+.pricing-features li span:first-child {
     position: absolute;
     left: 0;
     color: #a78bfa;
@@ -960,7 +960,7 @@ section {
     position: relative;
 }
 
-.process-step ul li span {
+.process-step ul li span:first-child {
     position: absolute;
     left: 0;
     color: #a78bfa;

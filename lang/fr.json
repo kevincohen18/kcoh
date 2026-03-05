@@ -175,7 +175,8 @@
     "services": {
         "title": "Ing\u00e9nierie de syst\u00e8mes d\u2019affaires",
         "subtitle": "Logiciels qui automatisent les op\u00e9rations, clarifient les finances et cr\u00e9ent un levier op\u00e9rationnel",
-        "callout": "Pour qui : Entreprises g\u00e9n\u00e9rant des revenus avec une complexit\u00e9 op\u00e9rationnelle \u2022 Op\u00e9rateurs d\u00e9passant les processus manuels \u2022 Entreprises ayant besoin de visibilit\u00e9 financi\u00e8re et de flux automatis\u00e9s",
+        "callout_label": "Pour qui :",
+        "callout": "Entreprises g\u00e9n\u00e9rant des revenus avec une complexit\u00e9 op\u00e9rationnelle \u2022 Op\u00e9rateurs d\u00e9passant les processus manuels \u2022 Entreprises ayant besoin de visibilit\u00e9 financi\u00e8re et de flux automatis\u00e9s",
         "card1_title": "Syst\u00e8mes produits de bout en bout",
         "card1_desc": "Je con\u00e7ois, construis et op\u00e8re des syst\u00e8mes coh\u00e9rents (mobile + web + backend) avec un seul responsable \u2014 aucun transfert ni silo.",
         "card1_f1": "Un op\u00e9rateur pour le mobile, le web et l\u2019API",
