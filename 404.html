@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found | KCOH Software Inc.</title>
+    <meta name="description" content="Page not found. Navigate back to KCOH Software Inc. for software systems that automate operations and add financial clarity.">
+    <meta name="robots" content="noindex, follow">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="canonical" href="https://kcoh.ca/404.html">
 
     <!-- Content Security Policy: Protects against XSS attacks -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.emailjs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdn.emailjs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
 
     <!-- Cache busting + early language detection -->
     <script src="init.js?v=2"></script>
@@ -32,7 +35,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(201, 168, 76, 0.1) 0%, transparent 70%);
             z-index: 0;
         }
 
@@ -51,7 +54,7 @@
         .error-code {
             font-size: clamp(6rem, 15vw, 10rem);
             font-weight: 900;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+            background: linear-gradient(135deg, #c9a84c, #d4af57, #d4af57);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -88,7 +91,7 @@
         .error-icon svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 10px 30px rgba(99, 102, 241, 0.3));
+            filter: drop-shadow(0 10px 30px rgba(201, 168, 76, 0.3));
         }
 
         .orbit {
@@ -111,9 +114,9 @@
         .orbit-dot {
             width: 12px;
             height: 12px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #c9a84c, #d4af57);
             border-radius: 50%;
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.6);
         }
 
         .error-title {
@@ -131,8 +134,8 @@
         }
 
         .error-suggestions {
-            background: rgba(99, 102, 241, 0.05);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: rgba(201, 168, 76, 0.05);
+            border: 1px solid rgba(201, 168, 76, 0.2);
             border-radius: 1rem;
             padding: 2rem;
             margin: 2rem 0;
@@ -156,13 +159,13 @@
         }
 
         .error-suggestions li a {
-            color: #6366f1;
+            color: #c9a84c;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .error-suggestions li a:hover {
-            color: #8b5cf6;
+            color: #d4af57;
         }
 
         .error-actions {
@@ -192,7 +195,7 @@
 
         .search-box button {
             padding: 0.875rem 1.5rem;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #c9a84c, #d4af57);
             color: white;
             border: none;
             border-radius: 0.5rem;
@@ -235,8 +238,8 @@
                     <path d="M70 80 L130 80 M70 120 L130 120" stroke="url(#gradient)" stroke-width="8" stroke-linecap="round"/>
                     <defs>
                         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#6366f1"/>
-                            <stop offset="100%" stop-color="#8b5cf6"/>
+                            <stop offset="0%" stop-color="#c9a84c"/>
+                            <stop offset="100%" stop-color="#d4af57"/>
                         </linearGradient>
                     </defs>
                 </svg>
@@ -257,10 +260,10 @@
             <div class="error-suggestions">
                 <h3 data-i18n="error.quick_links">🔍 Quick Links</h3>
                 <ul>
-                    <li>→ <a href="index.html" data-i18n="error.link_home">Homepage</a> - Start fresh</li>
-                    <li>→ <a href="services.html" data-i18n="error.link_services">Services</a> - See what we offer</li>
-                    <li>→ <a href="portfolio.html" data-i18n="error.link_portfolio">Portfolio</a> - Check out our work</li>
-                    <li>→ <a href="contact.html" data-i18n="error.link_contact">Contact</a> - Get in touch</li>
+                    <li>→ <a href="index.html" data-i18n="error.link_home">Homepage</a> - <span data-i18n="error.link_home_desc">Start fresh</span></li>
+                    <li>→ <a href="services.html" data-i18n="error.link_services">Services</a> - <span data-i18n="error.link_services_desc">See what we offer</span></li>
+                    <li>→ <a href="portfolio.html" data-i18n="error.link_portfolio">Portfolio</a> - <span data-i18n="error.link_portfolio_desc">Check out our work</span></li>
+                    <li>→ <a href="contact.html" data-i18n="error.link_contact">Contact</a> - <span data-i18n="error.link_contact_desc">Get in touch</span></li>
                 </ul>
             </div>
 
@@ -271,26 +274,12 @@
 
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Search our site..." data-i18n-placeholder="error.search_placeholder" />
-                <button onclick="searchSite()">Search</button>
+                <button type="button" id="searchBtn">Search</button>
             </div>
         </div>
     </div>
 
     <script src="i18n.js?v=2" defer></script>
-    <script>
-        function searchSite() {
-            const query = document.getElementById('searchInput').value;
-            if (query.trim()) {
-                // Redirect to homepage with search query (you can enhance this later)
-                window.location.href = `index.html#search=${encodeURIComponent(query)}`;
-            }
-        }
-
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                searchSite();
-            }
-        });
-    </script>
+    <script src="assets/js/404-search.js" defer></script>
 </body>
 </html>

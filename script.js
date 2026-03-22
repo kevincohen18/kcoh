@@ -807,7 +807,7 @@ function initParticles() {
         }
         
         draw() {
-            ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
+            ctx.fillStyle = `rgba(201, 168, 76, ${this.opacity})`;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
@@ -835,7 +835,7 @@ function initParticles() {
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 
                 if (distance < PARTICLE_CONNECTION_DISTANCE) {
-                    ctx.strokeStyle = `rgba(99, 102, 241, ${0.2 * (1 - distance / 150)})`;
+                    ctx.strokeStyle = `rgba(201, 168, 76, ${0.2 * (1 - distance / 150)})`;
                     ctx.lineWidth = 1;
                     ctx.beginPath();
                     ctx.moveTo(particle.x, particle.y);
@@ -851,10 +851,10 @@ function initParticles() {
     animate();
 }
 
-// Initialize particles when page loads
-window.addEventListener('load', () => {
-    setTimeout(initParticles, 500);
-});
+// Initialize particles when page loads (disabled for redesign)
+// window.addEventListener('load', () => {
+//     setTimeout(initParticles, 500);
+// });
 
 // Magnetic cursor effect will be added below with modern implementation
 
@@ -1516,9 +1516,9 @@ function initMatrixRainBackground() {
         for (let i = 0; i < drops.length; i += step) {
             // Blue gradient effect to match site theme
             const gradient = ctx.createLinearGradient(0, drops[i] * fontSize, 0, (drops[i] + 1) * fontSize);
-            gradient.addColorStop(0, '#6366f1');  // Blue (brand color)
-            gradient.addColorStop(0.5, '#8b5cf6'); // Purple (secondary)
-            gradient.addColorStop(1, '#a78bfa');   // Light purple
+            gradient.addColorStop(0, '#c9a84c');  // Blue (brand color)
+            gradient.addColorStop(0.5, '#d4af57'); // Purple (secondary)
+            gradient.addColorStop(1, '#d4af57');   // Light purple
             ctx.fillStyle = gradient;
 
             const char = chars[Math.floor(Math.random() * chars.length)];
@@ -1605,8 +1605,8 @@ function initCodeTyping() {
         padding: 1.35rem;
         padding-top: 2rem;
         border-radius: 0.75rem;
-        border: 1px solid rgba(99, 102, 241, 0.35);
-        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.35), 0 0 18px rgba(99, 102, 241, 0.25);
+        border: 1px solid rgba(201, 168, 76, 0.35);
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.35), 0 0 18px rgba(201, 168, 76, 0.25);
         max-width: 360px;
         width: calc(100% - 48px);
         z-index: 10000;
@@ -1757,13 +1757,13 @@ function initMagneticCursor() {
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        background: linear-gradient(135deg, #c9a84c, #d4af57);
         pointer-events: none;
         z-index: 9999;
         transition: transform 0.15s ease;
         mix-blend-mode: difference;
         opacity: 0.8;
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        box-shadow: 0 0 20px rgba(201, 168, 76, 0.5);
     `;
     document.body.appendChild(cursor);
 
@@ -1773,7 +1773,7 @@ function initMagneticCursor() {
         position: fixed;
         width: 40px;
         height: 40px;
-        border: 2px solid #6366f1;
+        border: 2px solid #c9a84c;
         border-radius: 50%;
         pointer-events: none;
         z-index: 9998;
@@ -1851,7 +1851,7 @@ function initGlitchEffect() {
             height: 200%;
             background: linear-gradient(45deg,
                 transparent 30%,
-                rgba(99, 102, 241, 0.1) 50%,
+                rgba(201, 168, 76, 0.1) 50%,
                 transparent 70%);
             animation: holographic-shine 3s linear infinite;
         }
@@ -1918,7 +1918,7 @@ function initCircuitBoard() {
     canvas.height = window.innerHeight;
 
     function drawCircuit() {
-        ctx.strokeStyle = '#6366f1';
+        ctx.strokeStyle = '#c9a84c';
         ctx.lineWidth = 1;
 
         for (let i = 0; i < 50; i++) {
@@ -1991,7 +1991,7 @@ function initInteractiveParticles() {
     function animateFloatingCode() {
         ctx.font = '14px monospace';
         floatingCode.forEach(code => {
-            ctx.fillStyle = `rgba(99, 102, 241, ${code.opacity})`;
+            ctx.fillStyle = `rgba(201, 168, 76, ${code.opacity})`;
             ctx.fillText(code.text, code.x, code.y);
 
             code.x += code.vx;
@@ -2046,7 +2046,7 @@ function enhanceLoadingScreen() {
     compilingText.style.cssText = `
         margin-top: 2rem;
         font-family: 'Courier New', monospace;
-        color: #6366f1;
+        color: #c9a84c;
         font-size: 1rem;
     `;
 
@@ -2084,7 +2084,7 @@ function initTerminalCommands() {
 
     commands.forEach((cmd, index) => {
         setTimeout(() => {
-            console.log(`%c$ ${cmd}`, 'color: #6366f1; font-weight: bold; font-size: 14px;');
+            console.log(`%c$ ${cmd}`, 'color: #c9a84c; font-weight: bold; font-size: 14px;');
         }, index * 500);
     });
 }
@@ -2123,7 +2123,7 @@ function initClickExplosion() {
             this.life = 100;
             this.maxLife = 100;
             this.size = Math.random() * 4 + 2;
-            this.color = ['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd'][Math.floor(Math.random() * 4)];
+            this.color = ['#c9a84c', '#d4af57', '#d4af57', '#c4b5fd'][Math.floor(Math.random() * 4)];
         }
 
         update() {
@@ -2217,7 +2217,7 @@ function initMouseTrail() {
 
         draw() {
             const opacity = this.life / 30;
-            ctx.fillStyle = `rgba(99, 102, 241, ${opacity * 0.6})`;
+            ctx.fillStyle = `rgba(201, 168, 76, ${opacity * 0.6})`;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
@@ -2297,10 +2297,10 @@ function initKonamiCode() {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #c9a84c, #d4af57);
             padding: 3rem;
             border-radius: 1rem;
-            box-shadow: 0 0 100px rgba(99, 102, 241, 0.8);
+            box-shadow: 0 0 100px rgba(201, 168, 76, 0.8);
             z-index: 99999;
             text-align: center;
             color: white;
@@ -2369,13 +2369,13 @@ function initInteractiveTerminal() {
         right: 20px;
         width: 400px;
         background: rgba(15, 23, 42, 0.95);
-        border: 1px solid #6366f1;
+        border: 1px solid #c9a84c;
         border-radius: 0.5rem;
         padding: 1rem;
         font-family: 'Courier New', monospace;
-        color: #6366f1;
+        color: #c9a84c;
         z-index: 10001;
-        box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
         display: none;
         max-height: 300px;
         overflow-y: auto;
@@ -2411,7 +2411,7 @@ function initInteractiveTerminal() {
         linkStyle.textContent = `
             #terminal-output a,
             #interactive-terminal a {
-                color: #6366f1 !important;
+                color: #c9a84c !important;
                 text-decoration: underline !important;
                 cursor: pointer !important;
                 pointer-events: auto !important;
@@ -2420,12 +2420,12 @@ function initInteractiveTerminal() {
             }
             #terminal-output a:hover,
             #interactive-terminal a:hover {
-                color: #8b5cf6 !important;
+                color: #d4af57 !important;
                 text-decoration: underline !important;
             }
             #terminal-output a:visited,
             #interactive-terminal a:visited {
-                color: #a78bfa !important;
+                color: #d4af57 !important;
             }
         `;
         document.head.appendChild(linkStyle);
@@ -2438,9 +2438,9 @@ function initInteractiveTerminal() {
         width: 100%;
         background: transparent;
         border: none;
-        border-top: 1px solid #6366f1;
+        border-top: 1px solid #c9a84c;
         padding: 0.5rem 0;
-        color: #6366f1;
+        color: #c9a84c;
         font-family: inherit;
         outline: none;
     `;
@@ -2493,18 +2493,18 @@ function initInteractiveTerminal() {
             if (cmd === 'clear') {
                 output.innerHTML = '';
             } else if (cmd === 'party') {
-                output.innerHTML += `<div style="color: #a78bfa;">${commands['party']}</div>`;
+                output.innerHTML += `<div style="color: #d4af57;">${commands['party']}</div>`;
                 triggerPartyMode();
             } else if (cmd === 'portfolio') {
                 // Show portfolio with clickable hyperlink
-                output.innerHTML += `<div style="color: #a78bfa;">Visit <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" style="color: #6366f1; text-decoration: underline; cursor: pointer;">https://kevincohen.ca</a> to see my complete portfolio</div>`;
+                output.innerHTML += `<div style="color: #d4af57;">Visit <a href="https://kevincohen.ca" target="_blank" rel="noopener noreferrer" style="color: #c9a84c; text-decoration: underline; cursor: pointer;">https://kevincohen.ca</a> to see my complete portfolio</div>`;
             } else if (cmd === 'contact') {
                 // Show contact with clickable links
-                output.innerHTML += `<div style="color: #a78bfa;">Email: <a href="mailto:inquiries@kcoh.ca" style="color: #6366f1; text-decoration: underline; cursor: pointer;">inquiries@kcoh.ca</a></div>`;
+                output.innerHTML += `<div style="color: #d4af57;">Email: <a href="mailto:inquiries@kcoh.ca" style="color: #c9a84c; text-decoration: underline; cursor: pointer;">inquiries@kcoh.ca</a></div>`;
             } else if (cmd.startsWith('echo ')) {
                 // Echo command - output whatever comes after 'echo '
                 const text = fullInput.substring(5);
-                output.innerHTML += `<div style="color: #a78bfa;">${text}</div>`;
+                output.innerHTML += `<div style="color: #d4af57;">${text}</div>`;
             } else if (cmd.startsWith('cowsay ') || cmd.startsWith('cosway ')) {
                 // Cowsay command - ASCII art cow
                 const prefix = cmd.startsWith('cowsay ') ? 7 : 7; // Both are 7 chars
@@ -2556,8 +2556,8 @@ function initInteractiveTerminal() {
                 // Check if command output contains URLs and make them clickable
                 let commandOutput = commands[cmd];
                 const urlRegex = /(https?:\/\/[^\s]+)/g;
-                commandOutput = commandOutput.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #6366f1; text-decoration: underline; cursor: pointer;">$1</a>');
-                output.innerHTML += `<div style="color: #a78bfa;">${commandOutput}</div>`;
+                commandOutput = commandOutput.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #c9a84c; text-decoration: underline; cursor: pointer;">$1</a>');
+                output.innerHTML += `<div style="color: #d4af57;">${commandOutput}</div>`;
             } else if (cmd) {
                 output.innerHTML += `<div style="color: #ef4444;">Command not found: ${cmd}<br>Type 'help' for available commands</div>`;
             }
@@ -2626,9 +2626,9 @@ function initAchievementBadges() {
             width: 320px;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            border: 1px solid rgba(201, 168, 76, 0.3);
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(201, 168, 76, 0.2);
             z-index: 99999;
             animation: achievementSlideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             overflow: hidden;
@@ -2652,7 +2652,7 @@ function initAchievementBadges() {
                         font-weight: 600;
                         text-transform: uppercase;
                         letter-spacing: 1px;
-                        background: linear-gradient(135deg, #6366f1, #a78bfa);
+                        background: linear-gradient(135deg, #c9a84c, #d4af57);
                         -webkit-background-clip: text;
                         -webkit-text-fill-color: transparent;
                         background-clip: text;
@@ -2674,8 +2674,8 @@ function initAchievementBadges() {
                     position: absolute;
                     top: 8px;
                     right: 8px;
-                    background: rgba(99, 102, 241, 0.1);
-                    border: 1px solid rgba(99, 102, 241, 0.2);
+                    background: rgba(201, 168, 76, 0.1);
+                    border: 1px solid rgba(201, 168, 76, 0.2);
                     color: #94a3b8;
                     width: 24px;
                     height: 24px;
@@ -2686,7 +2686,7 @@ function initAchievementBadges() {
                     align-items: center;
                     justify-content: center;
                     transition: all 0.2s ease;
-                " onmouseover="this.style.background='rgba(99, 102, 241, 0.2)'; this.style.color='#e2e8f0';" onmouseout="this.style.background='rgba(99, 102, 241, 0.1)'; this.style.color='#94a3b8';">✕</button>
+                " onmouseover="this.style.background='rgba(201, 168, 76, 0.2)'; this.style.color='#e2e8f0';" onmouseout="this.style.background='rgba(201, 168, 76, 0.1)'; this.style.color='#94a3b8';">✕</button>
             </div>
             <div class="achievement-progress" style="
                 position: absolute;
@@ -2694,7 +2694,7 @@ function initAchievementBadges() {
                 left: 0;
                 height: 3px;
                 width: 100%;
-                background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+                background: linear-gradient(90deg, #c9a84c, #d4af57, #d4af57);
                 transform-origin: left;
                 animation: achievementProgress 4s linear;
             "></div>
@@ -2948,13 +2948,13 @@ function initEasterEggs() {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(99, 102, 241, 0.95);
+            background: rgba(201, 168, 76, 0.95);
             color: white;
             padding: 2rem;
             border-radius: 1rem;
             z-index: 99999;
             font-size: 1.5rem;
-            box-shadow: 0 0 50px rgba(99, 102, 241, 0.8);
+            box-shadow: 0 0 50px rgba(201, 168, 76, 0.8);
             animation: secretPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         `;
         message.textContent = '🎉 You found a secret! Keep exploring! 🚀';
@@ -3404,8 +3404,8 @@ function initEnhancedMatrixRain() {
         for (let i = 0; i < drops.length; i++) {
             // Color gradient effect
             const gradient = ctx.createLinearGradient(0, drops[i] * fontSize, 0, (drops[i] + 1) * fontSize);
-            gradient.addColorStop(0, '#6366f1');
-            gradient.addColorStop(1, '#a78bfa');
+            gradient.addColorStop(0, '#c9a84c');
+            gradient.addColorStop(1, '#d4af57');
             ctx.fillStyle = gradient;
 
             const char = chars[Math.floor(Math.random() * chars.length)];
@@ -3614,7 +3614,7 @@ function initHackerTerminal() {
     style.textContent = `
         @keyframes terminalGlow {
             0%, 100% { text-shadow: none; }
-            50% { text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+            50% { text-shadow: 0 0 10px rgba(201, 168, 76, 0.5); }
         }
     `;
     document.head.appendChild(style);
@@ -3629,8 +3629,8 @@ function initCyberScan() {
         left: 0;
         width: 100%;
         height: 2px;
-        background: linear-gradient(90deg, transparent, #6366f1, transparent);
-        box-shadow: 0 0 20px #6366f1;
+        background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+        box-shadow: 0 0 20px #c9a84c;
         pointer-events: none;
         z-index: 9999;
         animation: scanDown 8s linear infinite;
@@ -3673,7 +3673,7 @@ function initDataStream() {
             position: absolute;
             right: ${Math.random() * 200}px;
             top: -20px;
-            color: #6366f1;
+            color: #c9a84c;
             font-family: 'Courier New', monospace;
             font-size: ${Math.random() * 20 + 10}px;
             animation: dataFall ${Math.random() * 3 + 2}s linear;
@@ -3729,7 +3729,7 @@ function initHolographicGrid() {
         }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = '#6366f1';
+        ctx.strokeStyle = '#c9a84c';
         ctx.lineWidth = 1;
 
         const gridSize = 50;
@@ -3821,7 +3821,7 @@ function initBinaryRain() {
         ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#6366f1';
+        ctx.fillStyle = '#c9a84c';
         ctx.font = fontSize + 'px monospace';
 
         for (let i = 0; i < drops.length; i++) {
@@ -3848,8 +3848,8 @@ function initNeonPulse() {
     badges.forEach((badge, index) => {
         setInterval(() => {
             badge.style.boxShadow = `
-                0 0 ${Math.random() * 30 + 10}px rgba(99, 102, 241, ${Math.random() * 0.5 + 0.3}),
-                0 0 ${Math.random() * 50 + 20}px rgba(139, 92, 246, ${Math.random() * 0.3 + 0.2})
+                0 0 ${Math.random() * 30 + 10}px rgba(201, 168, 76, ${Math.random() * 0.5 + 0.3}),
+                0 0 ${Math.random() * 50 + 20}px rgba(201, 168, 76, ${Math.random() * 0.3 + 0.2})
             `;
         }, 2000 + index * 500);
     });
@@ -3977,7 +3977,7 @@ window.addEventListener('load', () => {
     // Development console messages
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         console.log('%c⚡ Performance-optimized loading complete!', 'color: #10b981; font-size: 16px; font-weight: bold;');
-        console.log('%c💡 Pro tip: Effects load progressively for optimal performance', 'color: #8b5cf6; font-size: 12px;');
+        console.log('%c💡 Pro tip: Effects load progressively for optimal performance', 'color: #d4af57; font-size: 12px;');
     }
 });
 

@@ -7,7 +7,6 @@
     'use strict';
 
     const CURRENT_VERSION = '3.4.0';
-    const CHECK_INTERVAL = 60000; // Check every 60 seconds
 
     // Register service worker if supported
     if ('serviceWorker' in navigator) {
@@ -15,11 +14,6 @@
             navigator.serviceWorker.register('/sw.js')
                 .then((registration) => {
                     console.log('[Cache Buster] Service Worker registered:', registration.scope);
-
-                    // Check for updates periodically
-                    setInterval(() => {
-                        registration.update();
-                    }, CHECK_INTERVAL);
 
                     // Listen for new service worker waiting
                     registration.addEventListener('updatefound', () => {
@@ -63,11 +57,11 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                background: linear-gradient(135deg, #c9a84c, #d4af57);
                 color: white;
                 padding: 1rem 1.5rem;
                 border-radius: 0.75rem;
-                box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+                box-shadow: 0 10px 40px rgba(201, 168, 76, 0.4);
                 z-index: 10000;
                 animation: slideIn 0.3s ease;
                 max-width: 300px;
@@ -81,11 +75,11 @@
                         <span style="font-size: 0.875rem; opacity: 0.9;">A new version is ready</span>
                     </div>
                 </div>
-                <button onclick="location.reload(true)" style="
+                <button class="cache-bust-refresh" style="
                     margin-top: 0.75rem;
                     width: 100%;
                     background: white;
-                    color: #6366f1;
+                    color: #c9a84c;
                     border: none;
                     padding: 0.5rem 1rem;
                     border-radius: 0.5rem;
@@ -95,7 +89,7 @@
                 ">
                     Refresh Now
                 </button>
-                <button onclick="this.parentElement.parentElement.remove()" style="
+                <button class="cache-bust-dismiss" style="
                     position: absolute;
                     top: 0.5rem;
                     right: 0.5rem;
@@ -124,6 +118,19 @@
             </style>
         `;
         document.body.appendChild(notification);
+
+        var refreshBtn = notification.querySelector('.cache-bust-refresh');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                location.reload();
+            });
+        }
+        var dismissBtn = notification.querySelector('.cache-bust-dismiss');
+        if (dismissBtn) {
+            dismissBtn.addEventListener('click', function() {
+                notification.remove();
+            });
+        }
     }
 
     // Check for updates on load and periodically

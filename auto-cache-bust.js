@@ -44,6 +44,8 @@
                 console.log('[Auto Cache Bust] Clearing cache:', cacheName);
                 caches.delete(cacheName);
             });
+        }).catch(e => {
+            console.warn('[Auto Cache Bust] Could not clear caches:', e);
         });
     }
 
@@ -71,34 +73,12 @@
                 registration.unregister();
                 console.log('[Auto Cache Bust] Unregistered service worker');
             });
+        }).catch(e => {
+            console.warn('[Auto Cache Bust] Could not unregister service workers:', e);
         });
     }
 
-    // === 6. ADD TIMESTAMPS TO DYNAMICALLY LOADED RESOURCES ===
-    // This intercepts any new scripts/styles loaded after page load
-    const originalCreateElement = document.createElement;
-    document.createElement = function(tagName) {
-        const element = originalCreateElement.call(document, tagName);
-
-        // Add timestamp to scripts and stylesheets
-        if (tagName.toLowerCase() === 'script' || tagName.toLowerCase() === 'link') {
-            const originalSetAttribute = element.setAttribute;
-            element.setAttribute = function(name, value) {
-                if (name === 'src' || name === 'href') {
-                    // Add timestamp if not already present
-                    if (value && !value.includes('?t=') && !value.startsWith('http')) {
-                        const separator = value.includes('?') ? '&' : '?';
-                        value = `${value}${separator}t=${timestamp}`;
-                    }
-                }
-                originalSetAttribute.call(element, name, value);
-            };
-        }
-
-        return element;
-    };
-
-    // === 7. PREVENT BROWSER BACK/FORWARD CACHE ===
+    // === 6. PREVENT BROWSER BACK/FORWARD CACHE ===
     window.addEventListener('pageshow', function(event) {
         if (event.persisted) {
             console.log('[Auto Cache Bust] Page restored from bfcache, reloading...');
@@ -116,28 +96,7 @@
         }
     });
 
-    // === 8. AGGRESSIVE CACHE PREVENTION ===
-    // Add no-cache headers to fetch requests
-    const originalFetch = window.fetch;
-    window.fetch = function(...args) {
-        const [url, options = {}] = args;
-
-        // Add cache: 'no-store' to prevent caching
-        const newOptions = {
-            ...options,
-            cache: 'no-store',
-            headers: {
-                ...options.headers,
-                'Cache-Control': 'no-cache, no-store, must-revalidate',
-                'Pragma': 'no-cache',
-                'Expires': '0'
-            }
-        };
-
-        return originalFetch.call(window, url, newOptions);
-    };
-
-    // === 9. MARK RESOURCES WITH TIMESTAMPS ===
+    // === 7. MARK RESOURCES WITH TIMESTAMPS ===
     // Update all script and link tags on the page
     window.addEventListener('DOMContentLoaded', function() {
         console.log('[Auto Cache Bust] Updating resource timestamps...');

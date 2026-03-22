@@ -61,7 +61,7 @@ const navLinks = document.querySelectorAll('.nav-link');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         // Tab bar stays visible, no need to close
-        if (window.innerWidth > 768) {
+        if (window.innerWidth > 768 && navMenu) {
             navMenu.classList.remove('active');
             if (mobileMenuToggle) {
                 mobileMenuToggle.classList.remove('active');
@@ -176,7 +176,7 @@ function enhanceLoadingScreen() {
     compilingText.style.cssText = `
         margin-top: 2rem;
         font-family: 'Courier New', monospace;
-        color: #6366f1;
+        color: #c9a84c;
         font-size: 1rem;
     `;
 
@@ -220,46 +220,7 @@ function enhanceLoadingScreen() {
 // ============================================
 
 function initDeveloperPalette() {
-    // DISABLED - Developer palette completely removed
-    console.log('[KCOH] Shared developer palette disabled - function returns immediately');
-    return;
-    const paletteButton = document.querySelector('.palette-toggle');
-    if (!paletteButton) return;
-
-    const palette = document.createElement('div');
-    palette.className = 'dev-palette';
-    palette.innerHTML = `
-        <div class="dev-palette-header">
-            <span>Developer Shortcuts</span>
-            <span class="dev-palette-close">✕</span>
-        </div>
-        <div class="dev-palette-list">
-            <span><span class="dev-key">Ctrl + \`</span>Open interactive terminal</span>
-            <span><span class="dev-key">Ctrl + K</span>Toggle this palette</span>
-            <span><span class="dev-key">?</span>Show/hide shortcuts</span>
-            <span><span class="dev-key">Konami</span>Confetti surprise</span>
-            <span><span class="dev-key">Click</span>Particle + ripple effects</span>
-            <span><span class="dev-key">Hover</span>Magnetic cards + tilt</span>
-        </div>
-        <div class="dev-palette-hint">Press "?" or Ctrl+K from anywhere to view shortcuts.</div>
-    `;
-
-    const closeBtn = palette.querySelector('.dev-palette-close');
-    closeBtn.addEventListener('click', () => {
-        console.log('[KCOH] Shared palette close button -> close');
-        palette.classList.remove('show');
-    });
-
-    document.body.appendChild(palette);
-
-    // Only allow palette via toolbar button; keep it closed by default
-    paletteButton.addEventListener('click', () => {
-        const shouldOpen = !palette.classList.contains('show');
-        console.log(`[KCOH] Shared palette button -> ${shouldOpen ? 'open' : 'close'}`);
-        palette.classList.toggle('show');
-    });
-    palette.classList.remove('show');
-    console.log('[KCOH] Shared developer palette initialized (closed by default)');
+    // Developer palette disabled
 }
 
 // ============================================
