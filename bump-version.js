@@ -27,7 +27,11 @@ const filesToUpdate = [
     'portfolio.html',
     'contact.html',
     'sitemap.html',
-    '404.html'
+    '404.html',
+    'styles.css',
+    'quick-wins.css',
+    'terminal.js',
+    'assets/js/404-search.js'
 ];
 
 // Read current version from package.json

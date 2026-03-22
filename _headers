@@ -20,13 +20,13 @@
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
 
-# CSS and JS with versioning - Cache for 1 year (immutable with version query string)
+# CSS and JS - Cache for 1 hour, revalidate after
 /*.css
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=3600, must-revalidate
   X-Content-Type-Options: nosniff
 
 /*.js
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=3600, must-revalidate
   X-Content-Type-Options: nosniff
 
 # Service Worker - NEVER cache (override the /*.js rule)
