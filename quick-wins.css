@@ -1225,7 +1225,7 @@
     left: 0;
     width: 60px;
     height: 2px;
-    background: linear-gradient(90deg, #c9a84c, #a855f7);
+    background: linear-gradient(90deg, #c9a84c, #d4af57);
     border-radius: 2px;
 }
 
@@ -1373,7 +1373,7 @@
     line-height: 1.2;
     transform: none !important;
     transition: none !important;
-    background: linear-gradient(135deg, #c9a84c, #a855f7);
+    background: linear-gradient(135deg, #c9a84c, #d4af57);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1390,7 +1390,7 @@
 
 /* Primary Text - Enhanced with Accent */
 .portfolio-primary {
-    color: #e0e7ff;
+    color: #e8e6e1;
     font-size: 1.125rem;
     line-height: 1.7;
     margin-bottom: 1rem;
@@ -1434,7 +1434,7 @@
 .portfolio-item:hover .portfolio-status {
     background: rgba(201, 168, 76, 0.15);
     border-color: rgba(201, 168, 76, 0.4);
-    color: #c4b5fd;
+    color: #d4af57;
 }
 
 /* Secondary Details - Enhanced Design */
@@ -1514,7 +1514,7 @@
     padding: 0.375rem 0.875rem;
     border-radius: 0.5rem;
     font-size: 0.75rem;
-    color: #c4b5fd;
+    color: #d4af57;
     font-weight: 500;
     border: 1px solid rgba(201, 168, 76, 0.3);
     transition: all 0.3s ease;

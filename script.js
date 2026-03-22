@@ -1600,7 +1600,7 @@ function initCodeTyping() {
         transform: translate(-50%, 10px);
         font-family: 'Courier New', monospace;
         font-size: 0.85rem;
-        color: #c7d2fe;
+        color: #e8e6e1;
         background: rgba(15, 23, 42, 0.9);
         padding: 1.35rem;
         padding-top: 2rem;
@@ -2123,7 +2123,7 @@ function initClickExplosion() {
             this.life = 100;
             this.maxLife = 100;
             this.size = Math.random() * 4 + 2;
-            this.color = ['#c9a84c', '#d4af57', '#d4af57', '#c4b5fd'][Math.floor(Math.random() * 4)];
+            this.color = ['#c9a84c', '#d4af57', '#d4af57', '#d4af57'][Math.floor(Math.random() * 4)];
         }
 
         update() {

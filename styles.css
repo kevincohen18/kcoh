@@ -39,11 +39,11 @@ body {
 :root {
     --primary-color: #c9a84c;
     --primary-dark: #b8943e;
-    --primary-light: #818cf8;
+    --primary-light: #c9a84c;
     --secondary-color: #d4af57;
     --accent-teal: #06b6d4;
     --accent-cyan: #22d3ee;
-    --accent-purple: #a855f7;
+    --accent-purple: #d4af57;
     --text-primary: #1f2937;
     --text-secondary: #6b7280;
     --bg-light: #f9fafb;
@@ -51,7 +51,7 @@ body {
     --border-color: #e5e7eb;
     --gradient-start: #c9a84c;
     --gradient-mid: #d4af57;
-    --gradient-end: #a855f7;
+    --gradient-end: #d4af57;
     --gradient-teal: #06b6d4;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -366,7 +366,7 @@ section {
     align-items: center;
     gap: 0.6rem;
     padding: 0.7rem 1.25rem;
-    background: linear-gradient(135deg, #c9a84c 0%, #d4af57 50%, #a855f7 100%);
+    background: linear-gradient(135deg, #c9a84c 0%, #d4af57 50%, #d4af57 100%);
     color: #fff;
     text-decoration: none;
     font-weight: 600;
@@ -420,7 +420,7 @@ section {
         0 6px 20px rgba(201, 168, 76, 0.5),
         0 4px 8px rgba(201, 168, 76, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #a855f7 100%);
+    background: linear-gradient(135deg, #b8943e 0%, #c9a84c 50%, #d4af57 100%);
 }
 
 .nav-cta-btn:active {
@@ -557,7 +557,7 @@ section {
 
 .case-badge.purple {
     background: rgba(201, 168, 76, 0.12);
-    color: #c4b5fd;
+    color: #d4af57;
 }
 
 .case-badge.blue {
@@ -721,7 +721,7 @@ section {
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #c9a84c, #a855f7);
+    background: linear-gradient(135deg, #c9a84c, #d4af57);
     padding: 0.25rem 1rem;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -877,7 +877,7 @@ section {
 .process-step .step-number {
     width: 56px;
     height: 56px;
-    background: linear-gradient(135deg, #c9a84c, #d4af57, #a855f7);
+    background: linear-gradient(135deg, #c9a84c, #d4af57, #d4af57);
     background-size: 200% 200%;
     border-radius: 50%;
     display: flex;
@@ -899,7 +899,7 @@ section {
     position: absolute;
     inset: -2px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #c9a84c, #a855f7);
+    background: linear-gradient(135deg, #c9a84c, #d4af57);
     opacity: 0;
     z-index: -1;
     filter: blur(10px);
@@ -1802,7 +1802,7 @@ body:not(.light-theme) .theme-toggle .moon-icon {
 .code-marquee span {
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
-    color: #c7d2fe;
+    color: #e8e6e1;
     text-shadow: 0 0 15px rgba(201, 168, 76, 0.6);
 }
 
@@ -2534,7 +2534,7 @@ section:first-of-type {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #c9a84c, #a855f7);
+    background: linear-gradient(135deg, #c9a84c, #d4af57);
     display: inline-block;
     animation: pulse 2s ease-in-out infinite;
 }
@@ -2581,7 +2581,7 @@ section:first-of-type {
 .stat-number-redesigned {
     font-size: 2.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #c9a84c, #a855f7);
+    background: linear-gradient(135deg, #c9a84c, #d4af57);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -2657,7 +2657,7 @@ section:first-of-type {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #c9a84c, #d4af57, #a855f7);
+    background: linear-gradient(90deg, #c9a84c, #d4af57, #d4af57);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -2696,7 +2696,7 @@ section:first-of-type {
     left: -2px;
     right: -2px;
     height: 6px;
-    background: linear-gradient(90deg, #c9a84c, #d4af57, #a855f7, #c9a84c);
+    background: linear-gradient(90deg, #c9a84c, #d4af57, #d4af57, #c9a84c);
     background-size: 200% 100%;
     border-radius: 1.5rem 1.5rem 0 0;
     opacity: 0.6;
@@ -5859,7 +5859,7 @@ html {
     border-radius: 1rem;
     box-shadow: 0 20px 60px rgba(10, 15, 26, 0.45), 0 0 30px rgba(201, 168, 76, 0.4);
     padding: 1rem 1.25rem;
-    color: #e0e7ff;
+    color: #e8e6e1;
     backdrop-filter: blur(12px);
     transform: translateY(20px);
     opacity: 0;
@@ -6615,7 +6615,7 @@ html {
     border-radius: 2rem;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #c7d2fe;
+    color: #e8e6e1;
     animation: floatWithRest 9s ease-in-out infinite;
     transition: all 0.3s ease;
 }
@@ -6734,7 +6734,7 @@ html {
 }
 
 .code-editor {
-    background: #1e293b;
+    background: #111827;
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
@@ -6769,12 +6769,12 @@ html {
 
 .editor-tab:hover {
     background: rgba(201, 168, 76, 0.1);
-    color: #c7d2fe;
+    color: #e8e6e1;
 }
 
 .editor-tab.active {
     background: rgba(201, 168, 76, 0.2);
-    color: #e0e7ff;
+    color: #e8e6e1;
     font-weight: 600;
 }
 
@@ -6878,12 +6878,12 @@ html {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
-    background: #1e293b;
+    background: #111827;
     border-bottom: 1px solid rgba(201, 168, 76, 0.2);
 }
 
 .terminal-title {
-    color: #c7d2fe;
+    color: #e8e6e1;
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     font-weight: 600;
