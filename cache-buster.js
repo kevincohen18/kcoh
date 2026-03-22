@@ -6,7 +6,7 @@
 (function() {
     'use strict';
 
-    const CURRENT_VERSION = '3.4.0';
+    const CURRENT_VERSION = '3.5.0';
 
     // Register service worker if supported
     if ('serviceWorker' in navigator) {
