@@ -1,71 +1,20 @@
 # Cloudflare Pages Headers Configuration
-# Forces proper cache behavior on custom domain (kcoh.ca)
+# All resources served fresh — no stale cache issues
 
-# HTML files - Always revalidate to show latest build
-/*.html
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-  Referrer-Policy: strict-origin-when-cross-origin
-
-# Root index
-/
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-
-# CSS and JS - Cache for 1 hour, revalidate after
-/*.css
-  Cache-Control: public, max-age=3600, must-revalidate
-  X-Content-Type-Options: nosniff
-
-/*.js
-  Cache-Control: public, max-age=3600, must-revalidate
-  X-Content-Type-Options: nosniff
-
-# Service Worker - NEVER cache (override the /*.js rule)
-/sw.js
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
-
-# Images - Cache for 1 month
-/*.jpg
-  Cache-Control: public, max-age=2592000
-/*.jpeg
-  Cache-Control: public, max-age=2592000
-/*.png
-  Cache-Control: public, max-age=2592000
-/*.svg
-  Cache-Control: public, max-age=2592000
-/*.webp
-  Cache-Control: public, max-age=2592000
-/*.gif
-  Cache-Control: public, max-age=2592000
-/*.ico
-  Cache-Control: public, max-age=2592000
-
-# Fonts - Cache for 1 year
-/*.woff
-  Cache-Control: public, max-age=31536000, immutable
-/*.woff2
-  Cache-Control: public, max-age=31536000, immutable
-/*.ttf
-  Cache-Control: public, max-age=31536000, immutable
-/*.eot
-  Cache-Control: public, max-age=31536000, immutable
-
-# Security headers for all files
+# Everything: no caching, always fresh
 /*
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.emailjs.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';
+
+# Fonts only — these never change, safe to cache
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
