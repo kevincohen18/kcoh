@@ -197,9 +197,9 @@ const aliases = {
     'cosway': 'cowsay'  // Common typo for cowsay
 };
 
-// Achievement unlock function
+// Achievement unlock function — disabled for professional redesign
 function unlockTerminalAchievement() {
-    // Wait for achievement system to be available
+    return;
     setTimeout(() => {
         if (typeof unlockAchievement === 'function') {
             unlockAchievement({

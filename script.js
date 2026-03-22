@@ -2272,10 +2272,9 @@ function initRippleEffect() {
     // Ripple effect removed; confetti and other click effects remain
 }
 
-// Konami Code Easter Egg
+// Konami Code Easter Egg — disabled for professional redesign
 function initKonamiCode() {
-    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    let konamiIndex = 0;
+    return;
 
     document.addEventListener('keydown', (e) => {
         if (e.key === konamiCode[konamiIndex]) {
@@ -2584,8 +2583,9 @@ function initInteractiveTerminal() {
     document.head.appendChild(rainbowStyle);
 }
 
-// Floating Achievement Badges (FIXED - higher thresholds)
+// Achievement Badges — disabled for professional redesign
 function initAchievementBadges() {
+    return;
     const achievements = [
         { icon: '🎯', text: 'Explorer', trigger: 'scroll', threshold: 3000 },
         { icon: '🖱️', text: 'Clicker', trigger: 'click', threshold: 50 },
