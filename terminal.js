@@ -155,7 +155,7 @@ Visit https://kevincohen.ca for infrastructure details.`,
                         path: '~/projects/README.md',
                         content: `# Projects Portfolio
 
-Welcome to my projects directory!
+KCOH Software Inc. — Project Directory
 
 ## Available Projects
 
@@ -203,7 +203,7 @@ function unlockTerminalAchievement() {
     setTimeout(() => {
         if (typeof unlockAchievement === 'function') {
             unlockAchievement({
-                icon: '💻',
+                icon: '',
                 text: 'Terminal Hacker',
                 description: 'Discovered the interactive terminal!'
             });
@@ -213,7 +213,7 @@ function unlockTerminalAchievement() {
                 if (typeof unlockAchievement === 'function') {
                     clearInterval(checkInterval);
                     unlockAchievement({
-                        icon: '💻',
+                        icon: '',
                         text: 'Terminal Hacker',
                         description: 'Discovered the interactive terminal!'
                     });
@@ -248,7 +248,7 @@ function initInteractiveTerminalPortfolio() {
             
             // Show smart help prompt
             setTimeout(() => {
-                addOutput(`<span class="terminal-info" style="color: #10b981; font-weight: 600;">💡 Tip: Type 'help' to see all available commands</span>`, 'terminal-tip');
+                addOutput(`<span class="terminal-info" style="color: #10b981; font-weight: 600;">Tip: Type 'help' to see all available commands</span>`, 'terminal-tip');
             }, 500);
             
             // Focus input after a brief delay
@@ -715,11 +715,6 @@ function initInteractiveTerminalPortfolio() {
   <span class="help-command">skills</span>                   List technical skills
   <span class="help-command">apps</span>                     Show iOS apps information
 
-<span class="help-category">Fun Commands:</span>
-  <span class="help-command">cowsay &lt;text&gt;</span>      ASCII art cow
-  <span class="help-command">fortune</span>                   Random quote
-  <span class="help-command">neofetch</span>                  System information
-
 <span class="help-category">Shortcuts:</span>
   <span class="help-command">Tab</span>                   Auto-complete
   <span class="help-command">↑/↓</span>                      Command history
@@ -823,40 +818,18 @@ function initInteractiveTerminalPortfolio() {
 
     function handleApps() {
         addOutput(`<span class="help-section">iOS Applications:</span>`);
-        addOutput(`  10+ published iOS apps on the App Store built with Swift & SwiftUI 🍎`);
+        addOutput(`  10+ published iOS apps on the App Store built with Swift & SwiftUI`);
         addOutput(`  Visit <a href="https://kevincohen.ca" target="_blank" class="terminal-link">kevincohen.ca</a> for full portfolio`);
     }
 
     // Matrix command removed - now a site-wide background effect
 
     function handleCowsay(args) {
-        const text = args.join(' ') || 'Hello from KCOH Terminal!';
-        const textLength = text.length;
-        const border = ' ' + '_'.repeat(textLength + 2);
-        const cow = `
-<span class="cowsay">${border}</span>
-<span class="cowsay"> < ${text} ></span>
-<span class="cowsay">${border.replace('_', '-').replace(/_/g, '-')}</span>
-<span class="cowsay">        \\   ^__^</span>
-<span class="cowsay">         \\  (oo)\\_______</span>
-<span class="cowsay">            (__)\\       )\\/\\</span>
-<span class="cowsay">                ||----w |</span>
-<span class="cowsay">                ||     ||</span>`;
-        addOutput(cow, 'terminal-cowsay');
+        addOutput('Command not available.');
     }
 
     function handleFortune() {
-        const fortunes = [
-            'The best code is code you never have to write.',
-            'Premature optimization is the root of all evil.',
-            'Code is like humor. When you have to explain it, it\'s bad.',
-            'First, solve the problem. Then, write the code.',
-            'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-            'The only way to learn a new programming language is by writing programs in it.',
-            'Programs must be written for people to read, and only incidentally for machines to execute.'
-        ];
-        const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-        addOutput(`<span class="fortune-text">${fortune}</span>`, 'terminal-fortune');
+        addOutput('Command not available.');
     }
 
     function handleNeofetch() {

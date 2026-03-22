@@ -1117,7 +1117,7 @@ const hasEmailForms = contactForm || newsletterForm;
 if (hasEmailForms && typeof emailjs !== 'undefined') {
     try {
     emailjs.init(EMAILJS_PUBLIC_KEY);
-        console.log('EmailJS initialized successfully ✓');
+        console.log('EmailJS initialized successfully');
         console.log('EmailJS Config:', {
             publicKey: EMAILJS_PUBLIC_KEY,
             serviceId: EMAILJS_SERVICE_ID,
@@ -1575,6 +1575,7 @@ function initMatrixRain() {
 
 // Code Typing Animation
 function initCodeTyping() {
+    return; // Disabled for professional redesign
     const codeLines = [
         'let developer = Developer()',
         'developer.skills = ["Swift", "iOS", "React"]',
@@ -1750,6 +1751,7 @@ function initCodeTyping() {
 
 // Magnetic Cursor Effect
 function initMagneticCursor() {
+    return; // Disabled for professional redesign
     const cursor = document.createElement('div');
     cursor.className = 'magnetic-cursor';
     cursor.style.cssText = `
@@ -1821,6 +1823,7 @@ function initMagneticCursor() {
 
 // Glitch Effect for Headers (disabled for stability)
 function initGlitchEffect() {
+    return; // Disabled for professional redesign
     const headers = document.querySelectorAll('.section-title');
     headers.forEach(header => {
         header.style.animation = 'none';
@@ -1872,6 +1875,7 @@ function initGlitchEffect() {
 
 // Holographic Card Effect
 function initHolographicCards() {
+    return; // Disabled for professional redesign
     // Exclude portfolio items - they have their own static glow effects
     const cards = document.querySelectorAll('.service-card, .testimonial-card');
     cards.forEach(card => {
@@ -1899,6 +1903,7 @@ function initHolographicCards() {
 
 // Circuit Board Background Pattern
 function initCircuitBoard() {
+    return; // Disabled for professional redesign
     const canvas = document.createElement('canvas');
     canvas.id = 'circuit-board';
     canvas.style.cssText = `
@@ -1954,6 +1959,7 @@ function initCircuitBoard() {
 
 // Enhanced Particle System with Mouse Interaction
 function initInteractiveParticles() {
+    return; // Disabled for professional redesign
     const canvas = document.getElementById('particles');
     if (!canvas) return;
 
@@ -2076,10 +2082,10 @@ function enhanceLoadingScreen() {
 // Terminal Command Animation in Console
 function initTerminalCommands() {
     const commands = [
-        'npm install awesome-website',
+        'Loading modules...',
         'Building modern UI...',
-        'Compiling with love ❤️',
-        'Website ready! 🚀'
+        'Compiling assets...',
+        'Website ready.'
     ];
 
     commands.forEach((cmd, index) => {
@@ -2095,6 +2101,7 @@ function initTerminalCommands() {
 
 // Particle Explosion on Click
 function initClickExplosion() {
+    return; // Disabled for professional redesign
     const canvas = document.createElement('canvas');
     canvas.id = 'explosion-canvas';
     canvas.style.cssText = `
@@ -2183,6 +2190,7 @@ function initClickExplosion() {
 
 // Mouse Trail Particles
 function initMouseTrail() {
+    return; // Disabled for professional redesign
     const canvas = document.createElement('canvas');
     canvas.id = 'trail-canvas';
     canvas.style.cssText = `
@@ -2567,6 +2575,7 @@ function initInteractiveTerminal() {
     });
 
     function triggerPartyMode() {
+        return; // Disabled for professional redesign
         document.body.style.animation = 'rainbow 2s linear infinite';
         setTimeout(() => {
             document.body.style.animation = '';
@@ -2801,6 +2810,7 @@ function initShakeEffects() {
 
 // Developer Command Palette - only via toolbar button, never auto
 function initDeveloperPalette() {
+    return; // Disabled for professional redesign
     const isHome = window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html') || window.location.pathname === '' || window.location.pathname === '/index.html';
     if (!isHome) {
         console.log('[KCOH] Developer palette skipped: not on home page');
@@ -2935,6 +2945,7 @@ function initMinimalMode(codeTyping) {
 
 // Easter Eggs - Double Click Logo
 function initEasterEggs() {
+    return; // Disabled for professional redesign
     const logo = document.querySelector('.logo-text');
 
     logo.addEventListener('dblclick', () => {
@@ -3592,6 +3603,7 @@ function initHeroTypingEffect() {
 
 // Hacker-Style Terminal Animation
 function initHackerTerminal() {
+    return; // Disabled for professional redesign
     const terminalOutput = document.querySelector('.terminal-output');
     if (!terminalOutput) return;
 
@@ -3622,6 +3634,7 @@ function initHackerTerminal() {
 
 // Cyber Scan Effect
 function initCyberScan() {
+    return; // Disabled for professional redesign
     const scanLine = document.createElement('div');
     scanLine.style.cssText = `
         position: fixed;
@@ -3651,6 +3664,7 @@ function initCyberScan() {
 
 // Data Stream Effect
 function initDataStream() {
+    return; // Disabled for professional redesign
     const container = document.createElement('div');
     container.className = 'data-stream-container';
     container.style.cssText = `
@@ -3788,6 +3802,7 @@ function initModernHoverEffect() {
 
 // Binary Rain Effect
 function initBinaryRain() {
+    return; // Disabled for professional redesign
     const canvas = document.createElement('canvas');
     canvas.id = 'binary-rain';
     canvas.style.cssText = `
@@ -3843,6 +3858,7 @@ function initBinaryRain() {
 
 // Neon Pulse Effect
 function initNeonPulse() {
+    return; // Disabled for professional redesign
     const badges = document.querySelectorAll('.dev-badge, .tech-icon');
 
     badges.forEach((badge, index) => {
@@ -3976,8 +3992,8 @@ window.addEventListener('load', () => {
 
     // Development console messages
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        console.log('%c⚡ Performance-optimized loading complete!', 'color: #10b981; font-size: 16px; font-weight: bold;');
-        console.log('%c💡 Pro tip: Effects load progressively for optimal performance', 'color: #d4af57; font-size: 12px;');
+        console.log('%cPerformance-optimized loading complete!', 'color: #10b981; font-size: 16px; font-weight: bold;');
+        console.log('%cEffects load progressively for optimal performance', 'color: #d4af57; font-size: 12px;');
     }
 });
 
@@ -4108,7 +4124,7 @@ window.addEventListener('beforeunload', () => {
     }
 });
 
-console.log('Performance optimizations loaded ✓');
+console.log('Performance optimizations loaded');
 
 // ============================================
 // AUTO-CENTER CONTRIBUTION GRAPH ON MOBILE
@@ -4138,7 +4154,7 @@ function centerContributionGraph() {
             behavior: 'smooth'
         });
         
-        console.log('Contribution graph centered on mobile ✓');
+        console.log('Contribution graph centered on mobile');
     }, 100);
 }
 
@@ -4184,7 +4200,7 @@ if ('IntersectionObserver' in window) {
     }
 }
 
-console.log('Auto-center contribution graph loaded ✓');
+console.log('Auto-center contribution graph loaded');
 
 // ============================================
 // CHAT WIDGET FUNCTIONALITY - HOMEPAGE ONLY
@@ -5138,4 +5154,4 @@ window.hideSkeletonLoader = function(containerSelector) {
     container.classList.add('loaded');
 };
 
-console.log('Skeleton loaders loaded ✓');
+console.log('Skeleton loaders loaded');

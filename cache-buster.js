@@ -5,7 +5,7 @@
 (function() {
     'use strict';
 
-    const CURRENT_VERSION = '3.5.2';
+    const CURRENT_VERSION = '3.5.3';
 
     // Check if there's a newer version via version.json
     function checkForUpdates() {

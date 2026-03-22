@@ -1,6 +1,6 @@
 {
-  "version": "3.5.2",
-  "timestamp": "2026-03-22T21:06:55.536Z",
+  "version": "3.5.3",
+  "timestamp": "2026-03-22T21:21:02.578Z",
   "changes": [
     "Added automatic cache busting",
     "Enhanced chatbot with email and phone links",
