@@ -531,20 +531,20 @@ p {
     background: rgba(17, 24, 39, 0.6);
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 3rem;
+    padding: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
+    max-width: 340px;
+    margin: 0 auto;
 }
 
 .case-logo-img {
-    max-width: 180px;
-    max-height: 180px;
-    width: auto;
+    width: 70%;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
 }
 
 @media (max-width: 768px) {
