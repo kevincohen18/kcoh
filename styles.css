@@ -1227,11 +1227,11 @@ section {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 90%;
+    left: 5%;
+    right: 5%;
+    transform: scaleX(0);
     height: 2px;
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 2px;
 }
@@ -1256,7 +1256,7 @@ section {
 }
 
 .nav-link:hover::before {
-    transform: translateX(-50%) scaleX(1);
+    transform: scaleX(1);
 }
 
 .nav-link:hover::after {
@@ -1272,9 +1272,8 @@ section {
 }
 
 .nav-link.active::before {
-    transform: translateX(-50%) scaleX(1);
+    transform: scaleX(1);
     height: 3px;
-    width: 94%;
 }
 
 .nav-link.active::after {
