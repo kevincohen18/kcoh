@@ -40,10 +40,16 @@
 .hero {
     padding: 10rem 0 6rem;
     min-height: auto;
+    display: block;
+    align-items: unset;
+    justify-content: unset;
 }
 
 .hero-content {
     max-width: 680px;
+    text-align: left;
+    margin: 0;
+    animation: none;
 }
 
 .hero .label {
@@ -68,6 +74,7 @@
     align-items: center;
     flex-wrap: wrap;
     margin-bottom: 1.5rem;
+    justify-content: flex-start;
 }
 
 .hero-proof {
