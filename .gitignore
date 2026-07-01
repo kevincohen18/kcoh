@@ -53,3 +53,6 @@ build/
 push-all.sh
 push_all.py
 push_gui.py
+
+# v2 redesign — trial fonts (not for production) and large design refs
+Canela_Collection/
