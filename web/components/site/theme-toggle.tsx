@@ -22,7 +22,7 @@ export function ThemeToggle() {
           : "Toggle color theme"
       }
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="grid size-9 place-items-center rounded-full border border-border text-fg-muted transition-colors hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      className="grid size-9 place-items-center rounded-full border border-border text-fg-muted transition-colors hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
     >
       {mounted ? (
         isDark ? <Sun size={16} /> : <Moon size={16} />

@@ -1,7 +1,11 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ============================================================
+   KCOH design tokens (brand layer)
+   ============================================================ */
 :root {
   --bg: #fafafb;
   --section: #ffffff;
@@ -11,11 +15,31 @@
   --fg: #0f172a;
   --fg-muted: #64748b;
   --fg-subtle: #94a3b8;
-  --accent: #6e63ff;
+  --brand: #6e63ff;
   --highlight: #6be5ff;
   --pos: #16a34a;
   --warn: #d97706;
   --neg: #dc2626;
+
+  /* shadcn semantic tokens -> mapped to KCOH palette (light) */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --card-foreground: var(--fg);
+  --popover: var(--card);
+  --popover-foreground: var(--fg);
+  --primary: var(--brand);
+  --primary-foreground: #ffffff;
+  --secondary: var(--section-alt);
+  --secondary-foreground: var(--fg);
+  --muted: var(--section-alt);
+  --muted-foreground: var(--fg-muted);
+  --accent: #ecedf3;
+  --accent-foreground: var(--fg);
+  --destructive: var(--neg);
+  --destructive-foreground: #ffffff;
+  --input: var(--border);
+  --ring: var(--brand);
+  --radius: 0.625rem;
 }
 
 .dark {
@@ -27,29 +51,72 @@
   --fg: #f6f7fb;
   --fg-muted: #9aa4b2;
   --fg-subtle: #6e7786;
-  --accent: #6e63ff;
+  --brand: #6e63ff;
   --highlight: #6be5ff;
   --pos: #34d399;
   --warn: #fbbf24;
   --neg: #f87171;
+
+  /* shadcn semantic tokens (dark) */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --card-foreground: var(--fg);
+  --popover: var(--card);
+  --popover-foreground: var(--fg);
+  --primary: var(--brand);
+  --primary-foreground: #ffffff;
+  --secondary: var(--section-alt);
+  --secondary-foreground: var(--fg);
+  --muted: var(--section-alt);
+  --muted-foreground: var(--fg-muted);
+  --accent: #1a2233;
+  --accent-foreground: var(--fg);
+  --destructive: var(--neg);
+  --destructive-foreground: #0b0b12;
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: var(--brand);
 }
 
 @theme inline {
+  /* KCOH brand utilities */
   --color-bg: var(--bg);
   --color-section: var(--section);
   --color-section-alt: var(--section-alt);
-  --color-card: var(--card);
-  --color-border: var(--border);
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
   --color-fg-subtle: var(--fg-subtle);
-  --color-accent: var(--accent);
+  --color-brand: var(--brand);
   --color-highlight: var(--highlight);
   --color-pos: var(--pos);
   --color-warn: var(--warn);
   --color-neg: var(--neg);
 
+  /* shadcn semantic utilities */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
   --radius-card: 18px;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
@@ -71,6 +138,6 @@
     text-rendering: optimizeLegibility;
   }
   ::selection {
-    background: color-mix(in srgb, var(--accent) 28%, transparent);
+    background: color-mix(in srgb, var(--brand) 28%, transparent);
   }
 }
