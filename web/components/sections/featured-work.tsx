@@ -4,7 +4,7 @@ import { Reveal } from "@/components/site/reveal";
 import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/content/projects";
 
-const featuredSlugs = ["concordia-connect", "draftery", "skyroa", "automedic"];
+const featuredSlugs = ["concordia-connect", "drafterie", "skyroa", "automedic"];
 const featured = featuredSlugs
   .map((s) => projects.find((p) => p.slug === s))
   .filter((p): p is NonNullable<typeof p> => Boolean(p));

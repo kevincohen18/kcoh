@@ -1,5 +1,5 @@
 import { Container } from "./container";
-import { CONTACT_EMAIL } from "@/content/nav";
+import { CONTACT_EMAIL, LINKEDIN_URL } from "@/content/nav";
 
 export function Footer() {
   return (
@@ -9,7 +9,7 @@ export function Footer() {
           <div className="text-sm font-medium text-fg">KCOH Software Inc.</div>
           <div className="flex items-center gap-6 text-sm text-fg-muted">
             <a
-              href="https://www.linkedin.com"
+              href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-fg"

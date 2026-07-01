@@ -12,13 +12,13 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "draftery",
+    slug: "drafterie",
     name: "Drafterie",
     tagline: "Contracts and e-signatures",
     description: "Smart contract creation and e-signature platform.",
     color: "#6e63ff",
     tech: ["React", "Node", "PostgreSQL", "Stripe"],
-    logo: "/logos/draftery.png",
+    logo: "/logos/drafterie.png",
     featured: true,
     href: "#",
   },

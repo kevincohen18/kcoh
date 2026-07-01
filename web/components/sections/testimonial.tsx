@@ -6,7 +6,7 @@ import { founder } from "@/content/founder";
 
 const LOGO_WALL_SLUGS = [
   "concordia-connect",
-  "draftery",
+  "drafterie",
   "skyroa",
   "automedic",
   "frostynow",
