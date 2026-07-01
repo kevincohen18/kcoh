@@ -13,7 +13,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "draftery",
-    name: "Draftery",
+    name: "Drafterie",
     tagline: "Contracts and e-signatures",
     description: "Smart contract creation and e-signature platform.",
     color: "#6e63ff",
@@ -27,7 +27,7 @@ export const projects: Project[] = [
     name: "Concordia Connect",
     tagline: "Connect. Belong. Succeed.",
     description:
-      "Student networking platform for Concordia University. Native iOS and web, realtime chat, and Apple and Google sign in.",
+      "Student networking platform for Concordia — native iOS and web with realtime chat.",
     color: "#8b1d3f",
     tech: ["Swift", "SwiftUI", "Node", "PostgreSQL", "Socket.IO"],
     logo: "/logos/concordia.png",

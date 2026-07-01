@@ -9,5 +9,5 @@ export const founder = {
     emphasis: "I run the business that needed it.",
     body: "From architecture to operations, I design systems around how businesses actually run, not how they look in a wireframe. The result: clarity, automation, and leverage.",
   },
-  photo: "/founder.jpg",
+  photo: "/founder.webp",
 };
