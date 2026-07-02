@@ -1,29 +1,43 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
-import { SectionLabel } from "@/components/site/section-label";
-import { DashboardScreen } from "@/components/dashboard/dashboard-screen";
+import { PageHero } from "@/components/site/page-hero";
+import { Button } from "@/components/ui/button";
+import { DashboardDemoLoader } from "@/components/dashboard/demo/dashboard-demo-loader";
 
 export const metadata: Metadata = {
-  title: "Live Dashboard",
+  title: "Live Demo",
   description:
-    "A live look at the KCOH operations dashboard: revenue, projects, clients, and invoices in one place.",
+    "A playable preview of the operations dashboards we build: revenue, projects, invoices, and analytics in one place.",
 };
 
 export default function DashboardPage() {
   return (
-    <Container className="py-16 md:py-24">
-      <div className="mb-8 max-w-2xl">
-        <SectionLabel>Product preview</SectionLabel>
-        <h1 className="mt-4 font-serif text-[clamp(32px,4vw,52px)] font-medium leading-[1.05] tracking-[-0.015em] text-fg">
-          The operations dashboard we build for you.
-        </h1>
-        <p className="mt-4 text-lg text-fg-muted">
-          Real-time revenue, project health, and financial clarity in a single
-          view. This is a live, interactive preview — resize it, switch themes,
-          and explore.
+    <>
+      <PageHero
+        eyebrow="Product demo"
+        title="The operations dashboard we build for you."
+        intro="This is the kind of system we build — click around. Switch screens, sort the invoices, hover the charts, and flip the theme."
+      />
+      <Container className="pb-20 md:pb-28">
+        <DashboardDemoLoader />
+        <p className="mt-3 text-center text-xs text-fg-subtle">
+          Simulated data. The components are the ones we ship.
         </p>
-      </div>
-      <DashboardScreen />
-    </Container>
+        <div className="mt-12 flex flex-col items-center gap-4 text-center">
+          <p className="max-w-md text-fg-muted">
+            Want a system like this behind your business? It starts with a
+            conversation.
+          </p>
+          <Button asChild size="lg" className="rounded-full">
+            <Link href="/contact/">
+              Start the conversation
+              <ArrowRight size={16} />
+            </Link>
+          </Button>
+        </div>
+      </Container>
+    </>
   );
 }
