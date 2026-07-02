@@ -6,6 +6,7 @@ import { HowWeWork } from "@/components/sections/how-we-work";
 import { Services } from "@/components/sections/services";
 import { Founder } from "@/components/sections/founder";
 import { Technologies } from "@/components/sections/technologies";
+import { Faq } from "@/components/sections/faq";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Services />
       <Founder />
       <Technologies />
+      <Faq />
     </>
   );
 }
