@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { Button } from "@/components/ui/button";
+import { Magnetic } from "@/components/site/magnetic";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -215,14 +216,16 @@ export function ContactForm() {
       </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-4">
-        <Button
-          type="submit"
-          size="lg"
-          className="rounded-full"
-          disabled={status === "sending" || token === ""}
-        >
-          {status === "sending" ? "Sending…" : "Send message"}
-        </Button>
+        <Magnetic>
+          <Button
+            type="submit"
+            size="lg"
+            className="rounded-full"
+            disabled={status === "sending" || token === ""}
+          >
+            {status === "sending" ? "Sending…" : "Send message"}
+          </Button>
+        </Magnetic>
         {status === "error" && (
           <p role="alert" className="text-sm text-neg">
             Something went wrong.{" "}
