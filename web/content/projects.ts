@@ -20,7 +20,7 @@ export const projects: Project[] = [
     tech: ["React", "Node", "PostgreSQL", "Stripe"],
     logo: "/logos/drafterie.png",
     featured: true,
-    href: "#",
+    href: "/work/drafterie/",
   },
   {
     slug: "concordia-connect",
@@ -32,7 +32,7 @@ export const projects: Project[] = [
     tech: ["Swift", "SwiftUI", "Node", "PostgreSQL", "Socket.IO"],
     logo: "/logos/concordia.png",
     featured: true,
-    href: "#",
+    href: "/work/concordia-connect/",
   },
   {
     slug: "skyroa",
@@ -43,7 +43,7 @@ export const projects: Project[] = [
     tech: ["React", "Node", "PostgreSQL"],
     logo: "/logos/skyroa.png",
     featured: true,
-    href: "#",
+    href: "/work/skyroa/",
   },
   {
     slug: "automedic",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     tech: ["React Native", "Node", "PostgreSQL"],
     logo: "/logos/automedic.png",
     featured: true,
-    href: "#",
+    href: "/work/automedic/",
   },
   {
     slug: "success",
