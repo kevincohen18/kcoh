@@ -3,6 +3,7 @@ import { fontVariables } from "@/lib/fonts";
 import { Providers } from "./providers";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -44,6 +45,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={fontVariables} suppressHydrationWarning>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
         <Providers>
           <Nav />
           <main>{children}</main>

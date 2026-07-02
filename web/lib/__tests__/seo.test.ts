@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, organizationJsonLd } from "@/lib/seo";
 
 describe("pageMetadata", () => {
   const meta = pageMetadata({
@@ -56,5 +56,31 @@ describe("pageMetadata", () => {
     expect(() =>
       pageMetadata({ title: "X", description: "Y", path: "/services" }),
     ).toThrow(/must start and end/);
+  });
+});
+
+describe("organizationJsonLd", () => {
+  it("is a schema.org Organization for kcoh.ca", () => {
+    expect(organizationJsonLd["@context"]).toBe("https://schema.org");
+    expect(organizationJsonLd["@type"]).toBe("Organization");
+    expect(organizationJsonLd.name).toBe("KCOH Software Inc.");
+    expect(organizationJsonLd.url).toBe("https://kcoh.ca");
+  });
+
+  it("carries the real contact facts (never invented)", () => {
+    expect(organizationJsonLd.email).toBe("inquiries@kcoh.ca");
+    expect(organizationJsonLd.sameAs).toContain(
+      "https://ca.linkedin.com/in/kevin-cohen-entrepreneur",
+    );
+    expect(organizationJsonLd.founder.name).toBe("Kevin Cohen");
+    expect(organizationJsonLd.address.addressCountry).toBe("CA");
+    expect(organizationJsonLd.contactPoint.availableLanguage).toEqual([
+      "English",
+      "French",
+    ]);
+  });
+
+  it("serializes cleanly for the ld+json script tag", () => {
+    expect(JSON.stringify(organizationJsonLd)).not.toContain("undefined");
   });
 });

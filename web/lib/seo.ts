@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { CONTACT_EMAIL, LINKEDIN_URL } from "@/content/nav";
+import { founder } from "@/content/founder";
 
 const SITE_NAME = "KCOH Software Inc.";
 
@@ -44,3 +46,24 @@ export function pageMetadata({
     },
   };
 }
+
+export const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: "https://kcoh.ca",
+  logo: "https://kcoh.ca/icon.png",
+  email: CONTACT_EMAIL,
+  founder: {
+    "@type": "Person",
+    name: founder.name,
+    url: LINKEDIN_URL,
+  },
+  sameAs: [LINKEDIN_URL],
+  address: { "@type": "PostalAddress", addressCountry: "CA" },
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: CONTACT_EMAIL,
+    availableLanguage: ["English", "French"],
+  },
+} as const;
