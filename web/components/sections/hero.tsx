@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/site/container";
 import { SectionLabel } from "@/components/site/section-label";
 import { DashboardImage } from "@/components/site/dashboard-image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/reveal";
+import { Tilt } from "@/components/site/tilt";
 import { CAL_URL } from "@/content/nav";
 
 export function Hero() {
@@ -47,7 +50,21 @@ export function Hero() {
             className="pointer-events-none absolute inset-0 -z-10 translate-y-6 scale-95 rounded-[24px] opacity-40 blur-3xl"
             style={{ background: "radial-gradient(closest-side, var(--brand), transparent)" }}
           />
-          <DashboardImage priority className="drop-shadow-2xl" />
+          <Tilt maxDeg={2}>
+            <DashboardImage priority className="drop-shadow-2xl" />
+          </Tilt>
+          <div className="mt-4 flex justify-center">
+            <Link
+              href="/dashboard/"
+              className="group inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-brand-text"
+            >
+              Explore the live demo
+              <ArrowRight
+                size={14}
+                className="transition-transform group-hover:translate-x-0.5"
+              />
+            </Link>
+          </div>
         </Reveal>
       </Container>
     </section>
