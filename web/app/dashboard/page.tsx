@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
@@ -6,11 +7,12 @@ import { PageHero } from "@/components/site/page-hero";
 import { Button } from "@/components/ui/button";
 import { DashboardDemoLoader } from "@/components/dashboard/demo/dashboard-demo-loader";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Live Demo",
   description:
     "A playable preview of the operations dashboards we build: revenue, projects, invoices, and analytics in one place.",
-};
+  path: "/dashboard/",
+});
 
 export default function DashboardPage() {
   return (

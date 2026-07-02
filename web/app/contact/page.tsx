@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Clock, Mail } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { PageHero } from "@/components/site/page-hero";
@@ -7,11 +8,12 @@ import { CalEmbed } from "@/components/contact/cal-embed";
 import { ContactForm } from "@/components/contact/contact-form";
 import { CAL_URL, CONTACT_EMAIL, LINKEDIN_URL } from "@/content/nav";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description:
     "Book a 30-minute conversation or write to us directly. Average reply: under 24h.",
-};
+  path: "/contact/",
+});
 
 export default function ContactPage() {
   return (

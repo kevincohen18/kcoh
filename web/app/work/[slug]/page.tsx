@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ProjectTheme } from "@/components/site/project-theme";
 import { CTASection } from "@/components/site/cta-section";
 import { CaseHero } from "@/components/work/case-hero";
@@ -20,16 +21,11 @@ type Props = { params: Promise<{ slug: CaseSlug }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const study = getCaseStudy(slug);
-  return {
+  return pageMetadata({
     title: study.name,
     description: study.oneLiner,
-    alternates: { canonical: `/work/${study.slug}/` },
-    openGraph: {
-      title: `${study.name} · KCOH Software Inc.`,
-      description: study.oneLiner,
-      images: ["/og.png"],
-    },
-  };
+    path: `/work/${study.slug}/`,
+  });
 }
 
 export default async function CaseStudyPage({ params }: Props) {

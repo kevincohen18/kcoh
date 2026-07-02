@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
@@ -10,12 +11,12 @@ import { ServiceBlock } from "@/components/services/service-block";
 import { WorkflowFeed } from "@/components/services/workflow-feed";
 import { serviceDetails, type ServiceSlug } from "@/content/service-details";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Services",
   description:
     "Business systems engineering: custom software, automation, financial systems, integrations, iOS development, and ongoing support. Fixed quotes after discovery, no hourly billing.",
-  alternates: { canonical: "/services/" },
-};
+  path: "/services/",
+});
 
 const visuals: Partial<Record<ServiceSlug, React.ReactNode>> = {
   automation: <WorkflowFeed />,

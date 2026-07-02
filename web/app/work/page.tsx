@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { CTASection } from "@/components/site/cta-section";
 import { LogoRow } from "@/components/site/logo-row";
@@ -7,18 +8,12 @@ import { Reveal } from "@/components/site/reveal";
 import { WorkFeatureRow } from "@/components/work/feature-row";
 import { caseStudies } from "@/content/case-studies";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Work",
   description:
     "Case studies from KCOH Software Inc.: Concordia Connect, Drafterie, Skyroa, and AutoMedic. Systems built, shipped, and operated in production.",
-  alternates: { canonical: "/work/" },
-  openGraph: {
-    title: "Work",
-    description:
-      "Case studies from KCOH Software Inc.: Concordia Connect, Drafterie, Skyroa, and AutoMedic.",
-    images: ["/og.png"],
-  },
-};
+  path: "/work/",
+});
 
 export default function WorkPage() {
   return (
