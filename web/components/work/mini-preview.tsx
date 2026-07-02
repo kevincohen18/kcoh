@@ -237,12 +237,16 @@ export function ProjectMiniPreview({ slug }: { slug: CaseSlug }) {
     };
   }, []);
 
+  // Ticking is a subscription to the interval "external system"; the reset
+  // back to `base` on deactivation is not stored in state at all (see the
+  // derived `displaySeries` below) so this effect never calls setState
+  // synchronously with a value already computable at render time
+  // (react-hooks/set-state-in-effect).
   useEffect(() => {
     if (!active || reduced) {
-      setSeries(base);
       return;
     }
-    setSeries((s) => tickSeries(s, seedRef.current++));
+    setSeries(tickSeries(base, seedRef.current++));
     const id = setInterval(() => {
       setSeries((s) => tickSeries(s, seedRef.current++));
     }, 700);
@@ -250,6 +254,8 @@ export function ProjectMiniPreview({ slug }: { slug: CaseSlug }) {
   }, [active, reduced, base]);
 
   const Composition = compositions[slug];
+  const isTicking = active && !reduced;
+  const displaySeries = isTicking ? series : base;
 
   return (
     <ProjectTheme accent={accents[slug]}>
@@ -258,7 +264,7 @@ export function ProjectMiniPreview({ slug }: { slug: CaseSlug }) {
         aria-hidden
         className="select-none overflow-hidden rounded-xl border border-border bg-section p-3"
       >
-        <Composition series={series} active={active && !reduced} />
+        <Composition series={displaySeries} active={isTicking} />
       </div>
     </ProjectTheme>
   );
