@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 /** Pure transform: viewport pointer coords -> element-local coords. */
 export function computeGlowPosition(
@@ -9,6 +9,22 @@ export function computeGlowPosition(
   clientY: number,
 ): { x: number; y: number } {
   return { x: clientX - rect.left, y: clientY - rect.top };
+}
+
+const FINE_POINTER_QUERY = "(hover: hover) and (pointer: fine)";
+
+function subscribeFinePointer(callback: () => void): () => void {
+  const mq = window.matchMedia(FINE_POINTER_QUERY);
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+function getFinePointerSnapshot(): boolean {
+  return window.matchMedia(FINE_POINTER_QUERY).matches;
+}
+
+function getFinePointerServerSnapshot(): boolean {
+  return false;
 }
 
 /**
@@ -32,13 +48,11 @@ export function usePointerGlow(): {
   onMouseMove: React.MouseEventHandler<HTMLElement>;
   onMouseLeave: React.MouseEventHandler<HTMLElement>;
 } {
-  const [finePointer, setFinePointer] = useState(false);
-
-  useEffect(() => {
-    setFinePointer(
-      window.matchMedia("(hover: hover) and (pointer: fine)").matches,
-    );
-  }, []);
+  const finePointer = useSyncExternalStore(
+    subscribeFinePointer,
+    getFinePointerSnapshot,
+    getFinePointerServerSnapshot,
+  );
 
   const onMouseMove: React.MouseEventHandler<HTMLElement> = useCallback(
     (e) => {

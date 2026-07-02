@@ -1,8 +1,24 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import { useSpring } from "motion/react";
 import { useReducedMotion } from "@/lib/hooks/use-reduced-motion";
+
+const FINE_POINTER_QUERY = "(hover: hover) and (pointer: fine)";
+
+function subscribeFinePointer(callback: () => void): () => void {
+  const mq = window.matchMedia(FINE_POINTER_QUERY);
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+function getFinePointerSnapshot(): boolean {
+  return window.matchMedia(FINE_POINTER_QUERY).matches;
+}
+
+function getFinePointerServerSnapshot(): boolean {
+  return false;
+}
 
 /**
  * Pure tilt geometry: px/py are the pointer position normalized to [0, 1]
@@ -34,15 +50,13 @@ export function useTilt(maxDeg = 2): {
 } {
   const ref = useRef<HTMLDivElement | null>(null);
   const reduced = useReducedMotion();
-  const [finePointer, setFinePointer] = useState(false);
+  const finePointer = useSyncExternalStore(
+    subscribeFinePointer,
+    getFinePointerSnapshot,
+    getFinePointerServerSnapshot,
+  );
   const rotateX = useSpring(0, SPRING);
   const rotateY = useSpring(0, SPRING);
-
-  useEffect(() => {
-    setFinePointer(
-      window.matchMedia("(hover: hover) and (pointer: fine)").matches,
-    );
-  }, []);
 
   const enabled = finePointer && !reduced;
 

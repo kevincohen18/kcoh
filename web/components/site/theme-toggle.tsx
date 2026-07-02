@@ -1,13 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 
+function subscribeNoop(): () => void {
+  return () => {};
+}
+
+function getMountedSnapshot(): boolean {
+  return true;
+}
+
+function getMountedServerSnapshot(): boolean {
+  return false;
+}
+
+/** True once the component has hydrated on the client. SSR-safe. */
+function useMounted(): boolean {
+  return useSyncExternalStore(
+    subscribeNoop,
+    getMountedSnapshot,
+    getMountedServerSnapshot,
+  );
+}
+
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
 
   const isDark = resolvedTheme === "dark";
 

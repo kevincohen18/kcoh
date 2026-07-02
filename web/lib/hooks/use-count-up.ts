@@ -24,24 +24,22 @@ type CountUpOptions = { duration?: number; enabled?: boolean };
 export function useCountUp(target: number, opts?: CountUpOptions): number {
   const { duration = 1200, enabled = true } = opts ?? {};
   const reduced = useReducedMotion();
-  const [value, setValue] = useState(enabled ? 0 : target);
+  const active = enabled && !reduced;
+  const [animatedValue, setAnimatedValue] = useState(0);
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!enabled || reduced) {
-      setValue(target);
-      return;
-    }
+    if (!active) return;
 
     let startTs: number | null = null;
     const tick = (ts: number) => {
       if (startTs === null) startTs = ts;
       const progress = (ts - startTs) / duration;
       if (progress >= 1) {
-        setValue(target);
+        setAnimatedValue(target);
         return;
       }
-      setValue(computeCountUp(target, progress));
+      setAnimatedValue(computeCountUp(target, progress));
       rafRef.current = requestAnimationFrame(tick);
     };
 
@@ -49,7 +47,9 @@ export function useCountUp(target: number, opts?: CountUpOptions): number {
     return () => {
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
-  }, [target, duration, enabled, reduced]);
+  }, [target, duration, active]);
 
-  return value;
+  // When inactive (disabled or reduced motion), skip the animated state
+  // entirely and return the target directly — no effect-driven sync needed.
+  return active ? animatedValue : target;
 }

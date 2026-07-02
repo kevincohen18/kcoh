@@ -40,7 +40,14 @@ export function DonutGauge({
   const cx = size / 2;
 
   let offset = 0;
-  let startFraction = 0;
+  const segmentStarts: number[] = [];
+  if (segments) {
+    let acc = 0;
+    for (const seg of segments) {
+      segmentStarts.push(acc);
+      acc += seg.value;
+    }
+  }
 
   return (
     <div className={className} style={{ position: "relative", width: size, height: size }}>
@@ -64,8 +71,7 @@ export function DonutGauge({
           animate ? (
             <g transform={`rotate(-90 ${cx} ${cx})`}>
               {segments.map((seg, i) => {
-                const start = startFraction;
-                startFraction += seg.value;
+                const start = segmentStarts[i];
                 return (
                   <motion.circle
                     key={i}
