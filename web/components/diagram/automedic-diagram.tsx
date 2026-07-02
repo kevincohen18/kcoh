@@ -7,11 +7,12 @@ const H = 500;
 
 /* Deliberately the leanest of the four: one operator, one database,
    two tables. The honesty is the point — nothing is padded. */
-export function AutoMedicDiagram() {
+export function AutoMedicDiagram({ eyebrow, client = "Mobile mechanic · Québec" }: { eyebrow?: string; client?: string } = {}) {
   return (
     <SchematicCanvas
-      client="Mobile mechanic · Québec"
+      client={client}
       clientColor="#16a34a"
+      eyebrow={eyebrow}
       w={W}
       h={H}
       edges={[

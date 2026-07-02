@@ -1,13 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
-import { LocaleLink } from "@/components/site/locale-link";
 import { Reveal } from "@/components/site/reveal";
-import { ScaledPreview } from "@/components/site/scaled-preview";
-import { DashboardScreen } from "@/components/dashboard/dashboard-screen";
-import { Tilt } from "@/components/site/tilt";
 import { useLocale } from "@/lib/i18n/locale";
 import { workCopy } from "@/content/case-studies";
 import type { CaseStudy } from "@/content/case-studies";
@@ -65,26 +60,6 @@ export function CaseHero({ study }: { study: CaseStudy }) {
               </li>
             ))}
           </ul>
-        </Reveal>
-
-        <Reveal delay={0.15} className="mt-12">
-          <Tilt maxDeg={2} className="will-change-transform">
-            <ScaledPreview designWidth={1160}>
-              <DashboardScreen />
-            </ScaledPreview>
-          </Tilt>
-          <div className="mt-4 flex justify-center">
-            <LocaleLink
-              href="/dashboard/"
-              className="group inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-brand-text"
-            >
-              {copy.case.exploreDemo}
-              <ArrowRight
-                size={14}
-                className="transition-transform group-hover:translate-x-0.5"
-              />
-            </LocaleLink>
-          </div>
         </Reveal>
       </Container>
     </section>

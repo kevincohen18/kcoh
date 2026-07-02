@@ -5,11 +5,12 @@ import { SchematicCanvas, Node, ContainerNode, CLabel, si, fa } from "./schemati
 const W = 1100;
 const H = 500;
 
-export function SkyroaDiagram() {
+export function SkyroaDiagram({ eyebrow, client = "Regulated escrow" }: { eyebrow?: string; client?: string } = {}) {
   return (
     <SchematicCanvas
-      client="Regulated escrow"
+      client={client}
       clientColor="#4f46e5"
+      eyebrow={eyebrow}
       w={W}
       h={H}
       edges={[

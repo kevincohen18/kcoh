@@ -5,11 +5,12 @@ import { SchematicCanvas, Node, ContainerNode, CLabel, si, fa } from "./schemati
 const W = 1100;
 const H = 500;
 
-export function DrafterieDiagram() {
+export function DrafterieDiagram({ eyebrow, client = "Legal · e-signature" }: { eyebrow?: string; client?: string } = {}) {
   return (
     <SchematicCanvas
-      client="Legal · e-signature"
+      client={client}
       clientColor="#6e63ff"
+      eyebrow={eyebrow}
       w={W}
       h={H}
       edges={[

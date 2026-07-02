@@ -5,11 +5,12 @@ import { SchematicCanvas, Node, ContainerNode, CLabel, si, fa } from "./schemati
 const W = 1100;
 const H = 500;
 
-export function ConcordiaConnectDiagram() {
+export function ConcordiaConnectDiagram({ eyebrow, client = "Concordia University" }: { eyebrow?: string; client?: string } = {}) {
   return (
     <SchematicCanvas
-      client="Concordia University"
+      client={client}
       clientColor="#912338"
+      eyebrow={eyebrow}
       w={W}
       h={H}
       edges={[
