@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { PageHero } from "@/components/site/page-hero";
 import { Button } from "@/components/ui/button";
+import { LocaleLink } from "@/components/site/locale-link";
 import { DashboardDemoLoader } from "@/components/dashboard/demo/dashboard-demo-loader";
 import { demoCopy } from "@/content/demo-copy";
 import { useLocale } from "@/lib/i18n/locale";
@@ -33,10 +33,10 @@ export function DashboardPageContent() {
         <div className="mt-12 flex flex-col items-center gap-4 text-center">
           <p className="max-w-md text-fg-muted">{copy.ctaText}</p>
           <Button asChild size="lg" className="rounded-full">
-            <Link href="/contact/">
+            <LocaleLink href="/contact/">
               {copy.ctaButton}
               <ArrowRight size={16} />
-            </Link>
+            </LocaleLink>
           </Button>
         </div>
       </Container>
