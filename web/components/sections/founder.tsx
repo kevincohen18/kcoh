@@ -1,20 +1,26 @@
+"use client";
+
 import Image from "next/image";
 import { Container } from "@/components/site/container";
 import { SectionLabel } from "@/components/site/section-label";
 import { Reveal } from "@/components/site/reveal";
 import { founder } from "@/content/founder";
+import { useLocale } from "@/lib/i18n/locale";
 
 export function Founder() {
+  const { locale } = useLocale();
+  const f = founder[locale];
+
   return (
     <section id="about" className="scroll-mt-24 border-t border-border bg-bg">
       <Container className="grid items-center gap-12 py-20 md:py-28 lg:grid-cols-12">
         <Reveal className="lg:col-span-7">
-          <SectionLabel>Built by someone who operates</SectionLabel>
+          <SectionLabel>{f.eyebrow}</SectionLabel>
           <h2 className="mt-4 font-serif text-[clamp(28px,3.4vw,44px)] font-medium leading-[1.1] tracking-[-0.015em] text-fg">
-            {founder.statement}
+            {f.statement}
           </h2>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-muted">
-            {founder.supporting}
+            {f.supporting}
           </p>
           <div className="mt-8">
             <svg
@@ -31,16 +37,16 @@ export function Founder() {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="mt-2 text-sm font-medium text-fg">&mdash; {founder.name}</p>
-            <p className="text-sm text-fg-subtle">{founder.role}</p>
+            <p className="mt-2 text-sm font-medium text-fg">&mdash; {f.name}</p>
+            <p className="text-sm text-fg-subtle">{f.role}</p>
           </div>
         </Reveal>
 
         <Reveal delay={0.1} className="lg:col-span-5">
           <div className="relative mx-auto aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-[20px] border border-border bg-section">
             <Image
-              src={founder.photo}
-              alt={`${founder.name}, ${founder.role}`}
+              src={f.photo}
+              alt={`${f.name}, ${f.role}`}
               fill
               sizes="320px"
               className="object-cover"

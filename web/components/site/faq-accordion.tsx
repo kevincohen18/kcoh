@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Accordion,
   AccordionContent,
@@ -5,11 +7,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { faqs } from "@/content/faq";
+import { useLocale } from "@/lib/i18n/locale";
 
 export function FaqAccordion() {
+  const { locale } = useLocale();
+  const items = faqs[locale];
+
   return (
     <Accordion type="single" collapsible className="w-full">
-      {faqs.map((faq, i) => (
+      {items.map((faq, i) => (
         <AccordionItem key={faq.q} value={`faq-${i}`}>
           <AccordionTrigger className="py-5 text-left text-base font-medium text-fg hover:no-underline">
             {faq.q}

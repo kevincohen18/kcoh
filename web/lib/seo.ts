@@ -56,7 +56,11 @@ export const organizationJsonLd = {
   email: CONTACT_EMAIL,
   founder: {
     "@type": "Person",
-    name: founder.name,
+    // Structured data / metadata is server-rendered and English-only (no
+    // `/fr` route exists to serve French metadata to) — use the `en` slice
+    // explicitly now that `founder` is a `Record<Locale, FounderContent>`.
+    // The name is a proper noun and identical across locales regardless.
+    name: founder.en.name,
     url: LINKEDIN_URL,
   },
   sameAs: [LINKEDIN_URL],
