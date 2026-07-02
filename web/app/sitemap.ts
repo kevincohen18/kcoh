@@ -1,24 +1,53 @@
 import type { MetadataRoute } from "next";
+import { caseStudies } from "@/content/case-studies";
 
 // Required for `output: "export"` — emit a static sitemap.xml at build time.
 export const dynamic = "force-static";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://kcoh.ca";
-  const lastModified = new Date("2026-07-01");
+const base = "https://kcoh.ca";
+const lastModified = new Date("2026-07-01");
 
-  return [
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: `${base}/`, lastModified, changeFrequency: "monthly", priority: 1 },
     {
-      url: `${base}/`,
+      url: `${base}/services/`,
       lastModified,
       changeFrequency: "monthly",
-      priority: 1,
+      priority: 0.8,
     },
     {
-      url: `${base}/dashboard`,
+      url: `${base}/work/`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${base}/about/`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${base}/contact/`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${base}/dashboard/`,
       lastModified,
       changeFrequency: "monthly",
       priority: 0.5,
     },
   ];
+
+  const caseRoutes: MetadataRoute.Sitemap = caseStudies.map((cs) => ({
+    url: `${base}/work/${cs.slug}/`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...caseRoutes];
 }
