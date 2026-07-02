@@ -17,7 +17,10 @@ import { altLanguages } from "@/lib/i18n/alternates";
 // content/i18n/messages.ts (see PATTERN.md's "Voice" section: brand names
 // stay untranslated).
 export const metadata: Metadata = {
-  title: "KCOH Software Inc.",
+  // `absolute` bypasses the root layout's "%s · KCOH Software Inc." template so
+  // the homepage title isn't doubled (matches the English homepage, which uses
+  // the layout's bare `default` title).
+  title: { absolute: "KCOH Software Inc." },
   description:
     "Nous concevons et exploitons les systèmes qui font croître de vraies entreprises. Automatisation, clarté financière et effet de levier opérationnel.",
   alternates: { canonical: "/fr/", languages: altLanguages("/") },
