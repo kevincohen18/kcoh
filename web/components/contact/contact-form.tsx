@@ -9,9 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CONTACT_EMAIL } from "@/content/nav";
+import { contactFormCopy } from "@/content/contact";
+import { useLocale, type Locale } from "@/lib/i18n/locale";
 import {
   buildContactPayload,
   buildMailtoUrl,
+  FIELD_LIMITS,
   validateFields,
   type ContactFields,
   type FieldErrors,
@@ -31,7 +34,36 @@ const EMPTY_FIELDS: ContactFields = {
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+// `lib/contact-validation.ts` is a pure module shared with the server
+// Function (`functions/api/contact.ts`) and has no locale concept — its
+// `validateFields()` always returns English text. Rather than making that
+// shared module locale-aware, this is a local EN → FR lookup for the small,
+// fixed set of messages it can produce (derived from its own FIELD_LIMITS
+// constants, so it stays in sync if a limit ever changes). Only the
+// on-screen display text is localized here; the validation logic itself is
+// untouched.
+const VALIDATION_MESSAGES_FR: Record<string, string> = {
+  "Please tell us your name.": "Veuillez indiquer votre nom.",
+  [`Please keep your name under ${FIELD_LIMITS.name} characters.`]: `Veuillez limiter votre nom à ${FIELD_LIMITS.name} caractères.`,
+  "Please enter a valid email address.":
+    "Veuillez entrer une adresse courriel valide.",
+  [`Please keep the company name under ${FIELD_LIMITS.company} characters.`]: `Veuillez limiter le nom de l'entreprise à ${FIELD_LIMITS.company} caractères.`,
+  "Please include a short message.": "Veuillez inclure un court message.",
+  [`Please keep your message under ${FIELD_LIMITS.message} characters.`]: `Veuillez limiter votre message à ${FIELD_LIMITS.message} caractères.`,
+};
+
+function localizeFieldError(
+  message: string | undefined,
+  locale: Locale,
+): string | undefined {
+  if (!message) return undefined;
+  if (locale === "fr") return VALIDATION_MESSAGES_FR[message] ?? message;
+  return message;
+}
+
 export function ContactForm() {
+  const { locale } = useLocale();
+  const t = contactFormCopy[locale];
   const [fields, setFields] = useState<ContactFields>(EMPTY_FIELDS);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -95,10 +127,10 @@ export function ContactForm() {
         className="rounded-[18px] border border-border bg-card p-8"
       >
         <h3 className="font-serif text-2xl font-medium tracking-[-0.01em] text-fg">
-          Message sent.
+          {t.sent.heading}
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-          It landed in the right inbox. Average reply: under 24h.
+          {t.sent.body}
         </p>
       </div>
     );
@@ -112,11 +144,12 @@ export function ContactForm() {
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="grid gap-2">
-          <Label htmlFor="contact-name">Name</Label>
+          <Label htmlFor="contact-name">{t.fields.name.label}</Label>
           <Input
             id="contact-name"
             name="name"
             autoComplete="name"
+            placeholder={t.fields.name.placeholder}
             value={fields.name}
             onChange={update("name")}
             aria-invalid={Boolean(errors.name)}
@@ -124,17 +157,18 @@ export function ContactForm() {
           />
           {errors.name && (
             <p id="contact-name-error" className="text-xs text-neg">
-              {errors.name}
+              {localizeFieldError(errors.name, locale)}
             </p>
           )}
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="contact-email">Email</Label>
+          <Label htmlFor="contact-email">{t.fields.email.label}</Label>
           <Input
             id="contact-email"
             name="email"
             type="email"
             autoComplete="email"
+            placeholder={t.fields.email.placeholder}
             value={fields.email}
             onChange={update("email")}
             aria-invalid={Boolean(errors.email)}
@@ -142,7 +176,7 @@ export function ContactForm() {
           />
           {errors.email && (
             <p id="contact-email-error" className="text-xs text-neg">
-              {errors.email}
+              {localizeFieldError(errors.email, locale)}
             </p>
           )}
         </div>
@@ -150,12 +184,16 @@ export function ContactForm() {
 
       <div className="mt-5 grid gap-2">
         <Label htmlFor="contact-company">
-          Company <span className="font-normal text-fg-subtle">(optional)</span>
+          {t.fields.company.label}{" "}
+          <span className="font-normal text-fg-subtle">
+            {t.fields.company.optional}
+          </span>
         </Label>
         <Input
           id="contact-company"
           name="company"
           autoComplete="organization"
+          placeholder={t.fields.company.placeholder}
           value={fields.company}
           onChange={update("company")}
           aria-invalid={Boolean(errors.company)}
@@ -163,17 +201,18 @@ export function ContactForm() {
         />
         {errors.company && (
           <p id="contact-company-error" className="text-xs text-neg">
-            {errors.company}
+            {localizeFieldError(errors.company, locale)}
           </p>
         )}
       </div>
 
       <div className="mt-5 grid gap-2">
-        <Label htmlFor="contact-message">Message</Label>
+        <Label htmlFor="contact-message">{t.fields.message.label}</Label>
         <Textarea
           id="contact-message"
           name="message"
           rows={6}
+          placeholder={t.fields.message.placeholder}
           value={fields.message}
           onChange={update("message")}
           aria-invalid={Boolean(errors.message)}
@@ -181,7 +220,7 @@ export function ContactForm() {
         />
         {errors.message && (
           <p id="contact-message-error" className="text-xs text-neg">
-            {errors.message}
+            {localizeFieldError(errors.message, locale)}
           </p>
         )}
       </div>
@@ -191,7 +230,7 @@ export function ContactForm() {
         aria-hidden="true"
         className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
       >
-        <label htmlFor="contact-website">Website</label>
+        <label htmlFor="contact-website">{t.honeypotLabel}</label>
         <input
           id="contact-website"
           name="website"
@@ -223,19 +262,19 @@ export function ContactForm() {
             className="rounded-full"
             disabled={status === "sending" || token === ""}
           >
-            {status === "sending" ? "Sending…" : "Send message"}
+            {status === "sending" ? t.sending : t.submit}
           </Button>
         </Magnetic>
         {status === "error" && (
           <p role="alert" className="text-sm text-neg">
-            Something went wrong.{" "}
+            {t.error.prefix}{" "}
             <a
               href={buildMailtoUrl(CONTACT_EMAIL, fields)}
               className="font-medium underline underline-offset-4"
             >
-              Email us directly
+              {t.error.linkText}
             </a>
-            ; your message is pre-filled.
+            {t.error.suffix}
           </p>
         )}
       </div>
