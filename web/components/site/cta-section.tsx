@@ -1,6 +1,7 @@
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/site/reveal";
 import { Button } from "@/components/ui/button";
+import { Magnetic } from "@/components/site/magnetic";
 import { CAL_URL, CONTACT_EMAIL } from "@/content/nav";
 
 export function CTASection({
@@ -29,11 +30,13 @@ export function CTASection({
             {subline}
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row">
-            <Button asChild size="lg" className="rounded-full">
-              <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-                Book a Conversation
-              </a>
-            </Button>
+            <Magnetic>
+              <Button asChild size="lg" className="rounded-full">
+                <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
+                  Book a Conversation
+                </a>
+              </Button>
+            </Magnetic>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="text-sm text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
