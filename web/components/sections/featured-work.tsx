@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -6,6 +8,7 @@ import { SectionLabel } from "@/components/site/section-label";
 import { Reveal } from "@/components/site/reveal";
 import { ProjectTheme } from "@/components/site/project-theme";
 import { ProjectMiniPreview } from "@/components/work/mini-preview";
+import { usePointerGlow } from "@/lib/hooks/use-pointer-glow";
 import { projects, type Project } from "@/content/projects";
 import type { CaseSlug } from "@/content/case-studies";
 
@@ -22,13 +25,25 @@ const featured = featuredSlugs.flatMap((slug) => {
 });
 
 function FeatureCard({ slug, project }: { slug: CaseSlug; project: Project }) {
+  const { onMouseMove, onMouseLeave } = usePointerGlow();
   return (
     <ProjectTheme accent={project.color} className="h-full w-full">
       <Link
         href={project.href}
         data-preview-group
-        className="group flex h-full flex-col rounded-[20px] border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--brand)_45%,transparent)] hover:shadow-[0_30px_80px_-32px_color-mix(in_srgb,var(--brand)_60%,transparent)]"
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        className="group relative flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--brand)_45%,transparent)] hover:shadow-[0_30px_80px_-32px_color-mix(in_srgb,var(--brand)_60%,transparent)]"
       >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
+          style={{
+            opacity: "var(--glow-opacity, 0)",
+            background:
+              "radial-gradient(240px circle at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in srgb, var(--brand) 12%, transparent), transparent 70%)",
+          }}
+        />
         <div className="flex items-center justify-between gap-4">
           <SectionLabel className="tracking-[0.18em]">
             {project.tagline}
