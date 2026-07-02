@@ -1,7 +1,11 @@
+"use client";
+
 import { Check } from "lucide-react";
 import { Reveal } from "@/components/site/reveal";
 import { SectionLabel } from "@/components/site/section-label";
 import type { ServiceDetail } from "@/content/service-details";
+import { serviceDetailsCopy } from "@/content/service-details";
+import { useLocale } from "@/lib/i18n/locale";
 
 export function ServiceBlock({
   detail,
@@ -12,6 +16,9 @@ export function ServiceBlock({
   index: number;
   visual?: React.ReactNode;
 }) {
+  const { locale } = useLocale();
+  const copy = serviceDetailsCopy[locale];
+
   return (
     <div className="grid gap-10 border-t border-border py-14 first:border-t-0 first:pt-0 md:py-16 lg:grid-cols-12">
       <Reveal className={visual ? "lg:col-span-7" : "lg:col-span-8"}>
@@ -28,7 +35,7 @@ export function ServiceBlock({
           {detail.problem}
         </p>
         <h3 className="mt-7 text-xs font-medium uppercase tracking-[0.2em] text-fg-subtle">
-          What this looks like
+          {copy.whatThisLooksLike}
         </h3>
         <ul className="mt-3 space-y-2.5">
           {detail.deliverables.map((d) => (

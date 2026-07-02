@@ -1,21 +1,28 @@
+"use client";
+
 import { Container } from "@/components/site/container";
 import { SectionLabel } from "@/components/site/section-label";
 import { Reveal } from "@/components/site/reveal";
-import { engagementSteps, pricingNote } from "@/content/engagement";
+import { engagementSteps, pricingNote, engagementCopy } from "@/content/engagement";
+import { useLocale } from "@/lib/i18n/locale";
 
 export function EngagementStrip() {
+  const { locale } = useLocale();
+  const steps = engagementSteps[locale];
+  const copy = engagementCopy[locale];
+
   return (
     <section id="engagements" className="scroll-mt-24 border-t border-border bg-section">
       <Container className="py-20 md:py-28">
         <Reveal>
-          <SectionLabel>How Engagements Work</SectionLabel>
+          <SectionLabel>{copy.eyebrow}</SectionLabel>
           <h2 className="mt-4 max-w-2xl font-serif text-[clamp(30px,3.6vw,48px)] font-medium leading-[1.08] tracking-[-0.015em] text-fg">
-            From first call to running system.
+            {copy.heading}
           </h2>
         </Reveal>
 
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {engagementSteps.map((s, i) => (
+          {steps.map((s, i) => (
             <Reveal key={s.n} delay={i * 0.06}>
               <span className="grid size-8 place-items-center rounded-full bg-[linear-gradient(135deg,var(--brand),var(--highlight))] text-sm font-semibold text-white">
                 {s.n}
@@ -31,7 +38,7 @@ export function EngagementStrip() {
 
         <Reveal delay={0.2}>
           <p className="mt-12 max-w-2xl border-t border-border pt-6 text-sm leading-relaxed text-fg-muted">
-            {pricingNote}
+            {pricingNote[locale]}
           </p>
         </Reveal>
       </Container>

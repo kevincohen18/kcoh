@@ -1,26 +1,33 @@
+"use client";
+
 import { Container } from "@/components/site/container";
 import { SectionLabel } from "@/components/site/section-label";
 import { Reveal } from "@/components/site/reveal";
 import { Button } from "@/components/ui/button";
 import { CAL_URL } from "@/content/nav";
-import { services } from "@/content/services";
+import { services, servicesCopy } from "@/content/services";
+import { useLocale } from "@/lib/i18n/locale";
 
 export function Services() {
+  const { locale } = useLocale();
+  const items = services[locale];
+  const copy = servicesCopy[locale];
+
   return (
     <section id="services" className="scroll-mt-24 border-t border-border bg-section">
       <Container className="py-20 md:py-28">
         <Reveal>
-          <SectionLabel>What We Do</SectionLabel>
+          <SectionLabel>{copy.eyebrow}</SectionLabel>
           <h2 className="mt-4 max-w-2xl font-serif text-[clamp(30px,3.6vw,48px)] font-medium leading-[1.08] tracking-[-0.015em] text-fg">
-            End-to-end software systems that run your business.
+            {copy.heading}
           </h2>
         </Reveal>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <div className="grid gap-x-8 gap-y-9 sm:grid-cols-2 xl:grid-cols-3">
-              {services.map((s, i) => (
-                <Reveal key={s.title} delay={i * 0.05}>
+              {items.map((s, i) => (
+                <Reveal key={i} delay={i * 0.05}>
                   <div className="flex items-center gap-2.5">
                     <s.icon size={18} className="text-brand" />
                     <h3 className="text-sm font-semibold text-fg">{s.title}</h3>
@@ -39,16 +46,16 @@ export function Services() {
                 style={{ background: "radial-gradient(closest-side, var(--brand), transparent)" }}
               />
               <h3 className="font-serif text-[26px] font-medium leading-[1.15] tracking-[-0.01em] text-fg">
-                Let&apos;s talk about
+                {copy.ctaHeadingLine1}
                 <br />
-                what you&apos;re building.
+                {copy.ctaHeadingLine2}
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-fg-muted">
-                30-minute call. No pitch, no pressure. Just a conversation about your systems.
+                {copy.ctaBody}
               </p>
               <Button asChild size="lg" className="mt-6 rounded-full">
                 <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-                  Book a Conversation
+                  {copy.ctaButton}
                 </a>
               </Button>
             </div>
