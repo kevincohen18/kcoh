@@ -7,6 +7,7 @@ import { Services } from "@/components/sections/services";
 import { Founder } from "@/components/sections/founder";
 import { Technologies } from "@/components/sections/technologies";
 import { Faq } from "@/components/sections/faq";
+import { CTASection } from "@/components/site/cta-section";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Founder />
       <Technologies />
       <Faq />
+      <CTASection />
     </>
   );
 }
