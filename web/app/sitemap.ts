@@ -42,7 +42,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const caseRoutes: MetadataRoute.Sitemap = caseStudies.map((cs) => ({
+  // Slugs are identical across locales (no /fr routes) — the English list
+  // is authoritative for the route set.
+  const caseRoutes: MetadataRoute.Sitemap = caseStudies.en.map((cs) => ({
     url: `${base}/work/${cs.slug}/`,
     lastModified,
     changeFrequency: "monthly",

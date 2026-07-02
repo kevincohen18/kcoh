@@ -9,6 +9,8 @@ import { ProjectTheme } from "@/components/site/project-theme";
 import { ProjectMiniPreview } from "@/components/work/mini-preview";
 import { Reveal } from "@/components/site/reveal";
 import { usePointerGlow } from "@/lib/hooks/use-pointer-glow";
+import { useLocale } from "@/lib/i18n/locale";
+import { workCopy } from "@/content/case-studies";
 import type { CaseStudy } from "@/content/case-studies";
 
 export function WorkFeatureRow({
@@ -19,6 +21,8 @@ export function WorkFeatureRow({
   flip?: boolean;
 }) {
   const { onMouseMove, onMouseLeave } = usePointerGlow();
+  const { locale } = useLocale();
+  const copy = workCopy[locale];
   return (
     <ProjectTheme accent={study.accent}>
       <article
@@ -75,7 +79,7 @@ export function WorkFeatureRow({
                 href={`/work/${study.slug}/`}
                 className="group mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-text"
               >
-                Read the case study
+                {copy.index.readCaseStudy}
                 <ArrowRight
                   size={15}
                   className="transition-transform group-hover:translate-x-0.5"

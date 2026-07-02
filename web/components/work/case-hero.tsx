@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -6,12 +8,16 @@ import { Reveal } from "@/components/site/reveal";
 import { ScaledPreview } from "@/components/site/scaled-preview";
 import { DashboardScreen } from "@/components/dashboard/dashboard-screen";
 import { Tilt } from "@/components/site/tilt";
+import { useLocale } from "@/lib/i18n/locale";
+import { workCopy } from "@/content/case-studies";
 import type { CaseStudy } from "@/content/case-studies";
 
 // Rendered inside the page-level ProjectTheme wrapper, so var(--brand) is the
 // project accent here. The gradient is a low-opacity radial tint on the base
 // background — an atmosphere, never a fill.
 export function CaseHero({ study }: { study: CaseStudy }) {
+  const { locale } = useLocale();
+  const copy = workCopy[locale];
   return (
     <section className="relative overflow-hidden border-b border-border bg-bg">
       <div
@@ -39,7 +45,7 @@ export function CaseHero({ study }: { study: CaseStudy }) {
             </span>
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.25em] text-brand-text">
-                Case Study
+                {copy.case.caseStudyLabel}
               </p>
               <h1 className="mt-1 font-serif text-[clamp(36px,5vw,64px)] font-medium leading-[1.02] tracking-[-0.015em] text-fg">
                 {study.name}
@@ -72,7 +78,7 @@ export function CaseHero({ study }: { study: CaseStudy }) {
               href="/dashboard/"
               className="group inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-brand-text"
             >
-              Explore the live demo
+              {copy.case.exploreDemo}
               <ArrowRight
                 size={14}
                 className="transition-transform group-hover:translate-x-0.5"
