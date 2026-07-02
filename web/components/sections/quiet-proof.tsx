@@ -1,8 +1,16 @@
+"use client";
+
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/site/reveal";
-import { proofHeading, proofBody, proofPoints } from "@/content/proof";
+import { proofPoints } from "@/content/proof";
+import { useLocale } from "@/lib/i18n/locale";
+import { useT } from "@/content/i18n/messages";
 
 export function QuietProof() {
+  const { locale } = useLocale();
+  const t = useT();
+  const points = proofPoints[locale];
+
   return (
     <section className="relative overflow-hidden">
       {/* Soft lavender wash that continues the hero — no hard divider. */}
@@ -26,17 +34,17 @@ export function QuietProof() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-[clamp(28px,3.6vw,42px)] font-medium leading-[1.1] tracking-[-0.01em] text-fg">
-              {proofHeading}
+              {t.proof.heading}
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-fg-muted md:text-lg">
-              {proofBody}
+              {t.proof.body}
             </p>
           </div>
         </Reveal>
 
         <div className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 md:mt-16 md:gap-5 lg:grid-cols-4">
-          {proofPoints.map((point, i) => (
-            <Reveal key={point.label} delay={0.08 + i * 0.07}>
+          {points.map((point, i) => (
+            <Reveal key={i} delay={0.08 + i * 0.07}>
               <div className="proof-card group h-full rounded-2xl p-6 backdrop-blur-xl">
                 <div className="font-serif text-2xl leading-none tracking-tight text-fg">
                   {point.value}

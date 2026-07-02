@@ -1,16 +1,23 @@
+"use client";
+
 import { Container } from "@/components/site/container";
 import { Reveal } from "@/components/site/reveal";
 import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/site/magnetic";
 import { CAL_URL, CONTACT_EMAIL } from "@/content/nav";
+import { useT } from "@/content/i18n/messages";
 
 export function CTASection({
-  heading = "Let's talk about what you're building.",
-  subline = "30-minute call. No pitch, no pressure. Just a conversation about your systems.",
+  heading,
+  subline,
 }: {
   heading?: string;
   subline?: string;
 }) {
+  const t = useT();
+  const resolvedHeading = heading ?? t.cta.heading;
+  const resolvedSubline = subline ?? t.cta.subline;
+
   return (
     <section className="relative overflow-hidden border-t border-border bg-bg">
       <div
@@ -24,16 +31,16 @@ export function CTASection({
       <Container className="py-24 md:py-32">
         <Reveal className="mx-auto flex max-w-2xl flex-col items-center text-center">
           <h2 className="font-serif text-[clamp(34px,4.4vw,56px)] font-medium leading-[1.06] tracking-[-0.015em] text-fg">
-            {heading}
+            {resolvedHeading}
           </h2>
           <p className="mt-5 text-base leading-relaxed text-fg-muted">
-            {subline}
+            {resolvedSubline}
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row">
             <Magnetic>
               <Button asChild size="lg" className="rounded-full">
                 <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-                  Book a Conversation
+                  {t.cta.bookCall}
                 </a>
               </Button>
             </Magnetic>

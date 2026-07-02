@@ -8,8 +8,11 @@ import { motion } from "motion/react";
 import { navLinks } from "@/content/nav";
 import { isActiveRoute } from "@/lib/active-route";
 import { useReducedMotion } from "@/lib/hooks/use-reduced-motion";
+import { useLocale } from "@/lib/i18n/locale";
+import { useT } from "@/content/i18n/messages";
 import { Container } from "./container";
 import { ThemeToggle } from "./theme-toggle";
+import { LocaleToggle } from "./locale-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -24,6 +27,9 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const reduced = useReducedMotion();
+  const { locale } = useLocale();
+  const t = useT();
+  const links = navLinks[locale];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -50,11 +56,11 @@ export function Nav() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((l) => {
+          {links.map((l) => {
             const active = isActiveRoute(l.href, pathname);
             return (
               <Link
-                key={l.label}
+                key={l.href}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
@@ -77,9 +83,10 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LocaleToggle />
           <ThemeToggle />
           <Button asChild className="hidden rounded-full sm:inline-flex">
-            <Link href="/contact/">Let&apos;s Talk</Link>
+            <Link href="/contact/">{t.nav.letsTalk}</Link>
           </Button>
           <Sheet>
             <SheetTrigger asChild>
@@ -93,10 +100,10 @@ export function Nav() {
             <SheetContent side="right" className="border-border bg-section">
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <nav className="mt-10 flex flex-col gap-5 px-5">
-                {navLinks.map((l) => {
+                {links.map((l) => {
                   const active = isActiveRoute(l.href, pathname);
                   return (
-                    <SheetClose asChild key={l.label}>
+                    <SheetClose asChild key={l.href}>
                       <Link
                         href={l.href}
                         aria-current={active ? "page" : undefined}
@@ -110,12 +117,13 @@ export function Nav() {
                     </SheetClose>
                   );
                 })}
+                <LocaleToggle />
                 <SheetClose asChild>
                   <Link
                     href="/contact/"
                     className="mt-2 rounded-full bg-primary px-4 py-2.5 text-center text-sm font-medium text-primary-foreground"
                   >
-                    Let&apos;s Talk
+                    {t.nav.letsTalk}
                   </Link>
                 </SheetClose>
               </nav>

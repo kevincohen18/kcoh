@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { Container } from "./container";
 import { navLinks, CAL_URL, CONTACT_EMAIL, LINKEDIN_URL } from "@/content/nav";
 import { featuredProjects } from "@/content/projects";
+import { useLocale } from "@/lib/i18n/locale";
+import { useT } from "@/content/i18n/messages";
 
 const footerLink =
   "text-sm text-fg-muted transition-colors hover:text-fg";
@@ -9,6 +13,10 @@ const columnHeading =
   "text-xs font-medium uppercase tracking-[0.2em] text-fg-subtle";
 
 export function Footer() {
+  const { locale } = useLocale();
+  const t = useT();
+  const links = navLinks[locale];
+
   return (
     <footer className="border-t border-border bg-bg">
       <Container className="py-14 md:py-16">
@@ -19,17 +27,15 @@ export function Footer() {
               Software Inc.
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-fg-muted">
-              Software systems that automate operations and add financial
-              clarity. Led by an operator who built and scaled a 7 figure
-              platform.
+              {t.footer.tagline}
             </p>
           </div>
 
-          <nav aria-label="Site" className="lg:col-span-2">
-            <h3 className={columnHeading}>Site</h3>
+          <nav aria-label={t.footer.siteHeading} className="lg:col-span-2">
+            <h3 className={columnHeading}>{t.footer.siteHeading}</h3>
             <ul className="mt-4 flex flex-col gap-3">
-              {navLinks.map((l) => (
-                <li key={l.label}>
+              {links.map((l) => (
+                <li key={l.href}>
                   <Link href={l.href} className={footerLink}>
                     {l.label}
                   </Link>
@@ -38,8 +44,8 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Work" className="lg:col-span-3">
-            <h3 className={columnHeading}>Work</h3>
+          <nav aria-label={t.footer.workHeading} className="lg:col-span-3">
+            <h3 className={columnHeading}>{t.footer.workHeading}</h3>
             <ul className="mt-4 flex flex-col gap-3">
               {featuredProjects.map((p) => (
                 <li key={p.slug}>
@@ -52,7 +58,7 @@ export function Footer() {
           </nav>
 
           <div className="lg:col-span-2">
-            <h3 className={columnHeading}>Connect</h3>
+            <h3 className={columnHeading}>{t.footer.connectHeading}</h3>
             <ul className="mt-4 flex flex-col gap-3">
               <li>
                 <a
@@ -76,7 +82,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className={footerLink}
                 >
-                  Book a Conversation
+                  {t.footer.bookCall}
                 </a>
               </li>
             </ul>
@@ -84,7 +90,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-border pt-6 text-xs text-fg-subtle">
-          © 2026 KCOH Software Inc. All rights reserved.
+          {t.footer.rights}
         </div>
       </Container>
     </footer>

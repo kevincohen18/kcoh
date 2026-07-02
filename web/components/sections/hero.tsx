@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/site/container";
 import { SectionLabel } from "@/components/site/section-label";
@@ -8,8 +10,11 @@ import { Magnetic } from "@/components/site/magnetic";
 import { Reveal } from "@/components/site/reveal";
 import { Tilt } from "@/components/site/tilt";
 import { CAL_URL } from "@/content/nav";
+import { useT } from "@/content/i18n/messages";
 
 export function Hero() {
+  const t = useT();
+
   return (
     <section className="relative overflow-hidden">
       <div
@@ -19,20 +24,19 @@ export function Hero() {
       />
       <Container className="relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-2 lg:gap-10">
         <Reveal>
-          <SectionLabel>Software that runs businesses</SectionLabel>
+          <SectionLabel>{t.hero.eyebrow}</SectionLabel>
           <h1 className="mt-5 font-serif text-[clamp(40px,5.4vw,74px)] font-medium leading-[1.04] tracking-[-0.015em] text-fg">
-            We build and operate{" "}
-            <em className="text-brand">the systems that scale real companies.</em>
+            {t.hero.headlineLead}{" "}
+            <em className="text-brand">{t.hero.headlineEmphasis}</em>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-fg-muted">
-            Automation, financial clarity, and operational leverage. Built by
-            someone who scaled a 7-figure platform from the inside.
+            {t.hero.subhead}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Magnetic>
               <Button asChild size="lg" className="rounded-full">
                 <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-                  Book a Conversation
+                  {t.hero.primaryCta}
                 </a>
               </Button>
             </Magnetic>
@@ -43,7 +47,7 @@ export function Hero() {
                 variant="outline"
                 className="rounded-full border-border bg-transparent text-fg hover:bg-section-alt"
               >
-                <a href="#work">See What We&apos;ve Built</a>
+                <a href="#work">{t.hero.secondaryCta}</a>
               </Button>
             </Magnetic>
           </div>
@@ -63,7 +67,7 @@ export function Hero() {
               href="/dashboard/"
               className="group inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-brand-text"
             >
-              Explore the live demo
+              {t.hero.exploreDemo}
               <ArrowRight
                 size={14}
                 className="transition-transform group-hover:translate-x-0.5"
