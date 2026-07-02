@@ -7,7 +7,7 @@ import { SectionLabel } from "@/components/site/section-label";
 import { Reveal } from "@/components/site/reveal";
 import { ProjectTheme } from "@/components/site/project-theme";
 import { LocaleLink } from "@/components/site/locale-link";
-import { ProjectMiniPreview } from "@/components/work/mini-preview";
+import { CaseSchematic } from "@/components/work/case-schematic";
 import { usePointerGlow } from "@/lib/hooks/use-pointer-glow";
 import {
   projects,
@@ -76,7 +76,7 @@ function FeatureCard({ slug, project }: { slug: CaseSlug; project: Project }) {
           {copy.description}
         </p>
         <div className="mt-5 flex-1">
-          <ProjectMiniPreview slug={slug} />
+          <CaseSchematic slug={slug} />
         </div>
         <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brand-text">
           {featuredWorkCopy[locale].readCaseStudy}

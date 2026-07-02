@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Container } from "@/components/site/container";
 import { LocaleLink } from "@/components/site/locale-link";
 import { ProjectTheme } from "@/components/site/project-theme";
-import { ProjectMiniPreview } from "@/components/work/mini-preview";
+import { CaseSchematic } from "@/components/work/case-schematic";
 import { Reveal } from "@/components/site/reveal";
 import { usePointerGlow } from "@/lib/hooks/use-pointer-glow";
 import { useLocale } from "@/lib/i18n/locale";
@@ -91,7 +91,7 @@ export function WorkFeatureRow({
               delay={0.1}
               className={cn("lg:col-span-7", flip && "lg:order-1")}
             >
-              <ProjectMiniPreview slug={study.slug} />
+              <CaseSchematic slug={study.slug} />
             </Reveal>
           </div>
         </Container>

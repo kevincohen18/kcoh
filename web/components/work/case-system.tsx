@@ -3,7 +3,7 @@
 import { Container } from "@/components/site/container";
 import { SectionLabel } from "@/components/site/section-label";
 import { Reveal } from "@/components/site/reveal";
-import { ProjectMiniPreview } from "@/components/work/mini-preview";
+import { CaseSchematic } from "@/components/work/case-schematic";
 import { useLocale } from "@/lib/i18n/locale";
 import { workCopy } from "@/content/case-studies";
 import type { CaseStudy } from "@/content/case-studies";
@@ -20,22 +20,25 @@ export function CaseSystem({ study }: { study: CaseStudy }) {
             {copy.case.systemHeading(study.name)}
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-10 lg:grid-cols-12">
-          <div className="grid content-start gap-x-8 gap-y-9 sm:grid-cols-2 lg:col-span-7">
-            {study.system.map((block, i) => (
-              <Reveal key={block.title} delay={i * 0.05}>
-                <h3 className="text-sm font-semibold text-fg">{block.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  {block.body}
-                </p>
-              </Reveal>
-            ))}
+
+        {/* The honest architecture, drawn — this replaces the old sample
+            dashboard as the section's visual. */}
+        <Reveal delay={0.05}>
+          <div className="mt-10 rounded-2xl border border-border bg-card p-2 sm:p-3">
+            <CaseSchematic slug={study.slug} />
           </div>
-          <Reveal delay={0.1} className="lg:col-span-5">
-            <div className="lg:sticky lg:top-24">
-              <ProjectMiniPreview slug={study.slug} />
-            </div>
-          </Reveal>
+        </Reveal>
+
+        {/* Read-more depth: the system-design decisions behind the diagram. */}
+        <div className="mt-12 grid gap-x-8 gap-y-9 sm:grid-cols-2">
+          {study.system.map((block, i) => (
+            <Reveal key={block.title} delay={i * 0.05}>
+              <h3 className="text-sm font-semibold text-fg">{block.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-fg-muted">
+                {block.body}
+              </p>
+            </Reveal>
+          ))}
         </div>
       </Container>
     </section>

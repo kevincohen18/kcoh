@@ -124,16 +124,16 @@ export const caseStudies: Record<Locale, CaseStudy[]> = {
         { value: "AES-256", label: "GCM encryption on contract data" },
         { value: "Live", label: "Web and iOS, at draftory.ca" },
       ],
-      // CONFLICT (facts inventory section 1): v1 portfolio.html says SQLite;
-      // the newer projects.ts says PostgreSQL. Using the fuller v1 list until
-      // Kevin's fact-check pass resolves it.
+      // RESOLVED (2026-07-02, from the Drafterie repo): prod DB is PostgreSQL
+      // (server/database/db.js uses pg Pool + DATABASE_URL; better-sqlite3 is a
+      // dev-only devDependency). The old v1 portfolio.html "SQLite" was stale.
       stack: [
         "React",
         "Vite",
         "Tailwind CSS",
         "Node.js",
         "Express",
-        "SQLite",
+        "PostgreSQL",
         "Stripe",
         "Cloudflare Pages",
         "Railway",
@@ -183,9 +183,8 @@ export const caseStudies: Record<Locale, CaseStudy[]> = {
         "NestJS",
         "PostgreSQL",
         "Prisma",
-        "Redis",
         "Stripe",
-        "Plaid",
+        "Socket.IO",
         "React",
         "Cloudflare Workers",
       ],
@@ -230,9 +229,9 @@ export const caseStudies: Record<Locale, CaseStudy[]> = {
         { value: "2", label: "Languages, switchable at runtime" },
         { value: "Live", label: "At automedicquebec.com" },
       ],
-      // CONFLICT (facts inventory section 1): projects.ts lists React Native;
-      // v1 says a vanilla-JS web front end with Node/Express/PostgreSQL. Using
-      // v1 until Kevin's fact-check pass resolves it.
+      // RESOLVED (2026-07-02, from the Automedic repo): a vanilla HTML/CSS/JS
+      // site + Node/Express/PostgreSQL, NOT React Native (no react-native/expo
+      // present). The projects.ts "React Native" note was wrong.
       stack: [
         "Node.js",
         "Express",
@@ -336,7 +335,7 @@ export const caseStudies: Record<Locale, CaseStudy[]> = {
         "Tailwind CSS",
         "Node.js",
         "Express",
-        "SQLite",
+        "PostgreSQL",
         "Stripe",
         "Cloudflare Pages",
         "Railway",
@@ -393,9 +392,8 @@ export const caseStudies: Record<Locale, CaseStudy[]> = {
         "NestJS",
         "PostgreSQL",
         "Prisma",
-        "Redis",
         "Stripe",
-        "Plaid",
+        "Socket.IO",
         "React",
         "Cloudflare Workers",
       ],
