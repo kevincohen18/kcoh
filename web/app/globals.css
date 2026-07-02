@@ -16,9 +16,13 @@
   --fg-muted: #64748b;
   --fg-subtle: #94a3b8;
   --brand: #6e63ff;
+  /* Accent tone for SMALL TEXT (12px eyebrows, status tints, small links):
+     raw --brand is 4.12:1 on --bg — below the 4.5:1 AA small-text bar.
+     85% brand + black ≈ #5e54d9 = 5.4:1. */
+  --brand-text: color-mix(in srgb, var(--brand) 85%, black);
   --highlight: #6be5ff;
-  --pos: #16a34a;
-  --warn: #d97706;
+  --pos: #15803d; /* was #16a34a (3.30:1 on white) — 5.02:1, AA for status text */
+  --warn: #b45309; /* was #d97706 (3.19:1 on white) — 5.02:1, AA for status text */
   --neg: #dc2626;
 
   /* shadcn semantic tokens -> mapped to KCOH palette (light) */
@@ -27,7 +31,7 @@
   --card-foreground: var(--fg);
   --popover: var(--card);
   --popover-foreground: var(--fg);
-  --primary: var(--brand);
+  --primary: color-mix(in srgb, var(--brand) 88%, black); /* white label ≈5.3:1 (raw brand = 4.29:1) */
   --primary-foreground: #ffffff;
   --secondary: var(--section-alt);
   --secondary-foreground: var(--fg);
@@ -52,6 +56,7 @@
   --fg-muted: #9aa4b2;
   --fg-subtle: #6e7786;
   --brand: #6e63ff;
+  --brand-text: var(--brand); /* violet on #05070b = 4.70:1, AA for small text */
   --highlight: #6be5ff;
   --pos: #34d399;
   --warn: #fbbf24;
@@ -63,7 +68,7 @@
   --card-foreground: var(--fg);
   --popover: var(--card);
   --popover-foreground: var(--fg);
-  --primary: var(--brand);
+  --primary: color-mix(in srgb, var(--brand) 88%, black); /* white label ≈5.3:1 (raw brand = 4.29:1) */
   --primary-foreground: #ffffff;
   --secondary: var(--section-alt);
   --secondary-foreground: var(--fg);
@@ -77,6 +82,19 @@
   --ring: var(--brand);
 }
 
+/* Inside ProjectTheme (data-project-theme), --brand is the project accent.
+   --brand-text must be RE-declared here — a color-mix() declared on :root
+   resolves var(--brand) at :root, so it would never see the override. The
+   mixes below keep every case accent AA as small text in both themes
+   (e.g. Concordia #8b1d3f: raw = 2.25:1 on the dark bg, 60%+white ≈ 5.8:1;
+   AutoMedic #16a34a: raw = 3.16:1 on the light bg, 72%+black ≈ 5.6:1). */
+[data-project-theme] {
+  --brand-text: color-mix(in srgb, var(--brand) 72%, black);
+}
+.dark [data-project-theme] {
+  --brand-text: color-mix(in srgb, var(--brand) 60%, white);
+}
+
 @theme inline {
   /* KCOH brand utilities */
   --color-bg: var(--bg);
@@ -86,6 +104,7 @@
   --color-fg-muted: var(--fg-muted);
   --color-fg-subtle: var(--fg-subtle);
   --color-brand: var(--brand);
+  --color-brand-text: var(--brand-text);
   --color-highlight: var(--highlight);
   --color-pos: var(--pos);
   --color-warn: var(--warn);
