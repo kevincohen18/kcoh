@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -6,6 +8,7 @@ import { Container } from "@/components/site/container";
 import { ProjectTheme } from "@/components/site/project-theme";
 import { ProjectMiniPreview } from "@/components/work/mini-preview";
 import { Reveal } from "@/components/site/reveal";
+import { usePointerGlow } from "@/lib/hooks/use-pointer-glow";
 import type { CaseStudy } from "@/content/case-studies";
 
 export function WorkFeatureRow({
@@ -15,9 +18,23 @@ export function WorkFeatureRow({
   study: CaseStudy;
   flip?: boolean;
 }) {
+  const { onMouseMove, onMouseLeave } = usePointerGlow();
   return (
     <ProjectTheme accent={study.accent}>
-      <article className="border-t border-border bg-bg">
+      <article
+        className="relative overflow-hidden border-t border-border bg-bg"
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
+          style={{
+            opacity: "var(--glow-opacity, 0)",
+            background:
+              "radial-gradient(240px circle at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in srgb, var(--brand) 12%, transparent), transparent 70%)",
+          }}
+        />
         <Container>
           <div className="grid items-center gap-10 py-16 md:py-20 lg:grid-cols-12 lg:gap-14">
             <Reveal className={cn("lg:col-span-5", flip && "lg:order-2")}>
