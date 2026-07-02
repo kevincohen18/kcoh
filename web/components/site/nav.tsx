@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
@@ -9,10 +8,12 @@ import { navLinks } from "@/content/nav";
 import { isActiveRoute } from "@/lib/active-route";
 import { useReducedMotion } from "@/lib/hooks/use-reduced-motion";
 import { useLocale } from "@/lib/i18n/locale";
+import { unlocalizedPath } from "@/lib/i18n/routing";
 import { useT } from "@/content/i18n/messages";
 import { Container } from "./container";
 import { ThemeToggle } from "./theme-toggle";
 import { LocaleToggle } from "./locale-toggle";
+import { LocaleLink } from "./locale-link";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -48,18 +49,18 @@ export function Nav() {
       )}
     >
       <Container className="flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="leading-none" aria-label="KCOH Software Inc.">
+        <LocaleLink href="/" className="leading-none" aria-label="KCOH Software Inc.">
           <div className="text-lg font-bold tracking-tight text-fg">KCOH</div>
           <div className="text-[10px] font-medium uppercase tracking-[0.24em] text-fg-subtle">
             Software Inc.
           </div>
-        </Link>
+        </LocaleLink>
 
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((l) => {
-            const active = isActiveRoute(l.href, pathname);
+            const active = isActiveRoute(l.href, unlocalizedPath(pathname));
             return (
-              <Link
+              <LocaleLink
                 key={l.href}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
@@ -77,7 +78,7 @@ export function Nav() {
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   />
                 ) : null}
-              </Link>
+              </LocaleLink>
             );
           })}
         </nav>
@@ -86,7 +87,7 @@ export function Nav() {
           <LocaleToggle />
           <ThemeToggle />
           <Button asChild className="hidden rounded-full sm:inline-flex">
-            <Link href="/contact/">{t.nav.letsTalk}</Link>
+            <LocaleLink href="/contact/">{t.nav.letsTalk}</LocaleLink>
           </Button>
           <Sheet>
             <SheetTrigger asChild>
@@ -101,10 +102,10 @@ export function Nav() {
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <nav className="mt-10 flex flex-col gap-5 px-5">
                 {links.map((l) => {
-                  const active = isActiveRoute(l.href, pathname);
+                  const active = isActiveRoute(l.href, unlocalizedPath(pathname));
                   return (
                     <SheetClose asChild key={l.href}>
-                      <Link
+                      <LocaleLink
                         href={l.href}
                         aria-current={active ? "page" : undefined}
                         className={cn(
@@ -113,18 +114,18 @@ export function Nav() {
                         )}
                       >
                         {l.label}
-                      </Link>
+                      </LocaleLink>
                     </SheetClose>
                   );
                 })}
                 <LocaleToggle />
                 <SheetClose asChild>
-                  <Link
+                  <LocaleLink
                     href="/contact/"
                     className="mt-2 rounded-full bg-primary px-4 py-2.5 text-center text-sm font-medium text-primary-foreground"
                   >
                     {t.nav.letsTalk}
-                  </Link>
+                  </LocaleLink>
                 </SheetClose>
               </nav>
             </SheetContent>

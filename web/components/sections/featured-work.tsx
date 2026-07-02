@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { SectionLabel } from "@/components/site/section-label";
 import { Reveal } from "@/components/site/reveal";
 import { ProjectTheme } from "@/components/site/project-theme";
+import { LocaleLink } from "@/components/site/locale-link";
 import { ProjectMiniPreview } from "@/components/work/mini-preview";
 import { usePointerGlow } from "@/lib/hooks/use-pointer-glow";
 import {
@@ -36,7 +36,7 @@ function FeatureCard({ slug, project }: { slug: CaseSlug; project: Project }) {
   const copy = featuredProjectCopy[locale][slug];
   return (
     <ProjectTheme accent={project.color} className="h-full w-full">
-      <Link
+      <LocaleLink
         href={project.href}
         data-preview-group
         onMouseMove={onMouseMove}
@@ -85,7 +85,7 @@ function FeatureCard({ slug, project }: { slug: CaseSlug; project: Project }) {
             className="transition-transform group-hover:translate-x-0.5"
           />
         </span>
-      </Link>
+      </LocaleLink>
     </ProjectTheme>
   );
 }

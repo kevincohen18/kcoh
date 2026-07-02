@@ -201,3 +201,55 @@ key for inline literals, `Record<Locale, T>` for structured content):
   no `/fr` route to serve French metadata to, or accept that metadata stays
   English while visible body copy is bilingual — decide and document before
   starting).
+
+## Route-based routing (current)
+
+**Supersedes the "no `/fr` routes" framing above.** The site now has real
+`/fr` routes: English lives at the root (`/`, `/services/`, …), French lives
+under `/fr` (`/fr/`, `/fr/services/`, …). The metadata bullet above is
+resolved too — `/fr` pages now get real French metadata via
+`altLanguages()`, see below.
+
+- **Locale source**: `useLocale()` (`lib/i18n/locale.tsx`) no longer reads
+  `localStorage`. `LocaleProvider` derives `locale` from `usePathname()` —
+  `/fr` or `/fr/...` → `"fr"`, everything else → `"en"`. This means locale
+  is now correct on the very first server/prerendered render for every
+  route (no post-hydration flash), and `useLocale()` returns `{ locale }`
+  only — **there is no `setLocale` anymore**. Don't try to call it.
+- **Internal links**: use `<LocaleLink href="/services/">` from
+  `components/site/locale-link.tsx` instead of `next/link`'s `Link` for any
+  internal absolute-path href. It reads the active locale and rewrites the
+  href via `localizedPath()` (`lib/i18n/routing.ts`) — `/services/` becomes
+  `/fr/services/` when the current route is under `/fr`. Leave hash links
+  (`#work`), `mailto:`, `tel:`, and external `http(s)` links as plain `<a>`
+  — `LocaleLink` only rewrites internal string hrefs.
+  - `localizedPath(href, locale)` — unlocalized → locale-specific href.
+  - `unlocalizedPath(pathname)` — locale-specific pathname → unlocalized
+    (strips the `/fr` prefix). Used by `LocaleToggle` and by `Nav` to run
+    `isActiveRoute()` against the unlocalized pathname (nav link hrefs are
+    stored unlocalized in `content/nav.ts`).
+- **Adding a `/fr/<route>` mirror**: for every English page
+  `app/<route>/page.tsx`, add `app/fr/<route>/page.tsx` that:
+  1. Renders the *same* content component(s) the English page renders
+     (e.g. `app/fr/page.tsx` renders `<Hero /><QuietProof /><FeaturedWork />…`
+     — the identical components `app/page.tsx` uses). Components already
+     derive `locale="fr"` automatically from the `/fr` path — do not pass a
+     `locale` prop or duplicate the component.
+  2. Exports its own `metadata` with a French `title`/`description` (reuse
+     existing French copy from `content/i18n/messages.ts` /
+     `content/*.ts` — do not invent new translations) and
+     `alternates: { canonical: "/fr/<route>/", languages: altLanguages("/<route>/") }`.
+  3. The matching English page's `alternates` must also include
+     `languages: altLanguages("/<route>/")` (canonical stays `"/<route>/"`)
+     so both sides emit the same hreflang map.
+  - `altLanguages(enPath)` (`lib/i18n/alternates.ts`) builds the
+    `{ en, fr, "x-default" }` language map from the *English* (unlocalized)
+    path — always pass the English path, even from the `/fr` page.
+  - Reference implementation: `app/page.tsx` + `app/fr/page.tsx`.
+- **`<html lang>`**: still tracked automatically — `LocaleProvider` sets
+  `document.documentElement.lang = locale` in a `useEffect` (a DOM side
+  effect, not React state, so it doesn't trip
+  `react-hooks/set-state-in-effect`).
+- Static export constraint unchanged: no middleware, no server runtime.
+  `usePathname()` in a Client Component is prerendered per-route at build
+  time — that's the whole mechanism.

@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { Container } from "./container";
+import { LocaleLink } from "./locale-link";
 import { navLinks, CAL_URL, CONTACT_EMAIL, LINKEDIN_URL } from "@/content/nav";
 import { featuredProjects } from "@/content/projects";
 import { useLocale } from "@/lib/i18n/locale";
@@ -36,9 +36,9 @@ export function Footer() {
             <ul className="mt-4 flex flex-col gap-3">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className={footerLink}>
+                  <LocaleLink href={l.href} className={footerLink}>
                     {l.label}
-                  </Link>
+                  </LocaleLink>
                 </li>
               ))}
             </ul>
@@ -49,9 +49,9 @@ export function Footer() {
             <ul className="mt-4 flex flex-col gap-3">
               {featuredProjects.map((p) => (
                 <li key={p.slug}>
-                  <Link href={`/work/${p.slug}/`} className={footerLink}>
+                  <LocaleLink href={`/work/${p.slug}/`} className={footerLink}>
                     {p.name}
-                  </Link>
+                  </LocaleLink>
                 </li>
               ))}
             </ul>

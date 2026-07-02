@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/site/container";
 import { SectionLabel } from "@/components/site/section-label";
 import { DashboardImage } from "@/components/site/dashboard-image";
-import Link from "next/link";
+import { LocaleLink } from "@/components/site/locale-link";
 import { ArrowRight } from "lucide-react";
 import { Magnetic } from "@/components/site/magnetic";
 import { Reveal } from "@/components/site/reveal";
@@ -63,7 +63,7 @@ export function Hero() {
             <DashboardImage priority className="drop-shadow-2xl" />
           </Tilt>
           <div className="mt-4 flex justify-center">
-            <Link
+            <LocaleLink
               href="/dashboard/"
               className="group inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-brand-text"
             >
@@ -72,7 +72,7 @@ export function Hero() {
                 size={14}
                 className="transition-transform group-hover:translate-x-0.5"
               />
-            </Link>
+            </LocaleLink>
           </div>
         </Reveal>
       </Container>

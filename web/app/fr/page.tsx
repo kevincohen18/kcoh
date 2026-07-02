@@ -11,11 +11,19 @@ import { Faq } from "@/components/sections/faq";
 import { CTASection } from "@/components/site/cta-section";
 import { altLanguages } from "@/lib/i18n/alternates";
 
+// Mirrors app/page.tsx — same section components, which already derive
+// locale="fr" from the `/fr` path via useLocale()/usePathname(). Title and
+// description reuse the existing French hero copy from
+// content/i18n/messages.ts (see PATTERN.md's "Voice" section: brand names
+// stay untranslated).
 export const metadata: Metadata = {
-  alternates: { canonical: "/", languages: altLanguages("/") },
+  title: "KCOH Software Inc.",
+  description:
+    "Nous concevons et exploitons les systèmes qui font croître de vraies entreprises. Automatisation, clarté financière et effet de levier opérationnel.",
+  alternates: { canonical: "/fr/", languages: altLanguages("/") },
 };
 
-export default function Home() {
+export default function HomeFr() {
   return (
     <>
       <Hero />
