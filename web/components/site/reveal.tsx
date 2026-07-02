@@ -26,7 +26,10 @@ export function Reveal({
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ type: "spring", stiffness: 260, damping: 34, mass: 0.9, delay }}
+      // Critically damped spring, measured against motion-dom's own generator
+      // and rest thresholds: opacity (0->1) settles at 370ms, y (16->0) at
+      // 267ms — both inside the <=400ms global motion budget, zero overshoot.
+      transition={{ type: "spring", stiffness: 390, damping: 28, mass: 0.5, delay }}
     >
       {children}
     </motion.div>

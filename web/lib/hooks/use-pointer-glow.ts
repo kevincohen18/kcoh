@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback } from "react";
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
 
 /** Pure transform: viewport pointer coords -> element-local coords. */
 export function computeGlowPosition(
@@ -12,20 +13,6 @@ export function computeGlowPosition(
 }
 
 const FINE_POINTER_QUERY = "(hover: hover) and (pointer: fine)";
-
-function subscribeFinePointer(callback: () => void): () => void {
-  const mq = window.matchMedia(FINE_POINTER_QUERY);
-  mq.addEventListener("change", callback);
-  return () => mq.removeEventListener("change", callback);
-}
-
-function getFinePointerSnapshot(): boolean {
-  return window.matchMedia(FINE_POINTER_QUERY).matches;
-}
-
-function getFinePointerServerSnapshot(): boolean {
-  return false;
-}
 
 /**
  * Cursor-tracking brand glow for cards. Spread the returned handlers onto
@@ -48,11 +35,7 @@ export function usePointerGlow(): {
   onMouseMove: React.MouseEventHandler<HTMLElement>;
   onMouseLeave: React.MouseEventHandler<HTMLElement>;
 } {
-  const finePointer = useSyncExternalStore(
-    subscribeFinePointer,
-    getFinePointerSnapshot,
-    getFinePointerServerSnapshot,
-  );
+  const finePointer = useMediaQuery(FINE_POINTER_QUERY);
 
   const onMouseMove: React.MouseEventHandler<HTMLElement> = useCallback(
     (e) => {
