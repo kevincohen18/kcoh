@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { PageHero } from "@/components/site/page-hero";
 import { CTASection } from "@/components/site/cta-section";
+import { LocaleLink } from "@/components/site/locale-link";
 import { EngagementStrip } from "@/components/services/engagement-strip";
 import { RevenueMiniChart } from "@/components/services/revenue-mini-chart";
 import { ServiceBlock } from "@/components/services/service-block";
@@ -17,9 +17,9 @@ import {
 import { useLocale } from "@/lib/i18n/locale";
 
 /**
- * Client child of `app/services/page.tsx`. The page file keeps `export
- * const metadata` (English-only, no `/fr` route to serve) and stays a
- * server shell; all visible, locale-reactive copy lives here. See
+ * Client child of both `app/services/page.tsx` and `app/fr/services/page.tsx`
+ * — the page files keep `export const metadata` (per-locale) and stay thin
+ * server shells; all visible, locale-reactive copy lives here. See
  * PATTERN.md §"Making a component locale-reactive — checklist" step 5.
  */
 export function ServicesPageContent() {
@@ -53,7 +53,7 @@ export function ServicesPageContent() {
             />
           ))}
           <div className="mt-4 flex justify-center">
-            <Link
+            <LocaleLink
               href="/dashboard/"
               className="group inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-brand-text"
             >
@@ -62,7 +62,7 @@ export function ServicesPageContent() {
                 size={15}
                 className="transition-transform group-hover:translate-x-0.5"
               />
-            </Link>
+            </LocaleLink>
           </div>
         </Container>
       </section>
