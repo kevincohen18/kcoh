@@ -1,9 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
+import { motion } from "motion/react";
 import { navLinks } from "@/content/nav";
+import { isActiveRoute } from "@/lib/active-route";
+import { useReducedMotion } from "@/lib/hooks/use-reduced-motion";
 import { Container } from "./container";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -18,6 +22,8 @@ import { cn } from "@/lib/utils";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -44,15 +50,30 @@ export function Nav() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((l) => (
-            <Link
-              key={l.label}
-              href={l.href}
-              className="text-sm text-fg-muted transition-colors hover:text-fg"
-            >
-              {l.label}
-            </Link>
-          ))}
+          {navLinks.map((l) => {
+            const active = isActiveRoute(l.href, pathname);
+            return (
+              <Link
+                key={l.label}
+                href={l.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "relative py-1 text-sm transition-colors hover:text-fg",
+                  active ? "text-fg" : "text-fg-muted",
+                )}
+              >
+                {l.label}
+                {active ? (
+                  <motion.span
+                    aria-hidden
+                    layoutId={reduced ? undefined : "nav-active"}
+                    className="absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-brand"
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                ) : null}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -72,13 +93,23 @@ export function Nav() {
             <SheetContent side="right" className="border-border bg-section">
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <nav className="mt-10 flex flex-col gap-5 px-5">
-                {navLinks.map((l) => (
-                  <SheetClose asChild key={l.label}>
-                    <Link href={l.href} className="text-base text-fg">
-                      {l.label}
-                    </Link>
-                  </SheetClose>
-                ))}
+                {navLinks.map((l) => {
+                  const active = isActiveRoute(l.href, pathname);
+                  return (
+                    <SheetClose asChild key={l.label}>
+                      <Link
+                        href={l.href}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          "text-base",
+                          active ? "font-medium text-brand-text" : "text-fg",
+                        )}
+                      >
+                        {l.label}
+                      </Link>
+                    </SheetClose>
+                  );
+                })}
                 <SheetClose asChild>
                   <Link
                     href="/contact/"
