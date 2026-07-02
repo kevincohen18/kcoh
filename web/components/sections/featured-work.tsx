@@ -9,8 +9,14 @@ import { Reveal } from "@/components/site/reveal";
 import { ProjectTheme } from "@/components/site/project-theme";
 import { ProjectMiniPreview } from "@/components/work/mini-preview";
 import { usePointerGlow } from "@/lib/hooks/use-pointer-glow";
-import { projects, type Project } from "@/content/projects";
+import {
+  projects,
+  featuredProjectCopy,
+  featuredWorkCopy,
+  type Project,
+} from "@/content/projects";
 import type { CaseSlug } from "@/content/case-studies";
+import { useLocale } from "@/lib/i18n/locale";
 
 const featuredSlugs: CaseSlug[] = [
   "concordia-connect",
@@ -26,6 +32,8 @@ const featured = featuredSlugs.flatMap((slug) => {
 
 function FeatureCard({ slug, project }: { slug: CaseSlug; project: Project }) {
   const { onMouseMove, onMouseLeave } = usePointerGlow();
+  const { locale } = useLocale();
+  const copy = featuredProjectCopy[locale][slug];
   return (
     <ProjectTheme accent={project.color} className="h-full w-full">
       <Link
@@ -46,7 +54,7 @@ function FeatureCard({ slug, project }: { slug: CaseSlug; project: Project }) {
         />
         <div className="flex items-center justify-between gap-4">
           <SectionLabel className="tracking-[0.18em]">
-            {project.tagline}
+            {copy.tagline}
           </SectionLabel>
           <div
             className="grid size-9 shrink-0 place-items-center rounded-lg"
@@ -65,13 +73,13 @@ function FeatureCard({ slug, project }: { slug: CaseSlug; project: Project }) {
           {project.name}
         </h3>
         <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-          {project.description}
+          {copy.description}
         </p>
         <div className="mt-5 flex-1">
           <ProjectMiniPreview slug={slug} />
         </div>
         <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-brand-text">
-          Read the case study
+          {featuredWorkCopy[locale].readCaseStudy}
           <ArrowRight
             size={15}
             className="transition-transform group-hover:translate-x-0.5"
@@ -83,14 +91,15 @@ function FeatureCard({ slug, project }: { slug: CaseSlug; project: Project }) {
 }
 
 export function FeaturedWork() {
+  const { locale } = useLocale();
+  const wc = featuredWorkCopy[locale];
   return (
     <section id="work" className="scroll-mt-24 bg-bg">
       <Container className="py-20 md:py-28">
         <Reveal>
-          <SectionLabel>Featured Work</SectionLabel>
+          <SectionLabel>{wc.eyebrow}</SectionLabel>
           <h2 className="mt-4 max-w-2xl font-serif text-[clamp(30px,3.6vw,48px)] font-medium leading-[1.08] tracking-[-0.015em] text-fg">
-            Everything shown here was built, shipped, and operated in
-            production.
+            {wc.heading}
           </h2>
         </Reveal>
         <div className="mt-12 grid gap-6 md:grid-cols-2">
