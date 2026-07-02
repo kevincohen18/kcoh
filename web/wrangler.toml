@@ -1,0 +1,14 @@
+# Cloudflare Pages configuration for the KCOH v2 site.
+# `wrangler pages dev out` = local preview with Functions, _redirects, _headers.
+# `wrangler pages deploy out` = production deploy (ONLY on Kevin's explicit approval).
+#
+# NOTE: the `kcoh` project is GIT-CONNECTED (wrangler pages project list shows a
+# Git provider). Cloudflare is expected to REJECT direct-upload deploys to
+# Git-connected projects, so `npm run deploy` likely cannot target `kcoh` as-is.
+# The cutover decision (Task 66 / H13 Step 4) covers the two launch paths;
+# `npm run preview` is purely local and unaffected.
+
+name = "kcoh"
+
+compatibility_date = "2026-07-01"
+pages_build_output_dir = "out"
