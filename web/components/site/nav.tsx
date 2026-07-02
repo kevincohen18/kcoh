@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
-import { navLinks, CAL_URL } from "@/content/nav";
+import { navLinks } from "@/content/nav";
 import { Container } from "./container";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetTitle,
   SheetTrigger,
@@ -44,22 +45,20 @@ export function Nav() {
 
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((l) => (
-            <a
+            <Link
               key={l.label}
               href={l.href}
               className="text-sm text-fg-muted transition-colors hover:text-fg"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Button asChild className="hidden rounded-full sm:inline-flex">
-            <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-              Let&apos;s Talk
-            </a>
+            <Link href="/contact/">Let&apos;s Talk</Link>
           </Button>
           <Sheet>
             <SheetTrigger asChild>
@@ -74,18 +73,20 @@ export function Nav() {
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <nav className="mt-10 flex flex-col gap-5 px-5">
                 {navLinks.map((l) => (
-                  <a key={l.label} href={l.href} className="text-base text-fg">
-                    {l.label}
-                  </a>
+                  <SheetClose asChild key={l.label}>
+                    <Link href={l.href} className="text-base text-fg">
+                      {l.label}
+                    </Link>
+                  </SheetClose>
                 ))}
-                <a
-                  href={CAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 rounded-full bg-primary px-4 py-2.5 text-center text-sm font-medium text-primary-foreground"
-                >
-                  Let&apos;s Talk
-                </a>
+                <SheetClose asChild>
+                  <Link
+                    href="/contact/"
+                    className="mt-2 rounded-full bg-primary px-4 py-2.5 text-center text-sm font-medium text-primary-foreground"
+                  >
+                    Let&apos;s Talk
+                  </Link>
+                </SheetClose>
               </nav>
             </SheetContent>
           </Sheet>
