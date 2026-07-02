@@ -5,6 +5,7 @@ import { Testimonial } from "@/components/sections/testimonial";
 import { HowWeWork } from "@/components/sections/how-we-work";
 import { Services } from "@/components/sections/services";
 import { Founder } from "@/components/sections/founder";
+import { Technologies } from "@/components/sections/technologies";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <HowWeWork />
       <Services />
       <Founder />
+      <Technologies />
     </>
   );
 }
