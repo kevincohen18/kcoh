@@ -1,23 +1,32 @@
 "use client";
 
 import { useId } from "react";
+import { motion } from "motion/react";
+import { useReducedMotion } from "@/lib/hooks/use-reduced-motion";
 
 export type BarGroup = { label: string; a: number; b: number };
+
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const VIEWPORT = { once: true, margin: "-40px" } as const;
 
 export function BarChart({
   data,
   max = 30,
   width = 520,
   height = 190,
+  animateIn = true,
   className,
 }: {
   data: BarGroup[];
   max?: number;
   width?: number;
   height?: number;
+  animateIn?: boolean;
   className?: string;
 }) {
   const uid = useId().replace(/[:]/g, "");
+  const reduced = useReducedMotion();
+  const animate = animateIn && !reduced;
   const pad = 10;
   const innerH = height - pad * 2;
   const groupW = (width - pad * 2) / data.length;
@@ -50,21 +59,31 @@ export function BarChart({
         const bx = cx + gap / 2;
         return (
           <g key={g.label}>
-            <rect
+            <motion.rect
               x={ax}
               y={y(g.a)}
               width={barW}
               height={pad + innerH - y(g.a)}
               rx={4}
               fill={`url(#barA-${uid})`}
+              style={{ originY: 1 }}
+              initial={animate ? { scaleY: 0 } : undefined}
+              whileInView={animate ? { scaleY: 1 } : undefined}
+              viewport={VIEWPORT}
+              transition={{ duration: 0.3, ease: EASE, delay: i * 0.03 }}
             />
-            <rect
+            <motion.rect
               x={bx}
               y={y(g.b)}
               width={barW}
               height={pad + innerH - y(g.b)}
               rx={4}
               fill={`url(#barB-${uid})`}
+              style={{ originY: 1 }}
+              initial={animate ? { scaleY: 0 } : undefined}
+              whileInView={animate ? { scaleY: 1 } : undefined}
+              viewport={VIEWPORT}
+              transition={{ duration: 0.3, ease: EASE, delay: i * 0.03 + 0.02 }}
             />
           </g>
         );

@@ -1,22 +1,31 @@
 "use client";
 
 import { useId } from "react";
+import { motion } from "motion/react";
 import { areaPath, linePath, toPoints } from "@/lib/charts/geometry";
+import { useReducedMotion } from "@/lib/hooks/use-reduced-motion";
+
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const VIEWPORT = { once: true, margin: "-40px" } as const;
 
 export function AreaChart({
   data,
   width = 560,
   height = 190,
   highlightIndex,
+  animateIn = true,
   className,
 }: {
   data: number[];
   width?: number;
   height?: number;
   highlightIndex?: number;
+  animateIn?: boolean;
   className?: string;
 }) {
   const uid = useId().replace(/[:]/g, "");
+  const reduced = useReducedMotion();
+  const animate = animateIn && !reduced;
   const pad = 6;
   const line = linePath(data, width, height, pad);
   const area = areaPath(data, width, height, pad);
@@ -41,8 +50,15 @@ export function AreaChart({
           <stop offset="100%" style={{ stopColor: "var(--highlight)" }} />
         </linearGradient>
       </defs>
-      <path d={area} fill={`url(#fill-${uid})`} />
-      <path
+      <motion.path
+        d={area}
+        fill={`url(#fill-${uid})`}
+        initial={animate ? { opacity: 0 } : undefined}
+        whileInView={animate ? { opacity: 1 } : undefined}
+        viewport={VIEWPORT}
+        transition={{ duration: 0.3, ease: EASE, delay: 0.08 }}
+      />
+      <motion.path
         d={line}
         fill="none"
         stroke={`url(#stroke-${uid})`}
@@ -50,9 +66,18 @@ export function AreaChart({
         strokeLinecap="round"
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
+        initial={animate ? { pathLength: 0 } : undefined}
+        whileInView={animate ? { pathLength: 1 } : undefined}
+        viewport={VIEWPORT}
+        transition={{ duration: 0.35, ease: EASE }}
       />
       {hp ? (
-        <>
+        <motion.g
+          initial={animate ? { opacity: 0 } : undefined}
+          whileInView={animate ? { opacity: 1 } : undefined}
+          viewport={VIEWPORT}
+          transition={{ duration: 0.25, ease: EASE, delay: 0.15 }}
+        >
           <line
             x1={hp.x}
             y1={hp.y}
@@ -71,7 +96,7 @@ export function AreaChart({
             strokeWidth={2.5}
             vectorEffect="non-scaling-stroke"
           />
-        </>
+        </motion.g>
       ) : null}
     </svg>
   );
