@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { pageMetadata } from "@/lib/seo";
 import { altLanguages } from "@/lib/i18n/alternates";
 import { CaseStudyContent } from "@/components/work/case-study-content";
 import { caseStudies, getCaseStudy } from "@/content/case-studies";
 import type { CaseSlug } from "@/content/case-studies";
 
+// Mirrors app/work/[slug]/page.tsx — same static params (the 4 slugs are
+// locale-invariant) and the same content component, which already derives
+// locale="fr" from the /fr path via useLocale(). Unlike the English page,
+// metadata here is sourced from the French case-study data
+// (caseStudies.fr), since this route serves French visitors.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -15,24 +19,18 @@ type Props = { params: Promise<{ slug: CaseSlug }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  // English metadata is always sourced from the English case study. The
-  // French equivalent is served by app/fr/work/[slug]/page.tsx (sourced
-  // from caseStudies.fr) — the two are cross-linked via alternates/hreflang.
-  const study = getCaseStudy("en", slug);
+  const study = getCaseStudy("fr", slug);
   return {
-    ...pageMetadata({
-      title: study.name,
-      description: study.oneLiner,
-      path: `/work/${study.slug}/`,
-    }),
+    title: study.name,
+    description: study.oneLiner,
     alternates: {
-      canonical: `/work/${study.slug}/`,
+      canonical: `/fr/work/${study.slug}/`,
       languages: altLanguages(`/work/${study.slug}/`),
     },
   };
 }
 
-export default async function CaseStudyPage({ params }: Props) {
+export default async function CaseStudyPageFr({ params }: Props) {
   const { slug } = await params;
   return <CaseStudyContent slug={slug} />;
 }

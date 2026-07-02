@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/site/container";
+import { LocaleLink } from "@/components/site/locale-link";
 import { ProjectTheme } from "@/components/site/project-theme";
 import { ProjectMiniPreview } from "@/components/work/mini-preview";
 import { Reveal } from "@/components/site/reveal";
@@ -75,7 +75,7 @@ export function WorkFeatureRow({
                   </li>
                 ))}
               </ul>
-              <Link
+              <LocaleLink
                 href={`/work/${study.slug}/`}
                 className="group mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-text"
               >
@@ -84,7 +84,7 @@ export function WorkFeatureRow({
                   size={15}
                   className="transition-transform group-hover:translate-x-0.5"
                 />
-              </Link>
+              </LocaleLink>
             </Reveal>
 
             <Reveal

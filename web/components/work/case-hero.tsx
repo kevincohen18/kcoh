@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
+import { LocaleLink } from "@/components/site/locale-link";
 import { Reveal } from "@/components/site/reveal";
 import { ScaledPreview } from "@/components/site/scaled-preview";
 import { DashboardScreen } from "@/components/dashboard/dashboard-screen";
@@ -74,7 +74,7 @@ export function CaseHero({ study }: { study: CaseStudy }) {
             </ScaledPreview>
           </Tilt>
           <div className="mt-4 flex justify-center">
-            <Link
+            <LocaleLink
               href="/dashboard/"
               className="group inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted transition-colors hover:text-brand-text"
             >
@@ -83,7 +83,7 @@ export function CaseHero({ study }: { study: CaseStudy }) {
                 size={14}
                 className="transition-transform group-hover:translate-x-0.5"
               />
-            </Link>
+            </LocaleLink>
           </div>
         </Reveal>
       </Container>

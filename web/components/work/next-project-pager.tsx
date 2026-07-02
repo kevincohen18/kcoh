@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/site/container";
+import { LocaleLink } from "@/components/site/locale-link";
 import { ProjectTheme } from "@/components/site/project-theme";
 import { useLocale } from "@/lib/i18n/locale";
 import { nextCaseStudy, workCopy } from "@/content/case-studies";
@@ -20,7 +20,7 @@ export function NextProjectPager({ current }: { current: CaseSlug }) {
     <ProjectTheme accent={next.accent}>
       <section className="border-t border-border bg-section-alt">
         <Container className="py-12 md:py-16">
-          <Link
+          <LocaleLink
             href={`/work/${next.slug}/`}
             className="group flex items-center justify-between gap-6"
           >
@@ -50,7 +50,7 @@ export function NextProjectPager({ current }: { current: CaseSlug }) {
               size={22}
               className="shrink-0 text-fg-muted transition-transform group-hover:translate-x-1"
             />
-          </Link>
+          </LocaleLink>
         </Container>
       </section>
     </ProjectTheme>
