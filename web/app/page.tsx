@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/hero";
-import { Metrics } from "@/components/sections/metrics";
+import { QuietProof } from "@/components/sections/quiet-proof";
 import { FeaturedWork } from "@/components/sections/featured-work";
 import { Testimonial } from "@/components/sections/testimonial";
 import { HowWeWork } from "@/components/sections/how-we-work";
@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Metrics />
+      <QuietProof />
       <FeaturedWork />
       <Testimonial />
       <HowWeWork />
