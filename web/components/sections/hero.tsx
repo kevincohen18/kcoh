@@ -4,6 +4,7 @@ import { SectionLabel } from "@/components/site/section-label";
 import { DashboardImage } from "@/components/site/dashboard-image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Magnetic } from "@/components/site/magnetic";
 import { Reveal } from "@/components/site/reveal";
 import { Tilt } from "@/components/site/tilt";
 import { CAL_URL } from "@/content/nav";
@@ -28,19 +29,23 @@ export function Hero() {
             someone who scaled a 7-figure platform from the inside.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="rounded-full">
-              <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
-                Book a Conversation
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="rounded-full border-border bg-transparent text-fg hover:bg-section-alt"
-            >
-              <a href="#work">See What We&apos;ve Built</a>
-            </Button>
+            <Magnetic>
+              <Button asChild size="lg" className="rounded-full">
+                <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
+                  Book a Conversation
+                </a>
+              </Button>
+            </Magnetic>
+            <Magnetic>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full border-border bg-transparent text-fg hover:bg-section-alt"
+              >
+                <a href="#work">See What We&apos;ve Built</a>
+              </Button>
+            </Magnetic>
           </div>
         </Reveal>
 
