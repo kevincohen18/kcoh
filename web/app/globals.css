@@ -160,3 +160,45 @@
     background: color-mix(in srgb, var(--brand) 28%, transparent);
   }
 }
+
+/* Technologies row — seamless left-to-right marquee (see tech-marquee.tsx) */
+@keyframes tech-marquee-slide {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.tech-marquee {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+.tech-marquee__track {
+  animation: tech-marquee-slide 34s linear infinite;
+  will-change: transform;
+}
+
+.tech-marquee:hover .tech-marquee__track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-marquee__track {
+    animation: none;
+  }
+}
