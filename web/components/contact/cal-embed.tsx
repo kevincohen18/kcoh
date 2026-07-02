@@ -20,7 +20,7 @@ export function CalEmbed() {
         return;
       }
       cal("ui", {
-        theme: resolvedTheme === "light" ? "light" : "dark",
+        theme: resolvedTheme === "dark" ? "dark" : "light",
         hideEventTypeDetails: false,
         layout: "month_view",
         cssVarsPerTheme: {
