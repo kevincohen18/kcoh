@@ -19,6 +19,13 @@ export function Hero() {
       />
       <Container className="relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-2 lg:gap-10">
         <Reveal>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-section-alt px-3 py-1 text-xs font-medium text-fg-muted">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--pos)] opacity-60 motion-safe:animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--pos)]" />
+            </span>
+            Available for new projects
+          </div>
           <SectionLabel>Software that runs businesses</SectionLabel>
           <h1 className="mt-5 font-serif text-[clamp(40px,5.4vw,74px)] font-medium leading-[1.04] tracking-[-0.015em] text-fg">
             We build and operate{" "}
