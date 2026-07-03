@@ -201,7 +201,9 @@ body {
 }
 
 .tech-marquee__track {
-  animation: tech-marquee-slide 34s linear infinite;
+  /* ~4.25s per item keeps the scroll speed steady as the list grows
+     (see content/technologies.ts): 24 items -> ~102s. */
+  animation: tech-marquee-slide 102s linear infinite;
   will-change: transform;
 }
 
