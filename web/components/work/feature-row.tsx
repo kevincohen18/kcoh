@@ -33,7 +33,7 @@ export function WorkFeatureRow({
   return (
     <ProjectTheme accent={study.accent}>
       <article
-        className="relative overflow-hidden"
+        className="relative hover:z-30"
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
       >
@@ -102,7 +102,7 @@ export function WorkFeatureRow({
               delay={0.1}
               className={cn("lg:col-span-7", flip && "lg:order-1")}
             >
-              <CaseSchematic slug={study.slug} />
+              <CaseSchematic slug={study.slug} flip={flip} zoom />
             </Reveal>
           </div>
         </Container>

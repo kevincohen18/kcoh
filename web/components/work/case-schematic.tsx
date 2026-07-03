@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ComponentType } from "react";
+import { cn } from "@/lib/utils";
 import { ConcordiaConnectDiagram } from "@/components/diagram/concordia-connect-diagram";
 import { DrafterieDiagram } from "@/components/diagram/drafterie-diagram";
 import { SkyroaDiagram } from "@/components/diagram/skyroa-diagram";
@@ -41,7 +42,15 @@ const CLIENT_TAG: Record<CaseSlug, Record<"en" | "fr", string>> = {
   automedic: { en: "Mobile mechanic · Québec", fr: "Mécanicien mobile · Québec" },
 };
 
-export function CaseSchematic({ slug }: { slug: CaseSlug }) {
+export function CaseSchematic({
+  slug,
+  flip = false,
+  zoom = false,
+}: {
+  slug: CaseSlug;
+  flip?: boolean;
+  zoom?: boolean;
+}) {
   const { locale } = useLocale();
   const ref = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -61,10 +70,25 @@ export function CaseSchematic({ slug }: { slug: CaseSlug }) {
   const eyebrow = locale === "fr" ? "ARCHITECTURE DU SYSTÈME" : "SYSTEM ARCHITECTURE";
   const client = CLIENT_TAG[slug][locale] ?? CLIENT_TAG[slug].en;
 
+  // When `zoom` is set (the /work + homepage index rows), hovering the
+  // schematic grows it to ~1.85x so the node labels become legible (at rest it
+  // renders at ~0.6x to fit its column). It grows away from the page edge
+  // (origin on the side the diagram sits) and lifts on a shadow above the
+  // neighbouring rows (the row's article carries hover:z-30). Off by default:
+  // the case-study detail page renders this full-width and must not zoom.
   return (
-    <div ref={ref} className="w-full overflow-hidden" style={{ aspectRatio: `${W} / ${H}` }}>
-      <div style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
-        <Diagram eyebrow={eyebrow} client={client} locale={locale} />
+    <div ref={ref} className={cn("w-full", !zoom && "overflow-hidden")} style={{ aspectRatio: `${W} / ${H}` }}>
+      <div
+        className={cn(
+          "relative h-full w-full",
+          zoom &&
+            "rounded-xl transition-all duration-300 ease-out will-change-transform hover:z-10 hover:scale-[1.85] hover:shadow-2xl motion-reduce:transition-none motion-reduce:hover:scale-100",
+          zoom && (flip ? "origin-left" : "origin-right"),
+        )}
+      >
+        <div style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: "top left" }}>
+          <Diagram eyebrow={eyebrow} client={client} locale={locale} />
+        </div>
       </div>
     </div>
   );
