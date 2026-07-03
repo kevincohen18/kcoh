@@ -8,14 +8,17 @@ const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : use
 /** Renders `children` at a fixed `designWidth` (so their desktop layout is
  *  correct), then scales them down to fit the available column width — the
  *  classic "product screenshot" technique. Reserves the scaled height so the
- *  surrounding layout doesn't collapse. Children are non-interactive. */
+ *  surrounding layout doesn't collapse. Children are non-interactive unless
+ *  `interactive` is set (e.g. the "compose your stack" map with hovercards). */
 export function ScaledPreview({
   designWidth = 1160,
   className,
+  interactive = false,
   children,
 }: {
   designWidth?: number;
   className?: string;
+  interactive?: boolean;
   children: React.ReactNode;
 }) {
   const outer = useRef<HTMLDivElement>(null);
@@ -47,8 +50,8 @@ export function ScaledPreview({
     >
       <div
         ref={inner}
-        aria-hidden
-        className="pointer-events-none select-none"
+        aria-hidden={interactive ? undefined : true}
+        className={interactive ? "pointer-events-auto" : "pointer-events-none select-none"}
         style={{
           width: designWidth,
           transform: `scale(${scale})`,
