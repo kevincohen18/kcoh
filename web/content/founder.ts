@@ -40,7 +40,7 @@ export const founder: Record<Locale, FounderContent> = {
     name: "Kevin Cohen",
     role: "Fondateur, KCOH Software Inc.",
     eyebrow: "Bâti par quelqu'un qui opère",
-    statement: "J'ai bâti, fait croître et exploité chaque système que nous livrons.",
+    statement: "J'ai bâti, fait évoluer et exploité chaque système que nous livrons.",
     supporting:
       "Je comprends la pression, la complexité et les cas particuliers, parce que je les ai vécus. C'est l'avantage que vous obtenez.",
     quote: {
