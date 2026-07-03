@@ -19,7 +19,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     // Frontend
     nextjs: {
       blurb: "Our default: full-stack React done right",
-      pros: ["Routing, SSR, data built in, unlike React", "Best SEO and first paint", "Biggest ecosystem and hiring pool"],
+      pros: ["Routing, SSR, data built in, unlike React", "Best SEO and first paint", "Inherits React's ecosystem, plus its tooling"],
       cons: ["Heavier than plain React for SPAs", "More framework than a simple site needs"],
     },
     react: {
@@ -120,7 +120,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
 
     // Database
     postgresql: {
-      blurb: "Our default relational database",
+      blurb: "Our default: correctness first, scales for most",
       pros: ["Strongest correctness, rich types like JSONB", "Handles most workloads we build", "Huge ecosystem and extensions"],
       cons: ["Vertical scaling ceiling", "Manual sharding, Mongo scales out easier"],
     },
@@ -185,7 +185,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     stripe: {
       blurb: "Our default: best developer payments API",
       pros: ["Best-in-class API and docs", "Cards, wallets, subscriptions in one", "Strong fraud and billing tooling"],
-      cons: ["Percentage fee per charge", "Weaker in-person than Square"],
+      cons: ["Rates not negotiable at low volume", "Weaker in-person than Square"],
     },
     paypal: {
       blurb: "When buyer trust drives conversion",
@@ -220,7 +220,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     // Frontend
     nextjs: {
       blurb: "Notre défaut: React full-stack bien fait",
-      pros: ["Routing, SSR et data intégrés, pas comme React", "Meilleur SEO et premier rendu", "Plus grand écosystème et bassin de talents"],
+      pros: ["Routing, SSR et data intégrés, pas comme React", "Meilleur SEO et premier rendu", "Hérite de l'écosystème React, plus ses outils"],
       cons: ["Plus lourd que React seul pour un SPA", "Trop de framework pour un site simple"],
     },
     react: {
@@ -263,7 +263,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
       cons: ["Coûts qui grimpent vite à l'échelle", "Bande passante plus chère que Cloudflare"],
     },
     railway: {
-      blurb: "Quand il faut vrais conteneurs et bases",
+      blurb: "Quand il faut de vrais conteneurs et bases de données",
       pros: ["Exécute de vrais conteneurs, pas que des fonctions", "Bases de données managées incluses"],
       cons: ["Pas d'edge mondial, pas comme Cloudflare", "Plus cher qu'un VPS à l'échelle"],
     },
@@ -277,7 +277,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     python: {
       blurb: "Pour la data, le ML et l'IA",
       pros: ["Bibliothèques data, ML et IA inégalées", "Rapide à écrire et lire"],
-      cons: ["Le GIL limite le parallélisme", "Plus lent que Go pour le calcul"],
+      cons: ["Le GIL limite le parallélisme CPU", "Plus lent que Go pour le calcul"],
     },
     go: {
       blurb: "Quand débit et concurrence comptent",
@@ -321,7 +321,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
 
     // Database
     postgresql: {
-      blurb: "Notre base relationnelle par défaut",
+      blurb: "Notre défaut: rigueur d'abord, suffit presque partout",
       pros: ["Meilleure rigueur, types riches comme JSONB", "Couvre la plupart de nos charges", "Écosystème et extensions immenses"],
       cons: ["Plafond de scaling vertical", "Sharding manuel, Mongo scale plus facilement"],
     },
@@ -338,7 +338,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
 
     // Cache
     redis: {
-      blurb: "Notre défaut: cache plus structures de données",
+      blurb: "Notre défaut: cache et structures de données",
       pros: ["Structures, files, verrous, pas que du cache", "Persistance optionnelle, pas comme Memcached", "Lectures en microsecondes"],
       cons: ["Plus lourd que Memcached pour du cache simple", "La mémoire coûte cher"],
     },
@@ -369,7 +369,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     bullmq: {
       blurb: "Notre défaut: jobs sur notre Redis existant",
       pros: ["Réutilise Redis, aucun service en plus", "Retries, planification, limites de débit inclus", "Intégration Node simple"],
-      cons: ["Centré Node, RabbitMQ est polyglotte", "Limité par la capacité Redis"],
+      cons: ["Centré sur Node, RabbitMQ est polyglotte", "Limité par la capacité Redis"],
     },
     rabbitmq: {
       blurb: "Quand routage et livraison se compliquent",
@@ -384,9 +384,9 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
 
     // Payments
     stripe: {
-      blurb: "Notre défaut: la meilleure API de paiement",
+      blurb: "Notre défaut: meilleure API de paiement pour développeurs",
       pros: ["API et docs de premier plan", "Cartes, wallets, abonnements réunis", "Outils anti-fraude et facturation solides"],
-      cons: ["Commission sur chaque transaction", "Moins fort en personne que Square"],
+      cons: ["Tarifs non négociables à faible volume", "Moins fort en personne que Square"],
     },
     paypal: {
       blurb: "Quand la confiance acheteur booste la conversion",
