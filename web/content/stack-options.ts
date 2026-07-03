@@ -158,7 +158,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     },
     gcs: {
       blurb: "Google Cloud's object storage",
-      pros: ["Strong consistency", "Tight Google Cloud integration", "Good analytics tie-ins"],
+      pros: ["Consistent by default", "Tight Google Cloud integration", "Good analytics tie-ins"],
       cons: ["Egress fees", "Ties you to Google Cloud"],
     },
 
@@ -218,7 +218,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     // Frontend
     nextjs: {
       blurb: "Framework React avec SSR et routing",
-      pros: ["SSR et SSG intégrés", "Excellent SEO et premier rendu", "Écosystème riche, bons défauts"],
+      pros: ["SSR et SSG intégrés", "Excellent SEO et premier rendu", "Écosystème riche, bons réglages par défaut"],
       cons: ["Complexité de build croissante", "Ruptures entre versions majeures"],
     },
     react: {
@@ -252,7 +252,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     // Hosting / Edge / CDN
     cloudflare: {
       blurb: "Réseau edge mondial et Workers",
-      pros: ["Exécution proche des utilisateurs", "Bande passante bon marché, offre gratuite", "CDN, DNS et sécurité intégrés"],
+      pros: ["Exécution proche des utilisateurs", "Bande passante bon marché, offre gratuite généreuse", "CDN, DNS et sécurité intégrés"],
       cons: ["Runtime Workers, pas Node complet", "APIs spécifiques au fournisseur"],
     },
     vercel: {
@@ -274,7 +274,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     },
     python: {
       blurb: "Langage lisible, fort en data et IA",
-      pros: ["Excellentes librairies data et ML", "Rapide à écrire et lire", "Écosystème immense"],
+      pros: ["Excellentes bibliothèques data et ML", "Rapide à écrire et lire", "Écosystème immense"],
       cons: ["Le GIL limite le parallélisme", "Plus lent que les langages compilés"],
     },
     go: {
@@ -320,7 +320,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     // Database
     postgresql: {
       blurb: "Base relationnelle éprouvée",
-      pros: ["Intégrité relationnelle et JSONB", "Éprouvée, écosystème immense", "Indexation et extensions riches"],
+      pros: ["Intégrité relationnelle et flexibilité JSONB", "Éprouvée, écosystème immense", "Indexation et extensions riches"],
       cons: ["Plafond de scaling vertical", "Sharding manuel à grande échelle"],
     },
     mysql: {
@@ -359,7 +359,7 @@ export const stackOptionInfo: Record<Locale, Record<string, OptionInfo>> = {
     },
     gcs: {
       blurb: "Le stockage objet de Google Cloud",
-      pros: ["Forte cohérence", "Intégration Google Cloud étroite", "Bons liens avec l'analytique"],
+      pros: ["Cohérent par défaut", "Intégration Google Cloud étroite", "Bons liens avec l'analytique"],
       cons: ["Frais de sortie", "Vous lie à Google Cloud"],
     },
 
