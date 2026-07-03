@@ -1,5 +1,9 @@
-import type { CSSProperties, ReactNode } from "react";
+import { forwardRef, type CSSProperties, type HTMLAttributes, type ReactNode } from "react";
 import type { IconType } from "react-icons";
+import { HoverCard } from "radix-ui";
+import { cn } from "@/lib/utils";
+import type { OptionInfo } from "@/content/stack-options";
+import type { Locale } from "@/lib/i18n/locale";
 
 /* ------------------------------------------------------------------ *
  * Flow-kit — the "dialed-up" sibling of the case-study schematic kit.
@@ -132,7 +136,12 @@ export function Node({
   const { height, ...rest } = style ?? {};
   return (
     <div
-      className="absolute overflow-hidden rounded-xl"
+      className={cn(
+        "absolute overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        t.name === "dark"
+          ? "hover:drop-shadow-[0_16px_26px_rgba(0,0,0,0.55)]"
+          : "hover:drop-shadow-[0_16px_26px_rgba(15,23,42,0.18)]",
+      )}
       style={{
         background: t.nodeBg,
         border: t.nodeBorder,
@@ -192,7 +201,12 @@ export function CoreNode({
   const accent = t.flow.request.color;
   return (
     <div
-      className="absolute flex flex-col overflow-hidden rounded-xl"
+      className={cn(
+        "absolute flex flex-col overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        t.name === "dark"
+          ? "hover:drop-shadow-[0_16px_26px_rgba(0,0,0,0.55)]"
+          : "hover:drop-shadow-[0_16px_26px_rgba(15,23,42,0.18)]",
+      )}
       style={{
         background:
           t.name === "dark"
@@ -257,13 +271,20 @@ export function CoreNode({
  * alternatives shown as "also supported". This is what turns the map
  * from "the build" into "your build — we wire whichever you pick".
  * ------------------------------------------------------------------ */
-export type StackOpt = { Comp?: IconType; name: string; sel?: boolean };
+export type StackOpt = { Comp?: IconType; name: string; sel?: boolean; id?: string };
 
-export function OptionChip({ t, opt, accent }: { t: Theme; opt: StackOpt; accent: string }) {
+export const OptionChip = forwardRef<
+  HTMLSpanElement,
+  { t: Theme; opt: StackOpt; accent: string } & HTMLAttributes<HTMLSpanElement>
+>(function OptionChip({ t, opt, accent, className, style, ...rest }, ref) {
   const sel = !!opt.sel;
   return (
     <span
-      className="inline-flex items-center gap-1.5 font-mono"
+      ref={ref}
+      className={cn(
+        "inline-flex cursor-default items-center gap-1.5 font-mono transition-transform duration-150 hover:scale-[1.06] hover:shadow-md motion-reduce:transition-none motion-reduce:hover:scale-100",
+        className,
+      )}
       style={{
         fontSize: 11.5,
         lineHeight: 1,
@@ -280,13 +301,105 @@ export function OptionChip({ t, opt, accent }: { t: Theme; opt: StackOpt; accent
               : "rgba(15,23,42,0.10)"
         }`,
         boxShadow: sel && t.name === "dark" ? `0 0 12px -5px ${rgba(accent, 0.8)}` : undefined,
+        ...style,
       }}
+      {...rest}
     >
       {opt.Comp && (
         <opt.Comp size={13} style={{ color: sel ? accent : t.faint, opacity: sel ? 1 : 0.85 }} />
       )}
       {opt.name}
     </span>
+  );
+});
+
+/* ------------------------------------------------------------------ *
+ * OptionHoverCard — hover an option chip to get the honest read: a one-
+ * line blurb, then Pros (green ✓) and Cons (red ✗). Framed as a risk
+ * assessment, not a spec sheet: every option, the good and the bad, and
+ * what we'd pick. Portaled so it escapes the scaled + overflow-hidden
+ * preview container; floating-ui positions it against the trigger's real
+ * on-screen rect, so it floats above everything, un-clipped and un-scaled.
+ * Theme-aware via `t`; pros/cons hues tuned per theme.
+ * ------------------------------------------------------------------ */
+export function OptionHoverCard({
+  t,
+  accent,
+  name,
+  info,
+  children,
+}: {
+  t: Theme;
+  accent: string;
+  name: string;
+  info: OptionInfo;
+  children: ReactNode;
+}) {
+  const dark = t.name === "dark";
+  const prosColor = dark ? "#4ade80" : "#15803d";
+  const consColor = dark ? "#f87171" : "#dc2626";
+  return (
+    <HoverCard.Root openDelay={120} closeDelay={80}>
+      <HoverCard.Trigger asChild>{children}</HoverCard.Trigger>
+      <HoverCard.Portal>
+        <HoverCard.Content
+          side="top"
+          align="center"
+          sideOffset={8}
+          collisionPadding={12}
+          className="z-[100] origin-(--radix-hover-card-content-transform-origin) data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 motion-reduce:animate-none"
+          style={{
+            width: 248,
+            background: dark ? "rgba(16,22,38,0.97)" : "rgba(255,255,255,0.98)",
+            border: t.nodeBorder,
+            borderRadius: 12,
+            boxShadow: dark
+              ? "inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 50px -20px rgba(0,0,0,0.85)"
+              : "inset 0 1px 0 #ffffff, 0 20px 46px -20px rgba(15,23,42,0.38)",
+            backdropFilter: "blur(8px)",
+            padding: "12px 13px 13px",
+          }}
+        >
+          <div className="flex flex-col" style={{ gap: 6 }}>
+            <span
+              className="font-mono"
+              style={{ fontSize: 12.5, fontWeight: 600, color: t.ink, letterSpacing: "-0.01em" }}
+            >
+              {name}
+            </span>
+            <span
+              aria-hidden
+              style={{ width: 24, height: 2, borderRadius: 2, background: accent, boxShadow: `0 0 8px ${rgba(accent, 0.6)}` }}
+            />
+          </div>
+          <p className="font-sans" style={{ fontSize: 11.5, lineHeight: 1.4, color: t.mut, marginTop: 8 }}>
+            {info.blurb}
+          </p>
+          <ul style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 5 }}>
+            {info.pros.map((p) => (
+              <li key={p} className="flex items-start" style={{ gap: 7 }}>
+                <span aria-hidden className="font-mono" style={{ fontSize: 11, lineHeight: 1.45, color: prosColor, flexShrink: 0 }}>
+                  ✓
+                </span>
+                <span className="font-sans" style={{ fontSize: 11.5, lineHeight: 1.4, color: t.ink }}>
+                  {p}
+                </span>
+              </li>
+            ))}
+            {info.cons.map((c) => (
+              <li key={c} className="flex items-start" style={{ gap: 7 }}>
+                <span aria-hidden className="font-mono" style={{ fontSize: 11, lineHeight: 1.45, color: consColor, flexShrink: 0 }}>
+                  ✗
+                </span>
+                <span className="font-sans" style={{ fontSize: 11.5, lineHeight: 1.4, color: t.ink }}>
+                  {c}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </HoverCard.Content>
+      </HoverCard.Portal>
+    </HoverCard.Root>
   );
 }
 
@@ -295,12 +408,15 @@ export function OptionNode({
   category,
   options,
   rail,
+  info,
   style,
 }: {
   t: Theme;
   category: string;
   options: StackOpt[];
   rail: string;
+  info?: Record<string, OptionInfo>;
+  locale?: Locale;
   style?: CSSProperties;
 }) {
   const { height, ...rest } = style ?? {};
@@ -315,9 +431,16 @@ export function OptionNode({
           {category}
         </span>
         <div className="flex flex-wrap" style={{ gap: 6, marginTop: 9 }}>
-          {options.map((o) => (
-            <OptionChip key={o.name} t={t} opt={o} accent={rail} />
-          ))}
+          {options.map((o) => {
+            const oi = o.id && info ? info[o.id] : undefined;
+            return oi ? (
+              <OptionHoverCard key={o.name} t={t} accent={rail} name={o.name} info={oi}>
+                <OptionChip t={t} opt={o} accent={rail} />
+              </OptionHoverCard>
+            ) : (
+              <OptionChip key={o.name} t={t} opt={o} accent={rail} />
+            );
+          })}
         </div>
       </div>
     </div>

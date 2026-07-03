@@ -43,7 +43,7 @@ export function HowWeWork() {
         </ol>
 
         <Reveal delay={0.12} className="mt-14">
-          <ScaledPreview designWidth={1280}>
+          <ScaledPreview designWidth={1280} interactive>
             <div className="block dark:hidden">
               <StackMap theme="light" locale={locale} />
             </div>

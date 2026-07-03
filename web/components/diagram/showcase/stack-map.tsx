@@ -30,6 +30,7 @@ import {
   ShowcaseCanvas,
   OptionNode,
   OptionChip,
+  OptionHoverCard,
   PLabel,
   FlowLegend,
   brandAccent,
@@ -40,6 +41,8 @@ import {
   type EdgeSpec,
   type StackOpt,
 } from "./flow-kit";
+import { stackOptionInfo } from "@/content/stack-options";
+import { cn } from "@/lib/utils";
 
 const W = 1280;
 const H = 664;
@@ -54,19 +57,35 @@ const tr = (locale: Locale) => (en: string, fr: string) => (locale === "fr" ? fr
 function CoreNode({ t, locale, style }: { t: Theme; locale: Locale; style: React.CSSProperties }) {
   const x = tr(locale);
   const accent = t.flow.request.color;
+  const info = stackOptionInfo[locale];
   const runtime: StackOpt[] = [
-    { Comp: SiNodedotjs, name: "Node.js", sel: true },
-    { Comp: SiPython, name: "Python" },
-    { Comp: SiGo, name: "Go" },
+    { Comp: SiNodedotjs, name: "Node.js", sel: true, id: "nodejs" },
+    { Comp: SiPython, name: "Python", id: "python" },
+    { Comp: SiGo, name: "Go", id: "go" },
   ];
   const protocol: StackOpt[] = [
-    { name: "REST", sel: true },
-    { Comp: SiGraphql, name: "GraphQL" },
-    { name: "gRPC" },
+    { name: "REST", sel: true, id: "rest" },
+    { Comp: SiGraphql, name: "GraphQL", id: "graphql" },
+    { name: "gRPC", id: "grpc" },
   ];
+  const chip = (o: StackOpt) => {
+    const oi = o.id ? info[o.id] : undefined;
+    return oi ? (
+      <OptionHoverCard key={o.name} t={t} accent={accent} name={o.name} info={oi}>
+        <OptionChip t={t} opt={o} accent={accent} />
+      </OptionHoverCard>
+    ) : (
+      <OptionChip key={o.name} t={t} opt={o} accent={accent} />
+    );
+  };
   return (
     <div
-      className="absolute flex flex-col overflow-hidden rounded-xl"
+      className={cn(
+        "absolute flex flex-col overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        t.name === "dark"
+          ? "hover:drop-shadow-[0_16px_26px_rgba(0,0,0,0.55)]"
+          : "hover:drop-shadow-[0_16px_26px_rgba(15,23,42,0.18)]",
+      )}
       style={{
         background:
           t.name === "dark"
@@ -95,18 +114,14 @@ function CoreNode({ t, locale, style }: { t: Theme; locale: Locale; style: React
           {x("Runtime", "Runtime")}
         </span>
         <div className="flex flex-wrap" style={{ gap: 6, marginTop: 7 }}>
-          {runtime.map((o) => (
-            <OptionChip key={o.name} t={t} opt={o} accent={accent} />
-          ))}
+          {runtime.map(chip)}
         </div>
 
         <span className="font-mono uppercase" style={{ fontSize: 9.5, letterSpacing: "0.11em", color: t.faint, marginTop: 12 }}>
           {x("Protocol", "Protocole")}
         </span>
         <div className="flex flex-wrap" style={{ gap: 6, marginTop: 7 }}>
-          {protocol.map((o) => (
-            <OptionChip key={o.name} t={t} opt={o} accent={accent} />
-          ))}
+          {protocol.map(chip)}
         </div>
       </div>
     </div>
@@ -138,7 +153,8 @@ export function StackMap({ theme = "light", locale = "en" }: { theme?: ThemeName
     { d: "M560,300 L540,300 L540,440 L284,440", flow: "telemetry" },
   ];
 
-  const mk = (name: string, sel: boolean, Comp?: StackOpt["Comp"]): StackOpt => ({ name, sel, Comp });
+  const info = stackOptionInfo[locale];
+  const mk = (name: string, sel: boolean, Comp: StackOpt["Comp"] | undefined, id: string): StackOpt => ({ name, sel, Comp, id });
 
   return (
     <ShowcaseCanvas t={t} w={W} h={H} eyebrow={x("COMPOSE YOUR STACK · WE WIRE IT TOGETHER", "COMPOSEZ VOTRE STACK · ON L'ASSEMBLE")} edges={edges}>
@@ -149,31 +165,31 @@ export function StackMap({ theme = "light", locale = "en" }: { theme?: ThemeName
       <PLabel t={t} x={900} y={430} flow="external">{x("3rd-party", "externe")}</PLabel>
 
       {/* clients */}
-      <OptionNode t={t} category={x("Frontend", "Interface web")} rail={F.request.color} options={[mk("Next.js", true, SiNextdotjs), mk("React", false, SiReact), mk("Vue", false, SiVuedotjs)]} style={{ left: 40, top: 96, width: 244, height: 104 }} />
-      <OptionNode t={t} category={x("Mobile", "Mobile")} rail={F.request.color} options={[mk("iOS", true, SiApple), mk("Android", false, SiAndroid), mk("Flutter", false, SiFlutter)]} style={{ left: 40, top: 216, width: 244, height: 104 }} />
+      <OptionNode t={t} category={x("Frontend", "Interface web")} rail={F.request.color} options={[mk("Next.js", true, SiNextdotjs, "nextjs"), mk("React", false, SiReact, "react"), mk("Vue", false, SiVuedotjs, "vue")]} info={info} locale={locale} style={{ left: 40, top: 96, width: 244, height: 104 }} />
+      <OptionNode t={t} category={x("Mobile", "Mobile")} rail={F.request.color} options={[mk("iOS", true, SiApple, "ios"), mk("Android", false, SiAndroid, "android"), mk("Flutter", false, SiFlutter, "flutter")]} info={info} locale={locale} style={{ left: 40, top: 216, width: 244, height: 104 }} />
 
       {/* edge / hosting */}
-      <OptionNode t={t} category={x("Hosting · Edge · CDN", "Hébergement · Edge · CDN")} rail={F.request.color} options={[mk("Cloudflare", true, SiCloudflare), mk("Vercel", false, SiVercel), mk("Railway", false, SiRailway)]} style={{ left: 316, top: 150, width: 214, height: 116 }} />
+      <OptionNode t={t} category={x("Hosting · Edge · CDN", "Hébergement · Edge · CDN")} rail={F.request.color} options={[mk("Cloudflare", true, SiCloudflare, "cloudflare"), mk("Vercel", false, SiVercel, "vercel"), mk("Railway", false, SiRailway, "railway")]} info={info} locale={locale} style={{ left: 316, top: 150, width: 214, height: 116 }} />
 
       {/* core */}
       <CoreNode t={t} locale={locale} style={{ left: 560, top: 116, width: 304, height: 220 }} />
 
       {/* realtime */}
-      <OptionNode t={t} category={x("Realtime", "Temps réel")} rail={F.realtime.color} options={[mk("Socket.IO", true, SiSocketdotio), mk("Pusher", false), mk("Ably", false)]} style={{ left: 1000, top: 66, width: 240, height: 92 }} />
+      <OptionNode t={t} category={x("Realtime", "Temps réel")} rail={F.realtime.color} options={[mk("Socket.IO", true, SiSocketdotio, "socketio"), mk("Pusher", false, undefined, "pusher"), mk("Ably", false, undefined, "ably")]} info={info} locale={locale} style={{ left: 1000, top: 66, width: 240, height: 92 }} />
 
       {/* data */}
-      <OptionNode t={t} category={x("Database", "Base de données")} rail={F.data.color} options={[mk("PostgreSQL", true, SiPostgresql), mk("MySQL", false, SiMysql), mk("MongoDB", false, SiMongodb)]} style={{ left: 1000, top: 178, width: 240, height: 104 }} />
-      <OptionNode t={t} category={x("Cache", "Cache")} rail={F.data.color} options={[mk("Redis", true, SiRedis), mk("Memcached", false)]} style={{ left: 1000, top: 298, width: 240, height: 92 }} />
-      <OptionNode t={t} category={x("Object storage", "Stockage objet")} rail={F.data.color} options={[mk("R2", true, SiCloudflare), mk("S3", false), mk("GCS", false, SiGooglecloud)]} style={{ left: 1000, top: 406, width: 240, height: 96 }} />
+      <OptionNode t={t} category={x("Database", "Base de données")} rail={F.data.color} options={[mk("PostgreSQL", true, SiPostgresql, "postgresql"), mk("MySQL", false, SiMysql, "mysql"), mk("MongoDB", false, SiMongodb, "mongodb")]} info={info} locale={locale} style={{ left: 1000, top: 178, width: 240, height: 104 }} />
+      <OptionNode t={t} category={x("Cache", "Cache")} rail={F.data.color} options={[mk("Redis", true, SiRedis, "redis"), mk("Memcached", false, undefined, "memcached")]} info={info} locale={locale} style={{ left: 1000, top: 298, width: 240, height: 92 }} />
+      <OptionNode t={t} category={x("Object storage", "Stockage objet")} rail={F.data.color} options={[mk("R2", true, SiCloudflare, "r2"), mk("S3", false, undefined, "s3"), mk("GCS", false, SiGooglecloud, "gcs")]} info={info} locale={locale} style={{ left: 1000, top: 406, width: 240, height: 96 }} />
 
       {/* workers */}
-      <OptionNode t={t} category={x("Queue · Jobs", "File · Tâches")} rail={F.event.color} options={[mk("BullMQ", true), mk("RabbitMQ", false, SiRabbitmq), mk("SQS", false)]} style={{ left: 560, top: 392, width: 304, height: 96 }} />
+      <OptionNode t={t} category={x("Queue · Jobs", "File · Tâches")} rail={F.event.color} options={[mk("BullMQ", true, undefined, "bullmq"), mk("RabbitMQ", false, SiRabbitmq, "rabbitmq"), mk("SQS", false, undefined, "sqs")]} info={info} locale={locale} style={{ left: 560, top: 392, width: 304, height: 96 }} />
 
       {/* payments / integrations */}
-      <OptionNode t={t} category={x("Payments", "Paiements")} rail={F.external.color} options={[mk("Stripe", true, SiStripe), mk("PayPal", false, SiPaypal), mk("Square", false, SiSquare)]} style={{ left: 1000, top: 520, width: 240, height: 96 }} />
+      <OptionNode t={t} category={x("Payments", "Paiements")} rail={F.external.color} options={[mk("Stripe", true, SiStripe, "stripe"), mk("PayPal", false, SiPaypal, "paypal"), mk("Square", false, SiSquare, "square")]} info={info} locale={locale} style={{ left: 1000, top: 520, width: 240, height: 96 }} />
 
       {/* observability */}
-      <OptionNode t={t} category={x("Observability", "Observabilité")} rail={F.telemetry.color} options={[mk("Sentry", true, SiSentry), mk("Grafana", false, SiGrafana), mk("Datadog", false, SiDatadog)]} style={{ left: 40, top: 392, width: 244, height: 96 }} />
+      <OptionNode t={t} category={x("Observability", "Observabilité")} rail={F.telemetry.color} options={[mk("Sentry", true, SiSentry, "sentry"), mk("Grafana", false, SiGrafana, "grafana"), mk("Datadog", false, SiDatadog, "datadog")]} info={info} locale={locale} style={{ left: 40, top: 392, width: 244, height: 96 }} />
 
       <FlowLegend t={t} keys={["request", "realtime", "data", "event", "external", "telemetry"]} style={{ left: 40, top: 586 }} />
 
