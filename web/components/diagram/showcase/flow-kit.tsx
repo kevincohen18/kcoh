@@ -137,7 +137,7 @@ export function Node({
   return (
     <div
       className={cn(
-        "absolute overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        "absolute overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100",
         t.name === "dark"
           ? "hover:drop-shadow-[0_16px_26px_rgba(0,0,0,0.55)]"
           : "hover:drop-shadow-[0_16px_26px_rgba(15,23,42,0.18)]",
@@ -202,7 +202,7 @@ export function CoreNode({
   return (
     <div
       className={cn(
-        "absolute flex flex-col overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        "absolute flex flex-col overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100",
         t.name === "dark"
           ? "hover:drop-shadow-[0_16px_26px_rgba(0,0,0,0.55)]"
           : "hover:drop-shadow-[0_16px_26px_rgba(15,23,42,0.18)]",
@@ -423,7 +423,12 @@ export function OptionNode({
   const { height, ...rest } = style ?? {};
   return (
     <div
-      className="absolute overflow-hidden rounded-xl"
+      className={cn(
+        "absolute overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100",
+        t.name === "dark"
+          ? "hover:drop-shadow-[0_16px_26px_rgba(0,0,0,0.55)]"
+          : "hover:drop-shadow-[0_16px_26px_rgba(15,23,42,0.18)]",
+      )}
       style={{ background: t.nodeBg, border: t.nodeBorder, boxShadow: t.nodeShadow, minHeight: height, ...rest }}
     >
       <span aria-hidden className="absolute inset-y-0 left-0" style={{ width: 3, background: rail, boxShadow: `0 0 10px ${rgba(rail, 0.5)}` }} />

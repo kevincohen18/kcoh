@@ -81,7 +81,7 @@ function CoreNode({ t, locale, style }: { t: Theme; locale: Locale; style: React
   return (
     <div
       className={cn(
-        "absolute flex flex-col overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        "absolute flex flex-col overflow-hidden rounded-xl transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100",
         t.name === "dark"
           ? "hover:drop-shadow-[0_16px_26px_rgba(0,0,0,0.55)]"
           : "hover:drop-shadow-[0_16px_26px_rgba(15,23,42,0.18)]",
