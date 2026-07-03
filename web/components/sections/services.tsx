@@ -14,7 +14,7 @@ export function Services() {
   const copy = servicesCopy[locale];
 
   return (
-    <section id="services" className="scroll-mt-24 border-t border-border bg-section">
+    <section id="services" className="scroll-mt-24">
       <Container className="py-20 md:py-28">
         <Reveal>
           <SectionLabel>{copy.eyebrow}</SectionLabel>

@@ -12,7 +12,7 @@ export function Technologies() {
   const copy = technologiesCopy[locale];
 
   return (
-    <section className="border-t border-border bg-bg">
+    <section>
       <Container className="py-14 md:py-16">
         <Reveal>
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-12">

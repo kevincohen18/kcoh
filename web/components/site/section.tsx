@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils";
 type SectionBg = "bg" | "section" | "section-alt";
 
 const bgMap: Record<SectionBg, string> = {
-  bg: "bg-bg",
-  section: "bg-section",
-  "section-alt": "bg-section-alt",
+  bg: "bg-transparent",
+  section: "bg-transparent",
+  "section-alt": "bg-transparent",
 };
 
 export function Section({

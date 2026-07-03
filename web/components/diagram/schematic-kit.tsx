@@ -8,12 +8,12 @@ import type { IconType } from "react-icons";
  * technical labels, real brand marks kept monochrome.
  * ------------------------------------------------------------------ */
 
-export const INK = "#16181d";
-export const MUT = "#6b7280";
-export const HAIR = "#e5e7eb";
-export const LINE = "#c9cdd6";
+export const INK = "var(--fg)";
+export const MUT = "var(--fg-muted)";
+export const HAIR = "var(--border)";
+export const LINE = "var(--diagram-line)";
 export const VIOLET = "#6e63ff";
-export const CHIP_BG = "#f4f5f7";
+export const CHIP_BG = "var(--accent)";
 
 export function withAlpha(hex: string, a: number) {
   const h = hex.replace("#", "");
@@ -29,8 +29,12 @@ export const si = (Comp: IconType, primary = false) => (
 export const fa = (Comp: IconType) => <Comp size={13} style={{ color: INK, opacity: 0.62 }} />;
 
 export function Node({ icon, name, caption, style }: { icon: ReactNode; name: string; caption: string; style?: CSSProperties }) {
+  // Treat the caller's height as a MINIMUM, not a hard height, so a longer
+  // French caption grows the box downward instead of spilling past its border.
+  // Edges anchor to the declared height's center, which stays inside the box.
+  const { height, ...rest } = style ?? {};
   return (
-    <div className="absolute rounded-lg" style={{ background: "#fff", border: `1px solid ${HAIR}`, boxShadow: "0 1px 2px rgba(16,18,29,0.05)", padding: "13px 15px", ...style }}>
+    <div className="absolute rounded-lg" style={{ background: "var(--card)", border: `1px solid ${HAIR}`, boxShadow: "0 1px 2px rgba(16,18,29,0.05)", padding: "13px 15px", minHeight: height, ...rest }}>
       <div className="flex items-center gap-2.5">
         {icon}
         <span className="font-mono" style={{ fontSize: 13, color: INK, fontWeight: 500, letterSpacing: "-0.01em" }}>{name}</span>
@@ -52,7 +56,7 @@ export function Chip({ children }: { children: ReactNode }) {
    caption, and a row of resource/module chips filling the body. */
 export function ContainerNode({ icon, name, caption, chips, accent = VIOLET, style }: { icon: ReactNode; name: string; caption: string; chips: string[]; accent?: string; style?: CSSProperties }) {
   return (
-    <div className="absolute rounded-lg" style={{ background: withAlpha(accent, 0.035), border: `1px solid ${withAlpha(accent, 0.5)}`, boxShadow: "0 1px 2px rgba(16,18,29,0.05)", padding: "14px 16px", display: "flex", flexDirection: "column", ...style }}>
+    <div className="absolute rounded-lg" style={{ background: `linear-gradient(${withAlpha(accent, 0.035)}, ${withAlpha(accent, 0.035)}), var(--card)`, border: `1px solid ${withAlpha(accent, 0.5)}`, boxShadow: "0 1px 2px rgba(16,18,29,0.05)", padding: "14px 16px", display: "flex", flexDirection: "column", ...style }}>
       <div className="flex items-center gap-2.5">
         {icon}
         <span className="font-mono" style={{ fontSize: 13.5, color: INK, fontWeight: 500, letterSpacing: "-0.01em" }}>{name}</span>
@@ -70,7 +74,7 @@ export function ContainerNode({ icon, name, caption, chips, accent = VIOLET, sty
 /* A small labelled pill sitting on a connector (REST / WSS / SQL …). */
 export function CLabel({ x, y, children, accent = false }: { x: number; y: number; children: ReactNode; accent?: boolean }) {
   return (
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 font-mono" style={{ left: x, top: y, fontSize: 10, letterSpacing: "0.03em", color: accent ? VIOLET : MUT, background: "#fff", padding: "1px 6px", border: `1px solid ${HAIR}`, borderRadius: 4, zIndex: 3 }}>
+    <div className="absolute -translate-x-1/2 -translate-y-1/2 font-mono" style={{ left: x, top: y, fontSize: 10, letterSpacing: "0.03em", color: accent ? VIOLET : MUT, background: "var(--card)", padding: "1px 6px", border: `1px solid ${HAIR}`, borderRadius: 4, zIndex: 3 }}>
       {children}
     </div>
   );
@@ -96,7 +100,7 @@ function Edge({ d, accent = false, dashed = false, arrow = true }: EdgeSpec) {
    absolutely-positioned children. */
 export function SchematicCanvas({ client, clientColor = VIOLET, eyebrow = "SYSTEM ARCHITECTURE", w, h, edges = [], children }: { client: string; clientColor?: string; eyebrow?: string; w: number; h: number; edges?: EdgeSpec[]; children: ReactNode }) {
   return (
-    <div id="system-canvas" className="relative overflow-hidden rounded-xl" style={{ width: w, height: h, background: "#ffffff", border: `1px solid ${HAIR}` }}>
+    <div id="system-canvas" className="relative overflow-hidden rounded-xl" style={{ width: w, height: h, background: "var(--section)", border: `1px solid ${HAIR}` }}>
       <div className="absolute left-7 right-7 top-6 flex items-baseline justify-between">
         <span className="font-mono" style={{ fontSize: 11, letterSpacing: "0.16em", color: MUT }}>{eyebrow}</span>
         <span className="flex items-center gap-2 font-mono" style={{ fontSize: 11, letterSpacing: "0.04em", color: MUT }}>

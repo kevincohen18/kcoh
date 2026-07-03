@@ -14,7 +14,7 @@ export function CaseHero({ study }: { study: CaseStudy }) {
   const { locale } = useLocale();
   const copy = workCopy[locale];
   return (
-    <section className="relative overflow-hidden border-b border-border bg-bg">
+    <section className="relative overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[720px] -translate-x-1/2 rounded-full opacity-25 blur-3xl"

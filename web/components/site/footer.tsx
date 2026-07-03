@@ -18,7 +18,7 @@ export function Footer() {
   const links = navLinks[locale];
 
   return (
-    <footer className="border-t border-border bg-bg">
+    <footer className="border-t border-border">
       <Container className="py-14 md:py-16">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12">
           <div className="sm:col-span-2 lg:col-span-5">

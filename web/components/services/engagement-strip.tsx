@@ -12,7 +12,7 @@ export function EngagementStrip() {
   const copy = engagementCopy[locale];
 
   return (
-    <section id="engagements" className="scroll-mt-24 border-t border-border bg-section">
+    <section id="engagements" className="scroll-mt-24">
       <Container className="py-20 md:py-28">
         <Reveal>
           <SectionLabel>{copy.eyebrow}</SectionLabel>

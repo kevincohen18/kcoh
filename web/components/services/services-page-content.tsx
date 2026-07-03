@@ -42,7 +42,7 @@ export function ServicesPageContent() {
         intro={copy.pageHero.intro}
       />
 
-      <section className="border-t border-border bg-bg">
+      <section>
         <Container className="py-16 md:py-20">
           {details.map((detail, i) => (
             <ServiceBlock

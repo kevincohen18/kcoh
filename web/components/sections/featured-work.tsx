@@ -94,7 +94,7 @@ export function FeaturedWork() {
   const { locale } = useLocale();
   const wc = featuredWorkCopy[locale];
   return (
-    <section id="work" className="scroll-mt-24 bg-bg">
+    <section id="work" className="scroll-mt-24">
       <Container className="py-20 md:py-28">
         <Reveal>
           <SectionLabel>{wc.eyebrow}</SectionLabel>

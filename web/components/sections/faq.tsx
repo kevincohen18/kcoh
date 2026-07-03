@@ -12,7 +12,7 @@ export function Faq() {
   const copy = faqCopy[locale];
 
   return (
-    <section id="faq" className="scroll-mt-24 border-t border-border bg-section">
+    <section id="faq" className="scroll-mt-24">
       <Container className="py-20 md:py-28">
         <div className="grid gap-10 lg:grid-cols-12">
           <Reveal className="lg:col-span-4">

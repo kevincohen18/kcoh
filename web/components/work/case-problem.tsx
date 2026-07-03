@@ -12,7 +12,7 @@ export function CaseProblem({ study }: { study: CaseStudy }) {
   const { locale } = useLocale();
   const copy = workCopy[locale];
   return (
-    <section className="bg-bg">
+    <section>
       <Container className="py-16 md:py-24">
         <div className="grid gap-8 lg:grid-cols-12">
           <Reveal className="lg:col-span-4">

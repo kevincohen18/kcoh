@@ -22,8 +22,8 @@ export function CaseStudyContent({ slug }: { slug: CaseSlug }) {
     <>
       <ProjectTheme accent={study.accent}>
         <CaseHero study={study} />
-        <CaseProblem study={study} />
         <CaseSystem study={study} />
+        <CaseProblem study={study} />
         <CaseOutcome study={study} />
       </ProjectTheme>
       <NextProjectPager current={study.slug} />

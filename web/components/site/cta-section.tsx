@@ -19,7 +19,7 @@ export function CTASection({
   const resolvedSubline = subline ?? t.cta.subline;
 
   return (
-    <section className="relative overflow-hidden border-t border-border bg-bg">
+    <section className="relative overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute -bottom-40 left-1/2 h-80 w-[640px] -translate-x-1/2 rounded-full opacity-30 blur-3xl"

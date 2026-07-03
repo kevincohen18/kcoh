@@ -46,7 +46,7 @@ export function AboutContent() {
       />
 
       {/* Founder story */}
-      <section className="border-t border-border bg-bg">
+      <section>
         <Container className="grid gap-12 py-20 md:py-28 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
             <SectionLabel>{copy.story.label}</SectionLabel>
@@ -96,7 +96,7 @@ export function AboutContent() {
       </section>
 
       {/* How we work, expanded */}
-      <section id="process" className="scroll-mt-24 border-t border-border bg-section">
+      <section id="process" className="scroll-mt-24">
         <Container className="py-20 md:py-28">
           <Reveal>
             <SectionLabel>{copy.process.label}</SectionLabel>
@@ -147,7 +147,7 @@ export function AboutContent() {
       </section>
 
       {/* Operating principles */}
-      <section className="border-t border-border bg-bg">
+      <section>
         <Container className="py-20 md:py-28">
           <Reveal>
             <SectionLabel>{copy.principles.label}</SectionLabel>

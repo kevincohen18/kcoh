@@ -24,6 +24,8 @@
   --pos: #15803d; /* was #16a34a (3.30:1 on white) — 5.02:1, AA for status text */
   --warn: #b45309; /* was #d97706 (3.19:1 on white) — 5.02:1, AA for status text */
   --neg: #dc2626;
+  --diagram-line: #c9cdd6;
+  --page-bg: radial-gradient(1200px 720px at 50% -160px, #ffffff 0%, #fafafb 62%);
 
   /* shadcn semantic tokens -> mapped to KCOH palette (light) */
   --background: var(--bg);
@@ -61,6 +63,8 @@
   --pos: #34d399;
   --warn: #fbbf24;
   --neg: #f87171;
+  --diagram-line: rgba(255, 255, 255, 0.2);
+  --page-bg: radial-gradient(1200px 720px at 50% -160px, #0c1119 0%, #05070b 60%);
 
   /* shadcn semantic tokens (dark) */
   --background: var(--bg);
@@ -93,6 +97,14 @@
 }
 .dark [data-project-theme] {
   --brand-text: color-mix(in srgb, var(--brand) 60%, white);
+}
+
+body {
+  background-color: var(--bg);
+  background-image: var(--page-bg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100dvh;
 }
 
 @theme inline {

@@ -14,7 +14,7 @@ export function HowWeWork() {
   const copy = processCopy[locale];
 
   return (
-    <section id="process" className="scroll-mt-24 border-t border-border bg-bg">
+    <section id="process" className="scroll-mt-24">
       <Container className="py-20 md:py-28">
         <Reveal>
           <SectionLabel>{copy.label}</SectionLabel>

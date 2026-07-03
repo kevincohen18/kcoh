@@ -18,7 +18,7 @@ export function NextProjectPager({ current }: { current: CaseSlug }) {
 
   return (
     <ProjectTheme accent={next.accent}>
-      <section className="border-t border-border bg-section-alt">
+      <section>
         <Container className="py-12 md:py-16">
           <LocaleLink
             href={`/work/${next.slug}/`}

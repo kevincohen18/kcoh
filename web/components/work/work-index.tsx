@@ -35,7 +35,7 @@ export function WorkIndex() {
         <WorkFeatureRow key={study.slug} study={study} flip={i % 2 === 1} />
       ))}
 
-      <section className="border-t border-border bg-section">
+      <section>
         <Container className="py-14 md:py-16">
           <Reveal>
             <p className="text-center text-xs font-medium uppercase tracking-[0.25em] text-fg-subtle">

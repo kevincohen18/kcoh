@@ -26,7 +26,7 @@ export function WorkFeatureRow({
   return (
     <ProjectTheme accent={study.accent}>
       <article
-        className="relative overflow-hidden border-t border-border bg-bg"
+        className="relative overflow-hidden"
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
       >

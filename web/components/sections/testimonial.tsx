@@ -23,7 +23,7 @@ export function Testimonial() {
   ).filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
-    <section className="border-t border-border bg-bg">
+    <section>
       <Container className="grid items-center gap-12 py-20 md:py-28 lg:grid-cols-12">
         <Reveal className="lg:col-span-7">
           <span

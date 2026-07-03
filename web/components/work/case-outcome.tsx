@@ -13,7 +13,7 @@ export function CaseOutcome({ study }: { study: CaseStudy }) {
   const { locale } = useLocale();
   const copy = workCopy[locale];
   return (
-    <section className="border-t border-border bg-bg">
+    <section>
       <Container className="py-16 md:py-24">
         <Reveal>
           <SectionLabel>{copy.case.theOutcome}</SectionLabel>

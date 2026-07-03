@@ -12,7 +12,7 @@ export function Founder() {
   const f = founder[locale];
 
   return (
-    <section id="about" className="scroll-mt-24 border-t border-border bg-bg">
+    <section id="about" className="scroll-mt-24">
       <Container className="grid items-center gap-12 py-20 md:py-28 lg:grid-cols-12">
         <Reveal className="lg:col-span-7">
           <SectionLabel>{f.eyebrow}</SectionLabel>
