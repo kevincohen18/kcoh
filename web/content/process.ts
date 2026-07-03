@@ -65,15 +65,18 @@ export const processSteps: Record<Locale, ProcessStep[]> = {
 export type ProcessCopy = {
   label: string;
   heading: string;
+  lede: string;
 };
 
 export const processCopy: Record<Locale, ProcessCopy> = {
   en: {
     label: "How We Work",
     heading: "Four steps. No mystery.",
+    lede: "Every layer is a choice. We bring an opinion, then build with whatever fits: your language, your database, your tools.",
   },
   fr: {
     label: "Comment nous travaillons",
     heading: "Quatre étapes. Aucun mystère.",
+    lede: "Chaque couche est un choix. Nous avons un avis, puis nous bâtissons avec ce qui convient : votre langage, votre base de données, vos outils.",
   },
 };
