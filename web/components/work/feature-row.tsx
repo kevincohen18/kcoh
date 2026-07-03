@@ -13,6 +13,13 @@ import { useLocale } from "@/lib/i18n/locale";
 import { workCopy } from "@/content/case-studies";
 import type { CaseStudy } from "@/content/case-studies";
 
+/* Feather the cursor-glow overlay on all four edges. The row is borderless
+   and has no radius, so a raw radial gradient gets sliced by its box into a
+   hard rectangle whenever the cursor nears an edge. Two crossed edge-fades,
+   intersected, taper the glow's alpha to zero before that hard boundary. */
+const GLOW_EDGE_FADE =
+  "linear-gradient(to bottom, transparent, #000 64px, #000 calc(100% - 64px), transparent), linear-gradient(to right, transparent, #000 64px, #000 calc(100% - 64px), transparent)";
+
 export function WorkFeatureRow({
   study,
   flip = false,
@@ -32,11 +39,15 @@ export function WorkFeatureRow({
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
           style={{
             opacity: "var(--glow-opacity, 0)",
             background:
               "radial-gradient(240px circle at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in srgb, var(--brand) 12%, transparent), transparent 70%)",
+            maskImage: GLOW_EDGE_FADE,
+            WebkitMaskImage: GLOW_EDGE_FADE,
+            maskComposite: "intersect",
+            WebkitMaskComposite: "source-in",
           }}
         />
         <Container>
