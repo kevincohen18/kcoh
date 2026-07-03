@@ -35,6 +35,7 @@ export function LocaleToggle() {
           <Link
             key={option.value}
             href={option.href}
+            scroll={false}
             aria-current={isActive ? "true" : undefined}
             aria-label={option.ariaLabel}
             className={cn(
