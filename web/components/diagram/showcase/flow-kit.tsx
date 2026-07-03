@@ -281,6 +281,7 @@ export const OptionChip = forwardRef<
   return (
     <span
       ref={ref}
+      tabIndex={0}
       className={cn(
         "inline-flex cursor-default items-center gap-1.5 font-mono transition-transform duration-150 hover:scale-[1.06] hover:shadow-md motion-reduce:transition-none motion-reduce:hover:scale-100",
         className,
