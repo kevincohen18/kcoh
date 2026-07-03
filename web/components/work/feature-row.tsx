@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -30,10 +31,13 @@ export function WorkFeatureRow({
   const { onMouseMove, onMouseLeave } = usePointerGlow();
   const { locale } = useLocale();
   const copy = workCopy[locale];
+  // Raised while this row's schematic is clicked open, so the enlarged diagram
+  // floats above the neighbouring rows.
+  const [zoomed, setZoomed] = useState(false);
   return (
     <ProjectTheme accent={study.accent}>
       <article
-        className="relative hover:z-30"
+        className={cn("relative", zoomed && "z-30")}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
       >
@@ -102,7 +106,7 @@ export function WorkFeatureRow({
               delay={0.1}
               className={cn("lg:col-span-7", flip && "lg:order-1")}
             >
-              <CaseSchematic slug={study.slug} flip={flip} zoom />
+              <CaseSchematic slug={study.slug} flip={flip} zoom onZoomChange={setZoomed} />
             </Reveal>
           </div>
         </Container>
